@@ -1,0 +1,17 @@
+[
+    {"name": "Serena Hotel Gisenyi", "lat": -1.7061, "lon": 29.2592, "cat": "hotels", "desc": "Luxury beachfront resort with world-class amenities."},
+    {"name": "Lake Kivu Serena Hotel", "lat": -1.7058, "lon": 29.2585, "cat": "hotels", "desc": "Iconic luxury stay with lake views and garden pools."},
+    {"name": "Hakuna Matata Lodge", "lat": -1.7012, "lon": 29.2515, "cat": "hotels", "desc": "Cozy lakeside lodge with a vibrant local atmosphere."},
+    {"name": "Palm Garden Resort", "lat": -1.6945, "lon": 29.2450, "cat": "hotels", "desc": "Quiet retreat perfect for long stays and relaxation."},
+    {"name": "Gorillas Lake Kivu Hotel", "lat": -1.7032, "lon": 29.2612, "cat": "hotels", "desc": "Modern hotel with excellent business and leisure facilities."},
+    {"name": "Discover Rwanda Gisenyi Beach", "lat": -1.7015, "lon": 29.2605, "cat": "hotels", "desc": "The most popular vibe-spot for backpackers and young travelers."},
+    {"name": "Tam Tam Beach", "lat": -1.7025, "lon": 29.2625, "cat": "nightlife", "desc": "The heartbeat of Gisenyi nightlife. Best vibe on the beach."},
+    {"name": "Petit Bruxelles", "lat": -1.7018, "lon": 29.2588, "cat": "dining", "desc": "Authentic Belgian-Rwandan fusion dining with lake breeze."},
+    {"name": "Bistro du Lac", "lat": -1.6990, "lon": 29.2615, "cat": "dining", "desc": "Refined dining experience featuring local Lake Kivu fish."},
+    {"name": "Caliente Club", "lat": -1.6975, "lon": 29.2645, "cat": "nightlife", "desc": "Late night vibe with local DJs and high energy."},
+    {"name": "Inzozi Beach", "lat": -1.7035, "lon": 29.2655, "cat": "beach", "desc": "Crystal clear water and golden sands. The perfect morning chill spot."},
+    {"name": "Gisenyi Public Market", "lat": -1.6925, "lon": 29.2555, "cat": "practical", "desc": "Full details on local crafts, fresh fruits, and daily Gisenyi life."},
+    {"name": "Brasserie Bralirwa", "lat": -1.7150, "lon": 29.2800, "cat": "activities", "desc": "The famous brewery. A landmark of industrial history in the region."},
+    {"name": "Hot Springs (Amashyuza)", "lat": -1.7350, "lon": 29.2700, "cat": "activities", "desc": "Natural volcanic hot springs. A must-visit therapeutic experience."},
+    {"name": "Rubavu Mountain Viewpoint", "lat": -1.6850, "lon": 29.2600, "cat": "activities", "desc": "Highest point for a panoramic view of Gisenyi and Goma."}
+]
