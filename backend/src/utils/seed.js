@@ -62,16 +62,31 @@ async function seed() {
                 });
             } else {
                 // Fallback to Snapshot for this category
-                const snapshot = require('./snapshot.json');
-                places = snapshot.filter(s => s.cat === key || (key === 'tourism' && s.cat === 'hotels')).map(s => ({
-                    osmId: `local-${s.name.replace(/\s+/g, '-').toLowerCase()}`,
-                    name: s.name,
-                    lat: s.lat,
-                    lon: s.lon,
-                    catKey: s.cat,
-                    tags: {},
-                    description: s.desc
-                }));
+                const snapshotData = require('./snapshot.json');
+                const snapshotList = Array.isArray(snapshotData) ? snapshotData : (snapshotData.places || []);
+                
+                places = snapshotList.filter(s => {
+                    const c = s.cat || s.category;
+                    if (key === 'hotels' && (c === 'hotel' || c === 'hotels')) return true;
+                    if (key === 'dining' && (c === 'restaurant' || c === 'cafe' || c === 'dining' || c === 'bar')) return true;
+                    if (key === 'practical' && (c === 'practical' || c === 'wellness')) return true;
+                    if (key === 'tourism' && (c === 'attraction' || c === 'tourism' || c === 'transport')) return true;
+                    if (key === 'leisure' && (c === 'beach' || c === 'leisure' || c === 'nightlife' || c === 'activities')) return true;
+                    if (key === 'shop' && (c === 'shop')) return true;
+                    return c === key;
+                }).map(s => {
+                    const c = s.cat || s.category;
+                    const cKey = c === 'hotel' ? 'hotels' : (c === 'restaurant' || c === 'cafe' || c === 'bar' ? 'dining' : (c === 'beach' ? 'leisure' : (c === 'attraction' || c === 'transport' ? 'tourism' : key)));
+                    return {
+                        osmId: s.id ? String(s.id) : `local-${s.name.replace(/\s+/g, '-').toLowerCase()}`,
+                        name: s.name,
+                        lat: s.lat || s.coordinates?.latitude,
+                        lon: s.lon || s.coordinates?.longitude,
+                        catKey: cKey,
+                        tags: s.tags || s.details || {},
+                        description: s.desc || s.details?.description
+                    };
+                });
                 console.log(`💡 Loaded ${places.length} items from local snapshot for ${key}`);
             }
 
