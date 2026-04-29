@@ -55,14 +55,14 @@ const MapView = ({ places, activeCat, selectedPlace, setSelectedPlace }) => {
 
             const marker = L.marker([p.lat, p.lon], { icon })
                 .bindPopup(`
-                    <div class="w-64 p-4 font-inter text-primary">
-                        <span class="text-[9px] font-poppins font-bold text-gold uppercase tracking-widest block mb-2">${CATEGORIES[p.catKey]?.label}</span>
-                        <h4 class="font-sora font-extrabold text-xl mb-2">${p.name}</h4>
-                        <p class="text-xs text-soft-gray/50 mb-4 line-clamp-2">${p.tags?.description || 'Explore this beautiful location in Gisenyi.'}</p>
+                    <div class="w-64 p-5 font-inter">
+                        <span class="text-[9px] font-poppins font-bold text-gold uppercase tracking-widest block mb-2">${CATEGORIES[p.catKey]?.label || 'Place'}</span>
+                        <h4 class="font-sora font-extrabold text-xl mb-2 text-white">${p.name}</h4>
+                        <p class="text-xs text-white/60 mb-5 line-clamp-3 leading-relaxed">${p.description || p.tags?.description || 'Explore this beautiful location in Gisenyi.'}</p>
                         <a 
                             href="https://www.google.com/maps/dir/?api=1&destination=${p.lat},${p.lon}" 
                             target="_blank" 
-                            class="block w-full bg-gold text-primary py-3 rounded-xl font-poppins font-bold text-[10px] text-center uppercase tracking-widest hover:bg-gold-light transition-all"
+                            class="block w-full bg-gold text-navy-dark py-3 rounded-xl font-poppins font-bold text-[10px] text-center uppercase tracking-widest hover:bg-gold-light transition-all shadow-lg"
                         >
                             Get Directions
                         </a>

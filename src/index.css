@@ -73,3 +73,34 @@
 .animate-float {
   animation: float 6s ease-in-out infinite;
 }
+
+/* Leaflet Map Customizations */
+.gisenyi-popup .leaflet-popup-content-wrapper {
+  background-color: #0F1A2E !important; /* navy-mid */
+  border: 1px solid rgba(201, 168, 76, 0.3) !important;
+  border-radius: 1.5rem !important;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
+}
+
+.gisenyi-popup .leaflet-popup-tip {
+  background-color: #0F1A2E !important;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.3) !important;
+  border-right: 1px solid rgba(201, 168, 76, 0.3) !important;
+}
+
+.gisenyi-popup .leaflet-popup-content {
+  margin: 0 !important;
+  line-height: 1.5 !important;
+}
+
+.gisenyi-popup a.leaflet-popup-close-button {
+  color: #C9A84C !important;
+  padding: 12px 16px !important;
+  font-size: 20px !important;
+  transition: all 0.3s ease;
+}
+
+.gisenyi-popup a.leaflet-popup-close-button:hover {
+  color: #F4F4F0 !important;
+  transform: scale(1.1);
+}
