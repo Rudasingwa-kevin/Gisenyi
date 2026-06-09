@@ -1,73 +1,96 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import { useRef } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { ChevronDown, ArrowRight, Compass } from 'lucide-react';
 
 const Hero = () => {
-    return (
-        <section id="discover" className="relative h-screen flex items-center justify-center overflow-hidden hero-gradient">
-            <div className="absolute inset-0 pointer-events-none">
-                {/* Animated Lake Ripples */}
-                <svg className="absolute bottom-0 w-[200%] h-96 opacity-20 animate-ripple" viewBox="0 0 1000 100" preserveAspectRatio="none">
-                    <path d="M0,50 C150,100 350,0 500,50 C650,100 850,0 1000,50 L1000,100 L0,100 Z" fill="white" />
-                </svg>
-                <svg className="absolute bottom-10 w-[200%] h-96 opacity-10 animate-ripple" style={{ animationDuration: '15s', animationDirection: 'reverse' }} viewBox="0 0 1000 100" preserveAspectRatio="none">
-                    <path d="M0,50 C150,100 350,0 500,50 C650,100 850,0 1000,50 L1000,100 L0,100 Z" fill="white" />
-                </svg>
-            </div>
+  const ref = useRef(null);
+  const { scrollYProgress } = useScroll({ target: ref, offset: ['start start', 'end start'] });
+  const y = useTransform(scrollYProgress, [0, 1], [0, 200]);
+  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
 
-            <div className="relative z-10 text-center px-6 max-w-5xl pt-32 lg:pt-0">
-                <motion.div 
-                    initial={{ opacity: 0, scale: 0.8 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 1 }}
-                    className="inline-block px-6 py-2 glass rounded-full mb-8"
-                >
-                    <span className="text-[10px] font-poppins font-bold text-gold tracking-[0.5em] uppercase">Lake Kivu · Rwanda · Africa</span>
-                </motion.div>
-                
-                <motion.h1 
-                    initial={{ opacity: 0, y: 50 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 1.2, ease: "easeOut" }}
-                    className="font-sora text-[clamp(64px,14vw,180px)] font-extrabold text-white leading-[0.85] tracking-[-0.06em] mb-12 text-glow"
-                >
-                    GISENYI
-                </motion.h1>
+  return (
+    <section ref={ref} className="relative h-screen flex items-center justify-center overflow-hidden">
+      <div className="absolute inset-0 bg-gradient-to-b from-navy-900 via-navy-800 to-navy-700" />
+      <div className="absolute inset-0 bg-grid opacity-50" />
 
-                <motion.p 
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ delay: 0.6, duration: 1 }}
-                    className="font-inter text-xl md:text-3xl text-soft-gray/60 font-light mb-16 tracking-tight"
-                >
-                    Where Volcanic Peaks Meet the Endless Azure.
-                </motion.p>
+      <motion.div
+        style={{ y, opacity }}
+        className="absolute inset-0 pointer-events-none"
+      >
+        <div className="absolute top-20 left-20 w-72 h-72 bg-gold-500/10 rounded-full blur-3xl animate-mesh" />
+        <div className="absolute bottom-40 right-20 w-96 h-96 bg-gold-500/5 rounded-full blur-3xl animate-mesh" style={{ animationDelay: '-6s' }} />
+      </motion.div>
 
-                <motion.div 
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: 1, duration: 0.8 }}
-                    className="flex flex-col sm:flex-row items-center justify-center gap-6"
-                >
-                    <Link to="/stays" className="px-12 py-5 bg-gold text-primary font-poppins font-bold rounded-full hover:bg-gold-light transition-all transform hover:scale-105 shadow-[0_20px_40px_rgba(201,168,76,0.3)] text-center">
-                        Find a Place to Stay
-                    </Link>
-                    <Link to="/map" className="px-12 py-5 glass text-white font-poppins font-bold rounded-full hover:bg-white/10 transition-all border border-white/20 text-center">
-                        Explore the Map
-                    </Link>
-                </motion.div>
-            </div>
+      <div className="absolute bottom-0 left-0 right-0 pointer-events-none">
+        <svg className="w-full h-48 opacity-20 animate-ripple" viewBox="0 0 1440 120" preserveAspectRatio="none">
+          <path d="M0,60 C300,120 600,0 900,60 C1200,120 1440,0 1440,60 L1440,120 L0,120 Z" fill="white" />
+        </svg>
+        <svg className="w-full h-32 opacity-10 animate-ripple" style={{ animationDuration: '15s', animationDirection: 'reverse' }} viewBox="0 0 1440 100" preserveAspectRatio="none">
+          <path d="M0,40 C200,100 400,0 720,50 C1000,100 1200,0 1440,50 L1440,100 L0,100 Z" fill="white" />
+        </svg>
+      </div>
 
-            <motion.div 
-                animate={{ y: [0, 15, 0] }}
-                transition={{ repeat: Infinity, duration: 3 }}
-                className="absolute bottom-12 flex flex-col items-center text-gold/50"
+      <div className="relative z-10 text-center px-6 max-w-5xl">
+        <motion.div
+          initial={{ opacity: 0, y: 20, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+          className="inline-flex items-center gap-2 px-5 py-2 glass rounded-full mb-8"
+        >
+          <Compass className="w-3.5 h-3.5 text-gold-500" />
+          <span className="text-[10px] font-poppins font-bold text-gold-500 tracking-[0.3em] uppercase">Lake Kivu · Rwanda · Africa</span>
+        </motion.div>
+
+        <motion.h1
+          initial={{ opacity: 0, y: 40 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+          className="font-sora text-[clamp(56px,12vw,140px)] font-extrabold text-white leading-[0.85] tracking-[-0.06em] mb-8"
+        >
+          GISENYI
+          <span className="block text-2xl md:text-4xl font-inter font-light tracking-[0.3em] text-gold-500/80 mt-4">
+            Where Volcanic Peaks Meet the Endless Azure
+          </span>
+        </motion.h1>
+
+        <motion.div
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12"
+        >
+          <Link to="/stays">
+            <motion.span
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 px-10 py-4 bg-gold-500 text-navy-900 font-poppins font-bold text-sm rounded-2xl hover:bg-gold-400 transition-all shadow-2xl shadow-gold-500/25"
             >
-                <span className="text-[10px] font-poppins font-bold uppercase tracking-widest mb-4">Scroll</span>
-                <div className="w-[1px] h-12 bg-gradient-to-b from-gold to-transparent"></div>
-            </motion.div>
-        </section>
-    );
+              Explore Stays <ArrowRight className="w-4 h-4" />
+            </motion.span>
+          </Link>
+          <Link to="/map">
+            <motion.span
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 px-10 py-4 glass text-white font-poppins font-bold text-sm rounded-2xl hover:bg-white/10 transition-all"
+            >
+              View Map <Compass className="w-4 h-4" />
+            </motion.span>
+          </Link>
+        </motion.div>
+      </div>
+
+      <motion.div
+        animate={{ y: [0, 8, 0] }}
+        transition={{ repeat: Infinity, duration: 2.5, ease: 'easeInOut' }}
+        className="absolute bottom-10 flex flex-col items-center text-white/30"
+      >
+        <span className="text-[9px] font-poppins font-bold uppercase tracking-[0.3em] mb-3">Scroll</span>
+        <ChevronDown className="w-4 h-4" />
+      </motion.div>
+    </section>
+  );
 };
 
 export default Hero;

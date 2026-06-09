@@ -1,20 +1,9 @@
-import React from 'react';
 import Places from '../components/Places';
 
-const StaysPage = ({ places, loading, activeCat, setActiveCat, search, setSearch, setSelectedPlace }) => {
-    return (
-        <div className="pt-32">
-            <Places 
-                places={places}
-                loading={loading}
-                activeCat={activeCat}
-                setActiveCat={setActiveCat}
-                search={search}
-                setSearch={setSearch}
-                setSelectedPlace={setSelectedPlace}
-            />
-        </div>
-    );
-};
+const StaysPage = (props) => (
+  <div className="pt-20">
+    <Places {...props} />
+  </div>
+);
 
 export default StaysPage;

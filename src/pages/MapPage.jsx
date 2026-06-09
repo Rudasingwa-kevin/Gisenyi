@@ -1,18 +1,9 @@
-import React from 'react';
 import MapView from '../components/MapView';
 
-const MapPage = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPlace }) => {
-    return (
-        <div className="pt-32">
-            <MapView 
-                places={places} 
-                activeCat={activeCat} 
-                setActiveCat={setActiveCat}
-                selectedPlace={selectedPlace}
-                setSelectedPlace={setSelectedPlace}
-            />
-        </div>
-    );
-};
+const MapPage = (props) => (
+  <div className="pt-20">
+    <MapView {...props} />
+  </div>
+);
 
 export default MapPage;
