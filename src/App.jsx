@@ -98,6 +98,7 @@ function App() {
               <MapPage 
                 places={places} 
                 activeCat={activeCat} 
+                setActiveCat={setActiveCat}
                 selectedPlace={selectedPlace}
                 setSelectedPlace={setSelectedPlace}
               />

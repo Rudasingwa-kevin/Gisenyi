@@ -4,14 +4,13 @@ import L from 'leaflet';
 import { Plus, Minus, Navigation, Crosshair, MapPin } from 'lucide-react';
 import { CENTER, CATEGORIES } from '../constants/data';
 
-const MapView = ({ places, activeCat, selectedPlace, setSelectedPlace }) => {
+const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPlace }) => {
     const mapRef = useRef(null);
     const mapInstance = useRef(null);
     const markers = useRef(L.layerGroup());
     const userMarker = useRef(null);
     const [userPos, setUserPos] = useState(null);
     const [searchQuery, setSearchQuery] = useState('');
-    const [localCat, setLocalCat] = useState('all');
 
     const handleLocate = () => {
         if (!navigator.geolocation) return;
@@ -37,7 +36,7 @@ const MapView = ({ places, activeCat, selectedPlace, setSelectedPlace }) => {
         markers.current.clearLayers();
         
         const filtered = places.filter(p => {
-            const matchesCat = localCat === 'all' || p.catKey === localCat;
+            const matchesCat = activeCat === 'all' || p.catKey === activeCat;
             const matchesSearch = p.name.toLowerCase().includes(searchQuery.toLowerCase());
             return matchesCat && matchesSearch;
         });
@@ -118,16 +117,16 @@ const MapView = ({ places, activeCat, selectedPlace, setSelectedPlace }) => {
                         {/* Quick Filter Chips */}
                         <div className="flex items-center space-x-2 mt-4 overflow-x-auto no-scrollbar pb-2">
                             <button 
-                                onClick={() => setLocalCat('all')}
-                                className={`px-5 py-2 rounded-full font-poppins text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-all ${localCat === 'all' ? 'bg-gold text-primary shadow-lg' : 'glass text-white/70 hover:bg-white/10'}`}
+                                onClick={() => setActiveCat('all')}
+                                className={`px-5 py-2 rounded-full font-poppins text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-all ${activeCat === 'all' ? 'bg-gold text-primary shadow-lg' : 'glass text-white/70 hover:bg-white/10'}`}
                             >
                                 All Spots
                             </button>
                             {Object.entries(CATEGORIES).map(([key, cat]) => (
                                 <button 
                                     key={key}
-                                    onClick={() => setLocalCat(key)}
-                                    className={`px-5 py-2 rounded-full font-poppins text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-all flex items-center space-x-2 ${localCat === key ? 'bg-gold text-primary shadow-lg' : 'glass text-white/70 hover:bg-white/10'}`}
+                                    onClick={() => setActiveCat(key)}
+                                    className={`px-5 py-2 rounded-full font-poppins text-[10px] font-bold uppercase tracking-widest whitespace-nowrap transition-all flex items-center space-x-2 ${activeCat === key ? 'bg-gold text-primary shadow-lg' : 'glass text-white/70 hover:bg-white/10'}`}
                                 >
                                     <span>{cat.icon}</span>
                                     <span>{cat.label}</span>
