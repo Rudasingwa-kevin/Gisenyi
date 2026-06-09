@@ -1,3 +1,5 @@
+import { PLACES_DATA } from './places-data';
+
 export const CENTER = [-1.7019, 29.2564];
 
 export const CATEGORIES = {
@@ -8,21 +10,11 @@ export const CATEGORIES = {
     beach: { label: 'Beach', icon: '🏖', color: '#1A8A9A' },
     wellness: { label: 'Wellness', icon: '🧘', color: '#2D8A5E' },
     activities: { label: 'Activities', icon: '🛶', color: '#F39C12' },
-    practical: { label: 'Practical', icon: 'ℹ', color: '#4A6A8A' }
+    shopping: { label: 'Shopping', icon: '🛍️', color: '#E91E63' },
+    practical: { label: 'Practical', icon: 'ℹ️', color: '#4A6A8A' }
 };
 
-export const FALLBACK_DATA = [
-    { id: 'f1', name: 'Serena Lake Kivu Hotel', lat: -1.6968, lon: 29.2619, catKey: 'hotels', tags: { stars: '5', description: '5-star lakeside resort' } },
-    { id: 'f2', name: 'Paradise Malahide Hotel', lat: -1.7023, lon: 29.2587, catKey: 'hotels', tags: { description: 'Boutique lakeside' } },
-    { id: 'f3', name: 'Kivu Sun Hotel', lat: -1.6998, lon: 29.2601, catKey: 'hotels', tags: { description: 'Lake views, full amenities' } },
-    { id: 'f4', name: 'Home St Jean', lat: -1.7050, lon: 29.2545, catKey: 'hotels', tags: { description: 'Popular guesthouse' } },
-    { id: 'f5', name: 'La Palmeraie Restaurant', lat: -1.7010, lon: 29.2598, catKey: 'dining', tags: { cuisine: 'International' } },
-    { id: 'f6', name: 'Inzozi Nziza Café', lat: -1.7035, lon: 29.2560, catKey: 'dining', tags: { cuisine: 'Cafe', description: 'Famous ice cream café' } },
-    { id: 'f7', name: 'Le Bistro du Lac', lat: -1.6990, lon: 29.2615, catKey: 'dining', tags: { cuisine: 'French' } },
-    { id: 'f8', name: 'Lake Kivu Beach', lat: -1.7000, lon: 29.2630, catKey: 'beach', tags: { description: 'Main public beach' } },
-    { id: 'f9', name: 'Rubavu Beach', lat: -1.6985, lon: 29.2640, catKey: 'beach', tags: { description: 'Popular lakeside' } },
-    { id: 'f10', name: 'Congo-Rwanda Border', lat: -1.6890, lon: 29.2380, catKey: 'beach', tags: { description: 'Landmark crossing' } }
-];
+export const FALLBACK_DATA = PLACES_DATA;
 
 export const HISTORY_ERAS = [
     {

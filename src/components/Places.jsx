@@ -17,16 +17,23 @@ const PlaceCard = ({ place, setSelectedPlace }) => {
     };
 
     useEffect(() => {
-        const keywords = {
-            hotels: 'luxury-hotel,resort,villa',
-            dining: 'fine-dining,restaurant,chef',
-            beach: 'lake-kivu,beach,tropical',
-            nightlife: 'cocktail-bar,nightclub',
-            wellness: 'spa,massage,yoga',
-            practical: 'modern-building,clinic'
+        const CATEGORY_IMAGES = {
+            hotels: '1542314831-068cd1dbfeeb',
+            dining: '1566073771259-6a8506099945',
+            beach: '1507525428697-bcebc0197c25',
+            nightlife: '1470337458703-46a199543c0b',
+            wellness: '1544367567-0f2fcb009e0b',
+            practical: '1497366811353-507074f9a6d2',
+            activities: '1506905925346-21bda4d32df4',
+            culture: '1499786388474-37f59913e7d9',
+            shop: '1441986300917-64674bd600d8',
+            attraction: '1469854523086-cc02fe5d8800',
+            bar: '1514362545857-3bc16c4a7f1b',
+            cafe: '1501339755260-7a88e06da40e',
+            shopping: '1441986300917-64674bd600d8'
         };
-        setImg(`https://images.unsplash.com/photo-${place.id.startsWith('f') ? '1542314831-068cd1dbfeeb' : '1566073771259-6a8506099945'}?auto=format&fit=crop&q=80&w=800&h=1000`);
-        // Using semi-random IDs for demo since Unsplash Source is gone
+        const photoId = CATEGORY_IMAGES[place.catKey] || '1542314831-068cd1dbfeeb';
+        setImg(`https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=800&h=1000`);
     }, [place.catKey, place.id]);
 
     return (
@@ -111,7 +118,7 @@ const Places = ({ places, loading, activeCat, setActiveCat, search, setSearch, s
                     </div>
                 ) : (
                     <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-                        {places.slice(0, 12).map(p => (
+                        {places.map(p => (
                             <PlaceCard key={p.id} place={p} setSelectedPlace={setSelectedPlace} />
                         ))}
                     </motion.div>
