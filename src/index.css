@@ -1,18 +1,18 @@
 @import "tailwindcss";
 
 @theme {
-  --color-primary: #0A1628;
-  --color-gold: #C9A84C;
-  --color-gold-light: #E8D5A3;
-  --color-soft-gray: #F4F4F0;
-  --color-dark-gray: #1E1E2E;
-  --color-muted-text: #8A8FA8;
-  --color-success: #2D8A5E;
-  --color-error: #C0392B;
-  --color-navy-dark: #08101E;
-  --color-navy-mid: #0F1A2E;
-  --color-card-dark: #141F35;
-
+  --color-navy-900: #060D1A;
+  --color-navy-800: #0A1628;
+  --color-navy-700: #0F1A2E;
+  --color-navy-600: #141F35;
+  --color-navy-500: #1A2740;
+  --color-gold-400: #E8D5A3;
+  --color-gold-500: #C9A84C;
+  --color-gold-600: #B8943A;
+  --color-surface: #FFFFFF;
+  --color-surface-dark: #0A1628;
+  --color-muted: #8A8FA8;
+  --color-muted-dark: #6B7088;
   --font-sora: "Sora", sans-serif;
   --font-poppins: "Poppins", sans-serif;
   --font-inter: "Inter", sans-serif;
@@ -20,87 +20,106 @@
 }
 
 @layer base {
-  html {
-    scroll-behavior: smooth;
-  }
+  html { scroll-behavior: smooth; }
   body {
-    @apply bg-soft-gray text-primary dark:bg-navy-dark dark:text-soft-gray transition-colors duration-500 overflow-x-hidden font-outfit;
+    @apply bg-[#F8F8F6] text-navy-800 dark:bg-navy-900 dark:text-white/90 transition-colors duration-500 overflow-x-hidden font-outfit antialiased;
   }
+  ::selection { @apply bg-gold-500/30; }
+  :focus-visible { @apply outline-2 outline-offset-2 outline-gold-500; }
 }
 
 @layer utilities {
   .glass {
-    background: rgba(255, 255, 255, 0.05);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.12);
   }
   .glass-dark {
-    background: rgba(14, 20, 40, 0.85);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    background: rgba(6, 13, 26, 0.8);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(201, 168, 76, 0.15);
   }
-  .text-glow {
-    text-shadow: 0 0 30px rgba(201, 168, 76, 0.3);
+  .glass-gold {
+    background: linear-gradient(135deg, rgba(201, 168, 76, 0.15), rgba(201, 168, 76, 0.05));
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid rgba(201, 168, 76, 0.2);
   }
-  .no-scrollbar::-webkit-scrollbar {
-    display: none;
+  .neu {
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.06), -8px -8px 16px rgba(255, 255, 255, 0.8);
   }
-  .no-scrollbar {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+  .neu-inset {
+    box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.06), inset -3px -3px 8px rgba(255, 255, 255, 0.8);
   }
-  .hero-gradient {
-    background: linear-gradient(180deg, #051428 0%, #0a3060 50%, #1a6a8a 100%);
+  .dark .neu {
+    box-shadow: 8px 8px 16px rgba(0, 0, 0, 0.3), -8px -8px 16px rgba(255, 255, 255, 0.03);
+  }
+  .dark .neu-inset {
+    box-shadow: inset 3px 3px 8px rgba(0, 0, 0, 0.3), inset -3px -3px 8px rgba(255, 255, 255, 0.03);
+  }
+  .text-balance { text-wrap: balance; }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  .bg-grid {
+    background-image: linear-gradient(rgba(201,168,76,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(201,168,76,0.03) 1px, transparent 1px);
+    background-size: 60px 60px;
   }
 }
 
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-12px); }
+}
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
 @keyframes ripple {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
 }
-
-@keyframes float {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+@keyframes mesh-shift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33% { transform: translate(30px, -20px) scale(1.05); }
+  66% { transform: translate(-20px, 15px) scale(0.95); }
 }
 
-.animate-ripple {
-  animation: ripple 10s infinite linear;
+.animate-shimmer {
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.06) 50%, transparent 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
+.animate-float { animation: float 6s ease-in-out infinite; }
+.animate-pulse-soft { animation: pulse-soft 3s ease-in-out infinite; }
+.animate-ripple { animation: ripple 10s infinite linear; }
+.animate-mesh { animation: mesh-shift 12s ease-in-out infinite; }
 
-.animate-float {
-  animation: float 6s ease-in-out infinite;
-}
-
-/* Leaflet Map Customizations */
 .gisenyi-popup .leaflet-popup-content-wrapper {
-  background-color: #0F1A2E !important; /* navy-mid */
-  border: 1px solid rgba(201, 168, 76, 0.3) !important;
+  background: rgba(15, 26, 46, 0.95) !important;
+  backdrop-filter: blur(20px) !important;
+  border: 1px solid rgba(201, 168, 76, 0.25) !important;
   border-radius: 1.5rem !important;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.5) !important;
+  box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5) !important;
 }
-
 .gisenyi-popup .leaflet-popup-tip {
-  background-color: #0F1A2E !important;
-  border-bottom: 1px solid rgba(201, 168, 76, 0.3) !important;
-  border-right: 1px solid rgba(201, 168, 76, 0.3) !important;
+  background: rgba(15, 26, 46, 0.95) !important;
+  border-bottom: 1px solid rgba(201, 168, 76, 0.25) !important;
+  border-right: 1px solid rgba(201, 168, 76, 0.25) !important;
 }
-
-.gisenyi-popup .leaflet-popup-content {
-  margin: 0 !important;
-  line-height: 1.5 !important;
-}
-
+.gisenyi-popup .leaflet-popup-content { margin: 0 !important; line-height: 1.5 !important; }
 .gisenyi-popup a.leaflet-popup-close-button {
   color: #C9A84C !important;
   padding: 12px 16px !important;
   font-size: 20px !important;
   transition: all 0.3s ease;
 }
-
 .gisenyi-popup a.leaflet-popup-close-button:hover {
-  color: #F4F4F0 !important;
+  color: #FFFFFF !important;
   transform: scale(1.1);
 }

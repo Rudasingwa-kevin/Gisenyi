@@ -1,71 +1,54 @@
-import React from 'react';
 import Hero from '../components/Hero';
+import Stats from '../components/Stats';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
-const SectionTeaser = ({ title, desc, link, linkText, image }) => (
-    <div className="py-32 border-b border-white/5 last:border-0">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <motion.div 
-                initial={{ opacity: 0, x: -30 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-            >
-                <h2 className="font-sora text-5xl font-extrabold mb-6">{title}</h2>
-                <p className="text-xl text-muted-text font-light mb-10 leading-relaxed">{desc}</p>
-                <Link to={link} className="inline-flex items-center text-gold font-poppins font-bold uppercase tracking-widest group">
-                    {linkText} <ArrowRight className="ml-3 w-5 h-5 transition-transform group-hover:translate-x-2" />
-                </Link>
-            </motion.div>
-            <motion.div 
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                className="aspect-video rounded-[3rem] overflow-hidden shadow-2xl"
-            >
-                <img src={image} className="w-full h-full object-cover" loading="lazy" />
-            </motion.div>
-        </div>
-    </div>
-);
+const teasers = [
+  { title: 'A Legacy of Fire & Water', desc: 'From volcanic genesis to the modern renaissance, explore the chronicles of Rwanda\'s most resilient city.', link: '/history', label: 'Discover History', img: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb' },
+  { title: 'Curated Destinations', desc: 'Experience the pinnacle of African lakeside luxury. From boutique resorts to world-class dining.', link: '/stays', label: 'View Stays', img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945' },
+  { title: 'Interactive Exploration', desc: 'Navigate the shoreline with real-time data powered by OpenStreetMap.', link: '/map', label: 'Open Map', img: 'https://images.unsplash.com/photo-1540541338287-41700207eda5' },
+  { title: 'Endless Adventure', desc: 'From kayaking on Lake Kivu to exploring volcanic trails and cultural museums.', link: '/stays', label: 'Explore Activities', img: 'https://images.unsplash.com/photo-1507525428697-bcebc0197c25' }
+];
 
-const HomePage = () => {
-    return (
-        <div>
-            <Hero />
-            <section className="py-40 px-8 max-w-7xl mx-auto">
-                <SectionTeaser 
-                    title="A Legacy of Fire & Water"
-                    desc="From volcanic genesis to the modern renaissance, Gisenyi's soul is etched into the very shores of Lake Kivu. Explore the chronicles of Rwanda's most resilient city."
-                    link="/history"
-                    linkText="Discover History"
-                    image="https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1200"
-                />
-                <SectionTeaser 
-                    title="Curated Destinations"
-                    desc="Experience the pinnacle of African lakeside luxury. From boutique resorts to world-class dining, discover the best Gisenyi has to offer."
-                    link="/stays"
-                    linkText="View Stays"
-                    image="https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=1200"
-                />
-                <SectionTeaser 
-                    title="Endless Adventure"
-                    desc="From kayaking on Lake Kivu to exploring volcanic trails and cultural museums, Gisenyi is a playground for the adventurous soul."
-                    link="/stays"
-                    linkText="Explore Activities"
-                    image="https://images.unsplash.com/photo-1540541338287-41700207eda5?auto=format&fit=crop&q=80&w=1200"
-                />
-                <SectionTeaser 
-                    title="Interactive Exploration"
-                    desc="Navigate the shoreline with real-time data powered by OpenStreetMap. Find your way to hidden gems and iconic landmarks."
-                    link="/map"
-                    linkText="Open Map"
-                    image="https://images.unsplash.com/photo-1540541338287-41700207eda5?auto=format&fit=crop&q=80&w=1200"
-                />
-            </section>
-        </div>
-    );
-};
+const HomePage = ({ stats, loading }) => (
+  <div>
+    <Hero />
+    <Stats stats={stats} loading={loading} />
+    <section className="py-20 px-6">
+      <div className="max-w-7xl mx-auto space-y-24">
+        {teasers.map((item, i) => (
+          <motion.div
+            key={i}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-80px' }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center ${i % 2 === 1 ? 'lg:direction-rtl' : ''}`}
+            style={{ direction: i % 2 === 1 ? 'rtl' : 'ltr' }}
+          >
+            <div style={{ direction: 'ltr' }}>
+              <h2 className="font-sora text-3xl md:text-4xl font-extrabold mb-4">{item.title}</h2>
+              <p className="text-white/50 font-inter text-lg leading-relaxed mb-8">{item.desc}</p>
+              <Link to={item.link}>
+                <motion.span
+                  whileHover={{ x: 4 }}
+                  className="inline-flex items-center gap-2 text-gold-500 font-poppins font-bold text-[10px] uppercase tracking-[0.2em]"
+                >
+                  {item.label} <ArrowRight className="w-3.5 h-3.5" />
+                </motion.span>
+              </Link>
+            </div>
+            <div style={{ direction: 'ltr' }}>
+              <div className="aspect-[4/3] rounded-2xl overflow-hidden">
+                <img src={`${item.img}?auto=format&fit=crop&q=80&w=800`} alt={item.title} className="w-full h-full object-cover" loading="lazy" />
+              </div>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  </div>
+);
 
 export default HomePage;

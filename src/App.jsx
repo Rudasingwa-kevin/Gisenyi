@@ -1,5 +1,6 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { AnimatePresence, motion } from 'framer-motion';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -9,14 +10,23 @@ import MapPage from './pages/MapPage';
 import GalleryPage from './pages/GalleryPage';
 import { FALLBACK_DATA } from './constants/data';
 
-// Scroll to top on route change
+const pageVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+  exit: { opacity: 0, y: -10, transition: { duration: 0.3 } }
+};
+
 const ScrollToTop = () => {
   const { pathname } = useLocation();
-  useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+  useEffect(() => { window.scrollTo(0, 0); }, [pathname]);
   return null;
 };
+
+const AnimatedOutlet = ({ children }) => (
+  <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
+    {children}
+  </motion.div>
+);
 
 function App() {
   const [isDark, setIsDark] = useState(true);
@@ -26,45 +36,44 @@ function App() {
   const [search, setSearch] = useState('');
   const [wikiPhotos, setWikiPhotos] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(null);
+  const [stats, setStats] = useState(null);
 
   useEffect(() => {
-    if (isDark) document.documentElement.classList.add('dark');
-    else document.documentElement.classList.remove('dark');
+    document.documentElement.classList.toggle('dark', isDark);
   }, [isDark]);
 
-  const fetchAll = async () => {
+  const fetchAll = useCallback(async () => {
     setLoading(true);
     try {
       const res = await fetch('http://localhost:3000/api/places');
       if (res.ok) {
         const data = await res.json();
-        if (data && data.length > 0) {
-          setPlaces(data);
-          setLoading(false);
-        } else {
-          throw new Error('No data in DB');
-        }
-      } else {
-        throw new Error('Backend error');
+        if (data?.length) { setPlaces(data); setLoading(false); return; }
       }
-    } catch (e) {
-      console.warn('Backend fetch failed, using fallback constants', e);
-      setPlaces(FALLBACK_DATA);
-      setLoading(false);
-    }
+    } catch {}
+    setPlaces(FALLBACK_DATA);
+    setLoading(false);
 
     try {
-      const wRes = await fetch(`https://en.wikipedia.org/w/api.php?action=query&titles=Gisenyi|Lake_Kivu&prop=pageimages&format=json&pithumbsize=1000&origin=*`);
+      const wRes = await fetch('https://en.wikipedia.org/w/api.php?action=query&titles=Gisenyi|Lake_Kivu&prop=pageimages&format=json&pithumbsize=1000&origin=*');
       if (wRes.ok) {
         const wData = await wRes.json();
         if (wData.query?.pages) {
           setWikiPhotos(Object.values(wData.query.pages).map(p => p.thumbnail?.source).filter(Boolean));
         }
       }
-    } catch (e) { console.warn('Wikimedia fetch failed', e); }
-  };
+    } catch {}
+  }, []);
 
-  useEffect(() => { fetchAll(); }, []);
+  useEffect(() => { fetchAll(); }, [fetchAll]);
+
+  useEffect(() => {
+    if (places.length) {
+      const cats = {};
+      places.forEach(p => { cats[p.catKey] = (cats[p.catKey] || 0) + 1; });
+      setStats({ total: places.length, categories: cats });
+    }
+  }, [places]);
 
   const filtered = useMemo(() => {
     let p = places;
@@ -78,33 +87,51 @@ function App() {
       <ScrollToTop />
       <div className="font-outfit min-h-screen flex flex-col">
         <Navbar isDark={isDark} setIsDark={setIsDark} />
-        
+
         <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/history" element={<HistoryPage />} />
-            <Route path="/stays" element={
-              <StaysPage 
-                places={filtered} 
-                loading={loading} 
-                activeCat={activeCat} 
-                setActiveCat={setActiveCat} 
-                search={search} 
-                setSearch={setSearch} 
-                setSelectedPlace={setSelectedPlace}
-              />
-            } />
-            <Route path="/map" element={
-              <MapPage 
-                places={places} 
-                activeCat={activeCat} 
-                setActiveCat={setActiveCat}
-                selectedPlace={selectedPlace}
-                setSelectedPlace={setSelectedPlace}
-              />
-            } />
-            <Route path="/gallery" element={<GalleryPage photos={wikiPhotos} />} />
-          </Routes>
+          <AnimatePresence mode="wait">
+            <Routes>
+              <Route path="/" element={
+                <AnimatedOutlet key="home">
+                  <HomePage stats={stats} loading={loading} />
+                </AnimatedOutlet>
+              } />
+              <Route path="/history" element={
+                <AnimatedOutlet key="history">
+                  <HistoryPage />
+                </AnimatedOutlet>
+              } />
+              <Route path="/stays" element={
+                <AnimatedOutlet key="stays">
+                  <StaysPage
+                    places={filtered}
+                    loading={loading}
+                    activeCat={activeCat}
+                    setActiveCat={setActiveCat}
+                    search={search}
+                    setSearch={setSearch}
+                    setSelectedPlace={setSelectedPlace}
+                  />
+                </AnimatedOutlet>
+              } />
+              <Route path="/map" element={
+                <AnimatedOutlet key="map">
+                  <MapPage
+                    places={places}
+                    activeCat={activeCat}
+                    setActiveCat={setActiveCat}
+                    selectedPlace={selectedPlace}
+                    setSelectedPlace={setSelectedPlace}
+                  />
+                </AnimatedOutlet>
+              } />
+              <Route path="/gallery" element={
+                <AnimatedOutlet key="gallery">
+                  <GalleryPage photos={wikiPhotos} />
+                </AnimatedOutlet>
+              } />
+            </Routes>
+          </AnimatePresence>
         </main>
 
         <Footer />

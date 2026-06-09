@@ -1,131 +1,162 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import { Star, ArrowRight, Search, MapPin } from 'lucide-react';
+import { useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Search, Star, ArrowRight, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { CATEGORIES } from '../constants/data';
-import { cn } from '../utils/helpers';
+import { GridSkeleton } from './LoadingSkeleton';
 
-const PlaceCard = ({ place, setSelectedPlace }) => {
-    const [img, setImg] = useState(null);
-    const navigate = useNavigate();
-    const cat = CATEGORIES[place.catKey] || CATEGORIES.all;
+const catImages = {
+  hotels: '1542314831-068cd1dbfeeb',
+  dining: '1566073771259-6a8506099945',
+  nightlife: '1470337458703-46a199543c0b',
+  beach: '1507525428697-bcebc0197c25',
+  wellness: '1544367567-0f2fcb009e0b',
+  activities: '1506905925346-21bda4d32df4',
+  shopping: '1441986300917-64674bd600d8',
+  practical: '1497366811353-507074f9a6d2',
+  cafe: '1501339755260-7a88e06da40e',
+  bar: '1514362545857-3bc16c4a7f1b',
+  attraction: '1469854523086-cc02fe5d8800',
+  culture: '1499786388474-37f59913e7d9'
+};
 
-    const handleViewOnMap = (e) => {
-        e.stopPropagation();
-        setSelectedPlace(place);
-        navigate('/map');
-    };
+const PlaceCard = ({ place, index, setSelectedPlace }) => {
+  const navigate = useNavigate();
+  const cat = CATEGORIES[place.catKey] || CATEGORIES.all;
+  const photoId = catImages[place.catKey] || '1542314831-068cd1dbfeeb';
 
-    useEffect(() => {
-        const CATEGORY_IMAGES = {
-            hotels: '1542314831-068cd1dbfeeb',
-            dining: '1566073771259-6a8506099945',
-            beach: '1507525428697-bcebc0197c25',
-            nightlife: '1470337458703-46a199543c0b',
-            wellness: '1544367567-0f2fcb009e0b',
-            practical: '1497366811353-507074f9a6d2',
-            activities: '1506905925346-21bda4d32df4',
-            culture: '1499786388474-37f59913e7d9',
-            shop: '1441986300917-64674bd600d8',
-            attraction: '1469854523086-cc02fe5d8800',
-            bar: '1514362545857-3bc16c4a7f1b',
-            cafe: '1501339755260-7a88e06da40e',
-            shopping: '1441986300917-64674bd600d8'
-        };
-        const photoId = CATEGORY_IMAGES[place.catKey] || '1542314831-068cd1dbfeeb';
-        setImg(`https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=800&h=1000`);
-    }, [place.catKey, place.id]);
+  return (
+    <motion.div
+      layout
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.95 }}
+      transition={{ duration: 0.4, delay: index * 0.03, ease: [0.22, 1, 0.36, 1] }}
+      whileHover={{ y: -8 }}
+      className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer bg-navy-800"
+      onClick={() => { setSelectedPlace(place); navigate('/map'); }}
+    >
+      <img
+        src={`https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=600&h=800`}
+        alt={place.name}
+        className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+        loading="lazy"
+      />
+      <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/20 to-transparent" />
 
-    return (
-        <motion.div 
-            layout
-            whileHover={{ y: -15 }}
-            className="relative aspect-[3/4.5] rounded-[2.5rem] overflow-hidden shadow-2xl group cursor-pointer"
-        >
-            {img && <img src={img} className="absolute inset-0 w-full h-full object-cover transition-transform duration-1000 group-hover:scale-110" loading="lazy" />}
-            <div className="absolute inset-0 bg-gradient-to-t from-primary/95 via-primary/10 to-transparent"></div>
-            
-            <div className="absolute top-8 left-8 flex items-center space-x-3">
-                <div className="glass-dark px-5 py-2 rounded-full border border-gold/20 flex items-center space-x-2">
-                    <span className="text-sm">{cat.icon}</span>
-                    <span className="text-[10px] font-poppins font-bold text-gold uppercase tracking-widest">{cat.label}</span>
-                </div>
-            </div>
+      <div className="absolute top-4 left-4">
+        <div className="px-3 py-1.5 rounded-full glass-dark text-[9px] font-poppins font-bold text-gold-500 uppercase tracking-[0.15em]">
+          {cat.icon} {cat.label}
+        </div>
+      </div>
 
-            <div className="absolute bottom-10 left-10 right-10">
-                {place.tags?.stars && (
-                    <div className="flex space-x-1 mb-4 text-gold">
-                        {[...Array(parseInt(place.tags.stars))].map((_, i) => <Star key={i} className="w-3.5 h-3.5 fill-current" />)}
-                    </div>
-                )}
-                <h4 className="font-sora text-3xl font-extrabold text-white mb-3 tracking-tight group-hover:text-gold transition-colors">{place.name}</h4>
-                <p className="font-inter text-sm text-soft-gray/50 line-clamp-2 mb-6 font-light">
-                    {place.tags?.description || place.tags?.cuisine || "Experience the unparalleled luxury of Gisenyi's most iconic destinations."}
-                </p>
-                <div className="flex items-center justify-between">
-                    <div className="flex items-center text-[10px] font-poppins font-bold text-gold uppercase tracking-[0.2em] group-hover:translate-x-3 transition-transform">
-                        Discover More <ArrowRight className="ml-3 w-4 h-4" />
-                    </div>
-                    <button 
-                        onClick={handleViewOnMap}
-                        className="p-3 glass rounded-xl text-gold hover:bg-gold hover:text-primary transition-all"
-                    >
-                        <MapPin className="w-5 h-5" />
-                    </button>
-                </div>
-            </div>
-        </motion.div>
-    );
+      <div className="absolute bottom-5 left-5 right-5">
+        {place.tags?.stars && (
+          <div className="flex gap-1 mb-2">
+            {Array.from({ length: parseInt(place.tags.stars) }).map((_, i) => (
+              <Star key={i} className="w-3 h-3 fill-gold-500 text-gold-500" />
+            ))}
+          </div>
+        )}
+        <h3 className="font-sora text-xl font-extrabold text-white mb-1">{place.name}</h3>
+        <p className="text-xs text-white/50 line-clamp-2 font-inter">
+          {place.tags?.description || place.tags?.cuisine || `Explore this ${cat.label.toLowerCase()} in Gisenyi`}
+        </p>
+        <div className="flex items-center gap-2 mt-3 text-[9px] font-poppins font-bold text-gold-500 uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+          View on Map <ArrowRight className="w-3 h-3" />
+        </div>
+      </div>
+    </motion.div>
+  );
 };
 
 const Places = ({ places, loading, activeCat, setActiveCat, search, setSearch, setSelectedPlace }) => {
-    return (
-        <section id="stays" className="py-40 bg-soft-gray dark:bg-navy-dark overflow-hidden">
-            <div className="max-w-7xl mx-auto px-8">
-                <div className="flex flex-col lg:flex-row lg:items-end justify-between mb-24 gap-12">
-                    <div className="max-w-2xl">
-                        <h2 className="font-sora text-6xl md:text-7xl font-extrabold tracking-tight mb-8">Curated <span className="text-gold">Destinations</span></h2>
-                        
-                        <div className="relative group max-w-lg">
-                            <div className="absolute inset-0 bg-gold/10 blur-2xl rounded-full opacity-0 group-focus-within:opacity-100 transition-opacity"></div>
-                            <input 
-                                type="text" placeholder="Search the city..." 
-                                className="relative w-full bg-white dark:bg-card-dark px-10 py-6 rounded-[2rem] outline-none border-2 border-transparent focus:border-gold/30 transition-all font-inter text-lg"
-                                value={search} onChange={e => setSearch(e.target.value)}
-                            />
-                            <Search className="absolute right-8 top-1/2 -translate-y-1/2 text-gold/40" />
-                        </div>
-                    </div>
+  const inputRef = useRef(null);
 
-                    <div className="flex flex-wrap gap-3">
-                        {Object.entries(CATEGORIES).map(([key, cat]) => (
-                            <button 
-                                key={key} onClick={() => setActiveCat(key)}
-                                className={cn(
-                                    "px-8 py-4 rounded-2xl font-poppins font-bold text-[10px] uppercase tracking-widest transition-all",
-                                    activeCat === key ? 'bg-gold text-primary shadow-2xl scale-105' : 'bg-white dark:bg-card-dark text-muted-text border border-white/5'
-                                )}
-                            >
-                                {cat.icon} {cat.label}
-                            </button>
-                        ))}
-                    </div>
-                </div>
+  return (
+    <section className="py-28 px-6">
+      <div className="max-w-7xl mx-auto">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
+          <div>
+            <motion.span
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-4 block"
+            >
+              Curated Collection
+            </motion.span>
+            <motion.h2
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              className="font-sora text-4xl md:text-5xl font-extrabold tracking-tight"
+            >
+              Discover <span className="text-gold-500">Gisenyi</span>
+            </motion.h2>
+          </div>
 
-                {loading ? (
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-                        {[...Array(8)].map((_, i) => <div key={i} className="aspect-[3/4.5] bg-white/40 dark:bg-white/5 rounded-[2.5rem] animate-pulse"></div>)}
-                    </div>
-                ) : (
-                    <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-10">
-                        {places.map(p => (
-                            <PlaceCard key={p.id} place={p} setSelectedPlace={setSelectedPlace} />
-                        ))}
-                    </motion.div>
-                )}
+          <div className="relative w-full lg:w-72">
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+            <input
+              ref={inputRef}
+              type="text"
+              placeholder="Search places..."
+              value={search}
+              onChange={e => setSearch(e.target.value)}
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-11 py-3.5 text-sm text-white outline-none focus:border-gold-500/50 transition-all font-inter placeholder:text-white/20"
+            />
+            {search && (
+              <button onClick={() => { setSearch(''); inputRef.current?.focus(); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors">
+                <X className="w-4 h-4" />
+              </button>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-wrap gap-2 mb-10">
+          {Object.entries(CATEGORIES).map(([key, cat]) => (
+            <motion.button
+              key={key}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setActiveCat(key)}
+              className={`px-5 py-2.5 rounded-xl text-[10px] font-poppins font-bold uppercase tracking-[0.15em] transition-all ${
+                activeCat === key
+                  ? 'bg-gold-500 text-navy-900 shadow-lg shadow-gold-500/25'
+                  : 'bg-white/5 text-white/50 hover:text-white hover:bg-white/10'
+              }`}
+            >
+              {cat.icon} {cat.label}
+            </motion.button>
+          ))}
+        </div>
+
+        {loading ? (
+          <GridSkeleton count={8} />
+        ) : places.length === 0 ? (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="text-center py-20"
+          >
+            <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-6">
+              <Search className="w-6 h-6 text-white/30" />
             </div>
-        </section>
-    );
+            <h3 className="font-sora text-xl font-bold text-white/60 mb-2">No places found</h3>
+            <p className="text-sm text-white/30 font-inter">Try adjusting your search or filter</p>
+          </motion.div>
+        ) : (
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <AnimatePresence mode="popLayout">
+              {places.map((p, i) => (
+                <PlaceCard key={p.id} place={p} index={i} setSelectedPlace={setSelectedPlace} />
+              ))}
+            </AnimatePresence>
+          </motion.div>
+        )}
+      </div>
+    </section>
+  );
 };
 
 export default Places;
