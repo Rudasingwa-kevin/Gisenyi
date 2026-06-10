@@ -27,4 +27,4 @@ export const HeroSkeleton = () => (
   </div>
 );
 
-export default SkeletonCard;
+export const SkeletonCard = CardSkeleton;

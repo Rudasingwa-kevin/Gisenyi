@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import { HISTORY_ERAS } from '../constants/data';
 
-const TimelineDot = () => (
+const TimelineDot = ({ index }) => (
   <div className="absolute left-1/2 -translate-x-1/2 hidden lg:block" style={{ top: `${(index / (HISTORY_ERAS.length - 1)) * 100}%` }}>
     <motion.div
       initial={{ scale: 0 }}
