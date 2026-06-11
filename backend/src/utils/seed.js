@@ -47,7 +47,10 @@ async function seed() {
             let places = [];
 
             if (data && data.elements) {
-                places = data.elements.filter(e => e.tags?.name).map(e => {
+                places = data.elements.filter(e => e.tags?.name).filter(e => {
+                    const lon = e.lon || e.center?.lon || 0;
+                    return lon >= 29.245;
+                }).map(e => {
                     let cat = key;
                     if (key === 'tourism' && (e.tags.tourism === 'hotel' || e.tags.tourism === 'guest_house')) cat = 'hotels';
                     return {
@@ -66,6 +69,8 @@ async function seed() {
                 const snapshotList = Array.isArray(snapshotData) ? snapshotData : (snapshotData.places || []);
                 
                 places = snapshotList.filter(s => {
+                    const lon = s.lon || s.coordinates?.longitude || 0;
+                    if (lon < 29.245) return false;
                     const c = s.cat || s.category;
                     if (key === 'hotels' && (c === 'hotel' || c === 'hotels')) return true;
                     if (key === 'dining' && (c === 'restaurant' || c === 'cafe' || c === 'dining' || c === 'bar')) return true;

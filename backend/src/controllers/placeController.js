@@ -3,8 +3,10 @@ const prisma = require('../utils/prisma');
 exports.getAllPlaces = async (req, res, next) => {
     try {
         const { category } = req.query;
-        const where = category && category !== 'all' ? { catKey: category } : {};
-        
+        const where = category && category !== 'all'
+            ? { catKey: category, lon: { gte: 29.245 } }
+            : { lon: { gte: 29.245 } };
+
         const places = await prisma.place.findMany({
             where,
             orderBy: { name: 'asc' }
