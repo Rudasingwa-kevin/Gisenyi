@@ -100,66 +100,6 @@
 .animate-ripple { animation: ripple 10s infinite linear; }
 .animate-mesh { animation: mesh-shift 12s ease-in-out infinite; }
 
-/* Map marker styles */
-.gisenyi-marker {
-  position: relative;
-  cursor: pointer;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-.gisenyi-marker-inner {
-  width: 44px;
-  height: 44px;
-  border-radius: 14px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  background: rgba(6, 13, 26, 0.9);
-  backdrop-filter: blur(12px);
-  border: 2px solid;
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
-  transition: all 0.3s cubic-bezier(0.22, 1, 0.36, 1);
-}
-.gisenyi-marker:hover .gisenyi-marker-inner {
-  transform: scale(1.15) translateY(-3px);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
-}
-.gisenyi-marker-selected .gisenyi-marker-inner {
-  border-color: #C9A84C !important;
-  box-shadow: 0 0 30px rgba(201, 168, 76, 0.3), 0 8px 32px rgba(0, 0, 0, 0.5);
-}
-.gisenyi-marker-shadow {
-  width: 20px;
-  height: 4px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 50%;
-  margin-top: 2px;
-  filter: blur(3px);
-  transition: all 0.3s ease;
-}
-.gisenyi-marker:hover .gisenyi-marker-shadow {
-  width: 28px;
-  opacity: 0.6;
-}
-.gisenyi-marker-pulse {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  width: 60px;
-  height: 60px;
-  transform: translate(-50%, -50%);
-  border-radius: 50%;
-  border: 2px solid rgba(201, 168, 76, 0.4);
-  animation: markerPulse 2s ease-in-out infinite;
-  pointer-events: none;
-}
-@keyframes markerPulse {
-  0% { transform: translate(-50%, -50%) scale(0.8); opacity: 0.8; }
-  100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
-}
-
 /* Sidebar scrollbar */
 .sidebar-scrollbar::-webkit-scrollbar {
   width: 4px;
@@ -197,4 +137,82 @@
 .gisenyi-popup a.leaflet-popup-close-button:hover {
   color: #FFFFFF !important;
   transform: scale(1.1);
+}
+
+.cluster-wrapper {
+  background: none !important;
+  border: none !important;
+}
+.cluster-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: rgba(201, 168, 76, 0.2);
+  border: 2px solid rgba(201, 168, 76, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Sora', sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: #C9A84C;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(8px);
+}
+
+.gisenyi-marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.2s ease;
+}
+.gisenyi-marker-selected {
+  transform: scale(1.15);
+  z-index: 9999 !important;
+}
+.gisenyi-marker-inner {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(6, 13, 26, 0.9);
+  backdrop-filter: blur(8px);
+  border: 2px solid;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  transition: all 0.2s ease;
+}
+.gisenyi-marker-shadow {
+  width: 12px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(0,0,0,0.3);
+  margin-top: -2px;
+  filter: blur(2px);
+}
+.gisenyi-marker-pulse {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  border: 2px solid #C9A84C;
+  animation: markerPulse 1.5s ease-out infinite;
+}
+@keyframes markerPulse {
+  0% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  100% { transform: translate(-50%, -50%) scale(2.2); opacity: 0; }
+}
+
+.leaflet-marker-icon { transition: filter 0.2s ease; }
+.marker-cluster-small .cluster-icon,
+.marker-cluster-medium .cluster-icon,
+.marker-cluster-large .cluster-icon {
+  background: rgba(201, 168, 76, 0.25);
+  border-color: rgba(201, 168, 76, 0.7);
+  color: #C9A84C;
 }
