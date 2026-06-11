@@ -14,6 +14,8 @@ app.use(morgan('dev'));
 
 // Routes
 app.use('/api/places', require('./routes/placeRoutes'));
+app.use('/api/auth', require('./routes/authRoutes'));
+app.use('/api/admin', require('./routes/adminRoutes'));
 
 app.get('/health', (req, res) => {
     res.json({ status: 'ok', timestamp: new Date().toISOString() });
