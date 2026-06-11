@@ -16,6 +16,7 @@ model Place {
   catKey      String
   description String?
   image       String?
+  gallery     Json?
   rating      Float?   @default(4.5)
   tags        Json?
   createdAt   DateTime @default(now())

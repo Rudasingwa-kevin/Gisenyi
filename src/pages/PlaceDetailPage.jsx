@@ -14,6 +14,17 @@ const catImages = {
   practical: '1497366811353-507074f9a6d2',
 };
 
+const galleryPhotos = {
+  hotels: ['1542314831-068cd1dbfeeb', '1568082403150-5a1c6b0b6b0b', '1571896349842-3b0f6b7e5b6b', '1564501044768-365f9b3c7f6a', '1590490359680-5c7b7b8b9c0d'],
+  dining: ['1566073771259-6a8506099945', '1414235077428-338939fa3b6c', '1555396273-4b0c7b9e8d6f', '1504674900247-0875b9c6b8a7', '1514932329294-7b5b6c3d8e9f'],
+  nightlife: ['1470337458703-46a199543c0b', '1496337589254-7f6b5e4c3d2a', '1514525253161-1c0b6a9e8d7f', '1470229722913-7c0e2d3b4a5f', '1492681598847-3d8c6b5a4f3e'],
+  beach: ['1507525428697-bcebc0197c25', '1500373990745-0b9f6e5d4c3b', '1519044800-0b5e9c7d8f6a', '1476514525535-07fb3b4a5c6d', '1534008897995-7f8e9d0c1b2a'],
+  wellness: ['1544367567-0f2fcb009e0b', '1540575466988-6b5c8d9e0f1a', '1519823551271-4b7c8d9e0f2b', '1497366811353-507074f9a6d2', '1544367567-0f2fcb009e0b'],
+  activities: ['1506905925346-21bda4d32df4', '1469854523086-cc02fe5d8800', '1501785888041-af3ef2b0e9c8', '1470071459604-7b8c9d0e1f2a', '1510312305650-4b6c7d8e9f0b'],
+  shopping: ['1441986300917-64674bd600d8', '1472851290288-d8b7c9d0e1f2', '1555529771-3b4c5d6e7f8a', '1483985988355-d8e9f0a1b2c3', '1441986300917-64674bd600d8'],
+  practical: ['1497366811353-507074f9a6d2', '1497366216548-4b5c6d7e8f9a', '1504384308090-c7d8e9f0a1b2', '1486312338219-1b2c3d4e5f6a', '1497366811353-507074f9a6d2'],
+};
+
 export default function PlaceDetailPage({ places }) {
   const { id } = useParams();
   const navigate = useNavigate();
@@ -37,6 +48,12 @@ export default function PlaceDetailPage({ places }) {
 
   const cat = CATEGORIES[place.catKey] || CATEGORIES.all;
   const photoId = catImages[place.catKey] || '1542314831-068cd1dbfeeb';
+  const heroImage = place.image || `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=1920&h=1080`;
+  const gallery = (place.gallery && place.gallery.length > 0)
+    ? place.gallery.slice(0, 4)
+    : (galleryPhotos[place.catKey] || galleryPhotos.hotels).slice(0, 4).map(id =>
+        `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=60&w=400&h=400`
+      );
   const stars = Math.round(place.rating || 4.5);
   const tags = place.tags || {};
 
@@ -44,7 +61,7 @@ export default function PlaceDetailPage({ places }) {
     <div className="min-h-screen bg-navy-950">
       <div className="relative h-[50vh] md:h-[60vh] overflow-hidden">
         <img
-          src={`https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=1920&h=1080`}
+          src={heroImage}
           alt={place.name}
           className="w-full h-full object-cover"
         />
@@ -100,6 +117,28 @@ export default function PlaceDetailPage({ places }) {
                 <p className="text-white/70 font-inter leading-relaxed">
                   {place.description || tags.description || `Discover ${place.name}, a premier ${cat.label.toLowerCase()} destination in Gisenyi, Rubavu District. Located along the stunning shores of Lake Kivu, this location offers an unforgettable experience for visitors.`}
                 </p>
+              </div>
+
+              <div>
+                <h2 className="text-sm font-poppins font-bold text-gold-500 uppercase tracking-[0.2em] mb-4">Photo Gallery</h2>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
+                  {gallery.map((url, i) => (
+                    <a
+                      key={i}
+                      href={url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="group aspect-square rounded-xl overflow-hidden bg-navy-800"
+                    >
+                      <img
+                        src={url}
+                        alt={`${place.name} photo ${i + 1}`}
+                        className="w-full h-full object-cover transition-all duration-500 group-hover:scale-110"
+                        loading="lazy"
+                      />
+                    </a>
+                  ))}
+                </div>
               </div>
 
               {tags.cuisine && (

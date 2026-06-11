@@ -24,6 +24,7 @@ const PlaceCard = ({ place, index, setSelectedPlace }) => {
   const navigate = useNavigate();
   const cat = CATEGORIES[place.catKey] || CATEGORIES.all;
   const photoId = catImages[place.catKey] || '1542314831-068cd1dbfeeb';
+  const cardImage = place.image || `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=600&h=800`;
 
   return (
     <motion.div
@@ -37,7 +38,7 @@ const PlaceCard = ({ place, index, setSelectedPlace }) => {
       onClick={() => navigate(`/stays/${place.id}`)}
     >
       <img
-        src={`https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=600&h=800`}
+        src={cardImage}
         alt={place.name}
         className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
         loading="lazy"
