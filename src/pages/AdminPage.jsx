@@ -237,6 +237,7 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
     catKey: place?.catKey || (categories[0]?.id || ''),
     description: place?.description || '',
     image: place?.image || '',
+    gallery: place?.gallery ? JSON.stringify(place.gallery) : '[]',
     rating: place?.rating || 4.5,
     tags: place?.tags ? JSON.stringify(place.tags) : '[]'
   });
@@ -245,12 +246,25 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const body = { ...form, lat: parseFloat(form.lat), lon: parseFloat(form.lon), rating: parseFloat(form.rating), tags: JSON.parse(form.tags || '[]') };
+    const body = {
+      ...form,
+      lat: parseFloat(form.lat),
+      lon: parseFloat(form.lon),
+      rating: parseFloat(form.rating),
+      gallery: JSON.parse(form.gallery || '[]'),
+      tags: JSON.parse(form.tags || '[]')
+    };
     const url = place ? `${API}/places/${place.id}` : `${API}/places`;
     const method = place ? 'PUT' : 'POST';
     const res = await fetchWithAuth(url, token, { method, body: JSON.stringify(body) });
     if (res.ok) onSave(await res.json());
     setSaving(false);
+  };
+
+  const updateGalleryUrl = (index, value) => {
+    const arr = JSON.parse(form.gallery || '[]');
+    arr[index] = value;
+    setForm(f => ({ ...f, gallery: JSON.stringify(arr) }));
   };
 
   return (
@@ -284,7 +298,7 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
             className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
         </div>
         <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Image URL</label>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Hero Image URL</label>
           <input type="url" value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))}
             className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
         </div>
@@ -294,6 +308,25 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
             className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
         </div>
       </div>
+
+      <div>
+        <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-2">Gallery Images (up to 4 URLs)</label>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+          {[0, 1, 2, 3].map(i => (
+            <div key={i} className="flex items-center gap-2">
+              <span className="text-[9px] font-poppins font-bold text-white/30 uppercase tracking-wider w-6 shrink-0">#{i + 1}</span>
+              <input
+                type="url"
+                value={JSON.parse(form.gallery || '[]')[i] || ''}
+                onChange={e => updateGalleryUrl(i, e.target.value)}
+                placeholder="https://example.com/photo.jpg"
+                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50"
+              />
+            </div>
+          ))}
+        </div>
+      </div>
+
       <div className="flex gap-3 pt-2">
         <button type="submit" disabled={saving}
           className="px-5 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
