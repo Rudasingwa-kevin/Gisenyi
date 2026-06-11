@@ -34,7 +34,7 @@ const PlaceCard = ({ place, index, setSelectedPlace }) => {
       transition={{ duration: 0.4, delay: index * 0.03, ease: [0.22, 1, 0.36, 1] }}
       whileHover={{ y: -8 }}
       className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer bg-navy-800"
-      onClick={() => { setSelectedPlace(place); navigate('/map'); }}
+      onClick={() => navigate(`/stays/${place.id}`)}
     >
       <img
         src={`https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=600&h=800`}
@@ -63,7 +63,7 @@ const PlaceCard = ({ place, index, setSelectedPlace }) => {
           {place.tags?.description || place.tags?.cuisine || `Explore this ${cat.label.toLowerCase()} in Gisenyi`}
         </p>
         <div className="flex items-center gap-2 mt-3 text-[9px] font-poppins font-bold text-gold-500 uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-          View on Map <ArrowRight className="w-3 h-3" />
+          View Details <ArrowRight className="w-3 h-3" />
         </div>
       </div>
     </motion.div>

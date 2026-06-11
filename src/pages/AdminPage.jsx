@@ -139,7 +139,7 @@ export default function AdminPage() {
                   <div key={place.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
                     <div>
                       <h3 className="text-white font-inter font-semibold">{place.name}</h3>
-                      <p className="text-white/30 text-sm font-inter">{place.catKey} &middot; {place.lat?.toFixed(4)}, {place.lon?.toFixed(4)}</p>
+                      <p className="text-white/30 text-sm font-inter">{place.catKey} &middot; <a href={`https://www.google.com/maps?q=${place.lat},${place.lon}`} target="_blank" rel="noopener noreferrer" className="hover:text-gold-500 transition-colors">{place.lat?.toFixed(4)}, {place.lon?.toFixed(4)}</a></p>
                     </div>
                     <div className="flex gap-2">
                       <button
