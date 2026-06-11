@@ -14,7 +14,7 @@ export const CATEGORIES = {
     practical: { label: 'Practical', icon: 'ℹ️', color: '#4A6A8A' }
 };
 
-export const FALLBACK_DATA = PLACES_DATA;
+export const FALLBACK_DATA = PLACES_DATA.filter(p => p.lon >= 29.245);
 
 export const HISTORY_ERAS = [
     {
