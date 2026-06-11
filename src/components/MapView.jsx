@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import L from 'leaflet';
+import 'leaflet.markercluster';
 import {
   Plus, Minus, Crosshair, Search, Navigation, X, List,
   ChevronLeft, Loader2, AlertCircle, MapPin
@@ -9,9 +10,11 @@ import { CENTER, CATEGORIES } from '../constants/data';
 const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPlace }) => {
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
-  const markersLayer = useRef(L.layerGroup());
+  const markersLayer = useRef(null);
   const userMarkerRef = useRef(null);
   const flyToDone = useRef(null);
+  const prevSelectedRef = useRef(null);
+  const markerMap = useRef(new Map());
   const [userPos, setUserPos] = useState(null);
   const [searchQuery, setSearchQuery] = useState('');
   const [mapReady, setMapReady] = useState(false);
@@ -33,7 +36,22 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
       { attribution: 'Tiles &copy; Esri', maxZoom: 16 }
     ).addTo(mapInstance.current);
 
-    markersLayer.current.addTo(mapInstance.current);
+    markersLayer.current = L.markerClusterGroup({
+      chunkedLoading: true,
+      maxClusterRadius: 50,
+      spiderfyOnMaxZoom: true,
+      showCoverageOnHover: false,
+      zoomToBoundsOnClick: true,
+      iconCreateFunction: (cluster) => {
+        const count = cluster.getChildCount();
+        return L.divIcon({
+          html: `<div class="cluster-icon">${count}</div>`,
+          className: 'cluster-wrapper',
+          iconSize: L.point(44, 44)
+        });
+      }
+    });
+    mapInstance.current.addLayer(markersLayer.current);
     setMapReady(true);
   }, []);
 
@@ -50,7 +68,7 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
     mapInstance.current.flyTo([targetLat, targetLon], 16, { duration: 1.5 });
 
     const onMoveEnd = () => {
-      markersLayer.current.eachLayer((layer) => {
+      mapInstance.current.eachLayer((layer) => {
         if (layer instanceof L.Marker) {
           const ll = layer.getLatLng();
           if (ll.lat === targetLat && ll.lng === targetLon) {
@@ -98,7 +116,9 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
 
   useEffect(() => {
     if (!mapReady) return;
+
     markersLayer.current.clearLayers();
+    markerMap.current.clear();
 
     if (filteredPlaces.length === 0) return;
 
@@ -137,20 +157,38 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
           </a>
         </div>`,
         { className: 'gisenyi-popup', offset: [0, -10], maxWidth: 320, minWidth: 288 }
-      ).addTo(markersLayer.current);
+      );
 
-      if (isSelected) {
-        markersLayer.current.eachLayer((layer) => {
-          if (layer instanceof L.Marker) {
-            const ll = layer.getLatLng();
-            if (Math.abs(ll.lat - place.lat) < 0.0001 && Math.abs(ll.lng - place.lon) < 0.0001) {
-              setTimeout(() => layer.openPopup(), 1600);
-            }
-          }
-        });
-      }
+      markersLayer.current.addLayer(marker);
+      markerMap.current.set(place.id, marker);
     });
-  }, [filteredPlaces, mapReady, selectedPlace, createMarkerIcon]);
+  }, [filteredPlaces, mapReady, createMarkerIcon]);
+
+  useEffect(() => {
+    if (!mapReady || !selectedPlace) return;
+    const prevId = prevSelectedRef.current;
+    const currId = selectedPlace.id;
+
+    const prevMarker = prevId ? markerMap.current.get(prevId) : null;
+    const currMarker = markerMap.current.get(currId);
+
+    if (prevMarker) {
+      const prevPlace = filteredPlaces.find(p => p.id === prevId);
+      if (prevPlace) {
+        prevMarker.setIcon(createMarkerIcon(prevPlace, false));
+      }
+    }
+
+    if (currMarker) {
+      const currPlace = filteredPlaces.find(p => p.id === currId);
+      if (currPlace) {
+        currMarker.setIcon(createMarkerIcon(currPlace, true));
+        currMarker.openPopup();
+      }
+    }
+
+    prevSelectedRef.current = currId;
+  }, [selectedPlace, filteredPlaces, mapReady, createMarkerIcon]);
 
   useEffect(() => {
     if (!mapReady) return;
@@ -214,7 +252,6 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
         <div className="relative h-[600px] rounded-2xl overflow-hidden border border-white/10">
           <div ref={mapRef} className="h-full w-full" />
 
-          {/* TOP-LEFT: Search + Category filters */}
           <div className="absolute top-4 left-4 z-[1000] w-full max-w-sm space-y-3">
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl glass-dark shadow-2xl">
               <Search className="w-4 h-4 text-gold-500 shrink-0" />
@@ -253,7 +290,6 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
             </div>
           </div>
 
-          {/* TOP-RIGHT: Sidebar toggle + Zoom controls + Locate */}
           <div className="absolute top-4 right-4 z-[1000] flex flex-col gap-2">
             <button
               onClick={() => setSidebarOpen((o) => !o)}
@@ -292,7 +328,6 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
             </button>
           </div>
 
-          {/* Geo error toast */}
           {geoError && (
             <div className="absolute top-20 right-4 z-[1000] max-w-xs animate-in fade-in slide-in-from-top-2 duration-300">
               <div className="flex items-start gap-2 px-4 py-3 rounded-xl glass-dark shadow-2xl border border-red-500/20">
@@ -305,7 +340,6 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
             </div>
           )}
 
-          {/* BOTTOM: Explorer badge + place count */}
           <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-[1000]">
             <div className="flex items-center gap-3 px-5 py-2.5 rounded-xl glass-dark shadow-2xl">
               <Navigation className="w-3.5 h-3.5 text-gold-500 animate-pulse" />
@@ -315,7 +349,6 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
             </div>
           </div>
 
-          {/* Empty state */}
           {mapReady && resultCount === 0 && (
             <div className="absolute inset-0 z-[500] flex items-center justify-center pointer-events-none">
               <div className="text-center px-8 py-6 rounded-2xl glass-dark shadow-2xl max-w-sm pointer-events-auto">
@@ -331,7 +364,6 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
             </div>
           )}
 
-          {/* SIDEBAR: Places list */}
           <div
             className={`absolute inset-y-0 left-0 z-[999] w-80 bg-navy-900/95 backdrop-blur-xl border-r border-white/10 shadow-2xl transition-all duration-300 ease-out flex flex-col ${
               sidebarOpen ? 'translate-x-0' : '-translate-x-full'
