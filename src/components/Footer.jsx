@@ -1,7 +1,10 @@
-import { MapPin, ArrowUpRight } from 'lucide-react';
+import { MapPin, ArrowUpRight, Shield } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
 
-const Footer = () => (
+const Footer = ({ onAdminClick }) => {
+  const { isAdmin } = useAuth();
+  return (
   <footer className="bg-navy-900 border-t border-white/5">
     <div className="max-w-7xl mx-auto px-6 py-20">
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
@@ -41,10 +44,20 @@ const Footer = () => (
           <a href="#" className="hover:text-white/40 transition-colors">Privacy</a>
           <a href="#" className="hover:text-white/40 transition-colors">Terms</a>
           <a href="#" className="hover:text-white/40 transition-colors">Data via OpenStreetMap</a>
+          {isAdmin ? (
+            <Link to="/admin" className="hover:text-gold-500 transition-colors flex items-center gap-1.5">
+              <Shield className="w-3 h-3" /> Admin
+            </Link>
+          ) : (
+            <button onClick={onAdminClick} className="hover:text-gold-500 transition-colors flex items-center gap-1.5">
+              <Shield className="w-3 h-3" /> Admin
+            </button>
+          )}
         </div>
       </div>
     </div>
   </footer>
-);
-
+  );
+};
+ 
 export default Footer;

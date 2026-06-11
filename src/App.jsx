@@ -8,6 +8,9 @@ import HistoryPage from './pages/HistoryPage';
 import StaysPage from './pages/StaysPage';
 import MapPage from './pages/MapPage';
 import GalleryPage from './pages/GalleryPage';
+import AdminPage from './pages/AdminPage';
+import LoginModal from './components/LoginModal';
+import { AuthProvider } from './context/AuthContext';
 import { FALLBACK_DATA } from './constants/data';
 
 const pageVariants = {
@@ -37,6 +40,7 @@ function App() {
   const [wikiPhotos, setWikiPhotos] = useState([]);
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [stats, setStats] = useState(null);
+  const [showLogin, setShowLogin] = useState(false);
 
   useEffect(() => {
     document.documentElement.classList.toggle('dark', isDark);
@@ -83,60 +87,68 @@ function App() {
   }, [places, activeCat, search]);
 
   return (
-    <Router>
-      <ScrollToTop />
-      <div className="font-outfit min-h-screen flex flex-col">
-        <Navbar isDark={isDark} setIsDark={setIsDark} />
+    <AuthProvider>
+      <Router>
+        <ScrollToTop />
+        <div className="font-outfit min-h-screen flex flex-col">
+          <Navbar isDark={isDark} setIsDark={setIsDark} />
 
-        <main className="flex-grow">
-          <AnimatePresence mode="wait">
-            <Routes>
-              <Route path="/" element={
-                <AnimatedOutlet key="home">
-                  <HomePage stats={stats} loading={loading} />
-                </AnimatedOutlet>
-              } />
-              <Route path="/history" element={
-                <AnimatedOutlet key="history">
-                  <HistoryPage />
-                </AnimatedOutlet>
-              } />
-              <Route path="/stays" element={
-                <AnimatedOutlet key="stays">
-                  <StaysPage
-                    places={filtered}
-                    loading={loading}
-                    activeCat={activeCat}
-                    setActiveCat={setActiveCat}
-                    search={search}
-                    setSearch={setSearch}
-                    setSelectedPlace={setSelectedPlace}
-                  />
-                </AnimatedOutlet>
-              } />
-              <Route path="/map" element={
-                <AnimatedOutlet key="map">
-                  <MapPage
-                    places={places}
-                    activeCat={activeCat}
-                    setActiveCat={setActiveCat}
-                    selectedPlace={selectedPlace}
-                    setSelectedPlace={setSelectedPlace}
-                  />
-                </AnimatedOutlet>
-              } />
-              <Route path="/gallery" element={
-                <AnimatedOutlet key="gallery">
-                  <GalleryPage photos={wikiPhotos} />
-                </AnimatedOutlet>
-              } />
-            </Routes>
-          </AnimatePresence>
-        </main>
+          <main className="flex-grow">
+            <AnimatePresence mode="wait">
+              <Routes>
+                <Route path="/" element={
+                  <AnimatedOutlet key="home">
+                    <HomePage stats={stats} loading={loading} />
+                  </AnimatedOutlet>
+                } />
+                <Route path="/history" element={
+                  <AnimatedOutlet key="history">
+                    <HistoryPage />
+                  </AnimatedOutlet>
+                } />
+                <Route path="/stays" element={
+                  <AnimatedOutlet key="stays">
+                    <StaysPage
+                      places={filtered}
+                      loading={loading}
+                      activeCat={activeCat}
+                      setActiveCat={setActiveCat}
+                      search={search}
+                      setSearch={setSearch}
+                      setSelectedPlace={setSelectedPlace}
+                    />
+                  </AnimatedOutlet>
+                } />
+                <Route path="/map" element={
+                  <AnimatedOutlet key="map">
+                    <MapPage
+                      places={places}
+                      activeCat={activeCat}
+                      setActiveCat={setActiveCat}
+                      selectedPlace={selectedPlace}
+                      setSelectedPlace={setSelectedPlace}
+                    />
+                  </AnimatedOutlet>
+                } />
+                <Route path="/gallery" element={
+                  <AnimatedOutlet key="gallery">
+                    <GalleryPage photos={wikiPhotos} />
+                  </AnimatedOutlet>
+                } />
+                <Route path="/admin" element={
+                  <AnimatedOutlet key="admin">
+                    <AdminPage />
+                  </AnimatedOutlet>
+                } />
+              </Routes>
+            </AnimatePresence>
+          </main>
 
-        <Footer />
-      </div>
-    </Router>
+          <Footer onAdminClick={() => setShowLogin(true)} />
+          <LoginModal isOpen={showLogin} onClose={() => setShowLogin(false)} />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
 
