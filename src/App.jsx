@@ -9,6 +9,7 @@ import StaysPage from './pages/StaysPage';
 import MapPage from './pages/MapPage';
 import GalleryPage from './pages/GalleryPage';
 import AdminPage from './pages/AdminPage';
+import PlaceDetailPage from './pages/PlaceDetailPage';
 import LoginModal from './components/LoginModal';
 import { AuthProvider } from './context/AuthContext';
 import { FALLBACK_DATA } from './constants/data';
@@ -137,6 +138,11 @@ function AppLayout() {
             <Route path="/admin" element={
               <AnimatedOutlet key="admin">
                 <AdminPage />
+              </AnimatedOutlet>
+            } />
+            <Route path="/stays/:id" element={
+              <AnimatedOutlet key="detail">
+                <PlaceDetailPage places={places} />
               </AnimatedOutlet>
             } />
           </Routes>
