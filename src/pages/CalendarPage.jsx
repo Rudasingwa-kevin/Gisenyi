@@ -1,4 +1,5 @@
 import { useState, useEffect, useMemo } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin, Circle, Plus, X } from 'lucide-react';
 
@@ -69,7 +70,7 @@ const CalendarPage = () => {
     const dayEvents = events.filter(e => {
       const d = new Date(e.date);
       return !isNaN(d) && d.getFullYear() === currentYear && d.getMonth() === currentMonth && d.getDate() === day;
-    }).map(e => ({ ...e, type: 'event', color: TYPE_COLORS.event }));
+    }).map(e => ({ ...e, type: 'event', color: TYPE_COLORS.event, _isRealEvent: true }));
     return [...calItems, ...dayEvents];
   };
 
@@ -192,35 +193,46 @@ const CalendarPage = () => {
                 <div className="space-y-3">
                   {selectedItems.map(item => {
                     const color = item.color || TYPE_COLORS[item.type] || '#C9A84C';
-                    return (
+                    const content = (
+                      <div className="flex items-start gap-3">
+                        <Circle className="w-3 h-3 mt-1 shrink-0" fill={color} stroke="none" />
+                        <div className="min-w-0">
+                          <div className="flex items-center gap-2 mb-1">
+                            <span className="text-xs font-poppins font-bold text-white/40 uppercase tracking-[0.1em]">{item.type}</span>
+                            {item.time && (
+                              <span className="text-[10px] font-inter text-white/30 flex items-center gap-1">
+                                <Clock className="w-3 h-3" /> {item.time}
+                              </span>
+                            )}
+                          </div>
+                          <h4 className="font-sora font-bold text-white text-sm mb-1">{item.title}</h4>
+                          {item.description && (
+                            <p className="font-inter text-xs text-white/50 line-clamp-2">{item.description}</p>
+                          )}
+                          {item.location && (
+                            <p className="font-inter text-[11px] text-white/30 flex items-center gap-1 mt-1">
+                              <MapPin className="w-3 h-3" /> {item.location}
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    );
+                    return item._isRealEvent ? (
+                      <Link
+                        key={item.id}
+                        to={`/events?highlight=${item.id}`}
+                        className="block p-4 rounded-xl bg-white/5 border border-white/5 hover:border-gold-500/30 transition-all group"
+                      >
+                        {content}
+                      </Link>
+                    ) : (
                       <motion.div
                         key={item.id}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         className="p-4 rounded-xl bg-white/5 border border-white/5 hover:border-white/10 transition-all"
                       >
-                        <div className="flex items-start gap-3">
-                          <Circle className="w-3 h-3 mt-1 shrink-0" fill={color} stroke="none" />
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-2 mb-1">
-                              <span className="text-xs font-poppins font-bold text-white/40 uppercase tracking-[0.1em]">{item.type}</span>
-                              {item.time && (
-                                <span className="text-[10px] font-inter text-white/30 flex items-center gap-1">
-                                  <Clock className="w-3 h-3" /> {item.time}
-                                </span>
-                              )}
-                            </div>
-                            <h4 className="font-sora font-bold text-white text-sm mb-1">{item.title}</h4>
-                            {item.description && (
-                              <p className="font-inter text-xs text-white/50 line-clamp-2">{item.description}</p>
-                            )}
-                            {item.location && (
-                              <p className="font-inter text-[11px] text-white/30 flex items-center gap-1 mt-1">
-                                <MapPin className="w-3 h-3" /> {item.location}
-                              </p>
-                            )}
-                          </div>
-                        </div>
+                        {content}
                       </motion.div>
                     );
                   })}
