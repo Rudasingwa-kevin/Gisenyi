@@ -32,6 +32,23 @@ model Category {
   color String
 }
 
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  description String?
+  date        String
+  time        String?
+  location    String
+  category    String
+  price       String?
+  image       String?
+  ticketLink  String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([category])
+}
+
 model User {
   id       String @id @default(uuid())
   username String @unique

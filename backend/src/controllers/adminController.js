@@ -69,3 +69,43 @@ exports.deleteCategory = async (req, res, next) => {
     res.json({ success: true });
   } catch (error) { next(error); }
 };
+
+// Events CRUD
+exports.getEvents = async (req, res, next) => {
+  try {
+    const events = await prisma.event.findMany({ orderBy: { date: 'asc' } });
+    res.json(events);
+  } catch (error) { next(error); }
+};
+
+exports.getEvent = async (req, res, next) => {
+  try {
+    const event = await prisma.event.findUnique({ where: { id: req.params.id } });
+    if (!event) return res.status(404).json({ error: 'Event not found' });
+    res.json(event);
+  } catch (error) { next(error); }
+};
+
+exports.createEvent = async (req, res, next) => {
+  try {
+    const event = await prisma.event.create({ data: req.body });
+    res.status(201).json(event);
+  } catch (error) { next(error); }
+};
+
+exports.updateEvent = async (req, res, next) => {
+  try {
+    const event = await prisma.event.update({
+      where: { id: req.params.id },
+      data: req.body
+    });
+    res.json(event);
+  } catch (error) { next(error); }
+};
+
+exports.deleteEvent = async (req, res, next) => {
+  try {
+    await prisma.event.delete({ where: { id: req.params.id } });
+    res.json({ success: true });
+  } catch (error) { next(error); }
+};

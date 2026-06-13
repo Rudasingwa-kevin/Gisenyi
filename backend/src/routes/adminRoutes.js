@@ -16,4 +16,10 @@ router.post('/categories', adminController.createCategory);
 router.put('/categories/:id', adminController.updateCategory);
 router.delete('/categories/:id', adminController.deleteCategory);
 
+router.get('/events', adminController.getEvents);
+router.get('/events/:id', adminController.getEvent);
+router.post('/events', adminController.createEvent);
+router.put('/events/:id', adminController.updateEvent);
+router.delete('/events/:id', adminController.deleteEvent);
+
 module.exports = router;
