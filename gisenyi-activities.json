@@ -1,3405 +1,978 @@
 {
-  "metadata": {
-    "location": "Gisenyi / Rubavu, Rwanda",
-    "center": {
-      "lat": -1.7019,
-      "lng": 29.2564
-    },
-    "radius_meters": 5000,
-    "fetched_at": "2026-04-29T07:50:38.529297Z",
-    "source": "OpenStreetMap via Overpass API",
-    "total_places": 233,
-    "categories": {
-      "hotel": 54,
-      "restaurant": 42,
-      "other": 36,
-      "cafe": 3,
-      "shop": 9,
-      "practical": 65,
-      "culture": 11,
-      "bar": 9,
-      "attraction": 4
-    }
+  "city": "Gisenyi (Rubavu)",
+  "country": "Rwanda",
+  "coordinates": {
+    "latitude": -1.6990482,
+    "longitude": 29.2560996
   },
-  "places": [
-    {
-      "id": 317581789,
-      "name": "Stipphotel",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6974105,
-        "longitude": 29.252128
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 317581789
-      }
-    },
-    {
-      "id": 317581790,
-      "name": "Crescendo",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6973729,
-        "longitude": 29.2500687
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 317581790
-      }
-    },
-    {
-      "id": 317581796,
-      "name": "Lake View Hotel",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6974355,
-        "longitude": 29.2466058
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 317581796
-      }
-    },
-    {
-      "id": 317581817,
-      "name": "La Corniche",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.695522,
-        "longitude": 29.2515366
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 317581817
-      }
-    },
-    {
-      "id": 317581894,
-      "name": "Lake View Guesthouse",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6966095,
-        "longitude": 29.2567498
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 317581894
-      }
-    },
-    {
-      "id": 317581988,
-      "name": "1660 m",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6996958,
-        "longitude": 29.2684987
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 317581988
-      }
-    },
-    {
-      "id": 435782764,
-      "name": "Bikini Tam Tam",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.7064076,
-        "longitude": 29.2621092
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 435782764
-      }
-    },
-    {
-      "id": 435804092,
-      "name": "Hôtel Musanto Gisenyi",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7071778,
-        "longitude": 29.264889
-      },
-      "contact": {
-        "address": "Avenue de la Production, Gisenyi",
-        "email": "hotelmusanto@yahoo.fr"
-      },
-      "details": {
-        "description": "Hotel Musanto is located by the Lake Kivu just 100m from Tam Tam Bar, 50m of Rue Bralirwa, very quiet but not far from the city center and DRC border, it offers a direct view of the lake and its surroundings giving you the freshness from the lake and surr",
-        "rooms": 23,
-        "operator": "Olivier SHEMA"
-      },
-      "amenities": {
-        "wifi": true,
-        "wifi_fee": "wlan",
-        "smoking": "outside"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 435804092
-      }
-    },
-    {
-      "id": 1631913036,
-      "name": "Ferry Port",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.7356253,
-        "longitude": 29.2784625
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 1631913036
-      }
-    },
-    {
-      "id": 2041160176,
-      "name": "La Versaille",
-      "category": "cafe",
-      "coordinates": {
-        "latitude": -1.6862296,
-        "longitude": 29.2385033
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 2041160176
-      }
-    },
-    {
-      "id": 2150668138,
-      "name": "Hot spring",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.7399049,
-        "longitude": 29.2739959
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 2150668138
-      }
-    },
-    {
-      "id": 2857732688,
-      "name": "Shoppers",
-      "category": "shop",
-      "coordinates": {
-        "latitude": -1.6879924,
-        "longitude": 29.2354877
-      },
-      "details": {
-        "operator": "Shoppers"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 2857732688
-      }
-    },
-    {
-      "id": 2857735661,
-      "name": "Espace Treichville",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6881157,
-        "longitude": 29.2352544
-      },
-      "details": {
-        "cuisine": [
-          "ivorian",
-          "congolese"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 2857735661
-      }
-    },
-    {
-      "id": 2857736514,
-      "name": "Latin House",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6905936,
-        "longitude": 29.2403615
-      },
-      "contact": {
-        "address": "23, Jacarandas, Goma, DRC"
-      },
-      "amenities": {
-        "smoking": "no"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 2857736514
-      }
-    },
-    {
-      "id": 2857737826,
-      "name": "VIP Hotel / Restaurant",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6978253,
-        "longitude": 29.2407051
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 2857737826
-      }
-    },
-    {
-      "id": 2857740463,
-      "name": "Petit Paris",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.688765,
-        "longitude": 29.2336357
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 2857740463
-      }
-    },
-    {
-      "id": 3212675448,
-      "name": "La Bella Lodge",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.731541,
-        "longitude": 29.2627459
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3212675448
-      }
-    },
-    {
-      "id": 3212675449,
-      "name": "La Bella campsite",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7317282,
-        "longitude": 29.2624507
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3212675449
-      }
-    },
-    {
-      "id": 3343529165,
-      "name": "Au Bon Pain",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.686776,
-        "longitude": 29.2365913
-      },
-      "details": {
-        "cuisine": [
-          "coffee_shop"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3343529165
-      }
-    },
-    {
-      "id": 3343802389,
-      "name": "Café des Arts",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.691466,
-        "longitude": 29.2386129
-      },
-      "details": {
-        "cuisine": [
-          "regional"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3343802389
-      }
-    },
-    {
-      "id": 3344009024,
-      "name": "Lava Stone",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6841019,
-        "longitude": 29.2342268
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3344009024
-      }
-    },
-    {
-      "id": 3379296263,
-      "name": "LITOR",
-      "category": "shop",
-      "coordinates": {
-        "latitude": -1.6866383,
-        "longitude": 29.2366362
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3379296263
-      }
-    },
-    {
-      "id": 3391062816,
-      "name": "Rawsur",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6868366,
-        "longitude": 29.2366436
-      },
-      "details": {
-        "operator": "Agence d'assurance"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3391062816
-      }
-    },
-    {
-      "id": 3564377946,
-      "name": "AEBR Gisenyi",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.6838324,
-        "longitude": 29.2632518
-      },
-      "details": {
-        "religion": "christian",
-        "denomination": "baptist"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3564377946
-      }
-    },
-    {
-      "id": 3564382693,
-      "name": "AEBR Byahi",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.665575,
-        "longitude": 29.2621004
-      },
-      "details": {
-        "religion": "christian",
-        "denomination": "baptist"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3564382693
-      }
-    },
-    {
-      "id": 3860728819,
-      "name": "Discover Rwanda",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7022347,
-        "longitude": 29.2584138
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3860728819
-      }
-    },
-    {
-      "id": 3928322238,
-      "name": "Malahide Paradise",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7337008,
-        "longitude": 29.2733918
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3928322238
-      }
-    },
-    {
-      "id": 3928343341,
-      "name": "Inzu Lodge",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7300278,
-        "longitude": 29.2655556
-      },
-      "contact": {
-        "address": "Gisenyi"
-      },
-      "amenities": {
-        "wheelchair_accessible": false,
-        "wifi": true,
-        "wifi_fee": "no"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3928343341
-      }
-    },
-    {
-      "id": 3928343342,
-      "name": "Palm Garden Resort",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7310313,
-        "longitude": 29.266969
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3928343342
-      }
-    },
-    {
-      "id": 3928351368,
-      "name": "Inzozi",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7310758,
-        "longitude": 29.2649894
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 3928351368
-      }
-    },
-    {
-      "id": 4156136410,
-      "name": "Auberge De Gisenyi",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6949717,
-        "longitude": 29.2604996
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4156136410
-      }
-    },
-    {
-      "id": 4266677308,
-      "name": "Les Vétérans",
-      "category": "bar",
-      "coordinates": {
-        "latitude": -1.6837629,
-        "longitude": 29.2337991
-      },
-      "contact": {
-        "address": "Avenue du Mont Goma"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4266677308
-      }
-    },
-    {
-      "id": 4299696221,
-      "name": "Le Petit Bruxelles",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6886424,
-        "longitude": 29.2387196
-      },
-      "details": {
-        "cuisine": [
-          "pizza"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4299696221
-      }
-    },
-    {
-      "id": 4299696222,
-      "name": "Salt & Pepper",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6886317,
-        "longitude": 29.2385855
-      },
-      "details": {
-        "cuisine": [
-          "indian"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4299696222
-      }
-    },
-    {
-      "id": 4299717667,
-      "name": "Acajou",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6999735,
-        "longitude": 29.2396605
-      },
-      "details": {
-        "cuisine": [
-          "regional"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4299717667
-      }
-    },
-    {
-      "id": 4299717680,
-      "name": "Centre d'accueil CARITAS",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7000377,
-        "longitude": 29.2401514
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4299717680
-      }
-    },
-    {
-      "id": 4461862290,
-      "name": "Saga Bay",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.7071289,
-        "longitude": 29.262895
-      },
-      "details": {
-        "cuisine": [
-          "african"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4461862290
-      }
-    },
-    {
-      "id": 4463090791,
-      "name": "Tony's Guest House",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6889452,
-        "longitude": 29.2401229
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4463090791
-      }
-    },
-    {
-      "id": 4472394796,
-      "name": "Megabytes Supermarket",
-      "category": "shop",
-      "coordinates": {
-        "latitude": -1.6875406,
-        "longitude": 29.2378787
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4472394796
-      }
-    },
-    {
-      "id": 4472448194,
-      "name": "Supermarket",
-      "category": "shop",
-      "coordinates": {
-        "latitude": -1.686348,
-        "longitude": 29.2374917
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4472448194
-      }
-    },
-    {
-      "id": 4472484594,
-      "name": "Hôtel Mbiza",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6757015,
-        "longitude": 29.2357835
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4472484594
-      }
-    },
-    {
-      "id": 4472544189,
-      "name": "Dallas",
-      "category": "bar",
-      "coordinates": {
-        "latitude": -1.686906,
-        "longitude": 29.2370644
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4472544189
-      }
-    },
-    {
-      "id": 4472544193,
-      "name": "Center d'Accueil Saint François Xavier",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.6982277,
-        "longitude": 29.2581913
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4472544193
-      }
-    },
-    {
-      "id": 4472648591,
-      "name": "Pizzéria italienne Al Lago Kivu",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.7056764,
-        "longitude": 29.2636294
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4472648591
-      }
-    },
-    {
-      "id": 4476736589,
-      "name": "Rwandan Adventures",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.7305743,
-        "longitude": 29.2679061
-      },
-      "contact": {
-        "phone": "+250 786571414",
-        "website": "https://www.rwandan-adventures.com/"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4476736589
-      }
-    },
-    {
-      "id": 4477095089,
-      "name": "Mwamikazi",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6929222,
-        "longitude": 29.259804
-      },
-      "details": {
-        "cuisine": [
-          "grill"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4477095089
-      }
-    },
-    {
-      "id": 4807545921,
-      "name": "Hot spring",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.7390176,
-        "longitude": 29.2736579
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 4807545921
-      }
-    },
-    {
-      "id": 5038815522,
-      "name": "Hôtel Cap Tanuk",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6912657,
-        "longitude": 29.2354881
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5038815522
-      }
-    },
-    {
-      "id": 5241142023,
-      "name": "Boulangerie Krishna",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6771525,
-        "longitude": 29.221801
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5241142023
-      }
-    },
-    {
-      "id": 5242220521,
-      "name": "Case Départ",
-      "category": "bar",
-      "coordinates": {
-        "latitude": -1.6759206,
-        "longitude": 29.2202055
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5242220521
-      }
-    },
-    {
-      "id": 5243789521,
-      "name": "Mont Goma",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6808563,
-        "longitude": 29.2241427
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5243789521
-      }
-    },
-    {
-      "id": 5303512521,
-      "name": "Shadow House",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7109607,
-        "longitude": 29.2663595
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5303512521
-      }
-    },
-    {
-      "id": 5333692321,
-      "name": "Bank of Kigali",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6980349,
-        "longitude": 29.2551681
-      },
-      "details": {
-        "operator": "Banque de Kigali",
-        "brand": "Banque de Kigali"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5333692321
-      }
-    },
-    {
-      "id": 5477230621,
-      "name": "Local fast food",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.7354136,
-        "longitude": 29.2767974
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5477230621
-      }
-    },
-    {
-      "id": 5482435455,
-      "name": "Kingfisher Journeys",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.7026599,
-        "longitude": 29.2603502
-      },
-      "contact": {
-        "phone": "+250783811918",
-        "website": "https://www.kingfisherjourneys.com/"
-      },
-      "details": {
-        "opening_hours": "24/7"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5482435455
-      }
-    },
-    {
-      "id": 5552555178,
-      "name": "dff",
-      "category": "bar",
-      "coordinates": {
-        "latitude": -1.6827391,
-        "longitude": 29.2368159
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5552555178
-      }
-    },
-    {
-      "id": 5732112123,
-      "name": "Zamzam",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6822066,
-        "longitude": 29.2498573
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5732112123
-      }
-    },
-    {
-      "id": 5749575884,
-      "name": "Caisse d'Épargne du Congo (CADECO) - Succursale de Goma",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6825758,
-        "longitude": 29.2367391
-      },
-      "contact": {
-        "address": "Goma"
-      },
-      "details": {
-        "opening_hours": "Mo-Fr 07:30-15:00, Sa 09:00-12:00",
-        "operator": "CADECO SA"
-      },
-      "amenities": {
-        "atm": false
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5749575884
-      }
-    },
-    {
-      "id": 5811591955,
-      "name": "Horizon",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6850882,
-        "longitude": 29.2341149
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5811591955
-      }
-    },
-    {
-      "id": 5811621862,
-      "name": "Salon de coifure Malaika",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6836907,
-        "longitude": 29.2395226
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5811621862
-      }
-    },
-    {
-      "id": 5811621863,
-      "name": "Pharmacie Muvunga",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6840861,
-        "longitude": 29.2391541
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5811621863
-      }
-    },
-    {
-      "id": 5811621869,
-      "name": "Trust Merchant Bank",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.682871,
-        "longitude": 29.2356947
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5811621869
-      }
-    },
-    {
-      "id": 5811621873,
-      "name": "Monument Chukudu",
-      "category": "attraction",
-      "coordinates": {
-        "latitude": -1.6840935,
-        "longitude": 29.2354184
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5811621873
-      }
-    },
-    {
-      "id": 5811621874,
-      "name": "Pharmacie Diocésain",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6856552,
-        "longitude": 29.2338158
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5811621874
-      }
-    },
-    {
-      "id": 5811621875,
-      "name": "Pharmacie Arche de l'unité",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6853965,
-        "longitude": 29.2341176
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5811621875
-      }
-    },
-    {
-      "id": 5811621876,
-      "name": "Station de l'unité",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6843616,
-        "longitude": 29.2350067
-      },
-      "details": {
-        "fuel_types": [
-          "diesel"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5811621876
-      }
-    },
-    {
-      "id": 5881015285,
-      "name": "Centre d'Accueil Saint François Xavier",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6985248,
-        "longitude": 29.2583864
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5881015285
-      }
-    },
-    {
-      "id": 5901707932,
-      "name": "Maghali Fan Club",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6881496,
-        "longitude": 29.2313171
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 5901707932
-      }
-    },
-    {
-      "id": 6049698381,
-      "name": "Hill View Hotel",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7013388,
-        "longitude": 29.2572798
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6049698381
-      }
-    },
-    {
-      "id": 6063288085,
-      "name": "Auberge de Gisenye",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6962229,
-        "longitude": 29.261144
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6063288085
-      }
-    },
-    {
-      "id": 6063288086,
-      "name": "No name",
-      "category": "bar",
-      "coordinates": {
-        "latitude": -1.7396131,
-        "longitude": 29.2748233
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6063288086
-      }
-    },
-    {
-      "id": 6110305185,
-      "name": "CHRIST TABERNACLE",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.6820621,
-        "longitude": 29.23951
-      },
-      "details": {
-        "religion": "christian"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6110305185
-      }
-    },
-    {
-      "id": 6123220298,
-      "name": "Centre de santé Kasika",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6766308,
-        "longitude": 29.2420126
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123220298
-      }
-    },
-    {
-      "id": 6123220344,
-      "name": "Centre de santé de Référence Kahembe",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6812951,
-        "longitude": 29.2422869
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123220344
-      }
-    },
-    {
-      "id": 6123237471,
-      "name": "Centre médical Belle vue",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6788226,
-        "longitude": 29.2195491
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123237471
-      }
-    },
-    {
-      "id": 6123238005,
-      "name": "Centre de santé Mabinga",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.673945,
-        "longitude": 29.227229
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123238005
-      }
-    },
-    {
-      "id": 6123511439,
-      "name": "Centre de santé Casop",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6841505,
-        "longitude": 29.2409203
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123511439
-      }
-    },
-    {
-      "id": 6123511440,
-      "name": "Centre de santé Murara",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6790699,
-        "longitude": 29.2317794
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123511440
-      }
-    },
-    {
-      "id": 6123542533,
-      "name": "Centre de Santé Mapendo",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6871868,
-        "longitude": 29.2417149
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123542533
-      }
-    },
-    {
-      "id": 6123542534,
-      "name": "Centre de Santé Virunga",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6635847,
-        "longitude": 29.2333237
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123542534
-      }
-    },
-    {
-      "id": 6123679311,
-      "name": "Centre de santé Heal Africa",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6801148,
-        "longitude": 29.2327899
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123679311
-      }
-    },
-    {
-      "id": 6123733200,
-      "name": "Centre Médical Bisengimana",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6685306,
-        "longitude": 29.2313851
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6123733200
-      }
-    },
-    {
-      "id": 6125366738,
-      "name": "Flamingo Restaurant",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6902398,
-        "longitude": 29.239419
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6125366738
-      }
-    },
-    {
-      "id": 6150261060,
-      "name": "Centre Médical Dimajelo",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6679307,
-        "longitude": 29.2291045
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6150261060
-      }
-    },
-    {
-      "id": 6151218160,
-      "name": "Centre Médical Kacha",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6760839,
-        "longitude": 29.2253528
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6151218160
-      }
-    },
-    {
-      "id": 6151218161,
-      "name": "Centre Médical Snel Mabanga",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6765825,
-        "longitude": 29.2210606
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6151218161
-      }
-    },
-    {
-      "id": 6151341207,
-      "name": "Centre Médical Chirugical Goma",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6686292,
-        "longitude": 29.2298958
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6151341207
-      }
-    },
-    {
-      "id": 6151341208,
-      "name": "Centre de santé Muungano Solidarité",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.669534,
-        "longitude": 29.2335074
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6151341208
-      }
-    },
-    {
-      "id": 6151396102,
-      "name": "Centre de Nursing Misinga",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6658878,
-        "longitude": 29.2299662
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6151396102
-      }
-    },
-    {
-      "id": 6260316286,
-      "name": "Sky Nevada",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6917972,
-        "longitude": 29.2628572
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6260316286
-      }
-    },
-    {
-      "id": 6267805787,
-      "name": "One Degree South",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.7073847,
-        "longitude": 29.2632571
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6267805787
-      }
-    },
-    {
-      "id": 6273548786,
-      "name": "Kigali Coach",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6819743,
-        "longitude": 29.250179
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6273548786
-      }
-    },
-    {
-      "id": 6273579285,
-      "name": "Everain Milk Shop",
-      "category": "shop",
-      "coordinates": {
-        "latitude": -1.682222,
-        "longitude": 29.2497895
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6273579285
-      }
-    },
-    {
-      "id": 6273594386,
-      "name": "Malik",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6827248,
-        "longitude": 29.2506324
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6273594386
-      }
-    },
-    {
-      "id": 6273594389,
-      "name": "Smile",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6848185,
-        "longitude": 29.2553346
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6273594389
-      }
-    },
-    {
-      "id": 6273594391,
-      "name": "Seventh Day Adventist Church",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.6883327,
-        "longitude": 29.2594931
-      },
-      "details": {
-        "religion": "christian",
-        "denomination": "seventh_day_adventist"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6273594391
-      }
-    },
-    {
-      "id": 6273603987,
-      "name": "Sculpture",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.7026041,
-        "longitude": 29.2627287
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6273603987
-      }
-    },
-    {
-      "id": 6283136685,
-      "name": "Nirvana Heights Hotel",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7313626,
-        "longitude": 29.2639397
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6283136685
-      }
-    },
-    {
-      "id": 6286283017,
-      "name": "Centre Médical Sainte Elizabeth",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6623749,
-        "longitude": 29.2416143
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6286283017
-      }
-    },
-    {
-      "id": 6286305401,
-      "name": "Centre Médical Mont Sinai",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.669589,
-        "longitude": 29.2277835
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6286305401
-      }
-    },
-    {
-      "id": 6286325743,
-      "name": "Clinique médical Emmanuel",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6724081,
-        "longitude": 29.2244878
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6286325743
-      }
-    },
-    {
-      "id": 6286325744,
-      "name": "Centre Médical Eben Ezer",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6736347,
-        "longitude": 29.2245649
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6286325744
-      }
-    },
-    {
-      "id": 6296156985,
-      "name": "Access",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.7004609,
-        "longitude": 29.2581632
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6296156985
-      }
-    },
-    {
-      "id": 6374000326,
-      "name": "Centre de Santé Shirika La Umoja (Handicapé Physique)",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6706802,
-        "longitude": 29.2320418
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6374000326
-      }
-    },
-    {
-      "id": 6374000377,
-      "name": "Centre de Santé Makimbilio",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.685721,
-        "longitude": 29.241192
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6374000377
-      }
-    },
-    {
-      "id": 6374102982,
-      "name": "Clinique Agape",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6747748,
-        "longitude": 29.2307695
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6374102982
-      }
-    },
-    {
-      "id": 6417646321,
-      "name": "Marché aux fruits et légumes",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6882679,
-        "longitude": 29.2378136
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6417646321
-      }
-    },
-    {
-      "id": 6417646323,
-      "name": "Charcuterie",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.68406,
-        "longitude": 29.2340559
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6417646323
-      }
-    },
-    {
-      "id": 6417646324,
-      "name": "Lapa Lounge",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6924128,
-        "longitude": 29.2377385
-      },
-      "amenities": {
-        "smoking": "yes"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6417646324
-      }
-    },
-    {
-      "id": 6417646325,
-      "name": "Nyumbani Lounge",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6831082,
-        "longitude": 29.2307782
-      },
-      "amenities": {
-        "wifi": true,
-        "wifi_fee": "no",
-        "smoking": "yes"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6417646325
-      }
-    },
-    {
-      "id": 6440662486,
-      "name": "Kunda guesthouse",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6892658,
-        "longitude": 29.2499604
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6440662486
-      }
-    },
-    {
-      "id": 6443246785,
-      "name": "Ecobank",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6854807,
-        "longitude": 29.2361473
-      },
-      "details": {
-        "brand": "Ecobank"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6443246785
-      }
-    },
-    {
-      "id": 6468635333,
-      "name": "Ihusi des Jeunes",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.681322,
-        "longitude": 29.2381992
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6468635333
-      }
-    },
-    {
-      "id": 6592797590,
-      "name": "Hot springs",
-      "category": "attraction",
-      "coordinates": {
-        "latitude": -1.7395414,
-        "longitude": 29.2745296
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6592797590
-      }
-    },
-    {
-      "id": 6649420585,
-      "name": "Bistro Restaurant & Wine Garage",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6995963,
-        "longitude": 29.2557925
-      },
-      "contact": {
-        "phone": "+250 (0) 785 368825"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6649420585
-      }
-    },
-    {
-      "id": 6649420685,
-      "name": "White Rock Bistro",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6976935,
-        "longitude": 29.250328
-      },
-      "contact": {
-        "address": "Avenue de la Revolution",
-        "phone": "+250783000935"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6649420685
-      }
-    },
-    {
-      "id": 6651016388,
-      "name": "Lakeside Restaurant & Beach Bar",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.7083735,
-        "longitude": 29.2642141
-      },
-      "contact": {
-        "address": "Avenue de la Production",
-        "phone": "+250 (0) 787775405"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6651016388
-      }
-    },
-    {
-      "id": 6698227186,
-      "name": "Maison indienne",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6930973,
-        "longitude": 29.2439806
-      },
-      "contact": {
-        "address": "15, Avenue Accasias",
-        "email": "andrusblr@gmail.com"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6698227186
-      }
-    },
-    {
-      "id": 6698245785,
-      "name": "Maison biélorusse",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.6930724,
-        "longitude": 29.243787
-      },
-      "contact": {
-        "address": "15, Avenue Accasias"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6698245785
-      }
-    },
-    {
-      "id": 6799268185,
-      "name": "Vivo Restaurant",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6963393,
-        "longitude": 29.2626196
-      },
-      "details": {
-        "cuisine": [
-          "regional",
-          "african",
-          "local"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6799268185
-      }
-    },
-    {
-      "id": 6801209287,
-      "name": "Start of the Congo Nile Trail",
-      "category": "attraction",
-      "coordinates": {
-        "latitude": -1.7394705,
-        "longitude": 29.2770636
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 6801209287
-      }
-    },
-    {
-      "id": 7022331387,
-      "name": "Family",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7331771,
-        "longitude": 29.2730335
-      },
-      "contact": {
-        "phone": "+250 (0) 788 480 524"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7022331387
-      }
-    },
-    {
-      "id": 7077045488,
-      "name": "Carrefour des Arts",
-      "category": "bar",
-      "coordinates": {
-        "latitude": -1.6829143,
-        "longitude": 29.2294512
-      },
-      "details": {
-        "cuisine": [
-          "barbecue",
-          "coffee_shop",
-          "deli",
-          "african"
-        ]
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7077045488
-      }
-    },
-    {
-      "id": 7077075887,
-      "name": "Ana Group",
-      "category": "shop",
-      "coordinates": {
-        "latitude": -1.6776642,
-        "longitude": 29.2189724
-      },
-      "details": {
-        "operator": "Henri Rwanika"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7077075887
-      }
-    },
-    {
-      "id": 7077077288,
-      "name": "Ana Groupe",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6777592,
-        "longitude": 29.2189111
-      },
-      "details": {
-        "cuisine": [
-          "coffee_shop",
-          "crepe",
-          "african",
-          "french",
-          "local",
-          "tea",
-          "deli",
-          "ice_cream",
-          "fish_and_chips",
-          "friture",
-          "burger",
-          "hotdog",
-          "italian_pizza",
-          "steak_house",
-          "pizza",
-          "fish",
-          "chicken",
-          "fine_dining",
-          "sandwich",
-          "sausage"
-        ],
-        "operator": "Henri Rwanika"
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7077077288
-      }
-    },
-    {
-      "id": 7079477788,
-      "name": "Hôtel Cirezi",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6775414,
-        "longitude": 29.2212203
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7079477788
-      }
-    },
-    {
-      "id": 7079479085,
-      "name": "PAIDEK sa",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6775117,
-        "longitude": 29.2197031
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7079479085
-      }
-    },
-    {
-      "id": 7155808050,
-      "name": "Jubya Technology",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6861962,
-        "longitude": 29.2372571
-      },
-      "contact": {
-        "address": "4, Tourisme, Goma"
-      },
-      "details": {
-        "operator": "Jubya Technology"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7155808050
-      }
-    },
-    {
-      "id": 7473845702,
-      "name": "Centre d'accueil Bakanja",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6881015,
-        "longitude": 29.2324355
-      },
-      "contact": {
-        "address": "12, Rue Lyn Lusi",
-        "phone": "+243 970 469 994",
-        "website": "http://www.bakanja.com"
-      },
-      "details": {
-        "description": "Restaurant et Logement"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7473845702
-      }
-    },
-    {
-      "id": 7532813417,
-      "name": "Pili Pili Bar & Restaurant",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6948199,
-        "longitude": 29.2396684
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7532813417
-      }
-    },
-    {
-      "id": 7532813418,
-      "name": "Le Volcan Bar & Restaurant",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6953347,
-        "longitude": 29.2398668
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7532813418
-      }
-    },
-    {
-      "id": 7532813419,
-      "name": "Paroisse Saint Esprit",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.692348,
-        "longitude": 29.2391534
-      },
-      "details": {
-        "religion": "christian"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7532813419
-      }
-    },
-    {
-      "id": 7532813420,
-      "name": "Hôtel Bénédiction 2",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6920877,
-        "longitude": 29.2327891
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7532813420
-      }
-    },
-    {
-      "id": 7801646785,
-      "name": "BANMP",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6739612,
-        "longitude": 29.2415142
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7801646785
-      }
-    },
-    {
-      "id": 7829871565,
-      "name": "Hôtel des Grands Lacs",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.690367,
-        "longitude": 29.2382359
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7829871565
-      }
-    },
-    {
-      "id": 7844138468,
-      "name": "Hôtel Rusina",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6882273,
-        "longitude": 29.2376797
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7844138468
-      }
-    },
-    {
-      "id": 7844138472,
-      "name": "Hôtel Bethanie",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6636924,
-        "longitude": 29.2326646
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7844138472
-      }
-    },
-    {
-      "id": 7849859044,
-      "name": "Marché Cental de Virunga",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6709579,
-        "longitude": 29.229474
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7849859044
-      }
-    },
-    {
-      "id": 7849859048,
-      "name": "Marché de Birere",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6872627,
-        "longitude": 29.2374287
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7849859048
-      }
-    },
-    {
-      "id": 7849859055,
-      "name": "Marché Noire de Virunga Tora-Tina",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6703721,
-        "longitude": 29.2351853
-      },
-      "details": {
-        "opening_hours": "08:30-18:00"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7849859055
-      }
-    },
-    {
-      "id": 7862014912,
-      "name": "Clinique Polygone de Willis",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6751447,
-        "longitude": 29.2344938
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 7862014912
-      }
-    },
-    {
-      "id": 8241983017,
-      "name": "Emmanuel Residents Goma",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6910301,
-        "longitude": 29.2352407
-      },
-      "contact": {
-        "address": "00000"
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8241983017
-      }
-    },
-    {
-      "id": 8285899550,
-      "name": "SNEL",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6768495,
-        "longitude": 29.2214069
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8285899550
-      }
-    },
-    {
-      "id": 8285903743,
-      "name": "Pharmacie de l'espoir",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6782729,
-        "longitude": 29.224931
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8285903743
-      }
-    },
-    {
-      "id": 8286019441,
-      "name": "Police nationale Congolaise",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.67894,
-        "longitude": 29.2265477
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8286019441
-      }
-    },
-    {
-      "id": 8296610275,
-      "name": "Banque de Développement des Etats des Grands Lacs",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6893365,
-        "longitude": 29.236846
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8296610275
-      }
-    },
-    {
-      "id": 8296610276,
-      "name": "Equity Bank",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6872703,
-        "longitude": 29.23682
-      },
-      "details": {
-        "brand": "Equity Bank"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8296610276
-      }
-    },
-    {
-      "id": 8543217173,
-      "name": "Bar-B-Cue",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6982065,
-        "longitude": 29.2374811
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8543217173
-      }
-    },
-    {
-      "id": 8543217174,
-      "name": "Belvedere Hotel 2",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.694138,
-        "longitude": 29.238975
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8543217174
-      }
-    },
-    {
-      "id": 8543217175,
-      "name": "Arabica",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6940241,
-        "longitude": 29.239313
-      },
-      "details": {
-        "opening_hours": "8:00-21:00"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8543217175
-      }
-    },
-    {
-      "id": 8553136950,
-      "name": "Centre Médical Évangélique",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6730177,
-        "longitude": 29.2332966
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8553136950
-      }
-    },
-    {
-      "id": 8556986708,
-      "name": "VIP Palace 2",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6987173,
-        "longitude": 29.2402813
-      },
-      "contact": {
-        "website": "https://www.vipgoma.com"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8556986708
-      }
-    },
-    {
-      "id": 8567368728,
-      "name": "Kiwango cha hali ya volkeno Nyiragongo",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6786212,
-        "longitude": 29.2251986
-      },
-      "details": {
-        "operator": "Observatoire Volcanologique de Goma"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8567368728
-      }
-    },
-    {
-      "id": 8567616339,
-      "name": "Hôtel kivu dream",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6734081,
-        "longitude": 29.2292953
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8567616339
-      }
-    },
-    {
-      "id": 8567626489,
-      "name": "BM night club",
-      "category": "bar",
-      "coordinates": {
-        "latitude": -1.6750381,
-        "longitude": 29.2290506
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8567626489
-      }
-    },
-    {
-      "id": 8572947800,
-      "name": "Maison rouge",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6727823,
-        "longitude": 29.2293252
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8572947800
-      }
-    },
-    {
-      "id": 8572966571,
-      "name": "Clinique nyota ya amani cna",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6735923,
-        "longitude": 29.2287597
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8572966571
-      }
-    },
-    {
-      "id": 8586760891,
-      "name": "Case départ",
-      "category": "bar",
-      "coordinates": {
-        "latitude": -1.6758864,
-        "longitude": 29.2202247
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8586760891
-      }
-    },
-    {
-      "id": 8586764232,
-      "name": "Jambo safari",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.679676,
-        "longitude": 29.2320446
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8586764232
-      }
-    },
-    {
-      "id": 8586768331,
-      "name": "Nganda cap sud",
-      "category": "bar",
-      "coordinates": {
-        "latitude": -1.6778754,
-        "longitude": 29.2218024
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8586768331
-      }
-    },
-    {
-      "id": 8617934798,
-      "name": "Restaurant benghazi",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6793333,
-        "longitude": 29.2185518
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8617934798
-      }
-    },
-    {
-      "id": 8680650056,
-      "name": "Mosquée ibb",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.6792946,
-        "longitude": 29.2279936
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 8680650056
-      }
-    },
-    {
-      "id": 9340335117,
-      "name": "New alaska",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6829885,
-        "longitude": 29.2292322
-      },
-      "details": {
-        "opening_hours": "Mo-Su 08:30-21:30"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 9340335117
-      }
-    },
-    {
-      "id": 9340395717,
-      "name": "Carnacia",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6879171,
-        "longitude": 29.2338028
-      },
-      "details": {
-        "opening_hours": "Mo-Su 09:00-21:45"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 9340395717
-      }
-    },
-    {
-      "id": 9468376417,
-      "name": "Muhabura mountain lodge",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6962015,
-        "longitude": 29.2622766
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 9468376417
-      }
-    },
-    {
-      "id": 9886023422,
-      "name": "Maji Nyumbani Office",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6814483,
-        "longitude": 29.2334855
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 9886023422
-      }
-    },
-    {
-      "id": 9902217966,
-      "name": "Gare routière de goma",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6811939,
-        "longitude": 29.2348348
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 9902217966
-      }
-    },
-    {
-      "id": 9977107421,
-      "name": "Bungwe Guest house",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6870193,
-        "longitude": 29.2302877
-      },
-      "contact": {
-        "address": "Rue Lyn Lusi"
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 9977107421
-      }
-    },
-    {
-      "id": 10000515717,
-      "name": "Oeil De Faucon",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.7297871,
-        "longitude": 29.272491
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 10000515717
-      }
-    },
-    {
-      "id": 10238038499,
-      "name": "Belvedere Hotel",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.7031852,
-        "longitude": 29.2645325
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 10238038499
-      }
-    },
-    {
-      "id": 10621783723,
-      "name": "Brasserie",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.7349741,
-        "longitude": 29.278315
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 10621783723
-      }
-    },
-    {
-      "id": 10799580831,
-      "name": "Bravour hôtel",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6855704,
-        "longitude": 29.2370586
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 10799580831
-      }
-    },
-    {
-      "id": 10840512943,
-      "name": "Centre d'Accueil Saint François Xavier",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6983979,
-        "longitude": 29.2584671
-      },
-      "contact": {
-        "website": "https://centre-d-accueil-saint-francois-xavier-gisenyi.booked.net/"
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 10840512943
-      }
-    },
-    {
-      "id": 10980087005,
-      "name": "GH NRC Goma",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6927297,
-        "longitude": 29.2313318
-      },
-      "amenities": {
-        "wifi": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 10980087005
-      }
-    },
-    {
-      "id": 10982740406,
-      "name": "GH SI Goma",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6968323,
-        "longitude": 29.2368095
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 10982740406
-      }
-    },
-    {
-      "id": 10983849805,
-      "name": "Big Busstation (to different destinations: Karongi, Kigali, ...)",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6911713,
-        "longitude": 29.2563399
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 10983849805
-      }
-    },
-    {
-      "id": 11019644434,
-      "name": "Institut français",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6839684,
-        "longitude": 29.2281961
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019644434
-      }
-    },
-    {
-      "id": 11019644435,
-      "name": "Pain royal",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6848017,
-        "longitude": 29.2292636
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019644435
-      }
-    },
-    {
-      "id": 11019644436,
-      "name": "église Chrisco",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.6860874,
-        "longitude": 29.2280188
-      },
-      "details": {
-        "religion": "christian"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019644436
-      }
-    },
-    {
-      "id": 11019669978,
-      "name": "Mediterraneo",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6877791,
-        "longitude": 29.2296894
-      },
-      "details": {
-        "cuisine": [
-          "pizza"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019669978
-      }
-    },
-    {
-      "id": 11019669980,
-      "name": "Centre hospitalier Shifaa",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6879435,
-        "longitude": 29.2305516
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019669980
-      }
-    },
-    {
-      "id": 11019669985,
-      "name": "Jubilé",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6885423,
-        "longitude": 29.2341427
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019669985
-      }
-    },
-    {
-      "id": 11019669986,
-      "name": "Trust Merchant",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6902022,
-        "longitude": 29.2362604
-      },
-      "contact": {
-        "address": "Avenue Mobutu, Goma, DRC"
-      },
-      "amenities": {
-        "atm": true
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019669986
-      }
-    },
-    {
-      "id": 11019669987,
-      "name": "Ô nectar",
-      "category": "cafe",
-      "coordinates": {
-        "latitude": -1.690185,
-        "longitude": 29.2358167
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019669987
-      }
-    },
-    {
-      "id": 11019669989,
-      "name": "Nyoumbani Lounge",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6904853,
-        "longitude": 29.2352669
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019669989
-      }
-    },
-    {
-      "id": 11019669991,
-      "name": "My hosting",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6900027,
-        "longitude": 29.2351837
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019669991
-      }
-    },
-    {
-      "id": 11019669993,
-      "name": "Seule la foi",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6911448,
-        "longitude": 29.2344408
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019669993
-      }
-    },
-    {
-      "id": 11019669996,
-      "name": "Ro Embassade",
-      "category": "shop",
-      "coordinates": {
-        "latitude": -1.6924108,
-        "longitude": 29.23052
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019669996
-      }
-    },
-    {
-      "id": 11019800400,
-      "name": "Selfie",
-      "category": "cafe",
-      "coordinates": {
-        "latitude": -1.6885471,
-        "longitude": 29.2292715
-      },
-      "details": {
-        "cuisine": [
-          "coffee_shop"
-        ]
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11019800400
-      }
-    },
-    {
-      "id": 11216158837,
-      "name": "African Art Gallery",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.70306,
-        "longitude": 29.261591
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11216158837
-      }
-    },
-    {
-      "id": 11217813938,
-      "name": "Tourist office",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.7022433,
-        "longitude": 29.2598694
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11217813938
-      }
-    },
-    {
-      "id": 11217814038,
-      "name": "Kivu art gallery",
-      "category": "attraction",
-      "coordinates": {
-        "latitude": -1.7022362,
-        "longitude": 29.2598131
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11217814038
-      }
-    },
-    {
-      "id": 11795679169,
-      "name": "Guest MC1",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6934413,
-        "longitude": 29.2390858
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11795679169
-      }
-    },
-    {
-      "id": 11878478269,
-      "name": "Fromage et saucisse Luchebere",
-      "category": "shop",
-      "coordinates": {
-        "latitude": -1.6838591,
-        "longitude": 29.2371074
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11878478269
-      }
-    },
-    {
-      "id": 11913664069,
-      "name": "Boutique ventilos",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.6782625,
-        "longitude": 29.22408
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 11913664069
-      }
-    },
-    {
-      "id": 12059589402,
-      "name": "LAVA restaurant et salon de coiffure",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6880171,
-        "longitude": 29.2382695
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12059589402
-      }
-    },
-    {
-      "id": 12059606095,
-      "name": "Restaurant Ble d'Or",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6896269,
-        "longitude": 29.237718
-      },
-      "contact": {
-        "address": "Avenue de rond-point, Quartier des  Volcans, Goma"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12059606095
-      }
-    },
-    {
-      "id": 12059639286,
-      "name": "Go Marché",
-      "category": "shop",
-      "coordinates": {
-        "latitude": -1.69196,
-        "longitude": 29.2388624
-      },
-      "contact": {
-        "address": "Avenue Accasias, Goma, DRC"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12059639286
-      }
-    },
-    {
-      "id": 12318270858,
-      "name": "Poste de Santé CEBCE",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6788789,
-        "longitude": 29.234603
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12318270858
-      }
-    },
-    {
-      "id": 12318270859,
-      "name": "CEBCE SIGNERS",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.6792207,
-        "longitude": 29.2342097
-      },
-      "details": {
-        "religion": "christian",
-        "denomination": "protestant"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12318270859
-      }
-    },
-    {
-      "id": 12435869077,
-      "name": "Congo Unis Hotel",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.695406,
-        "longitude": 29.2404694
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12435869077
-      }
-    },
-    {
-      "id": 12442115058,
-      "name": "Restaurant Espace BEDAN",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6882827,
-        "longitude": 29.2327463
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12442115058
-      }
-    },
-    {
-      "id": 12468530214,
-      "name": "La Rosta",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6925812,
-        "longitude": 29.2379828
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12468530214
-      }
-    },
-    {
-      "id": 12468530215,
-      "name": "Coiffure Mixte La Splendide De l'Art",
-      "category": "other",
-      "coordinates": {
-        "latitude": -1.697878,
-        "longitude": 29.239611
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12468530215
-      }
-    },
-    {
-      "id": 12468530216,
-      "name": "Evangelical Friends church of Rwanda",
-      "category": "culture",
-      "coordinates": {
-        "latitude": -1.6816649,
-        "longitude": 29.2495757
-      },
-      "details": {
-        "religion": "christian",
-        "denomination": "protestant"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12468530216
-      }
-    },
-    {
-      "id": 12468530217,
-      "name": "Château Dor",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.695662,
-        "longitude": 29.2394139
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12468530217
-      }
-    },
-    {
-      "id": 12468530218,
-      "name": "Hôtel Kivu Neno",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6969693,
-        "longitude": 29.2400397
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12468530218
-      }
-    },
-    {
-      "id": 12468530219,
-      "name": "Chère Hotel",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6965832,
-        "longitude": 29.2398501
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12468530219
-      }
-    },
-    {
-      "id": 12950467157,
-      "name": "Answer Pharmacy Ltd",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6847399,
-        "longitude": 29.2552973
-      },
-      "contact": {
-        "phone": "+250 790 569 208"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467157
-      }
-    },
-    {
-      "id": 12950467162,
-      "name": "Iwacu Clinic",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6904207,
-        "longitude": 29.2546224
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467162
-      }
-    },
-    {
-      "id": 12950467227,
-      "name": "Intwari Mu Buzima",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6769956,
-        "longitude": 29.2537393
-      },
-      "contact": {
-        "phone": "+250 781 260 578"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467227
-      }
-    },
-    {
-      "id": 12950467305,
-      "name": "Qlpharma (Quality Legacy Pharmacy) Ltd",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6791575,
-        "longitude": 29.2611335
-      },
-      "contact": {
-        "phone": "+250 788 264 506"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467305
-      }
-    },
-    {
-      "id": 12950467310,
-      "name": "Charity Medical Clinic",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6965195,
-        "longitude": 29.2567354
-      },
-      "contact": {
-        "phone": "+250 785 196 386"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467310
-      }
-    },
-    {
-      "id": 12950467335,
-      "name": "Dépôt Pharmaceutique Optiphar",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6994581,
-        "longitude": 29.262232
-      },
-      "contact": {
-        "phone": "+250 785 939 789"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467335
-      }
-    },
-    {
-      "id": 12950467376,
-      "name": "Gisenyi Health Centre",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6996894,
-        "longitude": 29.2626245
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467376
-      }
-    },
-    {
-      "id": 12950467442,
-      "name": "Pharmacy Vinca",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6972634,
-        "longitude": 29.2634421
-      },
-      "contact": {
-        "phone": "+250 788 455 565"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467442
-      }
-    },
-    {
-      "id": 12950467457,
-      "name": "Pharmacie Du District De Rubavu",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.7001472,
-        "longitude": 29.2622425
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467457
-      }
-    },
-    {
-      "id": 12950467472,
-      "name": "Gisenyi District Hospital",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.7013247,
-        "longitude": 29.2622115
-      },
-      "contact": {
-        "phone": "+250 788 629 215"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467472
-      }
-    },
-    {
-      "id": 12950467482,
-      "name": "Byahi Health Centre",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6631258,
-        "longitude": 29.2645206
-      },
-      "contact": {
-        "phone": "+250 781 016 398"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467482
-      }
-    },
-    {
-      "id": 12950467550,
-      "name": "Prestige Pharmacy Ltd",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6856221,
-        "longitude": 29.2570757
-      },
-      "contact": {
-        "phone": "+250 788 228 131"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467550
-      }
-    },
-    {
-      "id": 12950467674,
-      "name": "Gacuba Ii B Health Centre",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6760034,
-        "longitude": 29.2550321
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467674
-      }
-    },
-    {
-      "id": 12950467713,
-      "name": "Polyclinique La Croix Du Sud - Gisenyi",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6967336,
-        "longitude": 29.261654
-      },
-      "contact": {
-        "phone": "+250 780 900 488"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467713
-      }
-    },
-    {
-      "id": 12950467895,
-      "name": "Ivuriro",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6812119,
-        "longitude": 29.2638619
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467895
-      }
-    },
-    {
-      "id": 12950467982,
-      "name": "Lane Park Polyclinic",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6849432,
-        "longitude": 29.2481804
-      },
-      "contact": {
-        "phone": "+250 786 521 838"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950467982
-      }
-    },
-    {
-      "id": 12950468003,
-      "name": "Gisenyi Dialysis Center - Africa Healthcare Network",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.7027725,
-        "longitude": 29.2621351
-      },
-      "contact": {
-        "phone": "+250 782 984 610"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950468003
-      }
-    },
-    {
-      "id": 12950468018,
-      "name": "Murara Health Centre",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6717304,
-        "longitude": 29.2540442
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950468018
-      }
-    },
-    {
-      "id": 12950468034,
-      "name": "Mission Pharmacy",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6606025,
-        "longitude": 29.2705386
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950468034
-      }
-    },
-    {
-      "id": 12950468072,
-      "name": "Clinic Horana Ubuzima Ltd",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6944544,
-        "longitude": 29.26093
-      },
-      "contact": {
-        "phone": "+250 785 014 749"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950468072
-      }
-    },
-    {
-      "id": 12950468093,
-      "name": "Medical Clinic De L'Arche",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.682807,
-        "longitude": 29.2499217
-      },
-      "contact": {
-        "phone": "+250 786 226 457"
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 12950468093
-      }
-    },
-    {
-      "id": 13247661501,
-      "name": "LaLiga",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6959699,
-        "longitude": 29.2363241
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 13247661501
-      }
-    },
-    {
-      "id": 13247661701,
-      "name": "Sous l'Avocatier",
-      "category": "restaurant",
-      "coordinates": {
-        "latitude": -1.6885165,
-        "longitude": 29.2303292
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 13247661701
-      }
-    },
-    {
-      "id": 13340456302,
-      "name": "blessington motel",
-      "category": "hotel",
-      "coordinates": {
-        "latitude": -1.6964313,
-        "longitude": 29.2588476
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 13340456302
-      }
-    },
-    {
-      "id": 13706432420,
-      "name": "Clinique AGAPE",
-      "category": "practical",
-      "coordinates": {
-        "latitude": -1.6730384,
-        "longitude": 29.2297229
-      },
-      "tags": {
-        "osm_type": "node",
-        "osm_id": 13706432420
-      }
+  "last_updated": "2026-06-12",
+  "categories": {
+    "hotels_and_lodges": [
+      {
+        "name": "Gorillas Lake Kivu Hotel",
+        "rating": 3.9,
+        "rating_count": 345,
+        "phone": "+250 788 200 522",
+        "address": "Gisenyi Rwanda, 8724+95X, Gisenyi 00100, Rwanda",
+        "coordinates": {
+          "lat": -1.6990208,
+          "lng": 29.2554771
+        },
+        "hours": "Open 24 hours",
+        "place_id": "ChIJ5WYHOqIF3RkR0id9BypWCkM"
+      },
+      {
+        "name": "Beach Garden BnB",
+        "rating": 3.8,
+        "rating_count": 74,
+        "phone": "+250 796 293 522",
+        "address": "Rubavu, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7063714,
+          "lng": 29.2627059
+        },
+        "hours": "Open 24 hours",
+        "website": "http://www.kivubeachgarden.com/",
+        "place_id": "ChIJ2eBCiwoF3RkRgDFjMoWKNmk"
+      },
+      {
+        "name": "INZU Lodge",
+        "rating": 4.3,
+        "rating_count": 217,
+        "phone": "+250 784 179 203",
+        "address": "Rubavu, Nyamuymba 136 P.O. Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.730532,
+          "lng": 29.2653955
+        },
+        "hours": "Mon-Sun 7:00AM - 9:00PM",
+        "website": "http://inzulodge.com/",
+        "place_id": "ChIJkY8uYzEF3RkRQX2UjOpbTQM"
+      },
+      {
+        "name": "Hakuna Matata Lodge",
+        "rating": 4.2,
+        "rating_count": 124,
+        "phone": "+250 787 484 954",
+        "address": "7796+CRV, Rwanda",
+        "coordinates": {
+          "lat": -1.7313875,
+          "lng": 29.2620469
+        },
+        "website": "http://www.hakunamatatalodge.rw/",
+        "place_id": "ChIJs_bf6DMF3RkRRrBqfJCro_g"
+      },
+      {
+        "name": "Palm Garden Resort",
+        "rating": 4.1,
+        "rating_count": 36,
+        "phone": "+250 788 306 830",
+        "address": "Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7305905,
+          "lng": 29.2648411
+        },
+        "website": "http://www.palmgardenlodge.com/",
+        "place_id": "ChIJ3don3QAb3RkRsQZ6GoCVWzw"
+      },
+      {
+        "name": "Sunset Lake Escape",
+        "rating": 4.0,
+        "rating_count": 4,
+        "phone": "+250 781 871 487",
+        "address": "Rn4, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6990482,
+          "lng": 29.2560996
+        },
+        "place_id": "ChIJofW_uWYF3RkRsCmAEV2YRFQ"
+      },
+      {
+        "name": "Kivu Nest Hotel",
+        "rating": 4.4,
+        "rating_count": 8,
+        "phone": "+250 796 912 498",
+        "address": "864X+FRM, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6938125,
+          "lng": 29.2495625
+        },
+        "place_id": "ChIJZ6gdJ2IF3RkR3iN4Sr0NQFw"
+      },
+      {
+        "name": "Fanad Hotel Gisenyi",
+        "rating": 3.6,
+        "rating_count": 109,
+        "phone": "+250 788 510 763",
+        "address": "Unnamed Road, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6904225,
+          "lng": 29.2537054
+        },
+        "place_id": "ChIJE5aet5cF3RkRdu4Ibf5bTeg"
+      },
+      {
+        "name": "Elevate Suites Hotel Gisenyi",
+        "rating": 3.4,
+        "rating_count": 15,
+        "phone": "+250 782 736 000",
+        "address": "Grande Barrière Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6971969,
+          "lng": 29.246212
+        },
+        "hours": "Open 24 hours",
+        "place_id": "ChIJDx--eEYF3RkRtcXuRVjq2dc"
+      }
+    ],
+    "restaurants_and_bars": [
+      {
+        "name": "Wazi Wine Garage",
+        "rating": 4.6,
+        "rating_count": 23,
+        "phone": "+250 791 574 271",
+        "address": "8724+7G2, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6994948,
+          "lng": 29.2559799
+        },
+        "hours": "Mon-Sun 8:00AM - 10:00PM",
+        "place_id": "ChIJ1xkqZTYF3RkRQGbkEibZQlU"
+      },
+      {
+        "name": "Sagabay Restaurant",
+        "rating": 4.2,
+        "rating_count": 322,
+        "phone": "+250 793 056 413",
+        "address": "77V7+756, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7068334,
+          "lng": 29.262898
+        },
+        "hours": "Mon-Thu 7:00AM-12:00AM, Fri-Sat 7:00AM-1:00AM, Sun 7:00AM-12:30AM",
+        "website": "https://www.stayinrwanda.com/",
+        "place_id": "ChIJz5Oj9UUF3RkRwsHK-UKC_xw"
+      },
+      {
+        "name": "Portico Bar Resto Gisenyi",
+        "rating": 4.3,
+        "rating_count": 12,
+        "phone": "+250 792 016 495",
+        "address": "77W6+PGQ, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7030981,
+          "lng": 29.2613134
+        },
+        "hours": "Mon-Thu 7:00AM-3:00AM, Fri-Sun 7:00AM-4:00AM",
+        "place_id": "ChIJH0pVjBUF3RkRfyuSEbuJf60"
+      },
+      {
+        "name": "Saba Lounge & Restaurant",
+        "rating": 4.2,
+        "rating_count": 59,
+        "phone": "+250 791 574 497",
+        "address": "8765+VMM, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6878272,
+          "lng": 29.2591513
+        },
+        "hours": "Mon-Sun 7:30AM - 11:00PM",
+        "website": "https://sabas-website.vercel.app/",
+        "place_id": "ChIJ_4VHZ3UF3RkRnLyT3Z6xknY"
+      },
+      {
+        "name": "Le Grand Chalet Spa & Restaurant",
+        "rating": 4.1,
+        "rating_count": 44,
+        "phone": "+250 784 700 000",
+        "address": "Gisenyi, RN4, Ave de la Production, Rwanda",
+        "coordinates": {
+          "lat": -1.70475,
+          "lng": 29.2615574
+        },
+        "hours": "Mon-Thu 9:00AM-11:30PM, Fri-Sun Open 24 hours",
+        "website": "http://www.legrandchalet.rw/",
+        "place_id": "ChIJXcvlpyoF3RkR1SO3JYnitqw"
+      },
+      {
+        "name": "Lakeside Bar Beach & Restaurant",
+        "rating": 3.9,
+        "rating_count": 334,
+        "phone": "+250 791 693 096",
+        "address": "Ave de la Production, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7078632,
+          "lng": 29.2637753
+        },
+        "hours": "Mon-Fri 8:00AM-1:00AM, Sat-Sun 8:00AM-2:00AM",
+        "place_id": "ChIJUR7CRQ4F3RkRafN3YVWuFF4"
+      },
+      {
+        "name": "O'Delice (Street Food & Food Store)",
+        "rating": 4.1,
+        "rating_count": 13,
+        "phone": "+250 791 349 612",
+        "address": "8735+R6C, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.695575,
+          "lng": 29.257522
+        },
+        "hours": "Mon-Sun 8:30AM - 10:00PM",
+        "place_id": "ChIJ_0s8RQAF3RkR-_bVKsPmg0s"
+      }
+    ],
+    "cafes_and_coffee_shops": [
+      {
+        "name": "Balcon Café",
+        "rating": 4.6,
+        "rating_count": 15,
+        "phone": "+250 788 900 636",
+        "address": "8754+P7W, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6903367,
+          "lng": 29.2553972
+        },
+        "place_id": "ChIJ8-8hS5cF3RkRJqNM5RC6O5Y"
+      },
+      {
+        "name": "HAYATI Coffee & Garden",
+        "rating": 4.8,
+        "rating_count": 5,
+        "phone": null,
+        "address": "8755+56C, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6921434,
+          "lng": 29.2579919
+        },
+        "place_id": "ChIJX5VoKgAF3RkRIU7tSrScpMU"
+      },
+      {
+        "name": "Heroes Coffee Rubavu",
+        "rating": 4.2,
+        "rating_count": 76,
+        "phone": "+250 791 042 738",
+        "address": "8757+569, Rubavu, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6920769,
+          "lng": 29.2631222
+        },
+        "hours": "Mon-Sun 7:00AM - 11:00PM",
+        "place_id": "ChIJPQb1qB4F3RkRjeOS_QTlv28"
+      },
+      {
+        "name": "The Moon Coffee Shop",
+        "rating": 5.0,
+        "rating_count": 1,
+        "phone": "+250 791 857 696",
+        "address": "8754+G95, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6911875,
+          "lng": 29.2559375
+        },
+        "hours": "Mon-Sun 7:00AM - 11:00PM",
+        "place_id": "ChIJ7afx4eUF3RkRwQ0pFARcXUQ"
+      },
+      {
+        "name": "Kota Café",
+        "rating": 5.0,
+        "rating_count": 1,
+        "phone": "+250 794 617 935",
+        "address": "Big JJ Building Bus Park, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6911023,
+          "lng": 29.2557266
+        },
+        "hours": "Mon-Sun 8:00AM - 8:30PM",
+        "place_id": "ChIJjTorbgAF3RkR8YC0isXIJhE"
+      }
+    ],
+    "pharmacies": [
+      {
+        "name": "ZELA Pharmacy",
+        "rating": 5.0,
+        "rating_count": 4,
+        "phone": "+250 786 971 950",
+        "address": "869X+4RG, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6821875,
+          "lng": 29.2495625
+        },
+        "hours": "Open 24 hours",
+        "place_id": "ChIJeWmAsAIF3RkRPsImvGnns-Q"
+      },
+      {
+        "name": "Medlink Pharmacy",
+        "rating": 5.0,
+        "rating_count": 2,
+        "phone": null,
+        "address": "8736+GFG, Ave de l'Umuganda, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6961508,
+          "lng": 29.2611462
+        },
+        "place_id": "ChIJfWUlOAAF3RkR5fIKl7epp5g"
+      },
+      {
+        "name": "Pharmacy Vinca",
+        "rating": 4.0,
+        "rating_count": 1,
+        "phone": "+250 788 455 565",
+        "address": "8737+39W, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6972634,
+          "lng": 29.2634421
+        },
+        "hours": "Mon-Sun 6:00AM - 10:00PM",
+        "place_id": "ChIJLQPM8qYF3RkRXkSnlRddNgc"
+      },
+      {
+        "name": "MEDIASOL Pharmacy",
+        "rating": null,
+        "rating_count": null,
+        "phone": "+250 789 990 455",
+        "address": "N/A, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6952479,
+          "lng": 29.257198
+        },
+        "hours": "Mon-Sun 7:00AM - 11:00PM",
+        "website": "https://www.mediasolpharma.com/",
+        "place_id": "ChIJ7_iEswkF3RkRaqFf78y4OdE"
+      },
+      {
+        "name": "Kivu Beach Pharmacy",
+        "rating": null,
+        "rating_count": null,
+        "phone": null,
+        "address": "8736+9JV, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6965031,
+          "lng": 29.2615345
+        },
+        "place_id": "ChIJ0zSvrqYF3RkR54NUNVU_4eQ"
+      }
+    ],
+    "banks_and_atms": [
+      {
+        "name": "Bank of Kigali - Gisenyi Branch",
+        "rating": 4.4,
+        "rating_count": 12,
+        "phone": null,
+        "address": "8724+Q4C, Ave des Fleures, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6980681,
+          "lng": 29.2552758
+        },
+        "hours": "Mon-Sat 8:00AM - 5:00PM, Sun Closed",
+        "has_atm": true,
+        "place_id": "ChIJZydLiAoF3RkR-iQytwhwV38"
+      },
+      {
+        "name": "ATM GT Bank",
+        "rating": null,
+        "rating_count": null,
+        "phone": null,
+        "address": "8737+68J, Rue de l'Aeropor, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6969172,
+          "lng": 29.2632632
+        },
+        "hours": "Open 24 hours",
+        "type": "ATM",
+        "place_id": "ChIJI0evIUQF3RkRKPQhhpXqNsU"
+      },
+      {
+        "name": "KCB ATM",
+        "rating": null,
+        "rating_count": null,
+        "phone": null,
+        "address": "8737+999, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6965991,
+          "lng": 29.2634911
+        },
+        "type": "ATM",
+        "place_id": "ChIJk7f85EwF3RkRsEt0_W_JKpw"
+      },
+      {
+        "name": "Access Bank",
+        "rating": 3.4,
+        "rating_count": 5,
+        "phone": null,
+        "address": "77X5+P6V, Ave de Independance, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7006444,
+          "lng": 29.2580619
+        },
+        "hours": "Mon-Fri 8:00AM-6:00PM, Sat 9:00AM-2:00PM, Sun Closed",
+        "website": "https://rwanda.accessbankplc.com/",
+        "place_id": "ChIJuXMegAoF3RkRYaFnzwiFUl4"
+      },
+      {
+        "name": "Bank of Africa",
+        "rating": 3.0,
+        "rating_count": 1,
+        "phone": "+250 739 783 805",
+        "address": "8736+MCJ, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6957892,
+          "lng": 29.2610075
+        },
+        "hours": "Mon-Fri 7:30AM-7:00PM, Sat 8:00AM-6:00PM, Sun Closed",
+        "place_id": "ChIJMdg7-KMF3RkRv34KfRQAEXU"
+      }
+    ],
+    "supermarkets_and_shops": [
+      {
+        "name": "JJ Supermarket",
+        "rating": 4.2,
+        "rating_count": 32,
+        "phone": "+250 734 598 224",
+        "address": "8792+2G5, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6824277,
+          "lng": 29.2511562
+        },
+        "hours": "Mon-Sun 8:00AM - 12:00AM",
+        "place_id": "ChIJtU8rpn0F3RkRod3jZbuV5jw"
+      },
+      {
+        "name": "Chez Abibu",
+        "rating": 4.0,
+        "rating_count": 16,
+        "phone": "+250 787 098 443",
+        "address": "8736+WW3, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6952341,
+          "lng": 29.2623032
+        },
+        "hours": "Mon-Sun 8:00AM - 10:00PM",
+        "place_id": "ChIJUayr0KYF3RkRL-JvDbrsXPU"
+      },
+      {
+        "name": "Saba Supermarket",
+        "rating": 3.8,
+        "rating_count": 18,
+        "phone": "+250 789 482 034",
+        "address": "8765+VJ9, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6878436,
+          "lng": 29.2590676
+        },
+        "hours": "Mon-Sun 8:00AM - 11:00PM",
+        "place_id": "ChIJZf0quZMF3RkRNtbHuFm2l3s"
+      },
+      {
+        "name": "Simnet Supermarket Ltd",
+        "rating": null,
+        "rating_count": null,
+        "phone": "+250 788 430 295",
+        "address": "Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7030592,
+          "lng": 29.2614101
+        },
+        "hours": "Mon-Fri 8:00AM-10:00PM, Sat 9:00AM-10:00PM, Sun 1:30PM-10:00PM",
+        "place_id": "ChIJBddIHQAF3RkRdIjdOtNTHa8"
+      },
+      {
+        "name": "Ineza Iwacu Shop",
+        "rating": 5.0,
+        "rating_count": 1,
+        "phone": "+250 783 086 783",
+        "address": "8736+QXQ, Ave du Marche, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6955284,
+          "lng": 29.2624855
+        },
+        "hours": "Mon-Sat 6:00AM - 9:00PM, Sun Closed",
+        "place_id": "ChIJg5RuFqQF3RkR1XowpTGHDrc"
+      }
+    ],
+    "markets": [
+      {
+        "name": "Rubavu Main Market (Ubucuruzi)",
+        "rating": 3.7,
+        "rating_count": 556,
+        "phone": "+250 722 487 468",
+        "address": "8736+QXQ, Ave du Marche, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6956652,
+          "lng": 29.2624702
+        },
+        "hours": "Mon 7:30AM-7:30PM, Tue-Sat 7:30AM-5:30PM, Sun Closed",
+        "place_id": "ChIJz0aMF6QF3RkRUwcxYn9Tyl8"
+      },
+      {
+        "name": "Mbugangari Market",
+        "rating": 3.8,
+        "rating_count": 186,
+        "phone": "+250 781 866 036",
+        "address": "Mbugangari, 87F3+5FX, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6755309,
+          "lng": 29.2535535
+        },
+        "hours": "Mon-Fri 8:00AM-8:00PM, Sat-Sun 6:00AM-8:00PM",
+        "place_id": "ChIJNVkPcugF3RkRlED3h9C6nnY"
+      },
+      {
+        "name": "Habibu Market",
+        "rating": 3.2,
+        "rating_count": 13,
+        "phone": "+250 782 444 412",
+        "address": "8736+WWQ, Rue des Poissons, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6951722,
+          "lng": 29.2623501
+        },
+        "place_id": "ChIJW5_5FKQF3RkR9tZ6oJ6Yzbk"
+      }
+    ],
+    "hospitals_and_clinics": [
+      {
+        "name": "Charity Medical Clinic",
+        "rating": 4.8,
+        "rating_count": 12,
+        "phone": "+250 785 196 386",
+        "address": "Rue de I'Industrie, Rwanda",
+        "coordinates": {
+          "lat": -1.6965195,
+          "lng": 29.2567354
+        },
+        "hours": "Open 24 hours",
+        "place_id": "ChIJZW0CvG8F3RkRiyPCcLmfqvs"
+      },
+      {
+        "name": "Polyclinique La Croix du Sud",
+        "rating": 4.4,
+        "rating_count": 7,
+        "phone": "+250 780 900 488",
+        "address": "Ave du Marche, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6967336,
+          "lng": 29.261654
+        },
+        "hours": "Open 24 hours",
+        "website": "http://www.hopitalcroixdusud.com/",
+        "place_id": "ChIJ5ducCEgF3RkRV8JAzE_9tuQ"
+      },
+      {
+        "name": "Gisenyi District Hospital",
+        "rating": 4.1,
+        "rating_count": 14,
+        "phone": "+250 788 629 215",
+        "address": "Rue de l'Hopital, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7013247,
+          "lng": 29.2622115
+        },
+        "hours": "Open 24 hours",
+        "website": "http://www.gisenyihospital.gov.rw/",
+        "place_id": "ChIJE3Ka5wkF3RkRpNN2skICTno"
+      },
+      {
+        "name": "Medical Clinic De L'Arche",
+        "rating": 3.8,
+        "rating_count": 4,
+        "phone": "+250 786 226 457",
+        "address": "Unnamed Road, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.682807,
+          "lng": 29.2499217
+        },
+        "hours": "Mon-Sun 8:00AM - 9:30PM",
+        "place_id": "ChIJlcP1W-sF3RkRtYLpc-iu1p4"
+      },
+      {
+        "name": "Clinic Horana Ubuzima LTD",
+        "rating": 4.0,
+        "rating_count": 2,
+        "phone": "+250 785 014 749",
+        "address": "8746+697, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6944544,
+          "lng": 29.26093
+        },
+        "hours": "Open 24 hours",
+        "place_id": "ChIJoRfkhqMF3RkR_9pQ020Rqow"
+      }
+    ],
+    "attractions_and_activities": [
+      {
+        "name": "Nyamyumba Hot Springs",
+        "rating": 3.8,
+        "rating_count": 311,
+        "phone": "+250 788 948 476",
+        "address": "775F+V9R, Rubavu, Rwanda",
+        "coordinates": {
+          "lat": -1.7402651,
+          "lng": 29.2733767
+        },
+        "description": "Volcanic hot springs & mud baths. Entry 5,000 RWF",
+        "website": "http://www.amestours.com/",
+        "place_id": "ChIJK9fcz9Ya3RkRi2VzJgXvqqk"
+      },
+      {
+        "name": "Lake Kivu Boat Tour (Gisenyi Branch)",
+        "rating": 5.0,
+        "rating_count": 1,
+        "phone": "+250 789 474 864",
+        "address": "Public Beach, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7037718,
+          "lng": 29.2591244
+        },
+        "hours": "Open 24 hours",
+        "website": "http://visitlakekivu.com/",
+        "place_id": "ChIJyc5vBgAF3RkRMY_WwTWtgLk"
+      },
+      {
+        "name": "Rubavu Artificial Forest",
+        "rating": 4.1,
+        "rating_count": 7,
+        "phone": "+250 728 376 781",
+        "address": "Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6902688,
+          "lng": 29.2662175
+        },
+        "hours": "Mon 6:00AM-5:00PM, Tue-Sun Open 24 hours",
+        "place_id": "ChIJAQAAkLoF3RkRLDIZJtI2Foo"
+      }
+    ],
+    "nightlife": [
+      {
+        "name": "Nyanja Night Club",
+        "rating": 4.3,
+        "rating_count": 33,
+        "phone": "+250 783 000 935",
+        "address": "8722+W5J, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6976649,
+          "lng": 29.2503959
+        },
+        "hours": "Mon Closed, Tue-Sun Open 24 hours",
+        "description": "Live band, karaoke & lake views",
+        "place_id": "ChIJqQQil54F3RkRaECvEfzvwO4"
+      },
+      {
+        "name": "Viber Night Club",
+        "rating": 4.1,
+        "rating_count": 15,
+        "phone": "+250 783 584 628",
+        "address": "8755+2WW, Ave de l'Umuganda, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6923838,
+          "lng": 29.2598343
+        },
+        "hours": "Open 24 hours",
+        "place_id": "ChIJ3VSF55EF3RkRwhi7ZqZxr2g"
+      }
+    ],
+    "gyms_and_fitness": [
+      {
+        "name": "Apollo Fitness",
+        "rating": 4.7,
+        "rating_count": 11,
+        "phone": "+250 780 762 013",
+        "address": "Rue des Poissons, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6951764,
+          "lng": 29.2622998
+        },
+        "hours": "Mon-Thu 6:00AM-9:00PM, Fri 6:00AM-11:30AM & 2:00PM-9:00PM, Sat 6:00AM-8:00PM, Sun 6:00AM-12:00PM",
+        "place_id": "ChIJ67HrEaQF3RkRZBAwx2ou18A"
+      },
+      {
+        "name": "FITNESS Temple 24",
+        "rating": 5.0,
+        "rating_count": 2,
+        "phone": "+250 791 441 064",
+        "address": "Rubavu, Rwanda",
+        "coordinates": {
+          "lat": -1.6909033,
+          "lng": 29.2558444
+        },
+        "hours": "Mon-Sun 6:00AM - 10:00PM",
+        "place_id": "ChIJe4W7WSUF3RkR3NQLcqbUhZ4"
+      },
+      {
+        "name": "Heroes Gym Rwanda",
+        "rating": null,
+        "rating_count": null,
+        "phone": "+250 791 042 738",
+        "address": "Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6921633,
+          "lng": 29.2631231
+        },
+        "hours": "Mon-Sun 6:00AM - 11:00PM",
+        "place_id": "ChIJI4dq78YF3RkRdbAveHkbMuM"
+      },
+      {
+        "name": "Fitness Academy Rwanda",
+        "rating": null,
+        "rating_count": null,
+        "phone": "+250 739 169 391",
+        "address": "Kivumu, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6835132,
+          "lng": 29.2514386
+        },
+        "hours": "Mon-Sun 9:00AM - 6:00PM",
+        "place_id": "ChIJBw9xNaYF3RkRLLNvNgfbaHg"
+      }
+    ],
+    "hair_and_beauty": [
+      {
+        "name": "House of Nails & Hair Lounge",
+        "rating": 4.8,
+        "rating_count": 4,
+        "phone": "+250 784 012 488",
+        "address": "Gisenyi Kigali, Avenue du Commerce, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6933125,
+          "lng": 29.2628125
+        },
+        "hours": "Mon-Tue 8:00AM-8:00PM, Wed 8:00AM-6:00PM, Thu 8:00AM-8:00PM, Fri-Sat 7:00AM-10:00PM, Sun 9:00AM-5:00PM",
+        "place_id": "ChIJK5VBxTAF3RkRME6vDZHK0Rk"
+      },
+      {
+        "name": "Happy Care Salon",
+        "rating": null,
+        "rating_count": null,
+        "phone": "+250 790 137 269",
+        "address": "Labrevis & Labamba Street, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6934625,
+          "lng": 29.2607802
+        },
+        "hours": "Mon-Sun 8:00AM - 9:00PM",
+        "place_id": "ChIJSRiPrruL5k8RfGHMivQe4mo"
+      },
+      {
+        "name": "James Nails Salon",
+        "rating": null,
+        "rating_count": null,
+        "phone": "+250 788 982 437",
+        "address": "Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6990482,
+          "lng": 29.2560996
+        },
+        "hours": "Open 24 hours",
+        "place_id": "ChIJTeYKKQAF3RkRqk7RUHStJr4"
+      }
+    ],
+    "petrol_stations": [
+      {
+        "name": "UNO Petroleum - Rubavu",
+        "rating": 5.0,
+        "rating_count": 1,
+        "phone": "+250 794 105 364",
+        "address": "8757+H4Q, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6910337,
+          "lng": 29.2628662
+        },
+        "hours": "Open 24 hours",
+        "place_id": "ChIJGz-FNAAF3RkRN08FkOVUpIY"
+      },
+      {
+        "name": "Engen Gisenyi Service-Station",
+        "rating": 4.2,
+        "rating_count": 5,
+        "phone": null,
+        "address": "8737+M6Q, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6957953,
+          "lng": 29.2631029
+        },
+        "place_id": "ChIJzYkWDCQF3RkRXYM00LgGu_0"
+      },
+      {
+        "name": "Kobil",
+        "rating": 3.5,
+        "rating_count": 2,
+        "phone": null,
+        "address": "8736+CFP, Ave de l'Umuganda, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.696418,
+          "lng": 29.2612052
+        },
+        "place_id": "ChIJh6ZAq6YF3RkRdA6N8sLOwM8"
+      },
+      {
+        "name": "Merez Petrol Station",
+        "rating": 3.7,
+        "rating_count": 16,
+        "phone": "+250 788 307 575",
+        "address": "77W6+R9Q, Ave de Independance, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7029203,
+          "lng": 29.2609973
+        },
+        "place_id": "ChIJVWhg1gsF3RkRNUFJkOJG7TE"
+      },
+      {
+        "name": "SP Petrol Station",
+        "rating": null,
+        "rating_count": null,
+        "phone": null,
+        "address": "77W6+QXW, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7030125,
+          "lng": 29.2624531
+        },
+        "place_id": "ChIJZ5QLvpcF3RkR8OKB_0jIJJg"
+      }
+    ],
+    "places_of_worship": [
+      {
+        "name": "Rubavu Mosque",
+        "rating": 3.9,
+        "rating_count": 77,
+        "phone": "+250 782 728 017",
+        "address": "8747+M38, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6933404,
+          "lng": 29.2627041
+        },
+        "type": "Mosque",
+        "place_id": "ChIJMVNd7aQF3RkREktXL2H-NSM"
+      },
+      {
+        "name": "Al Djamiat Mosque",
+        "rating": null,
+        "rating_count": null,
+        "phone": null,
+        "address": "8724+9CQ, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6990482,
+          "lng": 29.2560996
+        },
+        "type": "Mosque",
+        "place_id": "ChIJ0cjYDscF3RkRzx7DoLgSNkk"
+      },
+      {
+        "name": "Mosque Ruriba Masjid",
+        "rating": 5.0,
+        "rating_count": 2,
+        "phone": null,
+        "address": "87H8+6CJ, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.671209,
+          "lng": 29.2666176
+        },
+        "type": "Mosque",
+        "hours": "Open 24 hours",
+        "place_id": "ChIJ9yN9KgAF3RkR4CiqO-tPlGA"
+      }
+    ],
+    "border_crossings": [
+      {
+        "name": "Grande Barrière (Main Border Rwanda-DRC)",
+        "rating": 3.7,
+        "rating_count": 60,
+        "phone": null,
+        "address": "Av. de la Révolution, Gisenyi / Goma Border",
+        "coordinates": {
+          "lat": -1.6978088,
+          "lng": 29.2447552
+        },
+        "hours": "Mon-Sun 6:00AM - 12:00AM",
+        "description": "Main border crossing between Gisenyi (Rwanda) and Goma (DRC)",
+        "place_id": "ChIJJfaqyJwF3RkRF8R_g-_zPOg"
+      },
+      {
+        "name": "La Corniche Migration Office",
+        "rating": 4.1,
+        "rating_count": 15,
+        "phone": null,
+        "address": "863W+85F, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6966802,
+          "lng": 29.2454248
+        },
+        "description": "Quieter border crossing point",
+        "place_id": "ChIJy0OK8sQF3RkRCXubJqAD2Xw"
+      },
+      {
+        "name": "Petite Barrière",
+        "rating": 4.0,
+        "rating_count": 25,
+        "phone": null,
+        "address": "869W+98C, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6815504,
+          "lng": 29.2457564
+        },
+        "hours": "Mon-Sun 5:30AM - 6:00PM",
+        "description": "High pedestrian traffic border crossing",
+        "place_id": "ChIJEwspCO0F3RkRghAnfuyzwKM"
+      }
+    ],
+    "police_stations": [
+      {
+        "name": "Gisenyi Police Station",
+        "rating": null,
+        "rating_count": null,
+        "phone": "+250 736 660 470",
+        "address": "8758+VFW, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7005154,
+          "lng": 29.264799
+        },
+        "hours": "Open 24 hours",
+        "place_id": "ChIJ4_nBHgAF3RkRLYZ2ld_dyWM"
+      },
+      {
+        "name": "Station Police Rubavu",
+        "rating": null,
+        "rating_count": null,
+        "phone": null,
+        "address": "77X6+2CM, Ave de Independance, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.7024195,
+          "lng": 29.2610427
+        },
+        "place_id": "ChIJVVUVKgoF3RkRIj2p92TtLU8"
+      },
+      {
+        "name": "Rubavu Police Station",
+        "rating": null,
+        "rating_count": null,
+        "phone": "+250 788 311 149",
+        "address": "8784+5HJ, Gisenyi, Rwanda",
+        "coordinates": {
+          "lat": -1.6845261,
+          "lng": 29.2563933
+        },
+        "place_id": "ChIJVST36b8F3RkRW2nDzPT9T4I"
+      }
+    ]
+  },
+  "summary": {
+    "total_places": 70,
+    "categories_count": 16,
+    "breakdown": {
+      "hotels_and_lodges": 9,
+      "restaurants_and_bars": 7,
+      "cafes_and_coffee_shops": 5,
+      "pharmacies": 5,
+      "banks_and_atms": 5,
+      "supermarkets_and_shops": 5,
+      "markets": 3,
+      "hospitals_and_clinics": 5,
+      "attractions_and_activities": 3,
+      "nightlife": 2,
+      "gyms_and_fitness": 4,
+      "hair_and_beauty": 3,
+      "petrol_stations": 5,
+      "places_of_worship": 3,
+      "border_crossings": 3,
+      "police_stations": 3
     }
-  ]
+  }
 }
