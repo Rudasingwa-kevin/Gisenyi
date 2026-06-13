@@ -14,7 +14,8 @@ const storage = new CloudinaryStorage({
   cloudinary,
   params: {
     folder: 'gisenyi',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'],
+    resource_type: 'auto',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif', 'mp4', 'mov', 'webm'],
     transformation: [{ width: 1920, height: 1080, crop: 'limit', quality: 'auto' }]
   }
 });

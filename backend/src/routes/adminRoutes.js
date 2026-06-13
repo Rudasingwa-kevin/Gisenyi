@@ -28,4 +28,10 @@ router.post('/calendar', adminController.createCalendarItem);
 router.put('/calendar/:id', adminController.updateCalendarItem);
 router.delete('/calendar/:id', adminController.deleteCalendarItem);
 
+router.get('/gallery', adminController.getGalleryItems);
+router.get('/gallery/:id', adminController.getGalleryItem);
+router.post('/gallery', adminController.createGalleryItem);
+router.put('/gallery/:id', adminController.updateGalleryItem);
+router.delete('/gallery/:id', adminController.deleteGalleryItem);
+
 module.exports = router;

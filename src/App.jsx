@@ -41,7 +41,6 @@ const AnimatedOutlet = ({ children }) => (
 function AppLayout() {
   const { pathname } = useLocation();
   const isAdminPage = pathname.startsWith('/admin');
-  const [isDark, setIsDark] = useState(true);
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);
   const [activeCat, setActiveCat] = useState('all');
@@ -50,10 +49,6 @@ function AppLayout() {
   const [selectedPlace, setSelectedPlace] = useState(null);
   const [stats, setStats] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
-
-  useEffect(() => {
-    document.documentElement.classList.toggle('dark', isDark);
-  }, [isDark]);
 
   const fetchAll = useCallback(async () => {
     setLoading(true);
@@ -97,7 +92,7 @@ function AppLayout() {
 
   return (
     <div className="font-outfit min-h-screen flex flex-col">
-      {!isAdminPage && <Navbar isDark={isDark} setIsDark={setIsDark} />}
+      {!isAdminPage && <Navbar />}
 
       <main className="flex-grow">
         <AnimatePresence mode="wait">

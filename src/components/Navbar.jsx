@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Menu, X, Moon, Sun, MapPin } from 'lucide-react';
+import { Menu, X, MapPin } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
 
 const links = [
@@ -13,7 +13,7 @@ const links = [
   { name: 'Gallery', path: '/gallery' }
 ];
 
-const Navbar = ({ isDark, setIsDark }) => {
+const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const { pathname } = useLocation();
@@ -25,15 +25,15 @@ const Navbar = ({ isDark, setIsDark }) => {
   }, []);
 
   return (
-    <nav className={`fixed top-0 w-full z-[100] transition-all duration-500 ${
+    <nav className={`fixed top-0 w-full z-[1001] transition-all duration-500 ${
       scrolled ? 'glass-dark shadow-2xl shadow-gold-500/5' : 'bg-transparent'
     }`}>
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-20">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-16 md:h-20">
         <Link to="/" className="relative group">
           <motion.div
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex items-center gap-3"
+            className="relative flex items-center gap-3"
           >
             <div className="relative">
               <div className="w-10 h-10 rounded-xl bg-gold-500/20 flex items-center justify-center group-hover:bg-gold-500/30 transition-all duration-300">
@@ -68,19 +68,9 @@ const Navbar = ({ isDark, setIsDark }) => {
           ))}
         </div>
 
-        <div className="flex items-center gap-3">
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setIsDark(!isDark)}
-            className="w-10 h-10 rounded-xl glass flex items-center justify-center text-gold-500 hover:bg-white/10 transition-all"
-          >
-            {isDark ? <Sun className="w-4.5 h-4.5" /> : <Moon className="w-4.5 h-4.5" />}
-          </motion.button>
-          <button onClick={() => setMobileOpen(true)} className="md:hidden w-10 h-10 rounded-xl glass flex items-center justify-center text-gold-500">
-            <Menu className="w-5 h-5" />
+        <button onClick={() => setMobileOpen((o) => !o)} className="md:hidden w-10 h-10 rounded-xl glass flex items-center justify-center text-gold-500 transition-all">
+            {mobileOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
           </button>
-        </div>
       </div>
 
       <AnimatePresence>
@@ -90,25 +80,25 @@ const Navbar = ({ isDark, setIsDark }) => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed inset-0 bg-navy-900/98 backdrop-blur-xl z-[200] flex flex-col p-10"
+            className="fixed inset-0 bg-navy-900/80 backdrop-blur-2xl z-[1100] flex flex-col p-6 sm:p-10"
           >
             <div className="flex justify-end">
               <motion.button
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.9 }}
                 onClick={() => setMobileOpen(false)}
-                className="w-12 h-12 rounded-xl glass flex items-center justify-center text-gold-500"
+                className="w-10 md:w-12 h-10 md:h-12 rounded-xl glass flex items-center justify-center text-gold-500"
               >
-                <X className="w-6 h-6" />
+                <X className="w-5 md:w-6 h-5 md:h-6" />
               </motion.button>
             </div>
-            <div className="flex-1 flex flex-col justify-center gap-6">
+            <div className="flex-1 flex flex-col justify-center gap-4 md:gap-6">
               {links.map((item) => (
                 <Link key={item.path} to={item.path} onClick={() => setMobileOpen(false)}>
                   <motion.span
                     initial={{ opacity: 0, x: 30 }}
                     animate={{ opacity: 1, x: 0 }}
-                    className={`text-5xl md:text-7xl font-sora font-extrabold tracking-tight transition-colors ${
+                    className={`text-4xl sm:text-5xl md:text-7xl font-sora font-extrabold tracking-tight transition-colors ${
                       pathname === item.path ? 'text-gold-500' : 'text-white/40 hover:text-white'
                     }`}
                   >

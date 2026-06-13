@@ -78,14 +78,14 @@ const Places = ({ places, loading, activeCat, setActiveCat, search, setSearch, s
   const categories = useCategories();
 
   return (
-    <section className="py-28 px-6">
+    <section className="py-16 md:py-28 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-8 mb-12">
+        <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-6 md:gap-8 mb-10">
           <div>
             <motion.span
               initial={{ opacity: 0 }}
               whileInView={{ opacity: 1 }}
-              className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-4 block"
+              className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-3 md:mb-4 block"
             >
               Curated Collection
             </motion.span>
@@ -93,7 +93,7 @@ const Places = ({ places, loading, activeCat, setActiveCat, search, setSearch, s
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
-              className="font-sora text-4xl md:text-5xl font-extrabold tracking-tight"
+              className="font-sora text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight"
             >
               Discover <span className="text-gold-500">Gisenyi</span>
             </motion.h2>
@@ -107,7 +107,7 @@ const Places = ({ places, loading, activeCat, setActiveCat, search, setSearch, s
               placeholder="Search places..."
               value={search}
               onChange={e => setSearch(e.target.value)}
-              className="w-full bg-white/5 border border-white/10 rounded-xl px-11 py-3.5 text-sm text-white outline-none focus:border-gold-500/50 transition-all font-inter placeholder:text-white/20"
+              className="w-full bg-white/5 border border-white/10 rounded-xl px-11 py-3 text-sm text-white outline-none focus:border-gold-500/50 transition-all font-inter placeholder:text-white/20"
             />
             {search && (
               <button onClick={() => { setSearch(''); inputRef.current?.focus(); }} className="absolute right-4 top-1/2 -translate-y-1/2 text-white/30 hover:text-white transition-colors">
@@ -117,14 +117,14 @@ const Places = ({ places, loading, activeCat, setActiveCat, search, setSearch, s
           </div>
         </div>
 
-        <div className="flex flex-wrap gap-2 mb-10">
+        <div className="flex flex-wrap gap-1.5 md:gap-2 mb-8 md:mb-10">
           {Object.entries(categories).map(([key, cat]) => (
             <motion.button
               key={key}
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setActiveCat(key)}
-              className={`px-5 py-2.5 rounded-xl text-[10px] font-poppins font-bold uppercase tracking-[0.15em] transition-all ${
+              className={`px-3 md:px-5 py-2 md:py-2.5 rounded-xl text-[9px] md:text-[10px] font-poppins font-bold uppercase tracking-[0.15em] transition-all ${
                 activeCat === key
                   ? 'bg-gold-500 text-navy-900 shadow-lg shadow-gold-500/25'
                   : 'bg-white/5 text-white/50 hover:text-white hover:bg-white/10'
@@ -141,16 +141,16 @@ const Places = ({ places, loading, activeCat, setActiveCat, search, setSearch, s
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-center py-20"
+            className="text-center py-16 md:py-20"
           >
-            <div className="w-16 h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-6">
-              <Search className="w-6 h-6 text-white/30" />
+            <div className="w-14 md:w-16 h-14 md:h-16 rounded-2xl bg-white/5 flex items-center justify-center mx-auto mb-6">
+              <Search className="w-5 md:w-6 h-5 md:h-6 text-white/30" />
             </div>
-            <h3 className="font-sora text-xl font-bold text-white/60 mb-2">No places found</h3>
+            <h3 className="font-sora text-lg md:text-xl font-bold text-white/60 mb-2">No places found</h3>
             <p className="text-sm text-white/30 font-inter">Try adjusting your search or filter</p>
           </motion.div>
         ) : (
-          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+          <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6">
             <AnimatePresence mode="popLayout">
               {places.map((p, i) => (
                 <PlaceCard key={p.id} place={p} index={i} setSelectedPlace={setSelectedPlace} />

@@ -177,3 +177,47 @@ exports.deleteCalendarItem = async (req, res, next) => {
     res.json({ success: true });
   } catch (error) { next(error); }
 };
+
+// Gallery CRUD
+exports.getGalleryItems = async (req, res, next) => {
+  try {
+    const { skip, take, page, limit } = paginate(req.query.page, req.query.limit);
+    const [data, total] = await Promise.all([
+      prisma.galleryItem.findMany({ skip, take, orderBy: { createdAt: 'desc' } }),
+      prisma.galleryItem.count()
+    ]);
+    res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
+  } catch (error) { next(error); }
+};
+
+exports.getGalleryItem = async (req, res, next) => {
+  try {
+    const item = await prisma.galleryItem.findUnique({ where: { id: req.params.id } });
+    if (!item) return res.status(404).json({ error: 'Gallery item not found' });
+    res.json(item);
+  } catch (error) { next(error); }
+};
+
+exports.createGalleryItem = async (req, res, next) => {
+  try {
+    const item = await prisma.galleryItem.create({ data: req.body });
+    res.status(201).json(item);
+  } catch (error) { next(error); }
+};
+
+exports.updateGalleryItem = async (req, res, next) => {
+  try {
+    const item = await prisma.galleryItem.update({
+      where: { id: req.params.id },
+      data: req.body
+    });
+    res.json(item);
+  } catch (error) { next(error); }
+};
+
+exports.deleteGalleryItem = async (req, res, next) => {
+  try {
+    await prisma.galleryItem.delete({ where: { id: req.params.id } });
+    res.json({ success: true });
+  } catch (error) { next(error); }
+};

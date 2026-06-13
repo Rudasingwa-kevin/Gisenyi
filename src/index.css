@@ -20,7 +20,7 @@
 }
 
 @layer base {
-  html { scroll-behavior: smooth; }
+  html { scroll-behavior: smooth; position: relative; }
   body {
     @apply bg-[#F8F8F6] text-navy-800 dark:bg-navy-900 dark:text-white/90 transition-colors duration-500 overflow-x-hidden font-outfit antialiased;
   }
