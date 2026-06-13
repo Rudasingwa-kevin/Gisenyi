@@ -69,7 +69,7 @@ export default function PlaceDetailPage({ places }) {
         <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-950/60 to-transparent" />
 
-        <div className="absolute top-24 left-6 z-10">
+        <div className="absolute top-20 sm:top-24 left-4 sm:left-6 z-10">
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl glass-dark text-white/80 hover:text-white transition-all text-sm font-inter"
@@ -79,9 +79,9 @@ export default function PlaceDetailPage({ places }) {
         </div>
       </div>
 
-      <div className="max-w-5xl mx-auto px-6 -mt-32 relative z-10">
-        <div className="bg-navy-900/90 backdrop-blur-xl border border-white/5 rounded-2xl p-8 md:p-10">
-          <div className="flex flex-wrap items-start justify-between gap-6 mb-8">
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 -mt-24 md:-mt-32 relative z-10">
+        <div className="bg-navy-900/90 backdrop-blur-xl border border-white/5 rounded-2xl p-6 md:p-8 lg:p-10">
+          <div className="flex flex-wrap items-start justify-between gap-4 md:gap-6 mb-6 md:mb-8">
             <div className="flex-1 min-w-0">
               <div className="flex items-center gap-3 mb-4">
                 <span className="px-3 py-1.5 rounded-full glass-dark text-[9px] font-poppins font-bold text-gold-500 uppercase tracking-[0.15em]">

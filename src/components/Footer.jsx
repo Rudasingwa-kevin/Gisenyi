@@ -6,19 +6,19 @@ const Footer = ({ onAdminClick }) => {
   const { isAdmin } = useAuth();
   return (
   <footer className="bg-navy-900 border-t border-white/5">
-    <div className="max-w-7xl mx-auto px-6 py-20">
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-        <div className="lg:col-span-2">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-gold-500/20 flex items-center justify-center">
-              <MapPin className="w-5 h-5 text-gold-500" />
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 py-12 md:py-20">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12 mb-12 md:mb-16">
+          <div className="lg:col-span-2">
+            <div className="flex items-center gap-3 mb-4 md:mb-6">
+              <div className="w-9 h-9 md:w-10 md:h-10 rounded-xl bg-gold-500/20 flex items-center justify-center">
+                <MapPin className="w-4 h-4 md:w-5 md:h-5 text-gold-500" />
+              </div>
+              <span className="text-xl md:text-2xl font-sora font-extrabold text-white">GISENYI<span className="text-gold-500">.</span></span>
             </div>
-            <span className="text-2xl font-sora font-extrabold text-white">GISENYI<span className="text-gold-500">.</span></span>
+            <p className="text-white/40 font-inter text-base md:text-lg leading-relaxed max-w-md">
+              Experience the pinnacle of African lakeside luxury. Every sunrise is a masterpiece, every wave carries a secret.
+            </p>
           </div>
-          <p className="text-white/40 font-inter text-lg leading-relaxed max-w-md">
-            Experience the pinnacle of African lakeside luxury. Every sunrise is a masterpiece, every wave carries a secret.
-          </p>
-        </div>
         <div>
           <h4 className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-6">Explore</h4>
           <div className="space-y-3">
@@ -38,7 +38,7 @@ const Footer = ({ onAdminClick }) => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-4 text-[10px] font-poppins font-bold text-white/20 uppercase tracking-[0.2em]">
+      <div className="flex flex-col md:flex-row justify-between items-center pt-8 border-t border-white/5 gap-4 text-[9px] md:text-[10px] font-poppins font-bold text-white/20 uppercase tracking-[0.15em] md:tracking-[0.2em]">
         <span>© 2026 Gisenyi Tourism</span>
         <div className="flex gap-8">
           <a href="#" className="hover:text-white/40 transition-colors">Privacy</a>

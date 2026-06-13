@@ -26,12 +26,12 @@ export default function AddCalendarItemPage() {
 
   return (
     <div className="min-h-screen bg-navy-950">
-      <div className="max-w-3xl mx-auto px-6 py-8">
-        <button onClick={() => navigate('/admin')} className="flex items-center gap-2 text-white/50 hover:text-gold-500 transition-colors text-sm font-inter mb-6">
-          <ArrowLeft className="w-4 h-4" /> Back to Admin
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 md:py-8">
+        <button onClick={() => navigate('/admin')} className="flex items-center gap-2 text-white/50 hover:text-gold-500 transition-colors text-xs md:text-sm font-inter mb-4 md:mb-6">
+          <ArrowLeft className="w-3.5 md:w-4 h-3.5 md:h-4" /> Back to Admin
         </button>
-        <h1 className="text-2xl font-sora font-bold text-white mb-6">Add New Calendar Item</h1>
-        <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-6">
+        <h1 className="text-xl md:text-2xl font-sora font-bold text-white mb-4 md:mb-6">Add New Calendar Item</h1>
+        <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-4 md:p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div>
               <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Title</label>
@@ -74,13 +74,13 @@ export default function AddCalendarItemPage() {
                 className="w-full h-10 bg-white/5 border border-white/10 rounded-lg cursor-pointer" />
             </div>
           </div>
-          <div className="flex gap-3 pt-4">
+          <div className="flex flex-col sm:flex-row gap-3 pt-4">
             <button type="submit" disabled={saving}
-              className="px-5 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
+              className="w-full sm:w-auto px-5 py-2.5 sm:py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
               {saving ? 'Saving...' : 'Create Item'}
             </button>
             <button type="button" onClick={() => navigate('/admin')}
-              className="px-5 py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
+              className="w-full sm:w-auto px-5 py-2.5 sm:py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
               Cancel
             </button>
           </div>

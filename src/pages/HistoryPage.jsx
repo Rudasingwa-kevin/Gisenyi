@@ -1,7 +1,7 @@
 import History from '../components/History';
 
 const HistoryPage = () => (
-  <div className="pt-20">
+  <div className="pt-16 md:pt-20">
     <History />
   </div>
 );

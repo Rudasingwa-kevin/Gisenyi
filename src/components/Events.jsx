@@ -79,13 +79,13 @@ const Events = () => {
   };
 
   return (
-    <section className="py-28 px-6">
+    <section className="py-16 md:py-28 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="max-w-3xl mb-16">
+        <div className="max-w-3xl mb-12 md:mb-16">
           <motion.span
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-4 block"
+            className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-3 md:mb-4 block"
           >
             What's Happening
           </motion.span>
@@ -93,14 +93,14 @@ const Events = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="font-sora text-4xl md:text-6xl font-extrabold tracking-tight mb-6"
+            className="font-sora text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight mb-4 md:mb-6"
           >
             Events in <span className="text-gold-500">Gisenyi</span>
           </motion.h2>
           <motion.p
             initial={{ opacity: 0 }}
             whileInView={{ opacity: 1 }}
-            className="font-inter text-lg text-white/40"
+            className="font-inter text-base md:text-lg text-white/40"
           >
             From lakeside concerts to comedy nights under the stars — discover the vibrant culture and entertainment scene on the shores of Lake Kivu.
           </motion.p>
@@ -110,7 +110,7 @@ const Events = () => {
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="flex flex-wrap gap-3 mb-12"
+          className="flex flex-wrap gap-2 md:gap-3 mb-10"
         >
           {CATEGORIES.map(cat => {
             const Icon = cat.icon;
@@ -121,7 +121,7 @@ const Events = () => {
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
                 onClick={() => setActiveCat(cat.key)}
-                className={`flex items-center gap-2 px-5 py-3 rounded-xl text-[11px] font-poppins font-semibold uppercase tracking-[0.15em] transition-all duration-300 ${
+                className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl text-[10px] md:text-[11px] font-poppins font-semibold uppercase tracking-[0.15em] transition-all duration-300 ${
                   isActive
                     ? 'bg-gold-500 text-navy-900'
                     : 'glass text-white/60 hover:text-white hover:bg-white/5'
@@ -135,7 +135,7 @@ const Events = () => {
         </motion.div>
 
         {loading ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {Array.from({ length: 6 }).map((_, i) => (
               <div key={i} className="rounded-2xl bg-white/5 overflow-hidden animate-pulse">
                 <div className="aspect-[2/1] bg-white/10" />
@@ -149,7 +149,7 @@ const Events = () => {
             ))}
           </div>
         ) : (
-          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             <AnimatePresence mode="popLayout">
               {filtered.map(event => {
                 const Icon = catIconMap[event.category] || Sparkles;
@@ -180,7 +180,7 @@ const Events = () => {
                       <div className={`h-1.5 w-full bg-gradient-to-r ${grad}`} />
                     )}
 
-                    <div className="p-6">
+                    <div className="p-4 md:p-6">
                       <div className="flex items-center justify-between mb-4">
                         <span className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-[9px] font-poppins font-bold uppercase tracking-[0.15em] glass ${border.replace('border-', 'text-').replace('/30', '')}`}>
                           <Icon className="w-3 h-3" />

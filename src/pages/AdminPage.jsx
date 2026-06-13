@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink } from 'lucide-react';
+import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink, Image as ImageIcon, Video } from 'lucide-react';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
 
 export default function AdminPage() {
@@ -12,6 +12,7 @@ export default function AdminPage() {
   const [categories, setCategories] = useState([]);
   const [events, setEvents] = useState([]);
   const [calendarItems, setCalendarItems] = useState([]);
+  const [galleryItems, setGalleryItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -55,11 +56,16 @@ export default function AdminPage() {
     if (res.ok) { const d = await res.json(); setCalendarItems(d.data || d); }
   }, [token]);
 
+  const loadGalleryItems = useCallback(async () => {
+    const res = await fetchWithAuth(`${API}/gallery`, token);
+    if (res.ok) { const d = await res.json(); setGalleryItems(d.data || d); }
+  }, [token]);
+
   useEffect(() => {
     if (!isAdmin) return;
     setLoading(true);
-    Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems()]).then(() => setLoading(false));
-  }, [isAdmin, loadPlaces, loadCategories, loadEvents]);
+    Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems()]).then(() => setLoading(false));
+  }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems]);
 
   const handleDelete = async (type, id) => {
     if (!confirm('Are you sure you want to delete this item?')) return;
@@ -68,6 +74,7 @@ export default function AdminPage() {
       if (type === 'places') setPlaces(p => p.filter(x => x.id !== id));
       else if (type === 'events') setEvents(e => e.filter(x => x.id !== id));
       else if (type === 'calendar') setCalendarItems(c => c.filter(x => x.id !== id));
+      else if (type === 'gallery') setGalleryItems(g => g.filter(x => x.id !== id));
       else setCategories(c => c.filter(x => x.id !== id));
     }
   };
@@ -131,45 +138,58 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [calendarItems, listSearch, listSort, listPage]);
 
+  const filteredGallery = useMemo(() => {
+    const f = galleryItems.filter(g => {
+      if (!listSearch) return true;
+      const q = listSearch.toLowerCase();
+      return g.title?.toLowerCase().includes(q) || g.type?.toLowerCase().includes(q);
+    }).sort((a, b) => {
+      if (listSort === 'title') return (a.title || '').localeCompare(b.title || '');
+      return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+    const { items, page, totalPages } = paginated(f);
+    return { items, page, totalPages, total: f.length };
+  }, [galleryItems, listSearch, listSort, listPage]);
+
   return (
     <div className="min-h-screen bg-navy-950">
       <div className="sticky top-0 z-40 bg-navy-900/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <ShieldAlert className="w-5 h-5 text-gold-500" />
-            <span className="text-white font-sora font-bold">Admin Panel</span>
-            <span className="text-white/30 text-sm font-inter">({username})</span>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
+          <div className="flex items-center gap-2 md:gap-3 min-w-0">
+            <ShieldAlert className="w-4 md:w-5 h-4 md:h-5 text-gold-500 shrink-0" />
+            <span className="text-white font-sora font-bold text-sm md:text-base truncate">Admin Panel</span>
+            <span className="text-white/30 text-xs md:text-sm font-inter hidden sm:inline">({username})</span>
           </div>
           <button
             onClick={handleLogout}
-            className="flex items-center gap-2 text-white/50 hover:text-red-400 transition-colors text-sm font-inter"
+            className="flex items-center gap-1.5 text-white/50 hover:text-red-400 transition-colors text-xs md:text-sm font-inter shrink-0"
           >
-            <LogOut className="w-4 h-4" /> Logout
+            <LogOut className="w-3.5 md:w-4 h-3.5 md:h-4" /> Logout
           </button>
         </div>
       </div>
 
-      <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex gap-2 mb-8 flex-wrap">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-8">
+        <div className="flex gap-2 mb-6 md:mb-8 flex-wrap">
           <button
             onClick={() => switchTab('dashboard')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+            className={`flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-inter font-semibold transition-all ${
               tab === 'dashboard' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
           >
-            <LayoutDashboard className="w-4 h-4" /> Dashboard
+            <LayoutDashboard className="w-3.5 md:w-4 h-3.5 md:h-4" /> Dashboard
           </button>
           <button
             onClick={() => switchTab('places')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+            className={`flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-inter font-semibold transition-all ${
               tab === 'places' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
           >
-            <MapPin className="w-4 h-4" /> Places
+            <MapPin className="w-3.5 md:w-4 h-3.5 md:h-4" /> Places
           </button>
           <button
             onClick={() => switchTab('categories')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
               tab === 'categories' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
           >
@@ -177,7 +197,7 @@ export default function AdminPage() {
           </button>
           <button
             onClick={() => switchTab('events')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
               tab === 'events' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
           >
@@ -185,11 +205,19 @@ export default function AdminPage() {
           </button>
           <button
             onClick={() => switchTab('calendar')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
               tab === 'calendar' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
           >
             <Circle className="w-4 h-4" /> Calendar
+          </button>
+          <button
+            onClick={() => switchTab('gallery')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+              tab === 'gallery' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
+            }`}
+          >
+            <ImageIcon className="w-4 h-4" /> Gallery
           </button>
         </div>
 
@@ -204,80 +232,80 @@ export default function AdminPage() {
               <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
             ) : (
               <>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                  <div className="glass rounded-2xl border border-white/5 p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <MapPin className="w-5 h-5 text-gold-500" />
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <MapPin className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
                       </div>
                     </div>
-                    <span className="text-3xl font-sora font-extrabold text-white">{places.length}</span>
-                    <p className="text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Places</p>
+                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{places.length}</span>
+                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Places</p>
                   </div>
-                  <div className="glass rounded-2xl border border-white/5 p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <LayoutGrid className="w-5 h-5 text-gold-500" />
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <LayoutGrid className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
                       </div>
                     </div>
-                    <span className="text-3xl font-sora font-extrabold text-white">{categories.length}</span>
-                    <p className="text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Categories</p>
+                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{categories.length}</span>
+                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Categories</p>
                   </div>
-                  <div className="glass rounded-2xl border border-white/5 p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <Calendar className="w-5 h-5 text-gold-500" />
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <Calendar className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
                       </div>
                     </div>
-                    <span className="text-3xl font-sora font-extrabold text-white">{events.length}</span>
-                    <p className="text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Events</p>
+                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{events.length}</span>
+                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Events</p>
                   </div>
-                  <div className="glass rounded-2xl border border-white/5 p-6">
-                    <div className="flex items-center gap-3 mb-3">
-                      <div className="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <Circle className="w-5 h-5 text-gold-500" />
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <Circle className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
                       </div>
                     </div>
-                    <span className="text-3xl font-sora font-extrabold text-white">{calendarItems.length}</span>
-                    <p className="text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Calendar Items</p>
+                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{calendarItems.length}</span>
+                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Calendar Items</p>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                  <div className="glass rounded-2xl border border-white/5 p-6">
-                    <h3 className="font-sora font-bold text-white text-sm mb-4 flex items-center gap-2">
-                      <Building2 className="w-4 h-4 text-gold-500" /> Recent Places
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
+                      <Building2 className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Recent Places
                     </h3>
                     {places.length === 0 ? (
-                      <p className="text-white/30 text-sm font-inter">No places yet</p>
+                      <p className="text-white/30 text-xs md:text-sm font-inter">No places yet</p>
                     ) : (
-                      <div className="space-y-2">
+                      <div className="space-y-1.5 md:space-y-2">
                         {places.slice(0, 5).map(p => (
-                          <div key={p.id} className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
-                            {p.image && <img src={p.image} alt="" className="w-8 h-8 rounded-lg object-cover bg-navy-800" />}
+                          <div key={p.id} className="flex items-center gap-2 md:gap-3 p-2 rounded-lg bg-white/5">
+                            {p.image && <img src={p.image} alt="" className="w-7 md:w-8 h-7 md:h-8 rounded-lg object-cover bg-navy-800" />}
                             <div className="min-w-0">
-                              <p className="text-white text-sm font-inter truncate">{p.name}</p>
-                              <p className="text-white/30 text-[10px] font-inter">{p.catKey}</p>
+                              <p className="text-white text-xs md:text-sm font-inter truncate">{p.name}</p>
+                              <p className="text-white/30 text-[9px] md:text-[10px] font-inter">{p.catKey}</p>
                             </div>
                           </div>
                         ))}
                       </div>
                     )}
                   </div>
-                  <div className="glass rounded-2xl border border-white/5 p-6">
-                    <h3 className="font-sora font-bold text-white text-sm mb-4 flex items-center gap-2">
-                      <Sparkles className="w-4 h-4 text-gold-500" /> Upcoming Events
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
+                      <Sparkles className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Upcoming Events
                     </h3>
                     {events.length === 0 ? (
-                      <p className="text-white/30 text-sm font-inter">No events yet</p>
+                      <p className="text-white/30 text-xs md:text-sm font-inter">No events yet</p>
                     ) : (
-                      <div className="space-y-2">
+                      <div className="space-y-1.5 md:space-y-2">
                         {events.slice(0, 5).map(e => (
-                          <div key={e.id} className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
-                            {e.image && <img src={e.image} alt="" className="w-8 h-8 rounded-lg object-cover bg-navy-800" />}
+                          <div key={e.id} className="flex items-center gap-2 md:gap-3 p-2 rounded-lg bg-white/5">
+                            {e.image && <img src={e.image} alt="" className="w-7 md:w-8 h-7 md:h-8 rounded-lg object-cover bg-navy-800" />}
                             <div className="min-w-0">
-                              <p className="text-white text-sm font-inter truncate">{e.title}</p>
-                              <p className="text-white/30 text-[10px] font-inter flex items-center gap-1"><Clock className="w-3 h-3" /> {e.date}</p>
+                              <p className="text-white text-xs md:text-sm font-inter truncate">{e.title}</p>
+                              <p className="text-white/30 text-[9px] md:text-[10px] font-inter flex items-center gap-1"><Clock className="w-2.5 md:w-3 h-2.5 md:h-3" /> {e.date}</p>
                             </div>
                           </div>
                         ))}
@@ -292,8 +320,8 @@ export default function AdminPage() {
 
         {tab === 'places' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-sora font-bold text-white">Manage Places ({places.length})</h2>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Places ({places.length})</h2>
               <button
                 onClick={() => setShowForm(!showForm)}
                 className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
@@ -357,8 +385,8 @@ export default function AdminPage() {
 
         {tab === 'categories' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-sora font-bold text-white">Manage Categories ({categories.length})</h2>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Categories ({categories.length})</h2>
               <button
                 onClick={() => setShowForm(!showForm)}
                 className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
@@ -420,8 +448,8 @@ export default function AdminPage() {
 
         {tab === 'events' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-sora font-bold text-white">Manage Events ({events.length})</h2>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Events ({events.length})</h2>
               <button
                 onClick={() => setShowForm(!showForm)}
                 className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
@@ -492,8 +520,8 @@ export default function AdminPage() {
 
         {tab === 'calendar' && (
           <div>
-            <div className="flex justify-between items-center mb-6">
-              <h2 className="text-xl font-sora font-bold text-white">Manage Calendar Items ({calendarItems.length})</h2>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Calendar Items ({calendarItems.length})</h2>
               <button
                 onClick={() => setShowForm(!showForm)}
                 className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
@@ -554,6 +582,72 @@ export default function AdminPage() {
                 ))}
               </div>
               <Pagination page={filteredCalendar.page} totalPages={filteredCalendar.totalPages} onPage={setListPage} />
+              </div>)}
+          </div>
+        )}
+
+        {tab === 'gallery' && (
+          <div>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Gallery ({galleryItems.length})</h2>
+            </div>
+            <div className="flex gap-3 mb-6">
+              <button
+                onClick={() => { setEditing(null); setShowForm(true); }}
+                className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
+              >
+                <Plus className="w-4 h-4" /> Add Item
+              </button>
+            </div>
+
+            {showForm && (
+              <GalleryItemForm
+                item={editing}
+                token={token}
+                onSave={(g) => {
+                  if (editing) setGalleryItems(items => items.map(x => x.id === g.id ? g : x));
+                  else setGalleryItems(items => [g, ...items]);
+                  setShowForm(false);
+                  setEditing(null);
+                }}
+                onCancel={() => { setShowForm(false); setEditing(null); }}
+              />
+            )}
+
+            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]} placeholder="Search gallery..." />
+            {loading ? (
+              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
+            ) : (<div>
+              <div className="grid gap-3">
+                {filteredGallery.items.map(item => (
+                  <div key={item.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-4 min-w-0">
+                      <div className="w-14 h-14 rounded-lg overflow-hidden bg-navy-800 shrink-0 flex items-center justify-center">
+                        {item.type === 'video' ? (
+                          <Video className="w-6 h-6 text-gold-500" />
+                        ) : (
+                          <img src={item.url} alt={item.title || ''} className="w-full h-full object-cover" onError={e => { e.target.style.display = 'none' }} />
+                        )}
+                      </div>
+                      <div className="min-w-0">
+                        <h3 className="text-white font-inter font-semibold truncate">{item.title || 'Untitled'}</h3>
+                        <p className="text-white/30 text-sm font-inter capitalize">{item.type}</p>
+                      </div>
+                    </div>
+                    <div className="flex gap-1 shrink-0">
+                      <a href={item.url} target="_blank" rel="noopener noreferrer"
+                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                      <button onClick={() => handleDelete('gallery', item.id)}
+                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+              <Pagination page={filteredGallery.page} totalPages={filteredGallery.totalPages} onPage={setListPage} />
               </div>)}
           </div>
         )}
@@ -947,6 +1041,87 @@ function CalendarItemForm({ item, token, onSave, onCancel }) {
         </button>
         <button type="button" onClick={onCancel}
           className="px-5 py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
+}
+
+function GalleryItemForm({ item, token, onSave, onCancel }) {
+  const [form, setForm] = useState({
+    url: item?.url || '',
+    type: item?.type || 'image',
+    title: item?.title || ''
+  });
+  const [uploading, setUploading] = useState(false);
+  const [saving, setSaving] = useState(false);
+
+  const handleFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const { url } = await uploadFile(file, token);
+      setForm(f => ({ ...f, url }));
+    } catch (err) {
+      alert('Upload failed: ' + err.message);
+    }
+    setUploading(false);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    const url = item ? `${API}/gallery/${item.id}` : `${API}/gallery`;
+    const method = item ? 'PUT' : 'POST';
+    const res = await fetchWithAuth(url, token, { method, body: JSON.stringify(form) });
+    if (res.ok) onSave(await res.json());
+    setSaving(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-4 md:p-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Title</label>
+          <input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
+            placeholder="Photo title (optional)"
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Type</label>
+          <select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50">
+            <option value="image">Image</option>
+            <option value="video">Video</option>
+          </select>
+        </div>
+        <div className="md:col-span-2">
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">URL</label>
+          <div className="flex gap-2">
+            <input type="url" value={form.url} onChange={e => setForm(f => ({ ...f, url: e.target.value }))}
+              placeholder={form.type === 'video' ? 'https://youtube.com/watch?v=... or https://example.com/video.mp4' : 'https://example.com/image.jpg'}
+              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
+            <label className={`shrink-0 px-4 py-3 rounded-lg text-sm font-inter font-semibold cursor-pointer transition-all ${uploading ? 'bg-white/10 text-white/40' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
+              {uploading ? '...' : 'Upload'}
+              <input type="file" accept={form.type === 'video' ? 'video/*' : 'image/*'} onChange={handleFile} className="hidden" disabled={uploading} />
+            </label>
+          </div>
+        </div>
+        {form.url && form.type === 'image' && (
+          <div className="md:col-span-2">
+            <img src={form.url} alt="" className="h-32 rounded-lg object-cover bg-navy-800" onError={e => { e.target.style.display = 'none' }} />
+          </div>
+        )}
+      </div>
+      <div className="flex flex-col sm:flex-row gap-3 pt-4">
+        <button type="submit" disabled={saving}
+          className="w-full sm:w-auto px-5 py-2.5 sm:py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
+          {saving ? 'Saving...' : item ? 'Update' : 'Add to Gallery'}
+        </button>
+        <button type="button" onClick={onCancel}
+          className="w-full sm:w-auto px-5 py-2.5 sm:py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
           Cancel
         </button>
       </div>

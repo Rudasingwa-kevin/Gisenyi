@@ -244,17 +244,17 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
   const resultCount = filteredPlaces.length;
 
   return (
-    <section className="py-28 px-6">
+    <section className="py-16 md:py-28 px-4 sm:px-6">
       <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-10">
+        <div className="text-center mb-8 md:mb-10">
           <span className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em]">Interactive Map</span>
-          <h2 className="font-sora text-4xl md:text-5xl font-extrabold mt-2">Explore the <span className="text-gold-500">Shoreline</span></h2>
+          <h2 className="font-sora text-3xl sm:text-4xl md:text-5xl font-extrabold mt-2">Explore the <span className="text-gold-500">Shoreline</span></h2>
         </div>
 
-        <div className="relative h-[600px] rounded-2xl overflow-hidden border border-white/10">
+        <div className="relative h-[70vh] md:h-[600px] rounded-2xl overflow-hidden border border-white/10">
           <div ref={mapRef} className="h-full w-full" />
 
-          <div className="absolute top-4 left-4 z-[1000] w-full max-w-sm space-y-3">
+          <div className="absolute top-3 left-3 right-3 md:top-4 md:left-4 z-[1000] space-y-3">
             <div className="flex items-center gap-3 px-4 py-3 rounded-xl glass-dark shadow-2xl">
               <Search className="w-4 h-4 text-gold-500 shrink-0" />
               <input
@@ -262,7 +262,7 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
                 placeholder="Search places..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="bg-transparent border-none outline-none text-white text-sm w-full font-inter placeholder:text-white/30"
+                className="bg-transparent border-none outline-none text-white text-sm w-full font-inter placeholder:text-white/30 min-w-0"
               />
               {searchQuery && (
                 <button onClick={() => setSearchQuery('')} className="shrink-0 text-white/40 hover:text-white transition-colors">
@@ -367,7 +367,7 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
           )}
 
           <div
-            className={`absolute inset-y-0 left-0 z-[999] w-80 bg-navy-900/95 backdrop-blur-xl border-r border-white/10 shadow-2xl transition-all duration-300 ease-out flex flex-col ${
+            className={`absolute inset-y-0 left-0 z-[999] w-[280px] sm:w-80 bg-navy-900/95 backdrop-blur-xl border-r border-white/10 shadow-2xl transition-all duration-300 ease-out flex flex-col ${
               sidebarOpen ? 'translate-x-0' : '-translate-x-full'
             }`}
           >

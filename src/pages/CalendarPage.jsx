@@ -86,40 +86,40 @@ const CalendarPage = () => {
   const selectedItems = selectedDay ? getItemsForDay(selectedDay) : [];
 
   return (
-    <div className="min-h-screen bg-navy-950 pt-28 px-6 pb-20">
+    <div className="min-h-screen bg-navy-950 pt-24 md:pt-28 px-4 sm:px-6 pb-16 md:pb-20">
       <div className="max-w-7xl mx-auto">
-        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-10">
-          <span className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-4 block">Plan Your Visit</span>
-          <h2 className="font-sora text-4xl md:text-5xl font-extrabold tracking-tight">
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8 md:mb-10">
+          <span className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-3 md:mb-4 block">Plan Your Visit</span>
+          <h2 className="font-sora text-3xl sm:text-4xl md:text-5xl font-extrabold tracking-tight">
             Events <span className="text-gold-500">Calendar</span>
           </h2>
         </motion.div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
           <div className="lg:col-span-2">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               className="glass rounded-2xl border border-white/5 overflow-hidden"
             >
-              <div className="flex items-center justify-between p-6 border-b border-white/5">
-                <div className="flex items-center gap-4">
-                  <button onClick={prevMonth} className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all">
-                    <ChevronLeft className="w-5 h-5" />
+              <div className="flex items-center justify-between p-4 md:p-6 border-b border-white/5">
+                <div className="flex items-center gap-2 md:gap-4">
+                  <button onClick={prevMonth} className="w-9 md:w-10 h-9 md:h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all">
+                    <ChevronLeft className="w-4 md:w-5 h-4 md:h-5" />
                   </button>
-                  <h3 className="font-sora text-xl font-bold text-white">
+                  <h3 className="font-sora text-base md:text-xl font-bold text-white">
                     {MONTHS[currentMonth]} <span className="text-gold-500">{currentYear}</span>
                   </h3>
-                  <button onClick={nextMonth} className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all">
-                    <ChevronRight className="w-5 h-5" />
+                  <button onClick={nextMonth} className="w-9 md:w-10 h-9 md:h-10 rounded-xl bg-white/5 flex items-center justify-center text-white/50 hover:text-white hover:bg-white/10 transition-all">
+                    <ChevronRight className="w-4 md:w-5 h-4 md:h-5" />
                   </button>
                 </div>
-                <button onClick={goToday} className="px-4 py-2 rounded-xl bg-gold-500/10 border border-gold-500/20 text-gold-500 font-poppins font-semibold text-[10px] uppercase tracking-[0.15em] hover:bg-gold-500 hover:text-navy-900 transition-all">
+                <button onClick={goToday} className="px-3 md:px-4 py-1.5 md:py-2 rounded-xl bg-gold-500/10 border border-gold-500/20 text-gold-500 font-poppins font-semibold text-[9px] md:text-[10px] uppercase tracking-[0.15em] hover:bg-gold-500 hover:text-navy-900 transition-all">
                   Today
                 </button>
               </div>
 
-              <div className="p-6">
+              <div className="p-3 md:p-6">
                 <div className="grid grid-cols-7 mb-2">
                   {DAYS.map(d => (
                     <div key={d} className="text-center text-[10px] font-poppins font-bold text-white/30 uppercase tracking-[0.15em] py-2">{d}</div>
@@ -127,13 +127,13 @@ const CalendarPage = () => {
                 </div>
 
                 {loading ? (
-                  <div className="grid grid-cols-7 gap-1">
+                  <div className="grid grid-cols-7 gap-0.5 md:gap-1">
                     {Array.from({ length: 35 }).map((_, i) => (
                       <div key={i} className="aspect-square rounded-xl bg-white/5 animate-pulse" />
                     ))}
                   </div>
                 ) : (
-                  <div className="grid grid-cols-7 gap-1">
+                  <div className="grid grid-cols-7 gap-0.5 md:gap-1">
                     {calendarDays.map((day, i) => {
                       const dayItems = getItemsForDay(day);
                       const isSelected = selectedDay === day;
@@ -142,23 +142,23 @@ const CalendarPage = () => {
                           key={i}
                           disabled={!day}
                           onClick={() => setSelectedDay(day)}
-                          className={`aspect-square rounded-xl flex flex-col items-center justify-center gap-0.5 transition-all duration-200 ${
+                          className={`min-h-[44px] md:aspect-square rounded-xl flex flex-col items-center justify-center gap-0.5 transition-all duration-200 ${
                             !day ? 'invisible' :
                             isSelected ? 'bg-gold-500/20 border border-gold-500/40' :
                             isToday(day) ? 'bg-gold-500/10 border border-gold-500/20' :
                             'bg-white/5 hover:bg-white/10 border border-transparent'
                           }`}
                         >
-                          <span className={`font-sora text-sm font-bold ${isSelected ? 'text-gold-500' : isToday(day) ? 'text-gold-500' : 'text-white/70'}`}>
+                          <span className={`font-sora text-xs md:text-sm font-bold ${isSelected ? 'text-gold-500' : isToday(day) ? 'text-gold-500' : 'text-white/70'}`}>
                             {day}
                           </span>
                           {dayItems.length > 0 && (
                             <div className="flex gap-0.5 flex-wrap justify-center px-1">
-                              {dayItems.slice(0, 4).map((_, idx) => (
+                              {dayItems.slice(0, 3).map((_, idx) => (
                                 <span key={idx} className="w-1 h-1 rounded-full bg-gold-500/70" />
                               ))}
-                              {dayItems.length > 4 && (
-                                <span className="text-[8px] font-poppins font-bold text-white/40">+{dayItems.length - 4}</span>
+                              {dayItems.length > 3 && (
+                                <span className="text-[7px] md:text-[8px] font-poppins font-bold text-white/40">+{dayItems.length - 3}</span>
                               )}
                             </div>
                           )}

@@ -49,7 +49,7 @@ const Hero = () => {
           className="font-sora text-[clamp(56px,12vw,140px)] font-extrabold text-white leading-[0.85] tracking-[-0.06em] mb-8"
         >
           GISENYI
-          <span className="block text-2xl md:text-4xl font-inter font-light tracking-[0.3em] text-gold-500/80 mt-4">
+          <span className="block text-lg sm:text-2xl md:text-4xl font-inter font-light tracking-[0.2em] md:tracking-[0.3em] text-gold-500/80 mt-3 md:mt-4">
             Where Volcanic Peaks Meet the Endless Azure
           </span>
         </motion.h1>
@@ -58,13 +58,13 @@ const Hero = () => {
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-12"
+          className="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 mt-8 md:mt-12"
         >
           <Link to="/stays">
             <motion.span
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 px-10 py-4 bg-gold-500 text-navy-900 font-poppins font-bold text-sm rounded-2xl hover:bg-gold-400 transition-all shadow-2xl shadow-gold-500/25"
+              className="inline-flex items-center gap-2 px-8 sm:px-10 py-3.5 sm:py-4 bg-gold-500 text-navy-900 font-poppins font-bold text-sm rounded-2xl hover:bg-gold-400 transition-all shadow-2xl shadow-gold-500/25"
             >
               Explore Stays <ArrowRight className="w-4 h-4" />
             </motion.span>
@@ -73,7 +73,7 @@ const Hero = () => {
             <motion.span
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 px-10 py-4 glass text-white font-poppins font-bold text-sm rounded-2xl hover:bg-white/10 transition-all"
+              className="inline-flex items-center gap-2 px-8 sm:px-10 py-3.5 sm:py-4 glass text-white font-poppins font-bold text-sm rounded-2xl hover:bg-white/10 transition-all"
             >
               View Map <Compass className="w-4 h-4" />
             </motion.span>

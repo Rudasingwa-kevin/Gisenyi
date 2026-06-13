@@ -15,8 +15,8 @@ const HomePage = ({ stats, loading }) => (
   <div>
     <Hero />
     <Stats stats={stats} loading={loading} />
-    <section className="py-20 px-6">
-      <div className="max-w-7xl mx-auto space-y-24">
+    <section className="py-12 md:py-20 px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto space-y-12 md:space-y-24">
         {teasers.map((item, i) => (
           <motion.div
             key={i}
@@ -24,12 +24,12 @@ const HomePage = ({ stats, loading }) => (
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-80px' }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className={`grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center ${i % 2 === 1 ? 'lg:direction-rtl' : ''}`}
+            className={`grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-20 items-center`}
             style={{ direction: i % 2 === 1 ? 'rtl' : 'ltr' }}
           >
             <div style={{ direction: 'ltr' }}>
-              <h2 className="font-sora text-3xl md:text-4xl font-extrabold mb-4">{item.title}</h2>
-              <p className="text-white/50 font-inter text-lg leading-relaxed mb-8">{item.desc}</p>
+              <h2 className="font-sora text-2xl sm:text-3xl md:text-4xl font-extrabold mb-3 md:mb-4">{item.title}</h2>
+              <p className="text-white/50 font-inter text-base md:text-lg leading-relaxed mb-6 md:mb-8">{item.desc}</p>
               <Link to={item.link}>
                 <motion.span
                   whileHover={{ x: 4 }}

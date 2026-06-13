@@ -45,13 +45,13 @@ const HistoryEra = ({ era, index }) => (
 );
 
 const History = () => (
-  <section className="py-28 px-6">
+  <section className="py-16 md:py-28 px-4 sm:px-6">
     <div className="max-w-7xl mx-auto">
-      <div className="max-w-3xl mb-20">
+      <div className="max-w-3xl mb-16 md:mb-20">
         <motion.span
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-4 block"
+          className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-3 md:mb-4 block"
         >
           Chronicles of the Riviera
         </motion.span>
@@ -59,14 +59,14 @@ const History = () => (
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
-          className="font-sora text-4xl md:text-6xl font-extrabold tracking-tight mb-6"
+          className="font-sora text-3xl sm:text-4xl md:text-6xl font-extrabold tracking-tight mb-4 md:mb-6"
         >
           A Legacy of <span className="text-gold-500">Fire & Water</span>
         </motion.h2>
         <motion.p
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
-          className="font-inter text-lg text-white/40"
+          className="font-inter text-base md:text-lg text-white/40"
         >
           From volcanic genesis to the modern renaissance, Gisenyi's soul is etched into the very shores of Lake Kivu.
         </motion.p>
