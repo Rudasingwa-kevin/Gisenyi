@@ -4,6 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle } from 'lucide-react';
 
 const API = 'http://localhost:3000/api/admin';
+const UPLOAD_API = 'http://localhost:3000/api/upload';
 
 function fetchWithAuth(url, token, opts = {}) {
   return fetch(url, {
@@ -14,6 +15,18 @@ function fetchWithAuth(url, token, opts = {}) {
       ...opts.headers
     }
   });
+}
+
+async function uploadFile(file, token) {
+  const fd = new FormData();
+  fd.append('image', file);
+  const res = await fetch(UPLOAD_API, {
+    method: 'POST',
+    headers: { 'Authorization': `Bearer ${token}` },
+    body: fd
+  });
+  if (!res.ok) throw new Error('Upload failed');
+  return res.json();
 }
 
 export default function AdminPage() {
@@ -389,6 +402,65 @@ export default function AdminPage() {
   );
 }
 
+function ImageUpload({ value, onChange, label, preview, token: t }) {
+  const [uploading, setUploading] = useState(false);
+
+  const handleFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const { url } = await uploadFile(file, t);
+      onChange(url);
+    } catch (err) {
+      alert('Upload failed: ' + err.message);
+    }
+    setUploading(false);
+  };
+
+  return (
+    <div className="md:col-span-2">
+      <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">{label}</label>
+      <div className="flex gap-2">
+        <input type="url" value={value} onChange={e => onChange(e.target.value)}
+          placeholder="https://example.com/image.jpg"
+          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
+        <label className={`shrink-0 px-4 py-2 rounded-lg text-sm font-inter font-semibold cursor-pointer transition-all ${uploading ? 'bg-white/10 text-white/40' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
+          {uploading ? 'Uploading...' : 'Upload'}
+          <input type="file" accept="image/*" onChange={handleFile} className="hidden" disabled={uploading} />
+        </label>
+      </div>
+      {preview && value && (
+        <img src={value} alt="" className="mt-2 h-24 rounded-lg object-cover bg-navy-800" onError={e => { e.target.style.display = 'none' }} />
+      )}
+    </div>
+  );
+}
+
+function GalleryUpload({ index, token, onUrl }) {
+  const [uploading, setUploading] = useState(false);
+
+  const handleFile = async (e) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    setUploading(true);
+    try {
+      const { url } = await uploadFile(file, token);
+      onUrl(url);
+    } catch (err) {
+      alert('Upload failed: ' + err.message);
+    }
+    setUploading(false);
+  };
+
+  return (
+    <label className={`shrink-0 px-3 py-2 rounded-lg text-[10px] font-inter font-semibold cursor-pointer transition-all ${uploading ? 'bg-white/5 text-white/30' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>
+      {uploading ? '...' : 'Upload'}
+      <input type="file" accept="image/*" onChange={handleFile} className="hidden" disabled={uploading} />
+    </label>
+  );
+}
+
 function EventForm({ event, token, onSave, onCancel }) {
   const [form, setForm] = useState({
     title: event?.title || '',
@@ -460,12 +532,7 @@ function EventForm({ event, token, onSave, onCancel }) {
           <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
             className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
         </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Flyer / Banner Image URL</label>
-          <input type="url" value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))}
-            placeholder="https://example.com/flyer.jpg"
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        </div>
+        <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Flyer / Banner Image" preview token={token} />
         <div>
           <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Ticket Link (URL)</label>
           <input type="url" value={form.ticketLink} onChange={e => setForm(f => ({ ...f, ticketLink: e.target.value }))}
@@ -555,11 +622,7 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
           <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
             className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
         </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Hero Image URL</label>
-          <input type="url" value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        </div>
+        <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Hero Image" preview token={token} />
         <div>
           <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Rating</label>
           <input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={e => setForm(f => ({ ...f, rating: e.target.value }))}
@@ -568,20 +631,24 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
       </div>
 
       <div>
-        <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-2">Gallery Images (up to 4 URLs)</label>
+        <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-2">Gallery Images (up to 4)</label>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-          {[0, 1, 2, 3].map(i => (
-            <div key={i} className="flex items-center gap-2">
-              <span className="text-[9px] font-poppins font-bold text-white/30 uppercase tracking-wider w-6 shrink-0">#{i + 1}</span>
-              <input
-                type="url"
-                value={JSON.parse(form.gallery || '[]')[i] || ''}
-                onChange={e => updateGalleryUrl(i, e.target.value)}
-                placeholder="https://example.com/photo.jpg"
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50"
-              />
-            </div>
-          ))}
+          {[0, 1, 2, 3].map(i => {
+            const val = JSON.parse(form.gallery || '[]')[i] || '';
+            return (
+              <div key={i} className="flex items-center gap-2">
+                <span className="text-[9px] font-poppins font-bold text-white/30 uppercase tracking-wider w-6 shrink-0">#{i + 1}</span>
+                <input
+                  type="url"
+                  value={val}
+                  onChange={e => updateGalleryUrl(i, e.target.value)}
+                  placeholder="https://example.com/photo.jpg"
+                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50"
+                />
+                <GalleryUpload index={i} token={token} onUrl={url => updateGalleryUrl(i, url)} />
+              </div>
+            );
+          })}
         </div>
       </div>
 
