@@ -22,4 +22,10 @@ router.post('/events', adminController.createEvent);
 router.put('/events/:id', adminController.updateEvent);
 router.delete('/events/:id', adminController.deleteEvent);
 
+router.get('/calendar', adminController.getCalendarItems);
+router.get('/calendar/:id', adminController.getCalendarItem);
+router.post('/calendar', adminController.createCalendarItem);
+router.put('/calendar/:id', adminController.updateCalendarItem);
+router.delete('/calendar/:id', adminController.deleteCalendarItem);
+
 module.exports = router;

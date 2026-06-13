@@ -11,6 +11,7 @@ import GalleryPage from './pages/GalleryPage';
 import AdminPage from './pages/AdminPage';
 import PlaceDetailPage from './pages/PlaceDetailPage';
 import EventsPage from './pages/EventsPage';
+import CalendarPage from './pages/CalendarPage';
 import LoginModal from './components/LoginModal';
 import { AuthProvider } from './context/AuthContext';
 import { FALLBACK_DATA } from './constants/data';
@@ -144,6 +145,11 @@ function AppLayout() {
             <Route path="/events" element={
               <AnimatedOutlet key="events">
                 <EventsPage />
+              </AnimatedOutlet>
+            } />
+            <Route path="/calendar" element={
+              <AnimatedOutlet key="calendar">
+                <CalendarPage />
               </AnimatedOutlet>
             } />
             <Route path="/stays/:id" element={

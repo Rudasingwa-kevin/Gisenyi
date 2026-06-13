@@ -7,6 +7,7 @@ const links = [
   { name: 'Discover', path: '/' },
   { name: 'Stays', path: '/stays' },
   { name: 'Events', path: '/events' },
+  { name: 'Calendar', path: '/calendar' },
   { name: 'Map', path: '/map' },
   { name: 'History', path: '/history' },
   { name: 'Gallery', path: '/gallery' }

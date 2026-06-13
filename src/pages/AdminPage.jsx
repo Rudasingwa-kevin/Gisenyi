@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar } from 'lucide-react';
+import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle } from 'lucide-react';
 
 const API = 'http://localhost:3000/api/admin';
 
@@ -23,6 +23,7 @@ export default function AdminPage() {
   const [places, setPlaces] = useState([]);
   const [categories, setCategories] = useState([]);
   const [events, setEvents] = useState([]);
+  const [calendarItems, setCalendarItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -46,10 +47,15 @@ export default function AdminPage() {
     if (res.ok) setEvents(await res.json());
   }, [token]);
 
+  const loadCalendarItems = useCallback(async () => {
+    const res = await fetchWithAuth(`${API}/calendar`, token);
+    if (res.ok) setCalendarItems(await res.json());
+  }, [token]);
+
   useEffect(() => {
     if (!isAdmin) return;
     setLoading(true);
-    Promise.all([loadPlaces(), loadCategories(), loadEvents()]).then(() => setLoading(false));
+    Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems()]).then(() => setLoading(false));
   }, [isAdmin, loadPlaces, loadCategories, loadEvents]);
 
   const handleDelete = async (type, id) => {
@@ -58,6 +64,7 @@ export default function AdminPage() {
     if (res.ok) {
       if (type === 'places') setPlaces(p => p.filter(x => x.id !== id));
       else if (type === 'events') setEvents(e => e.filter(x => x.id !== id));
+      else if (type === 'calendar') setCalendarItems(c => c.filter(x => x.id !== id));
       else setCategories(c => c.filter(x => x.id !== id));
     }
   };
@@ -116,6 +123,14 @@ export default function AdminPage() {
             }`}
           >
             <Calendar className="w-4 h-4" /> Events
+          </button>
+          <button
+            onClick={() => setTab('calendar')}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+              tab === 'calendar' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
+            }`}
+          >
+            <Circle className="w-4 h-4" /> Calendar
           </button>
         </div>
 
@@ -293,6 +308,71 @@ export default function AdminPage() {
                       </button>
                       <button
                         onClick={() => handleDelete('events', event.id)}
+                        className="p-2 text-white/40 hover:text-red-400 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'calendar' && (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-sora font-bold text-white">Manage Calendar Items ({calendarItems.length})</h2>
+              <button
+                onClick={() => { setEditing(null); setShowForm(!showForm); }}
+                className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
+              >
+                <Plus className="w-4 h-4" /> Add Item
+              </button>
+            </div>
+
+            {showForm && (
+              <CalendarItemForm
+                item={editing}
+                token={token}
+                onSave={(ci) => {
+                  if (editing) setCalendarItems(items => items.map(x => x.id === ci.id ? ci : x));
+                  else setCalendarItems(items => [...items, ci]);
+                  setShowForm(false);
+                  setEditing(null);
+                }}
+                onCancel={() => { setShowForm(false); setEditing(null); }}
+              />
+            )}
+
+            {loading ? (
+              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
+            ) : (
+              <div className="grid gap-3">
+                {calendarItems.map(item => (
+                  <div key={item.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      <div className="w-14 h-14 rounded-lg flex items-center justify-center text-2xl" style={{ backgroundColor: `${item.color}15` }}>
+                        <Circle className="w-4 h-4" style={{ color: item.color }} fill={item.color} stroke="none" />
+                      </div>
+                      <div>
+                        <h3 className="text-white font-inter font-semibold">{item.title}</h3>
+                        <p className="text-white/30 text-sm font-inter">
+                          {item.date}{item.time ? ` ${item.time}` : ''} &middot; <span className="capitalize" style={{ color: item.color }}>{item.type}</span>
+                        </p>
+                        {item.description && <p className="text-white/20 text-xs font-inter mt-0.5 line-clamp-1">{item.description}</p>}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <button
+                        onClick={() => { setEditing(item); setShowForm(true); }}
+                        className="p-2 text-white/40 hover:text-gold-500 transition-colors"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete('calendar', item.id)}
                         className="p-2 text-white/40 hover:text-red-400 transition-colors"
                       >
                         <Trash2 className="w-4 h-4" />
@@ -509,6 +589,86 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
         <button type="submit" disabled={saving}
           className="px-5 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
           {saving ? 'Saving...' : place ? 'Update Place' : 'Create Place'}
+        </button>
+        <button type="button" onClick={onCancel}
+          className="px-5 py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
+          Cancel
+        </button>
+      </div>
+    </form>
+  );
+}
+
+function CalendarItemForm({ item, token, onSave, onCancel }) {
+  const [form, setForm] = useState({
+    title: item?.title || '',
+    description: item?.description || '',
+    date: item?.date || '',
+    time: item?.time || '',
+    type: item?.type || 'note',
+    color: item?.color || '#4A90D9',
+    location: item?.location || ''
+  });
+  const [saving, setSaving] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    const url = item ? `${API}/calendar/${item.id}` : `${API}/calendar`;
+    const method = item ? 'PUT' : 'POST';
+    const res = await fetchWithAuth(url, token, { method, body: JSON.stringify(form) });
+    if (res.ok) onSave(await res.json());
+    setSaving(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Title</label>
+          <input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Type</label>
+          <select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50">
+            <option value="event">Event</option>
+            <option value="note">Note</option>
+            <option value="reminder">Reminder</option>
+            <option value="holiday">Holiday</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Date (YYYY-MM-DD)</label>
+          <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Time</label>
+          <input type="time" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
+        </div>
+        <div className="md:col-span-2">
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Description</label>
+          <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Location</label>
+          <input type="text" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Color</label>
+          <input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))}
+            className="w-full h-10 bg-white/5 border border-white/10 rounded-lg cursor-pointer" />
+        </div>
+      </div>
+      <div className="flex gap-3 pt-4">
+        <button type="submit" disabled={saving}
+          className="px-5 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
+          {saving ? 'Saving...' : item ? 'Update Item' : 'Create Item'}
         </button>
         <button type="button" onClick={onCancel}
           className="px-5 py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
