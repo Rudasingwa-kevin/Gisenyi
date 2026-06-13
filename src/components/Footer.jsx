@@ -22,7 +22,7 @@ const Footer = ({ onAdminClick }) => {
         <div>
           <h4 className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-6">Explore</h4>
           <div className="space-y-3">
-            {['Stays', 'Map', 'History', 'Gallery'].map(item => (
+            {['Stays', 'Events', 'Map', 'History', 'Gallery'].map(item => (
               <Link key={item} to={`/${item.toLowerCase()}`} className="block text-white/50 hover:text-gold-500 transition-colors font-inter text-sm">
                 {item}
               </Link>
