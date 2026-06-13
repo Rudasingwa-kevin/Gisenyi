@@ -1,9 +1,19 @@
 const prisma = require('../utils/prisma');
 
+function paginate(page, limit) {
+  const p = Math.max(1, parseInt(page) || 1);
+  const l = Math.min(100, Math.max(1, parseInt(limit) || 20));
+  return { skip: (p - 1) * l, take: l, page: p, limit: l };
+}
+
 exports.getPlaces = async (req, res, next) => {
   try {
-    const places = await prisma.place.findMany({ orderBy: { name: 'asc' } });
-    res.json(places);
+    const { skip, take, page, limit } = paginate(req.query.page, req.query.limit);
+    const [data, total] = await Promise.all([
+      prisma.place.findMany({ skip, take, orderBy: { name: 'asc' } }),
+      prisma.place.count()
+    ]);
+    res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) { next(error); }
 };
 
@@ -41,8 +51,12 @@ exports.deletePlace = async (req, res, next) => {
 
 exports.getCategories = async (req, res, next) => {
   try {
-    const categories = await prisma.category.findMany({ orderBy: { label: 'asc' } });
-    res.json(categories);
+    const { skip, take, page, limit } = paginate(req.query.page, req.query.limit);
+    const [data, total] = await Promise.all([
+      prisma.category.findMany({ skip, take, orderBy: { label: 'asc' } }),
+      prisma.category.count()
+    ]);
+    res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) { next(error); }
 };
 
@@ -73,8 +87,12 @@ exports.deleteCategory = async (req, res, next) => {
 // Events CRUD
 exports.getEvents = async (req, res, next) => {
   try {
-    const events = await prisma.event.findMany({ orderBy: { date: 'asc' } });
-    res.json(events);
+    const { skip, take, page, limit } = paginate(req.query.page, req.query.limit);
+    const [data, total] = await Promise.all([
+      prisma.event.findMany({ skip, take, orderBy: { date: 'asc' } }),
+      prisma.event.count()
+    ]);
+    res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) { next(error); }
 };
 
@@ -113,14 +131,18 @@ exports.deleteEvent = async (req, res, next) => {
 // Calendar Items CRUD
 exports.getCalendarItems = async (req, res, next) => {
   try {
-    const { month, year } = req.query;
+    const { month, year, page: pg, limit: lm } = req.query;
+    const { skip, take, page, limit } = paginate(pg, lm);
     const where = {};
     if (month && year) {
       const m = String(month).padStart(2, '0');
       where.date = { startsWith: `${year}-${m}` };
     }
-    const items = await prisma.calendarItem.findMany({ where, orderBy: [{ date: 'asc' }, { time: 'asc' }] });
-    res.json(items);
+    const [data, total] = await Promise.all([
+      prisma.calendarItem.findMany({ where, skip, take, orderBy: [{ date: 'asc' }, { time: 'asc' }] }),
+      prisma.calendarItem.count({ where })
+    ]);
+    res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) { next(error); }
 };
 
