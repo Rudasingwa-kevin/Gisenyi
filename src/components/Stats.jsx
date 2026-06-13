@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion';
 import { Building2, Utensils, Music, Palmtree, Sparkles, Compass, ShoppingBag, Info } from 'lucide-react';
-import { CATEGORIES } from '../constants/data';
+import { useCategories } from '../constants/categories';
 
 const iconMap = {
   hotels: Building2,
@@ -14,6 +14,7 @@ const iconMap = {
 };
 
 const Stats = ({ stats, loading }) => {
+  const CATEGORIES = useCategories();
   if (loading || !stats) return null;
 
   const catEntries = Object.entries(stats.categories).filter(([key]) => key in CATEGORIES && key !== 'all');

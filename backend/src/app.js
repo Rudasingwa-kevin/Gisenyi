@@ -16,6 +16,7 @@ app.use(morgan('dev'));
 app.use('/api/places', require('./routes/placeRoutes'));
 app.use('/api/events', require('./routes/eventRoutes'));
 app.use('/api/calendar', require('./routes/calendarRoutes'));
+app.use('/api/categories', require('./routes/categoryRoutes'));
 app.use('/api/auth', require('./routes/authRoutes'));
 app.use('/api/admin', require('./routes/adminRoutes'));
 

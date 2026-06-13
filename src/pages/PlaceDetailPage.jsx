@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Navigation, ExternalLink, Globe, Phone, Clock, Tag } from 'lucide-react';
-import { CATEGORIES } from '../constants/data';
+import { useCategories } from '../constants/categories';
 
 const catImages = {
   hotels: '1542314831-068cd1dbfeeb',
@@ -28,6 +28,7 @@ const galleryPhotos = {
 export default function PlaceDetailPage({ places }) {
   const { id } = useParams();
   const navigate = useNavigate();
+  const CATEGORIES = useCategories();
 
   const place = useMemo(() => places.find(p => p.id === id), [places, id]);
   const related = useMemo(() =>
