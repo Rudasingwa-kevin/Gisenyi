@@ -5,9 +5,11 @@ import {
   Plus, Minus, Crosshair, Search, Navigation, X, List,
   ChevronLeft, Loader2, AlertCircle, MapPin
 } from 'lucide-react';
-import { CENTER, CATEGORIES } from '../constants/data';
+import { CENTER } from '../constants/data';
+import { useCategories } from '../constants/categories';
 
 const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPlace }) => {
+  const CATEGORIES = useCategories();
   const mapRef = useRef(null);
   const mapInstance = useRef(null);
   const markersLayer = useRef(null);

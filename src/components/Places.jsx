@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Search, Star, ArrowRight, X } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { CATEGORIES } from '../constants/data';
+import { useCategories } from '../constants/categories';
 import { GridSkeleton } from './LoadingSkeleton';
 
 const catImages = {
@@ -22,6 +22,8 @@ const catImages = {
 
 const PlaceCard = ({ place, index, setSelectedPlace }) => {
   const navigate = useNavigate();
+  const categories = useCategories();
+  const CATEGORIES = categories;
   const cat = CATEGORIES[place.catKey] || CATEGORIES.all;
   const photoId = catImages[place.catKey] || '1542314831-068cd1dbfeeb';
   const cardImage = place.image || `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=600&h=800`;
@@ -73,6 +75,7 @@ const PlaceCard = ({ place, index, setSelectedPlace }) => {
 
 const Places = ({ places, loading, activeCat, setActiveCat, search, setSearch, setSelectedPlace }) => {
   const inputRef = useRef(null);
+  const categories = useCategories();
 
   return (
     <section className="py-28 px-6">
@@ -115,7 +118,7 @@ const Places = ({ places, loading, activeCat, setActiveCat, search, setSearch, s
         </div>
 
         <div className="flex flex-wrap gap-2 mb-10">
-          {Object.entries(CATEGORIES).map(([key, cat]) => (
+          {Object.entries(categories).map(([key, cat]) => (
             <motion.button
               key={key}
               whileHover={{ scale: 1.05 }}

@@ -2,18 +2,6 @@ import { PLACES_DATA } from './places-data';
 
 export const CENTER = [-1.6990482, 29.2560996];
 
-export const CATEGORIES = {
-    all: { label: 'All', icon: '📍', color: '#C9A84C' },
-    hotels: { label: 'Hotels', icon: '🏨', color: '#C9A84C' },
-    dining: { label: 'Dining', icon: '🍽', color: '#E8593C' },
-    nightlife: { label: 'Nightlife', icon: '🍹', color: '#7B3FA0' },
-    beach: { label: 'Beach', icon: '🏖', color: '#1A8A9A' },
-    wellness: { label: 'Wellness', icon: '🧘', color: '#2D8A5E' },
-    activities: { label: 'Activities', icon: '🛶', color: '#F39C12' },
-    shopping: { label: 'Shopping', icon: '🛍️', color: '#E91E63' },
-    practical: { label: 'Practical', icon: 'ℹ️', color: '#4A6A8A' }
-};
-
 export const FALLBACK_DATA = PLACES_DATA.filter(p => p.lon >= 29.245);
 
 export const HISTORY_ERAS = [
