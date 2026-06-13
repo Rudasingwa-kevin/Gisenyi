@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle } from 'lucide-react';
+import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock } from 'lucide-react';
 
 const API = 'http://localhost:3000/api/admin';
 const UPLOAD_API = 'http://localhost:3000/api/upload';
@@ -32,7 +32,7 @@ async function uploadFile(file, token) {
 export default function AdminPage() {
   const { token, username, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
-  const [tab, setTab] = useState('places');
+  const [tab, setTab] = useState('dashboard');
   const [places, setPlaces] = useState([]);
   const [categories, setCategories] = useState([]);
   const [events, setEvents] = useState([]);
@@ -112,10 +112,18 @@ export default function AdminPage() {
       </div>
 
       <div className="max-w-7xl mx-auto px-6 py-8">
-        <div className="flex gap-4 mb-8">
+        <div className="flex gap-2 mb-8 flex-wrap">
+          <button
+            onClick={() => setTab('dashboard')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+              tab === 'dashboard' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
+            }`}
+          >
+            <LayoutDashboard className="w-4 h-4" /> Dashboard
+          </button>
           <button
             onClick={() => setTab('places')}
-            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
               tab === 'places' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
           >
@@ -146,6 +154,103 @@ export default function AdminPage() {
             <Circle className="w-4 h-4" /> Calendar
           </button>
         </div>
+
+        {tab === 'dashboard' && (
+          <div>
+            <div className="mb-8">
+              <h2 className="text-xl font-sora font-bold text-white mb-1">Dashboard</h2>
+              <p className="text-sm font-inter text-white/40">Overview of your Gisenyi platform</p>
+            </div>
+
+            {loading ? (
+              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
+            ) : (
+              <>
+                <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                  <div className="glass rounded-2xl border border-white/5 p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <MapPin className="w-5 h-5 text-gold-500" />
+                      </div>
+                    </div>
+                    <span className="text-3xl font-sora font-extrabold text-white">{places.length}</span>
+                    <p className="text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Places</p>
+                  </div>
+                  <div className="glass rounded-2xl border border-white/5 p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <LayoutGrid className="w-5 h-5 text-gold-500" />
+                      </div>
+                    </div>
+                    <span className="text-3xl font-sora font-extrabold text-white">{categories.length}</span>
+                    <p className="text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Categories</p>
+                  </div>
+                  <div className="glass rounded-2xl border border-white/5 p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <Calendar className="w-5 h-5 text-gold-500" />
+                      </div>
+                    </div>
+                    <span className="text-3xl font-sora font-extrabold text-white">{events.length}</span>
+                    <p className="text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Events</p>
+                  </div>
+                  <div className="glass rounded-2xl border border-white/5 p-6">
+                    <div className="flex items-center gap-3 mb-3">
+                      <div className="w-10 h-10 rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <Circle className="w-5 h-5 text-gold-500" />
+                      </div>
+                    </div>
+                    <span className="text-3xl font-sora font-extrabold text-white">{calendarItems.length}</span>
+                    <p className="text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Calendar Items</p>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="glass rounded-2xl border border-white/5 p-6">
+                    <h3 className="font-sora font-bold text-white text-sm mb-4 flex items-center gap-2">
+                      <Building2 className="w-4 h-4 text-gold-500" /> Recent Places
+                    </h3>
+                    {places.length === 0 ? (
+                      <p className="text-white/30 text-sm font-inter">No places yet</p>
+                    ) : (
+                      <div className="space-y-2">
+                        {places.slice(0, 5).map(p => (
+                          <div key={p.id} className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
+                            {p.image && <img src={p.image} alt="" className="w-8 h-8 rounded-lg object-cover bg-navy-800" />}
+                            <div className="min-w-0">
+                              <p className="text-white text-sm font-inter truncate">{p.name}</p>
+                              <p className="text-white/30 text-[10px] font-inter">{p.catKey}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                  <div className="glass rounded-2xl border border-white/5 p-6">
+                    <h3 className="font-sora font-bold text-white text-sm mb-4 flex items-center gap-2">
+                      <Sparkles className="w-4 h-4 text-gold-500" /> Upcoming Events
+                    </h3>
+                    {events.length === 0 ? (
+                      <p className="text-white/30 text-sm font-inter">No events yet</p>
+                    ) : (
+                      <div className="space-y-2">
+                        {events.slice(0, 5).map(e => (
+                          <div key={e.id} className="flex items-center gap-3 p-2 rounded-lg bg-white/5">
+                            {e.image && <img src={e.image} alt="" className="w-8 h-8 rounded-lg object-cover bg-navy-800" />}
+                            <div className="min-w-0">
+                              <p className="text-white text-sm font-inter truncate">{e.title}</p>
+                              <p className="text-white/30 text-[10px] font-inter flex items-center gap-1"><Clock className="w-3 h-3" /> {e.date}</p>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        )}
 
         {tab === 'places' && (
           <div>
