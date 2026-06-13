@@ -1,4 +1,5 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Ticket, Mic, Film, Music, Palette, Theater, Sparkles, ExternalLink, X } from 'lucide-react';
 
@@ -18,6 +19,14 @@ const Events = () => {
   const [loading, setLoading] = useState(true);
   const [activeCat, setActiveCat] = useState('all');
   const [lightbox, setLightbox] = useState(null);
+  const [highlightId, setHighlightId] = useState(null);
+  const [searchParams] = useSearchParams();
+  const cardRefs = useRef({});
+
+  useEffect(() => {
+    const h = searchParams.get('highlight');
+    if (h) setHighlightId(h);
+  }, [searchParams]);
 
   useEffect(() => {
     setLoading(true);
@@ -27,6 +36,19 @@ const Events = () => {
       .catch(() => {})
       .finally(() => setLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (!highlightId || loading) return;
+    const el = cardRefs.current[highlightId];
+    if (el) {
+      el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+      const timer = setTimeout(() => {
+        el.classList.add('ring-2', 'ring-gold-500', 'ring-offset-2', 'ring-offset-navy-950');
+        setTimeout(() => el.classList.remove('ring-2', 'ring-gold-500', 'ring-offset-2', 'ring-offset-navy-950'), 20000);
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [highlightId, loading, events]);
 
   const filtered = activeCat === 'all'
     ? events
@@ -136,6 +158,7 @@ const Events = () => {
                 return (
                   <motion.div
                     key={event.id}
+                    ref={el => cardRefs.current[event.id] = el}
                     layout
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
