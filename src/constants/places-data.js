@@ -1,2755 +1,1078 @@
 // Auto-generated from gisenyi-activities.json — do not edit directly
 export const PLACES_DATA = [
   {
-    "id": "317581789",
-    "name": "Stipphotel",
-    "lat": -1.6974105,
-    "lon": 29.252128,
+    "id": "ChIJ5WYHOqIF3RkR0id9BypWCkM",
+    "name": "Gorillas Lake Kivu Hotel",
+    "lat": -1.6990208,
+    "lon": 29.2554771,
     "catKey": "hotels",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 317581789
-    }
-  },
-  {
-    "id": "317581790",
-    "name": "Crescendo",
-    "lat": -1.6973729,
-    "lon": 29.2500687,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 317581790
-    }
-  },
-  {
-    "id": "317581796",
-    "name": "Lake View Hotel",
-    "lat": -1.6974355,
-    "lon": 29.2466058,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 317581796
-    }
-  },
-  {
-    "id": "317581817",
-    "name": "La Corniche",
-    "lat": -1.695522,
-    "lon": 29.2515366,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 317581817
-    }
-  },
-  {
-    "id": "317581894",
-    "name": "Lake View Guesthouse",
-    "lat": -1.6966095,
-    "lon": 29.2567498,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 317581894
-    }
-  },
-  {
-    "id": "317581988",
-    "name": "1660 m",
-    "lat": -1.6996958,
-    "lon": 29.2684987,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 317581988
-    }
-  },
-  {
-    "id": "435782764",
-    "name": "Bikini Tam Tam",
-    "lat": -1.7064076,
-    "lon": 29.2621092,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 435782764
-    }
-  },
-  {
-    "id": "435804092",
-    "name": "Hôtel Musanto Gisenyi",
-    "lat": -1.7071778,
-    "lon": 29.264889,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 435804092,
-      "description": "Hotel Musanto is located by the Lake Kivu just 100m from Tam Tam Bar, 50m of Rue Bralirwa, very quiet but not far from the city center and DRC border, it offers a direct view of the lake and its surroundings giving you the freshness from the lake and surr",
-      "operator": "Olivier SHEMA",
-      "rooms": 23,
-      "wifi": true,
-      "wifi_fee": "wlan",
-      "smoking": "outside"
+      "rating": 3.9,
+      "rating_count": 345,
+      "hours": "Open 24 hours"
     },
     "contact": {
-      "address": "Avenue de la Production, Gisenyi",
-      "email": "hotelmusanto@yahoo.fr"
+      "phone": "+250 788 200 522",
+      "address": "Gisenyi Rwanda, 8724+95X, Gisenyi 00100, Rwanda"
     }
   },
   {
-    "id": "1631913036",
-    "name": "Ferry Port",
-    "lat": -1.7356253,
-    "lon": 29.2784625,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 1631913036
-    }
-  },
-  {
-    "id": "2041160176",
-    "name": "La Versaille",
-    "lat": -1.6862296,
-    "lon": 29.2385033,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 2041160176
-    }
-  },
-  {
-    "id": "2150668138",
-    "name": "Hot spring",
-    "lat": -1.7399049,
-    "lon": 29.2739959,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 2150668138
-    }
-  },
-  {
-    "id": "2857732688",
-    "name": "Shoppers",
-    "lat": -1.6879924,
-    "lon": 29.2354877,
-    "catKey": "shopping",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 2857732688,
-      "operator": "Shoppers"
-    }
-  },
-  {
-    "id": "2857735661",
-    "name": "Espace Treichville",
-    "lat": -1.6881157,
-    "lon": 29.2352544,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 2857735661,
-      "cuisine": "ivorian, congolese"
-    }
-  },
-  {
-    "id": "2857736514",
-    "name": "Latin House",
-    "lat": -1.6905936,
-    "lon": 29.2403615,
+    "id": "ChIJ2eBCiwoF3RkRgDFjMoWKNmk",
+    "name": "Beach Garden BnB",
+    "lat": -1.7063714,
+    "lon": 29.2627059,
     "catKey": "hotels",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 2857736514,
-      "smoking": "no"
+      "rating": 3.8,
+      "rating_count": 74,
+      "hours": "Open 24 hours",
+      "website": "http://www.kivubeachgarden.com/"
     },
     "contact": {
-      "address": "23, Jacarandas, Goma, DRC"
+      "phone": "+250 796 293 522",
+      "address": "Rubavu, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "2857737826",
-    "name": "VIP Hotel / Restaurant",
-    "lat": -1.6978253,
-    "lon": 29.2407051,
+    "id": "ChIJkY8uYzEF3RkRQX2UjOpbTQM",
+    "name": "INZU Lodge",
+    "lat": -1.730532,
+    "lon": 29.2653955,
     "catKey": "hotels",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 2857737826
-    }
-  },
-  {
-    "id": "2857740463",
-    "name": "Petit Paris",
-    "lat": -1.688765,
-    "lon": 29.2336357,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 2857740463
-    }
-  },
-  {
-    "id": "3212675448",
-    "name": "La Bella Lodge",
-    "lat": -1.731541,
-    "lon": 29.2627459,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3212675448
-    }
-  },
-  {
-    "id": "3212675449",
-    "name": "La Bella campsite",
-    "lat": -1.7317282,
-    "lon": 29.2624507,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3212675449
-    }
-  },
-  {
-    "id": "3343529165",
-    "name": "Au Bon Pain",
-    "lat": -1.686776,
-    "lon": 29.2365913,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3343529165,
-      "cuisine": "coffee_shop"
-    }
-  },
-  {
-    "id": "3343802389",
-    "name": "Café des Arts",
-    "lat": -1.691466,
-    "lon": 29.2386129,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3343802389,
-      "cuisine": "regional"
-    }
-  },
-  {
-    "id": "3344009024",
-    "name": "Lava Stone",
-    "lat": -1.6841019,
-    "lon": 29.2342268,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3344009024
-    }
-  },
-  {
-    "id": "3379296263",
-    "name": "LITOR",
-    "lat": -1.6866383,
-    "lon": 29.2366362,
-    "catKey": "shopping",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3379296263
-    }
-  },
-  {
-    "id": "3391062816",
-    "name": "Rawsur",
-    "lat": -1.6868366,
-    "lon": 29.2366436,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3391062816,
-      "operator": "Agence d'assurance"
-    }
-  },
-  {
-    "id": "3564377946",
-    "name": "AEBR Gisenyi",
-    "lat": -1.6838324,
-    "lon": 29.2632518,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3564377946,
-      "religion": "christian",
-      "denomination": "baptist"
-    }
-  },
-  {
-    "id": "3564382693",
-    "name": "AEBR Byahi",
-    "lat": -1.665575,
-    "lon": 29.2621004,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3564382693,
-      "religion": "christian",
-      "denomination": "baptist"
-    }
-  },
-  {
-    "id": "3860728819",
-    "name": "Discover Rwanda",
-    "lat": -1.7022347,
-    "lon": 29.2584138,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3860728819
-    }
-  },
-  {
-    "id": "3928322238",
-    "name": "Malahide Paradise",
-    "lat": -1.7337008,
-    "lon": 29.2733918,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3928322238
-    }
-  },
-  {
-    "id": "3928343341",
-    "name": "Inzu Lodge",
-    "lat": -1.7300278,
-    "lon": 29.2655556,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3928343341,
-      "wheelchair_accessible": false,
-      "wifi": true,
-      "wifi_fee": "no"
+      "rating": 4.3,
+      "rating_count": 217,
+      "hours": "Mon-Sun 7:00AM - 9:00PM",
+      "website": "http://inzulodge.com/"
     },
     "contact": {
-      "address": "Gisenyi"
+      "phone": "+250 784 179 203",
+      "address": "Rubavu, Nyamuymba 136 P.O. Gisenyi, Rwanda"
     }
   },
   {
-    "id": "3928343342",
+    "id": "ChIJs_bf6DMF3RkRRrBqfJCro_g",
+    "name": "Hakuna Matata Lodge",
+    "lat": -1.7313875,
+    "lon": 29.2620469,
+    "catKey": "hotels",
+    "tags": {
+      "rating": 4.2,
+      "rating_count": 124,
+      "website": "http://www.hakunamatatalodge.rw/"
+    },
+    "contact": {
+      "phone": "+250 787 484 954",
+      "address": "7796+CRV, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ3don3QAb3RkRsQZ6GoCVWzw",
     "name": "Palm Garden Resort",
-    "lat": -1.7310313,
-    "lon": 29.266969,
+    "lat": -1.7305905,
+    "lon": 29.2648411,
     "catKey": "hotels",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 3928343342
-    }
-  },
-  {
-    "id": "3928351368",
-    "name": "Inzozi",
-    "lat": -1.7310758,
-    "lon": 29.2649894,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 3928351368
-    }
-  },
-  {
-    "id": "4156136410",
-    "name": "Auberge De Gisenyi",
-    "lat": -1.6949717,
-    "lon": 29.2604996,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4156136410
-    }
-  },
-  {
-    "id": "4266677308",
-    "name": "Les Vétérans",
-    "lat": -1.6837629,
-    "lon": 29.2337991,
-    "catKey": "nightlife",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4266677308
+      "rating": 4.1,
+      "rating_count": 36,
+      "website": "http://www.palmgardenlodge.com/"
     },
     "contact": {
-      "address": "Avenue du Mont Goma"
+      "phone": "+250 788 306 830",
+      "address": "Gisenyi, Rwanda"
     }
   },
   {
-    "id": "4299696221",
-    "name": "Le Petit Bruxelles",
-    "lat": -1.6886424,
-    "lon": 29.2387196,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4299696221,
-      "cuisine": "pizza"
-    }
-  },
-  {
-    "id": "4299696222",
-    "name": "Salt & Pepper",
-    "lat": -1.6886317,
-    "lon": 29.2385855,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4299696222,
-      "cuisine": "indian"
-    }
-  },
-  {
-    "id": "4299717667",
-    "name": "Acajou",
-    "lat": -1.6999735,
-    "lon": 29.2396605,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4299717667,
-      "cuisine": "regional"
-    }
-  },
-  {
-    "id": "4299717680",
-    "name": "Centre d'accueil CARITAS",
-    "lat": -1.7000377,
-    "lon": 29.2401514,
+    "id": "ChIJofW_uWYF3RkRsCmAEV2YRFQ",
+    "name": "Sunset Lake Escape",
+    "lat": -1.6990482,
+    "lon": 29.2560996,
     "catKey": "hotels",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 4299717680
-    }
-  },
-  {
-    "id": "4461862290",
-    "name": "Saga Bay",
-    "lat": -1.7071289,
-    "lon": 29.262895,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4461862290,
-      "cuisine": "african"
-    }
-  },
-  {
-    "id": "4463090791",
-    "name": "Tony's Guest House",
-    "lat": -1.6889452,
-    "lon": 29.2401229,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4463090791,
-      "wifi": true
-    }
-  },
-  {
-    "id": "4472394796",
-    "name": "Megabytes Supermarket",
-    "lat": -1.6875406,
-    "lon": 29.2378787,
-    "catKey": "shopping",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4472394796
-    }
-  },
-  {
-    "id": "4472448194",
-    "name": "Supermarket",
-    "lat": -1.686348,
-    "lon": 29.2374917,
-    "catKey": "shopping",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4472448194
-    }
-  },
-  {
-    "id": "4472484594",
-    "name": "Hôtel Mbiza",
-    "lat": -1.6757015,
-    "lon": 29.2357835,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4472484594,
-      "wifi": true
-    }
-  },
-  {
-    "id": "4472544189",
-    "name": "Dallas",
-    "lat": -1.686906,
-    "lon": 29.2370644,
-    "catKey": "nightlife",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4472544189
-    }
-  },
-  {
-    "id": "4472544193",
-    "name": "Center d'Accueil Saint François Xavier",
-    "lat": -1.6982277,
-    "lon": 29.2581913,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4472544193
-    }
-  },
-  {
-    "id": "4472648591",
-    "name": "Pizzéria italienne Al Lago Kivu",
-    "lat": -1.7056764,
-    "lon": 29.2636294,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4472648591
-    }
-  },
-  {
-    "id": "4476736589",
-    "name": "Rwandan Adventures",
-    "lat": -1.7305743,
-    "lon": 29.2679061,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4476736589
+      "rating": 4,
+      "rating_count": 4
     },
     "contact": {
-      "phone": "+250 786571414",
-      "website": "https://www.rwandan-adventures.com/"
+      "phone": "+250 781 871 487",
+      "address": "Rn4, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "4477095089",
-    "name": "Mwamikazi",
-    "lat": -1.6929222,
-    "lon": 29.259804,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4477095089,
-      "cuisine": "grill"
-    }
-  },
-  {
-    "id": "4807545921",
-    "name": "Hot spring",
-    "lat": -1.7390176,
-    "lon": 29.2736579,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 4807545921
-    }
-  },
-  {
-    "id": "5038815522",
-    "name": "Hôtel Cap Tanuk",
-    "lat": -1.6912657,
-    "lon": 29.2354881,
+    "id": "ChIJZ6gdJ2IF3RkR3iN4Sr0NQFw",
+    "name": "Kivu Nest Hotel",
+    "lat": -1.6938125,
+    "lon": 29.2495625,
     "catKey": "hotels",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 5038815522,
-      "wifi": true
-    }
-  },
-  {
-    "id": "5241142023",
-    "name": "Boulangerie Krishna",
-    "lat": -1.6771525,
-    "lon": 29.221801,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5241142023
-    }
-  },
-  {
-    "id": "5242220521",
-    "name": "Case Départ",
-    "lat": -1.6759206,
-    "lon": 29.2202055,
-    "catKey": "nightlife",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5242220521
-    }
-  },
-  {
-    "id": "5243789521",
-    "name": "Mont Goma",
-    "lat": -1.6808563,
-    "lon": 29.2241427,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5243789521
-    }
-  },
-  {
-    "id": "5303512521",
-    "name": "Shadow House",
-    "lat": -1.7109607,
-    "lon": 29.2663595,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5303512521
-    }
-  },
-  {
-    "id": "5333692321",
-    "name": "Bank of Kigali",
-    "lat": -1.6980349,
-    "lon": 29.2551681,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5333692321,
-      "operator": "Banque de Kigali",
-      "brand": "Banque de Kigali"
-    }
-  },
-  {
-    "id": "5477230621",
-    "name": "Local fast food",
-    "lat": -1.7354136,
-    "lon": 29.2767974,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5477230621
-    }
-  },
-  {
-    "id": "5482435455",
-    "name": "Kingfisher Journeys",
-    "lat": -1.7026599,
-    "lon": 29.2603502,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5482435455,
-      "opening_hours": "24/7"
+      "rating": 4.4,
+      "rating_count": 8
     },
     "contact": {
-      "phone": "+250783811918",
-      "website": "https://www.kingfisherjourneys.com/"
+      "phone": "+250 796 912 498",
+      "address": "864X+FRM, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "5552555178",
-    "name": "dff",
-    "lat": -1.6827391,
-    "lon": 29.2368159,
-    "catKey": "nightlife",
+    "id": "ChIJE5aet5cF3RkRdu4Ibf5bTeg",
+    "name": "Fanad Hotel Gisenyi",
+    "lat": -1.6904225,
+    "lon": 29.2537054,
+    "catKey": "hotels",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 5552555178
-    }
-  },
-  {
-    "id": "5732112123",
-    "name": "Zamzam",
-    "lat": -1.6822066,
-    "lon": 29.2498573,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5732112123
-    }
-  },
-  {
-    "id": "5749575884",
-    "name": "Caisse d'Épargne du Congo (CADECO) - Succursale de Goma",
-    "lat": -1.6825758,
-    "lon": 29.2367391,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5749575884,
-      "opening_hours": "Mo-Fr 07:30-15:00, Sa 09:00-12:00",
-      "operator": "CADECO SA",
-      "atm": false
+      "rating": 3.6,
+      "rating_count": 109
     },
     "contact": {
-      "address": "Goma"
+      "phone": "+250 788 510 763",
+      "address": "Unnamed Road, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "5811591955",
-    "name": "Horizon",
-    "lat": -1.6850882,
-    "lon": 29.2341149,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5811591955
-    }
-  },
-  {
-    "id": "5811621862",
-    "name": "Salon de coifure Malaika",
-    "lat": -1.6836907,
-    "lon": 29.2395226,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5811621862
-    }
-  },
-  {
-    "id": "5811621863",
-    "name": "Pharmacie Muvunga",
-    "lat": -1.6840861,
-    "lon": 29.2391541,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5811621863
-    }
-  },
-  {
-    "id": "5811621869",
-    "name": "Trust Merchant Bank",
-    "lat": -1.682871,
-    "lon": 29.2356947,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5811621869
-    }
-  },
-  {
-    "id": "5811621873",
-    "name": "Monument Chukudu",
-    "lat": -1.6840935,
-    "lon": 29.2354184,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5811621873
-    }
-  },
-  {
-    "id": "5811621874",
-    "name": "Pharmacie Diocésain",
-    "lat": -1.6856552,
-    "lon": 29.2338158,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5811621874
-    }
-  },
-  {
-    "id": "5811621875",
-    "name": "Pharmacie Arche de l'unité",
-    "lat": -1.6853965,
-    "lon": 29.2341176,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5811621875
-    }
-  },
-  {
-    "id": "5811621876",
-    "name": "Station de l'unité",
-    "lat": -1.6843616,
-    "lon": 29.2350067,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5811621876,
-      "fuel_types": [
-        "diesel"
-      ]
-    }
-  },
-  {
-    "id": "5881015285",
-    "name": "Centre d'Accueil Saint François Xavier",
-    "lat": -1.6985248,
-    "lon": 29.2583864,
+    "id": "ChIJDx--eEYF3RkRtcXuRVjq2dc",
+    "name": "Elevate Suites Hotel Gisenyi",
+    "lat": -1.6971969,
+    "lon": 29.246212,
     "catKey": "hotels",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 5881015285,
-      "wifi": true
-    }
-  },
-  {
-    "id": "5901707932",
-    "name": "Maghali Fan Club",
-    "lat": -1.6881496,
-    "lon": 29.2313171,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 5901707932
-    }
-  },
-  {
-    "id": "6049698381",
-    "name": "Hill View Hotel",
-    "lat": -1.7013388,
-    "lon": 29.2572798,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6049698381
-    }
-  },
-  {
-    "id": "6063288085",
-    "name": "Auberge de Gisenye",
-    "lat": -1.6962229,
-    "lon": 29.261144,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6063288085
-    }
-  },
-  {
-    "id": "6063288086",
-    "name": "No name",
-    "lat": -1.7396131,
-    "lon": 29.2748233,
-    "catKey": "nightlife",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6063288086
-    }
-  },
-  {
-    "id": "6110305185",
-    "name": "CHRIST TABERNACLE",
-    "lat": -1.6820621,
-    "lon": 29.23951,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6110305185,
-      "religion": "christian"
-    }
-  },
-  {
-    "id": "6123220298",
-    "name": "Centre de santé Kasika",
-    "lat": -1.6766308,
-    "lon": 29.2420126,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123220298
-    }
-  },
-  {
-    "id": "6123220344",
-    "name": "Centre de santé de Référence Kahembe",
-    "lat": -1.6812951,
-    "lon": 29.2422869,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123220344
-    }
-  },
-  {
-    "id": "6123237471",
-    "name": "Centre médical Belle vue",
-    "lat": -1.6788226,
-    "lon": 29.2195491,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123237471
-    }
-  },
-  {
-    "id": "6123238005",
-    "name": "Centre de santé Mabinga",
-    "lat": -1.673945,
-    "lon": 29.227229,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123238005
-    }
-  },
-  {
-    "id": "6123511439",
-    "name": "Centre de santé Casop",
-    "lat": -1.6841505,
-    "lon": 29.2409203,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123511439
-    }
-  },
-  {
-    "id": "6123511440",
-    "name": "Centre de santé Murara",
-    "lat": -1.6790699,
-    "lon": 29.2317794,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123511440
-    }
-  },
-  {
-    "id": "6123542533",
-    "name": "Centre de Santé Mapendo",
-    "lat": -1.6871868,
-    "lon": 29.2417149,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123542533
-    }
-  },
-  {
-    "id": "6123542534",
-    "name": "Centre de Santé Virunga",
-    "lat": -1.6635847,
-    "lon": 29.2333237,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123542534
-    }
-  },
-  {
-    "id": "6123679311",
-    "name": "Centre de santé Heal Africa",
-    "lat": -1.6801148,
-    "lon": 29.2327899,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123679311
-    }
-  },
-  {
-    "id": "6123733200",
-    "name": "Centre Médical Bisengimana",
-    "lat": -1.6685306,
-    "lon": 29.2313851,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6123733200
-    }
-  },
-  {
-    "id": "6125366738",
-    "name": "Flamingo Restaurant",
-    "lat": -1.6902398,
-    "lon": 29.239419,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6125366738
-    }
-  },
-  {
-    "id": "6150261060",
-    "name": "Centre Médical Dimajelo",
-    "lat": -1.6679307,
-    "lon": 29.2291045,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6150261060
-    }
-  },
-  {
-    "id": "6151218160",
-    "name": "Centre Médical Kacha",
-    "lat": -1.6760839,
-    "lon": 29.2253528,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6151218160
-    }
-  },
-  {
-    "id": "6151218161",
-    "name": "Centre Médical Snel Mabanga",
-    "lat": -1.6765825,
-    "lon": 29.2210606,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6151218161
-    }
-  },
-  {
-    "id": "6151341207",
-    "name": "Centre Médical Chirugical Goma",
-    "lat": -1.6686292,
-    "lon": 29.2298958,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6151341207
-    }
-  },
-  {
-    "id": "6151341208",
-    "name": "Centre de santé Muungano Solidarité",
-    "lat": -1.669534,
-    "lon": 29.2335074,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6151341208
-    }
-  },
-  {
-    "id": "6151396102",
-    "name": "Centre de Nursing Misinga",
-    "lat": -1.6658878,
-    "lon": 29.2299662,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6151396102
-    }
-  },
-  {
-    "id": "6260316286",
-    "name": "Sky Nevada",
-    "lat": -1.6917972,
-    "lon": 29.2628572,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6260316286
-    }
-  },
-  {
-    "id": "6267805787",
-    "name": "One Degree South",
-    "lat": -1.7073847,
-    "lon": 29.2632571,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6267805787
-    }
-  },
-  {
-    "id": "6273548786",
-    "name": "Kigali Coach",
-    "lat": -1.6819743,
-    "lon": 29.250179,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6273548786
-    }
-  },
-  {
-    "id": "6273579285",
-    "name": "Everain Milk Shop",
-    "lat": -1.682222,
-    "lon": 29.2497895,
-    "catKey": "shopping",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6273579285
-    }
-  },
-  {
-    "id": "6273594386",
-    "name": "Malik",
-    "lat": -1.6827248,
-    "lon": 29.2506324,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6273594386
-    }
-  },
-  {
-    "id": "6273594389",
-    "name": "Smile",
-    "lat": -1.6848185,
-    "lon": 29.2553346,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6273594389
-    }
-  },
-  {
-    "id": "6273594391",
-    "name": "Seventh Day Adventist Church",
-    "lat": -1.6883327,
-    "lon": 29.2594931,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6273594391,
-      "religion": "christian",
-      "denomination": "seventh_day_adventist"
-    }
-  },
-  {
-    "id": "6273603987",
-    "name": "Sculpture",
-    "lat": -1.7026041,
-    "lon": 29.2627287,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6273603987
-    }
-  },
-  {
-    "id": "6283136685",
-    "name": "Nirvana Heights Hotel",
-    "lat": -1.7313626,
-    "lon": 29.2639397,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6283136685
-    }
-  },
-  {
-    "id": "6286283017",
-    "name": "Centre Médical Sainte Elizabeth",
-    "lat": -1.6623749,
-    "lon": 29.2416143,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6286283017
-    }
-  },
-  {
-    "id": "6286305401",
-    "name": "Centre Médical Mont Sinai",
-    "lat": -1.669589,
-    "lon": 29.2277835,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6286305401
-    }
-  },
-  {
-    "id": "6286325743",
-    "name": "Clinique médical Emmanuel",
-    "lat": -1.6724081,
-    "lon": 29.2244878,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6286325743
-    }
-  },
-  {
-    "id": "6286325744",
-    "name": "Centre Médical Eben Ezer",
-    "lat": -1.6736347,
-    "lon": 29.2245649,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6286325744
-    }
-  },
-  {
-    "id": "6296156985",
-    "name": "Access",
-    "lat": -1.7004609,
-    "lon": 29.2581632,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6296156985
-    }
-  },
-  {
-    "id": "6374000326",
-    "name": "Centre de Santé Shirika La Umoja (Handicapé Physique)",
-    "lat": -1.6706802,
-    "lon": 29.2320418,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6374000326
-    }
-  },
-  {
-    "id": "6374000377",
-    "name": "Centre de Santé Makimbilio",
-    "lat": -1.685721,
-    "lon": 29.241192,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6374000377
-    }
-  },
-  {
-    "id": "6374102982",
-    "name": "Clinique Agape",
-    "lat": -1.6747748,
-    "lon": 29.2307695,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6374102982
-    }
-  },
-  {
-    "id": "6417646321",
-    "name": "Marché aux fruits et légumes",
-    "lat": -1.6882679,
-    "lon": 29.2378136,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6417646321
-    }
-  },
-  {
-    "id": "6417646323",
-    "name": "Charcuterie",
-    "lat": -1.68406,
-    "lon": 29.2340559,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6417646323
-    }
-  },
-  {
-    "id": "6417646324",
-    "name": "Lapa Lounge",
-    "lat": -1.6924128,
-    "lon": 29.2377385,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6417646324,
-      "smoking": "yes"
-    }
-  },
-  {
-    "id": "6417646325",
-    "name": "Nyumbani Lounge",
-    "lat": -1.6831082,
-    "lon": 29.2307782,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6417646325,
-      "wifi": true,
-      "wifi_fee": "no",
-      "smoking": "yes"
-    }
-  },
-  {
-    "id": "6440662486",
-    "name": "Kunda guesthouse",
-    "lat": -1.6892658,
-    "lon": 29.2499604,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6440662486
-    }
-  },
-  {
-    "id": "6443246785",
-    "name": "Ecobank",
-    "lat": -1.6854807,
-    "lon": 29.2361473,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6443246785,
-      "brand": "Ecobank"
-    }
-  },
-  {
-    "id": "6468635333",
-    "name": "Ihusi des Jeunes",
-    "lat": -1.681322,
-    "lon": 29.2381992,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6468635333
-    }
-  },
-  {
-    "id": "6592797590",
-    "name": "Hot springs",
-    "lat": -1.7395414,
-    "lon": 29.2745296,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6592797590
-    }
-  },
-  {
-    "id": "6649420585",
-    "name": "Bistro Restaurant & Wine Garage",
-    "lat": -1.6995963,
-    "lon": 29.2557925,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6649420585
+      "rating": 3.4,
+      "rating_count": 15,
+      "hours": "Open 24 hours"
     },
     "contact": {
-      "phone": "+250 (0) 785 368825"
+      "phone": "+250 782 736 000",
+      "address": "Grande Barrière Gisenyi, Rwanda"
     }
   },
   {
-    "id": "6649420685",
-    "name": "White Rock Bistro",
-    "lat": -1.6976935,
-    "lon": 29.250328,
+    "id": "ChIJ1xkqZTYF3RkRQGbkEibZQlU",
+    "name": "Wazi Wine Garage",
+    "lat": -1.6994948,
+    "lon": 29.2559799,
     "catKey": "dining",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 6649420685
+      "rating": 4.6,
+      "rating_count": 23,
+      "hours": "Mon-Sun 8:00AM - 10:00PM"
     },
     "contact": {
-      "address": "Avenue de la Revolution",
-      "phone": "+250783000935"
+      "phone": "+250 791 574 271",
+      "address": "8724+7G2, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "6651016388",
-    "name": "Lakeside Restaurant & Beach Bar",
-    "lat": -1.7083735,
-    "lon": 29.2642141,
+    "id": "ChIJz5Oj9UUF3RkRwsHK-UKC_xw",
+    "name": "Sagabay Restaurant",
+    "lat": -1.7068334,
+    "lon": 29.262898,
     "catKey": "dining",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 6651016388
+      "rating": 4.2,
+      "rating_count": 322,
+      "hours": "Mon-Thu 7:00AM-12:00AM, Fri-Sat 7:00AM-1:00AM, Sun 7:00AM-12:30AM",
+      "website": "https://www.stayinrwanda.com/"
     },
     "contact": {
-      "address": "Avenue de la Production",
-      "phone": "+250 (0) 787775405"
+      "phone": "+250 793 056 413",
+      "address": "77V7+756, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "6698227186",
-    "name": "Maison indienne",
-    "lat": -1.6930973,
-    "lon": 29.2439806,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6698227186
-    },
-    "contact": {
-      "address": "15, Avenue Accasias",
-      "email": "andrusblr@gmail.com"
-    }
-  },
-  {
-    "id": "6698245785",
-    "name": "Maison biélorusse",
-    "lat": -1.6930724,
-    "lon": 29.243787,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6698245785
-    },
-    "contact": {
-      "address": "15, Avenue Accasias"
-    }
-  },
-  {
-    "id": "6799268185",
-    "name": "Vivo Restaurant",
-    "lat": -1.6963393,
-    "lon": 29.2626196,
+    "id": "ChIJH0pVjBUF3RkRfyuSEbuJf60",
+    "name": "Portico Bar Resto Gisenyi",
+    "lat": -1.7030981,
+    "lon": 29.2613134,
     "catKey": "dining",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 6799268185,
-      "cuisine": "regional, african, local"
-    }
-  },
-  {
-    "id": "6801209287",
-    "name": "Start of the Congo Nile Trail",
-    "lat": -1.7394705,
-    "lon": 29.2770636,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 6801209287
-    }
-  },
-  {
-    "id": "7022331387",
-    "name": "Family",
-    "lat": -1.7331771,
-    "lon": 29.2730335,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7022331387
+      "rating": 4.3,
+      "rating_count": 12,
+      "hours": "Mon-Thu 7:00AM-3:00AM, Fri-Sun 7:00AM-4:00AM"
     },
     "contact": {
-      "phone": "+250 (0) 788 480 524"
+      "phone": "+250 792 016 495",
+      "address": "77W6+PGQ, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "7077045488",
-    "name": "Carrefour des Arts",
-    "lat": -1.6829143,
-    "lon": 29.2294512,
-    "catKey": "nightlife",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7077045488,
-      "cuisine": "barbecue, coffee_shop, deli, african",
-      "wifi": true
-    }
-  },
-  {
-    "id": "7077075887",
-    "name": "Ana Group",
-    "lat": -1.6776642,
-    "lon": 29.2189724,
-    "catKey": "shopping",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7077075887,
-      "operator": "Henri Rwanika"
-    }
-  },
-  {
-    "id": "7077077288",
-    "name": "Ana Groupe",
-    "lat": -1.6777592,
-    "lon": 29.2189111,
+    "id": "ChIJ_4VHZ3UF3RkRnLyT3Z6xknY",
+    "name": "Saba Lounge & Restaurant",
+    "lat": -1.6878272,
+    "lon": 29.2591513,
     "catKey": "dining",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 7077077288,
-      "cuisine": "coffee_shop, crepe, african, french, local, tea, deli, ice_cream, fish_and_chips, friture, burger, hotdog, italian_pizza, steak_house, pizza, fish, chicken, fine_dining, sandwich, sausage",
-      "operator": "Henri Rwanika",
-      "wifi": true
+      "rating": 4.2,
+      "rating_count": 59,
+      "hours": "Mon-Sun 7:30AM - 11:00PM",
+      "website": "https://sabas-website.vercel.app/"
+    },
+    "contact": {
+      "phone": "+250 791 574 497",
+      "address": "8765+VMM, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "7079477788",
-    "name": "Hôtel Cirezi",
-    "lat": -1.6775414,
-    "lon": 29.2212203,
-    "catKey": "hotels",
+    "id": "ChIJXcvlpyoF3RkR1SO3JYnitqw",
+    "name": "Le Grand Chalet Spa & Restaurant",
+    "lat": -1.70475,
+    "lon": 29.2615574,
+    "catKey": "dining",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 7079477788
+      "rating": 4.1,
+      "rating_count": 44,
+      "hours": "Mon-Thu 9:00AM-11:30PM, Fri-Sun Open 24 hours",
+      "website": "http://www.legrandchalet.rw/"
+    },
+    "contact": {
+      "phone": "+250 784 700 000",
+      "address": "Gisenyi, RN4, Ave de la Production, Rwanda"
     }
   },
   {
-    "id": "7079479085",
-    "name": "PAIDEK sa",
-    "lat": -1.6775117,
-    "lon": 29.2197031,
+    "id": "ChIJUR7CRQ4F3RkRafN3YVWuFF4",
+    "name": "Lakeside Bar Beach & Restaurant",
+    "lat": -1.7078632,
+    "lon": 29.2637753,
+    "catKey": "dining",
+    "tags": {
+      "rating": 3.9,
+      "rating_count": 334,
+      "hours": "Mon-Fri 8:00AM-1:00AM, Sat-Sun 8:00AM-2:00AM"
+    },
+    "contact": {
+      "phone": "+250 791 693 096",
+      "address": "Ave de la Production, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ_0s8RQAF3RkR-_bVKsPmg0s",
+    "name": "O'Delice (Street Food & Food Store)",
+    "lat": -1.695575,
+    "lon": 29.257522,
+    "catKey": "dining",
+    "tags": {
+      "rating": 4.1,
+      "rating_count": 13,
+      "hours": "Mon-Sun 8:30AM - 10:00PM"
+    },
+    "contact": {
+      "phone": "+250 791 349 612",
+      "address": "8735+R6C, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ8-8hS5cF3RkRJqNM5RC6O5Y",
+    "name": "Balcon Café",
+    "lat": -1.6903367,
+    "lon": 29.2553972,
+    "catKey": "dining",
+    "tags": {
+      "rating": 4.6,
+      "rating_count": 15
+    },
+    "contact": {
+      "phone": "+250 788 900 636",
+      "address": "8754+P7W, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJX5VoKgAF3RkRIU7tSrScpMU",
+    "name": "HAYATI Coffee & Garden",
+    "lat": -1.6921434,
+    "lon": 29.2579919,
+    "catKey": "dining",
+    "tags": {
+      "rating": 4.8,
+      "rating_count": 5
+    },
+    "contact": {
+      "address": "8755+56C, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJPQb1qB4F3RkRjeOS_QTlv28",
+    "name": "Heroes Coffee Rubavu",
+    "lat": -1.6920769,
+    "lon": 29.2631222,
+    "catKey": "dining",
+    "tags": {
+      "rating": 4.2,
+      "rating_count": 76,
+      "hours": "Mon-Sun 7:00AM - 11:00PM"
+    },
+    "contact": {
+      "phone": "+250 791 042 738",
+      "address": "8757+569, Rubavu, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ7afx4eUF3RkRwQ0pFARcXUQ",
+    "name": "The Moon Coffee Shop",
+    "lat": -1.6911875,
+    "lon": 29.2559375,
+    "catKey": "dining",
+    "tags": {
+      "rating": 5,
+      "rating_count": 1,
+      "hours": "Mon-Sun 7:00AM - 11:00PM"
+    },
+    "contact": {
+      "phone": "+250 791 857 696",
+      "address": "8754+G95, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJjTorbgAF3RkR8YC0isXIJhE",
+    "name": "Kota Café",
+    "lat": -1.6911023,
+    "lon": 29.2557266,
+    "catKey": "dining",
+    "tags": {
+      "rating": 5,
+      "rating_count": 1,
+      "hours": "Mon-Sun 8:00AM - 8:30PM"
+    },
+    "contact": {
+      "phone": "+250 794 617 935",
+      "address": "Big JJ Building Bus Park, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJeWmAsAIF3RkRPsImvGnns-Q",
+    "name": "ZELA Pharmacy",
+    "lat": -1.6821875,
+    "lon": 29.2495625,
     "catKey": "practical",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 7079479085
-    }
-  },
-  {
-    "id": "7155808050",
-    "name": "Jubya Technology",
-    "lat": -1.6861962,
-    "lon": 29.2372571,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7155808050,
-      "operator": "Jubya Technology"
+      "rating": 5,
+      "rating_count": 4,
+      "hours": "Open 24 hours"
     },
     "contact": {
-      "address": "4, Tourisme, Goma"
+      "phone": "+250 786 971 950",
+      "address": "869X+4RG, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "7473845702",
-    "name": "Centre d'accueil Bakanja",
-    "lat": -1.6881015,
-    "lon": 29.2324355,
-    "catKey": "hotels",
+    "id": "ChIJfWUlOAAF3RkR5fIKl7epp5g",
+    "name": "Medlink Pharmacy",
+    "lat": -1.6961508,
+    "lon": 29.2611462,
+    "catKey": "practical",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 7473845702,
-      "description": "Restaurant et Logement"
+      "rating": 5,
+      "rating_count": 2
     },
     "contact": {
-      "address": "12, Rue Lyn Lusi",
-      "phone": "+243 970 469 994",
-      "website": "http://www.bakanja.com"
+      "address": "8736+GFG, Ave de l'Umuganda, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "7532813417",
-    "name": "Pili Pili Bar & Restaurant",
-    "lat": -1.6948199,
-    "lon": 29.2396684,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7532813417
-    }
-  },
-  {
-    "id": "7532813418",
-    "name": "Le Volcan Bar & Restaurant",
-    "lat": -1.6953347,
-    "lon": 29.2398668,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7532813418
-    }
-  },
-  {
-    "id": "7532813419",
-    "name": "Paroisse Saint Esprit",
-    "lat": -1.692348,
-    "lon": 29.2391534,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7532813419,
-      "religion": "christian"
-    }
-  },
-  {
-    "id": "7532813420",
-    "name": "Hôtel Bénédiction 2",
-    "lat": -1.6920877,
-    "lon": 29.2327891,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7532813420
-    }
-  },
-  {
-    "id": "7801646785",
-    "name": "BANMP",
-    "lat": -1.6739612,
-    "lon": 29.2415142,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7801646785
-    }
-  },
-  {
-    "id": "7829871565",
-    "name": "Hôtel des Grands Lacs",
-    "lat": -1.690367,
-    "lon": 29.2382359,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7829871565
-    }
-  },
-  {
-    "id": "7844138468",
-    "name": "Hôtel Rusina",
-    "lat": -1.6882273,
-    "lon": 29.2376797,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7844138468
-    }
-  },
-  {
-    "id": "7844138472",
-    "name": "Hôtel Bethanie",
-    "lat": -1.6636924,
-    "lon": 29.2326646,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7844138472
-    }
-  },
-  {
-    "id": "7849859044",
-    "name": "Marché Cental de Virunga",
-    "lat": -1.6709579,
-    "lon": 29.229474,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7849859044
-    }
-  },
-  {
-    "id": "7849859048",
-    "name": "Marché de Birere",
-    "lat": -1.6872627,
-    "lon": 29.2374287,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7849859048
-    }
-  },
-  {
-    "id": "7849859055",
-    "name": "Marché Noire de Virunga Tora-Tina",
-    "lat": -1.6703721,
-    "lon": 29.2351853,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7849859055,
-      "opening_hours": "08:30-18:00"
-    }
-  },
-  {
-    "id": "7862014912",
-    "name": "Clinique Polygone de Willis",
-    "lat": -1.6751447,
-    "lon": 29.2344938,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 7862014912
-    }
-  },
-  {
-    "id": "8241983017",
-    "name": "Emmanuel Residents Goma",
-    "lat": -1.6910301,
-    "lon": 29.2352407,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8241983017,
-      "wifi": true
-    },
-    "contact": {
-      "address": "00000"
-    }
-  },
-  {
-    "id": "8285899550",
-    "name": "SNEL",
-    "lat": -1.6768495,
-    "lon": 29.2214069,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8285899550
-    }
-  },
-  {
-    "id": "8285903743",
-    "name": "Pharmacie de l'espoir",
-    "lat": -1.6782729,
-    "lon": 29.224931,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8285903743
-    }
-  },
-  {
-    "id": "8286019441",
-    "name": "Police nationale Congolaise",
-    "lat": -1.67894,
-    "lon": 29.2265477,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8286019441
-    }
-  },
-  {
-    "id": "8296610275",
-    "name": "Banque de Développement des Etats des Grands Lacs",
-    "lat": -1.6893365,
-    "lon": 29.236846,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8296610275
-    }
-  },
-  {
-    "id": "8296610276",
-    "name": "Equity Bank",
-    "lat": -1.6872703,
-    "lon": 29.23682,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8296610276,
-      "brand": "Equity Bank"
-    }
-  },
-  {
-    "id": "8543217173",
-    "name": "Bar-B-Cue",
-    "lat": -1.6982065,
-    "lon": 29.2374811,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8543217173
-    }
-  },
-  {
-    "id": "8543217174",
-    "name": "Belvedere Hotel 2",
-    "lat": -1.694138,
-    "lon": 29.238975,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8543217174
-    }
-  },
-  {
-    "id": "8543217175",
-    "name": "Arabica",
-    "lat": -1.6940241,
-    "lon": 29.239313,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8543217175,
-      "opening_hours": "8:00-21:00"
-    }
-  },
-  {
-    "id": "8553136950",
-    "name": "Centre Médical Évangélique",
-    "lat": -1.6730177,
-    "lon": 29.2332966,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8553136950
-    }
-  },
-  {
-    "id": "8556986708",
-    "name": "VIP Palace 2",
-    "lat": -1.6987173,
-    "lon": 29.2402813,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8556986708
-    },
-    "contact": {
-      "website": "https://www.vipgoma.com"
-    }
-  },
-  {
-    "id": "8567368728",
-    "name": "Kiwango cha hali ya volkeno Nyiragongo",
-    "lat": -1.6786212,
-    "lon": 29.2251986,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8567368728,
-      "operator": "Observatoire Volcanologique de Goma"
-    }
-  },
-  {
-    "id": "8567616339",
-    "name": "Hôtel kivu dream",
-    "lat": -1.6734081,
-    "lon": 29.2292953,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8567616339
-    }
-  },
-  {
-    "id": "8567626489",
-    "name": "BM night club",
-    "lat": -1.6750381,
-    "lon": 29.2290506,
-    "catKey": "nightlife",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8567626489
-    }
-  },
-  {
-    "id": "8572947800",
-    "name": "Maison rouge",
-    "lat": -1.6727823,
-    "lon": 29.2293252,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8572947800
-    }
-  },
-  {
-    "id": "8572966571",
-    "name": "Clinique nyota ya amani cna",
-    "lat": -1.6735923,
-    "lon": 29.2287597,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8572966571
-    }
-  },
-  {
-    "id": "8586760891",
-    "name": "Case départ",
-    "lat": -1.6758864,
-    "lon": 29.2202247,
-    "catKey": "nightlife",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8586760891
-    }
-  },
-  {
-    "id": "8586764232",
-    "name": "Jambo safari",
-    "lat": -1.679676,
-    "lon": 29.2320446,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8586764232
-    }
-  },
-  {
-    "id": "8586768331",
-    "name": "Nganda cap sud",
-    "lat": -1.6778754,
-    "lon": 29.2218024,
-    "catKey": "nightlife",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8586768331
-    }
-  },
-  {
-    "id": "8617934798",
-    "name": "Restaurant benghazi",
-    "lat": -1.6793333,
-    "lon": 29.2185518,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8617934798
-    }
-  },
-  {
-    "id": "8680650056",
-    "name": "Mosquée ibb",
-    "lat": -1.6792946,
-    "lon": 29.2279936,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 8680650056
-    }
-  },
-  {
-    "id": "9340335117",
-    "name": "New alaska",
-    "lat": -1.6829885,
-    "lon": 29.2292322,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 9340335117,
-      "opening_hours": "Mo-Su 08:30-21:30"
-    }
-  },
-  {
-    "id": "9340395717",
-    "name": "Carnacia",
-    "lat": -1.6879171,
-    "lon": 29.2338028,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 9340395717,
-      "opening_hours": "Mo-Su 09:00-21:45"
-    }
-  },
-  {
-    "id": "9468376417",
-    "name": "Muhabura mountain lodge",
-    "lat": -1.6962015,
-    "lon": 29.2622766,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 9468376417
-    }
-  },
-  {
-    "id": "9886023422",
-    "name": "Maji Nyumbani Office",
-    "lat": -1.6814483,
-    "lon": 29.2334855,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 9886023422
-    }
-  },
-  {
-    "id": "9902217966",
-    "name": "Gare routière de goma",
-    "lat": -1.6811939,
-    "lon": 29.2348348,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 9902217966
-    }
-  },
-  {
-    "id": "9977107421",
-    "name": "Bungwe Guest house",
-    "lat": -1.6870193,
-    "lon": 29.2302877,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 9977107421,
-      "wifi": true
-    },
-    "contact": {
-      "address": "Rue Lyn Lusi"
-    }
-  },
-  {
-    "id": "10000515717",
-    "name": "Oeil De Faucon",
-    "lat": -1.7297871,
-    "lon": 29.272491,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 10000515717
-    }
-  },
-  {
-    "id": "10238038499",
-    "name": "Belvedere Hotel",
-    "lat": -1.7031852,
-    "lon": 29.2645325,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 10238038499
-    }
-  },
-  {
-    "id": "10621783723",
-    "name": "Brasserie",
-    "lat": -1.7349741,
-    "lon": 29.278315,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 10621783723
-    }
-  },
-  {
-    "id": "10799580831",
-    "name": "Bravour hôtel",
-    "lat": -1.6855704,
-    "lon": 29.2370586,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 10799580831
-    }
-  },
-  {
-    "id": "10840512943",
-    "name": "Centre d'Accueil Saint François Xavier",
-    "lat": -1.6983979,
-    "lon": 29.2584671,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 10840512943,
-      "wifi": true
-    },
-    "contact": {
-      "website": "https://centre-d-accueil-saint-francois-xavier-gisenyi.booked.net/"
-    }
-  },
-  {
-    "id": "10980087005",
-    "name": "GH NRC Goma",
-    "lat": -1.6927297,
-    "lon": 29.2313318,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 10980087005,
-      "wifi": true
-    }
-  },
-  {
-    "id": "10982740406",
-    "name": "GH SI Goma",
-    "lat": -1.6968323,
-    "lon": 29.2368095,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 10982740406
-    }
-  },
-  {
-    "id": "10983849805",
-    "name": "Big Busstation (to different destinations: Karongi, Kigali, ...)",
-    "lat": -1.6911713,
-    "lon": 29.2563399,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 10983849805
-    }
-  },
-  {
-    "id": "11019644434",
-    "name": "Institut français",
-    "lat": -1.6839684,
-    "lon": 29.2281961,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019644434
-    }
-  },
-  {
-    "id": "11019644435",
-    "name": "Pain royal",
-    "lat": -1.6848017,
-    "lon": 29.2292636,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019644435
-    }
-  },
-  {
-    "id": "11019644436",
-    "name": "église Chrisco",
-    "lat": -1.6860874,
-    "lon": 29.2280188,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019644436,
-      "religion": "christian"
-    }
-  },
-  {
-    "id": "11019669978",
-    "name": "Mediterraneo",
-    "lat": -1.6877791,
-    "lon": 29.2296894,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019669978,
-      "cuisine": "pizza"
-    }
-  },
-  {
-    "id": "11019669980",
-    "name": "Centre hospitalier Shifaa",
-    "lat": -1.6879435,
-    "lon": 29.2305516,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019669980
-    }
-  },
-  {
-    "id": "11019669985",
-    "name": "Jubilé",
-    "lat": -1.6885423,
-    "lon": 29.2341427,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019669985
-    }
-  },
-  {
-    "id": "11019669986",
-    "name": "Trust Merchant",
-    "lat": -1.6902022,
-    "lon": 29.2362604,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019669986,
-      "atm": true
-    },
-    "contact": {
-      "address": "Avenue Mobutu, Goma, DRC"
-    }
-  },
-  {
-    "id": "11019669987",
-    "name": "Ô nectar",
-    "lat": -1.690185,
-    "lon": 29.2358167,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019669987
-    }
-  },
-  {
-    "id": "11019669989",
-    "name": "Nyoumbani Lounge",
-    "lat": -1.6904853,
-    "lon": 29.2352669,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019669989
-    }
-  },
-  {
-    "id": "11019669991",
-    "name": "My hosting",
-    "lat": -1.6900027,
-    "lon": 29.2351837,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019669991
-    }
-  },
-  {
-    "id": "11019669993",
-    "name": "Seule la foi",
-    "lat": -1.6911448,
-    "lon": 29.2344408,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019669993
-    }
-  },
-  {
-    "id": "11019669996",
-    "name": "Ro Embassade",
-    "lat": -1.6924108,
-    "lon": 29.23052,
-    "catKey": "shopping",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019669996
-    }
-  },
-  {
-    "id": "11019800400",
-    "name": "Selfie",
-    "lat": -1.6885471,
-    "lon": 29.2292715,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11019800400,
-      "cuisine": "coffee_shop"
-    }
-  },
-  {
-    "id": "11216158837",
-    "name": "African Art Gallery",
-    "lat": -1.70306,
-    "lon": 29.261591,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11216158837
-    }
-  },
-  {
-    "id": "11217813938",
-    "name": "Tourist office",
-    "lat": -1.7022433,
-    "lon": 29.2598694,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11217813938
-    }
-  },
-  {
-    "id": "11217814038",
-    "name": "Kivu art gallery",
-    "lat": -1.7022362,
-    "lon": 29.2598131,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11217814038
-    }
-  },
-  {
-    "id": "11795679169",
-    "name": "Guest MC1",
-    "lat": -1.6934413,
-    "lon": 29.2390858,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11795679169
-    }
-  },
-  {
-    "id": "11878478269",
-    "name": "Fromage et saucisse Luchebere",
-    "lat": -1.6838591,
-    "lon": 29.2371074,
-    "catKey": "shopping",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11878478269
-    }
-  },
-  {
-    "id": "11913664069",
-    "name": "Boutique ventilos",
-    "lat": -1.6782625,
-    "lon": 29.22408,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 11913664069
-    }
-  },
-  {
-    "id": "12059589402",
-    "name": "LAVA restaurant et salon de coiffure",
-    "lat": -1.6880171,
-    "lon": 29.2382695,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12059589402
-    }
-  },
-  {
-    "id": "12059606095",
-    "name": "Restaurant Ble d'Or",
-    "lat": -1.6896269,
-    "lon": 29.237718,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12059606095
-    },
-    "contact": {
-      "address": "Avenue de rond-point, Quartier des  Volcans, Goma"
-    }
-  },
-  {
-    "id": "12059639286",
-    "name": "Go Marché",
-    "lat": -1.69196,
-    "lon": 29.2388624,
-    "catKey": "shopping",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12059639286
-    },
-    "contact": {
-      "address": "Avenue Accasias, Goma, DRC"
-    }
-  },
-  {
-    "id": "12318270858",
-    "name": "Poste de Santé CEBCE",
-    "lat": -1.6788789,
-    "lon": 29.234603,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12318270858
-    }
-  },
-  {
-    "id": "12318270859",
-    "name": "CEBCE SIGNERS",
-    "lat": -1.6792207,
-    "lon": 29.2342097,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12318270859,
-      "religion": "christian",
-      "denomination": "protestant"
-    }
-  },
-  {
-    "id": "12435869077",
-    "name": "Congo Unis Hotel",
-    "lat": -1.695406,
-    "lon": 29.2404694,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12435869077
-    }
-  },
-  {
-    "id": "12442115058",
-    "name": "Restaurant Espace BEDAN",
-    "lat": -1.6882827,
-    "lon": 29.2327463,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12442115058
-    }
-  },
-  {
-    "id": "12468530214",
-    "name": "La Rosta",
-    "lat": -1.6925812,
-    "lon": 29.2379828,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12468530214
-    }
-  },
-  {
-    "id": "12468530215",
-    "name": "Coiffure Mixte La Splendide De l'Art",
-    "lat": -1.697878,
-    "lon": 29.239611,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12468530215
-    }
-  },
-  {
-    "id": "12468530216",
-    "name": "Evangelical Friends church of Rwanda",
-    "lat": -1.6816649,
-    "lon": 29.2495757,
-    "catKey": "activities",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12468530216,
-      "religion": "christian",
-      "denomination": "protestant"
-    }
-  },
-  {
-    "id": "12468530217",
-    "name": "Château Dor",
-    "lat": -1.695662,
-    "lon": 29.2394139,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12468530217
-    }
-  },
-  {
-    "id": "12468530218",
-    "name": "Hôtel Kivu Neno",
-    "lat": -1.6969693,
-    "lon": 29.2400397,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12468530218
-    }
-  },
-  {
-    "id": "12468530219",
-    "name": "Chère Hotel",
-    "lat": -1.6965832,
-    "lon": 29.2398501,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12468530219
-    }
-  },
-  {
-    "id": "12950467157",
-    "name": "Answer Pharmacy Ltd",
-    "lat": -1.6847399,
-    "lon": 29.2552973,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467157
-    },
-    "contact": {
-      "phone": "+250 790 569 208"
-    }
-  },
-  {
-    "id": "12950467162",
-    "name": "Iwacu Clinic",
-    "lat": -1.6904207,
-    "lon": 29.2546224,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467162
-    }
-  },
-  {
-    "id": "12950467227",
-    "name": "Intwari Mu Buzima",
-    "lat": -1.6769956,
-    "lon": 29.2537393,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467227
-    },
-    "contact": {
-      "phone": "+250 781 260 578"
-    }
-  },
-  {
-    "id": "12950467305",
-    "name": "Qlpharma (Quality Legacy Pharmacy) Ltd",
-    "lat": -1.6791575,
-    "lon": 29.2611335,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467305
-    },
-    "contact": {
-      "phone": "+250 788 264 506"
-    }
-  },
-  {
-    "id": "12950467310",
-    "name": "Charity Medical Clinic",
-    "lat": -1.6965195,
-    "lon": 29.2567354,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467310
-    },
-    "contact": {
-      "phone": "+250 785 196 386"
-    }
-  },
-  {
-    "id": "12950467335",
-    "name": "Dépôt Pharmaceutique Optiphar",
-    "lat": -1.6994581,
-    "lon": 29.262232,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467335
-    },
-    "contact": {
-      "phone": "+250 785 939 789"
-    }
-  },
-  {
-    "id": "12950467376",
-    "name": "Gisenyi Health Centre",
-    "lat": -1.6996894,
-    "lon": 29.2626245,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467376
-    }
-  },
-  {
-    "id": "12950467442",
+    "id": "ChIJLQPM8qYF3RkRXkSnlRddNgc",
     "name": "Pharmacy Vinca",
     "lat": -1.6972634,
     "lon": 29.2634421,
     "catKey": "practical",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467442
+      "rating": 4,
+      "rating_count": 1,
+      "hours": "Mon-Sun 6:00AM - 10:00PM"
     },
     "contact": {
-      "phone": "+250 788 455 565"
+      "phone": "+250 788 455 565",
+      "address": "8737+39W, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "12950467457",
-    "name": "Pharmacie Du District De Rubavu",
-    "lat": -1.7001472,
-    "lon": 29.2622425,
+    "id": "ChIJ7_iEswkF3RkRaqFf78y4OdE",
+    "name": "MEDIASOL Pharmacy",
+    "lat": -1.6952479,
+    "lon": 29.257198,
     "catKey": "practical",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467457
+      "hours": "Mon-Sun 7:00AM - 11:00PM",
+      "website": "https://www.mediasolpharma.com/"
+    },
+    "contact": {
+      "phone": "+250 789 990 455",
+      "address": "N/A, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "12950467472",
+    "id": "ChIJ0zSvrqYF3RkR54NUNVU_4eQ",
+    "name": "Kivu Beach Pharmacy",
+    "lat": -1.6965031,
+    "lon": 29.2615345,
+    "catKey": "practical",
+    "tags": {},
+    "contact": {
+      "address": "8736+9JV, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJZydLiAoF3RkR-iQytwhwV38",
+    "name": "Bank of Kigali - Gisenyi Branch",
+    "lat": -1.6980681,
+    "lon": 29.2552758,
+    "catKey": "practical",
+    "tags": {
+      "rating": 4.4,
+      "rating_count": 12,
+      "hours": "Mon-Sat 8:00AM - 5:00PM, Sun Closed",
+      "has_atm": true
+    },
+    "contact": {
+      "address": "8724+Q4C, Ave des Fleures, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJI0evIUQF3RkRKPQhhpXqNsU",
+    "name": "ATM GT Bank",
+    "lat": -1.6969172,
+    "lon": 29.2632632,
+    "catKey": "practical",
+    "tags": {
+      "hours": "Open 24 hours",
+      "type": "ATM"
+    },
+    "contact": {
+      "address": "8737+68J, Rue de l'Aeropor, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJk7f85EwF3RkRsEt0_W_JKpw",
+    "name": "KCB ATM",
+    "lat": -1.6965991,
+    "lon": 29.2634911,
+    "catKey": "practical",
+    "tags": {
+      "type": "ATM"
+    },
+    "contact": {
+      "address": "8737+999, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJuXMegAoF3RkRYaFnzwiFUl4",
+    "name": "Access Bank",
+    "lat": -1.7006444,
+    "lon": 29.2580619,
+    "catKey": "practical",
+    "tags": {
+      "rating": 3.4,
+      "rating_count": 5,
+      "hours": "Mon-Fri 8:00AM-6:00PM, Sat 9:00AM-2:00PM, Sun Closed",
+      "website": "https://rwanda.accessbankplc.com/"
+    },
+    "contact": {
+      "address": "77X5+P6V, Ave de Independance, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJMdg7-KMF3RkRv34KfRQAEXU",
+    "name": "Bank of Africa",
+    "lat": -1.6957892,
+    "lon": 29.2610075,
+    "catKey": "practical",
+    "tags": {
+      "rating": 3,
+      "rating_count": 1,
+      "hours": "Mon-Fri 7:30AM-7:00PM, Sat 8:00AM-6:00PM, Sun Closed"
+    },
+    "contact": {
+      "phone": "+250 739 783 805",
+      "address": "8736+MCJ, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJtU8rpn0F3RkRod3jZbuV5jw",
+    "name": "JJ Supermarket",
+    "lat": -1.6824277,
+    "lon": 29.2511562,
+    "catKey": "shopping",
+    "tags": {
+      "rating": 4.2,
+      "rating_count": 32,
+      "hours": "Mon-Sun 8:00AM - 12:00AM"
+    },
+    "contact": {
+      "phone": "+250 734 598 224",
+      "address": "8792+2G5, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJUayr0KYF3RkRL-JvDbrsXPU",
+    "name": "Chez Abibu",
+    "lat": -1.6952341,
+    "lon": 29.2623032,
+    "catKey": "shopping",
+    "tags": {
+      "rating": 4,
+      "rating_count": 16,
+      "hours": "Mon-Sun 8:00AM - 10:00PM"
+    },
+    "contact": {
+      "phone": "+250 787 098 443",
+      "address": "8736+WW3, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJZf0quZMF3RkRNtbHuFm2l3s",
+    "name": "Saba Supermarket",
+    "lat": -1.6878436,
+    "lon": 29.2590676,
+    "catKey": "shopping",
+    "tags": {
+      "rating": 3.8,
+      "rating_count": 18,
+      "hours": "Mon-Sun 8:00AM - 11:00PM"
+    },
+    "contact": {
+      "phone": "+250 789 482 034",
+      "address": "8765+VJ9, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJBddIHQAF3RkRdIjdOtNTHa8",
+    "name": "Simnet Supermarket Ltd",
+    "lat": -1.7030592,
+    "lon": 29.2614101,
+    "catKey": "shopping",
+    "tags": {
+      "hours": "Mon-Fri 8:00AM-10:00PM, Sat 9:00AM-10:00PM, Sun 1:30PM-10:00PM"
+    },
+    "contact": {
+      "phone": "+250 788 430 295",
+      "address": "Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJg5RuFqQF3RkR1XowpTGHDrc",
+    "name": "Ineza Iwacu Shop",
+    "lat": -1.6955284,
+    "lon": 29.2624855,
+    "catKey": "shopping",
+    "tags": {
+      "rating": 5,
+      "rating_count": 1,
+      "hours": "Mon-Sat 6:00AM - 9:00PM, Sun Closed"
+    },
+    "contact": {
+      "phone": "+250 783 086 783",
+      "address": "8736+QXQ, Ave du Marche, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJz0aMF6QF3RkRUwcxYn9Tyl8",
+    "name": "Rubavu Main Market (Ubucuruzi)",
+    "lat": -1.6956652,
+    "lon": 29.2624702,
+    "catKey": "shopping",
+    "tags": {
+      "rating": 3.7,
+      "rating_count": 556,
+      "hours": "Mon 7:30AM-7:30PM, Tue-Sat 7:30AM-5:30PM, Sun Closed"
+    },
+    "contact": {
+      "phone": "+250 722 487 468",
+      "address": "8736+QXQ, Ave du Marche, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJNVkPcugF3RkRlED3h9C6nnY",
+    "name": "Mbugangari Market",
+    "lat": -1.6755309,
+    "lon": 29.2535535,
+    "catKey": "shopping",
+    "tags": {
+      "rating": 3.8,
+      "rating_count": 186,
+      "hours": "Mon-Fri 8:00AM-8:00PM, Sat-Sun 6:00AM-8:00PM"
+    },
+    "contact": {
+      "phone": "+250 781 866 036",
+      "address": "Mbugangari, 87F3+5FX, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJW5_5FKQF3RkR9tZ6oJ6Yzbk",
+    "name": "Habibu Market",
+    "lat": -1.6951722,
+    "lon": 29.2623501,
+    "catKey": "shopping",
+    "tags": {
+      "rating": 3.2,
+      "rating_count": 13
+    },
+    "contact": {
+      "phone": "+250 782 444 412",
+      "address": "8736+WWQ, Rue des Poissons, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJZW0CvG8F3RkRiyPCcLmfqvs",
+    "name": "Charity Medical Clinic",
+    "lat": -1.6965195,
+    "lon": 29.2567354,
+    "catKey": "practical",
+    "tags": {
+      "rating": 4.8,
+      "rating_count": 12,
+      "hours": "Open 24 hours"
+    },
+    "contact": {
+      "phone": "+250 785 196 386",
+      "address": "Rue de I'Industrie, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ5ducCEgF3RkRV8JAzE_9tuQ",
+    "name": "Polyclinique La Croix du Sud",
+    "lat": -1.6967336,
+    "lon": 29.261654,
+    "catKey": "practical",
+    "tags": {
+      "rating": 4.4,
+      "rating_count": 7,
+      "hours": "Open 24 hours",
+      "website": "http://www.hopitalcroixdusud.com/"
+    },
+    "contact": {
+      "phone": "+250 780 900 488",
+      "address": "Ave du Marche, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJE3Ka5wkF3RkRpNN2skICTno",
     "name": "Gisenyi District Hospital",
     "lat": -1.7013247,
     "lon": 29.2622115,
     "catKey": "practical",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467472
+      "rating": 4.1,
+      "rating_count": 14,
+      "hours": "Open 24 hours",
+      "website": "http://www.gisenyihospital.gov.rw/"
     },
     "contact": {
-      "phone": "+250 788 629 215"
+      "phone": "+250 788 629 215",
+      "address": "Rue de l'Hopital, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "12950467482",
-    "name": "Byahi Health Centre",
-    "lat": -1.6631258,
-    "lon": 29.2645206,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467482
-    },
-    "contact": {
-      "phone": "+250 781 016 398"
-    }
-  },
-  {
-    "id": "12950467550",
-    "name": "Prestige Pharmacy Ltd",
-    "lat": -1.6856221,
-    "lon": 29.2570757,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467550
-    },
-    "contact": {
-      "phone": "+250 788 228 131"
-    }
-  },
-  {
-    "id": "12950467674",
-    "name": "Gacuba Ii B Health Centre",
-    "lat": -1.6760034,
-    "lon": 29.2550321,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467674
-    }
-  },
-  {
-    "id": "12950467713",
-    "name": "Polyclinique La Croix Du Sud - Gisenyi",
-    "lat": -1.6967336,
-    "lon": 29.261654,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467713
-    },
-    "contact": {
-      "phone": "+250 780 900 488"
-    }
-  },
-  {
-    "id": "12950467895",
-    "name": "Ivuriro",
-    "lat": -1.6812119,
-    "lon": 29.2638619,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467895
-    }
-  },
-  {
-    "id": "12950467982",
-    "name": "Lane Park Polyclinic",
-    "lat": -1.6849432,
-    "lon": 29.2481804,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950467982
-    },
-    "contact": {
-      "phone": "+250 786 521 838"
-    }
-  },
-  {
-    "id": "12950468003",
-    "name": "Gisenyi Dialysis Center - Africa Healthcare Network",
-    "lat": -1.7027725,
-    "lon": 29.2621351,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950468003
-    },
-    "contact": {
-      "phone": "+250 782 984 610"
-    }
-  },
-  {
-    "id": "12950468018",
-    "name": "Murara Health Centre",
-    "lat": -1.6717304,
-    "lon": 29.2540442,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950468018
-    }
-  },
-  {
-    "id": "12950468034",
-    "name": "Mission Pharmacy",
-    "lat": -1.6606025,
-    "lon": 29.2705386,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950468034
-    }
-  },
-  {
-    "id": "12950468072",
-    "name": "Clinic Horana Ubuzima Ltd",
-    "lat": -1.6944544,
-    "lon": 29.26093,
-    "catKey": "practical",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 12950468072
-    },
-    "contact": {
-      "phone": "+250 785 014 749"
-    }
-  },
-  {
-    "id": "12950468093",
+    "id": "ChIJlcP1W-sF3RkRtYLpc-iu1p4",
     "name": "Medical Clinic De L'Arche",
     "lat": -1.682807,
     "lon": 29.2499217,
     "catKey": "practical",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 12950468093
+      "rating": 3.8,
+      "rating_count": 4,
+      "hours": "Mon-Sun 8:00AM - 9:30PM"
     },
     "contact": {
-      "phone": "+250 786 226 457"
+      "phone": "+250 786 226 457",
+      "address": "Unnamed Road, Gisenyi, Rwanda"
     }
   },
   {
-    "id": "13247661501",
-    "name": "LaLiga",
-    "lat": -1.6959699,
-    "lon": 29.2363241,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 13247661501
-    }
-  },
-  {
-    "id": "13247661701",
-    "name": "Sous l'Avocatier",
-    "lat": -1.6885165,
-    "lon": 29.2303292,
-    "catKey": "dining",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 13247661701
-    }
-  },
-  {
-    "id": "13340456302",
-    "name": "blessington motel",
-    "lat": -1.6964313,
-    "lon": 29.2588476,
-    "catKey": "hotels",
-    "tags": {
-      "osm_type": "node",
-      "osm_id": 13340456302
-    }
-  },
-  {
-    "id": "13706432420",
-    "name": "Clinique AGAPE",
-    "lat": -1.6730384,
-    "lon": 29.2297229,
+    "id": "ChIJoRfkhqMF3RkR_9pQ020Rqow",
+    "name": "Clinic Horana Ubuzima LTD",
+    "lat": -1.6944544,
+    "lon": 29.26093,
     "catKey": "practical",
     "tags": {
-      "osm_type": "node",
-      "osm_id": 13706432420
+      "rating": 4,
+      "rating_count": 2,
+      "hours": "Open 24 hours"
+    },
+    "contact": {
+      "phone": "+250 785 014 749",
+      "address": "8746+697, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJK9fcz9Ya3RkRi2VzJgXvqqk",
+    "name": "Nyamyumba Hot Springs",
+    "lat": -1.7402651,
+    "lon": 29.2733767,
+    "catKey": "activities",
+    "tags": {
+      "rating": 3.8,
+      "rating_count": 311,
+      "description": "Volcanic hot springs & mud baths. Entry 5,000 RWF",
+      "website": "http://www.amestours.com/"
+    },
+    "contact": {
+      "phone": "+250 788 948 476",
+      "address": "775F+V9R, Rubavu, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJyc5vBgAF3RkRMY_WwTWtgLk",
+    "name": "Lake Kivu Boat Tour (Gisenyi Branch)",
+    "lat": -1.7037718,
+    "lon": 29.2591244,
+    "catKey": "activities",
+    "tags": {
+      "rating": 5,
+      "rating_count": 1,
+      "hours": "Open 24 hours",
+      "website": "http://visitlakekivu.com/"
+    },
+    "contact": {
+      "phone": "+250 789 474 864",
+      "address": "Public Beach, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJAQAAkLoF3RkRLDIZJtI2Foo",
+    "name": "Rubavu Artificial Forest",
+    "lat": -1.6902688,
+    "lon": 29.2662175,
+    "catKey": "activities",
+    "tags": {
+      "rating": 4.1,
+      "rating_count": 7,
+      "hours": "Mon 6:00AM-5:00PM, Tue-Sun Open 24 hours"
+    },
+    "contact": {
+      "phone": "+250 728 376 781",
+      "address": "Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJqQQil54F3RkRaECvEfzvwO4",
+    "name": "Nyanja Night Club",
+    "lat": -1.6976649,
+    "lon": 29.2503959,
+    "catKey": "nightlife",
+    "tags": {
+      "rating": 4.3,
+      "rating_count": 33,
+      "hours": "Mon Closed, Tue-Sun Open 24 hours",
+      "description": "Live band, karaoke & lake views"
+    },
+    "contact": {
+      "phone": "+250 783 000 935",
+      "address": "8722+W5J, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ3VSF55EF3RkRwhi7ZqZxr2g",
+    "name": "Viber Night Club",
+    "lat": -1.6923838,
+    "lon": 29.2598343,
+    "catKey": "nightlife",
+    "tags": {
+      "rating": 4.1,
+      "rating_count": 15,
+      "hours": "Open 24 hours"
+    },
+    "contact": {
+      "phone": "+250 783 584 628",
+      "address": "8755+2WW, Ave de l'Umuganda, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ67HrEaQF3RkRZBAwx2ou18A",
+    "name": "Apollo Fitness",
+    "lat": -1.6951764,
+    "lon": 29.2622998,
+    "catKey": "wellness",
+    "tags": {
+      "rating": 4.7,
+      "rating_count": 11,
+      "hours": "Mon-Thu 6:00AM-9:00PM, Fri 6:00AM-11:30AM & 2:00PM-9:00PM, Sat 6:00AM-8:00PM, Sun 6:00AM-12:00PM"
+    },
+    "contact": {
+      "phone": "+250 780 762 013",
+      "address": "Rue des Poissons, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJe4W7WSUF3RkR3NQLcqbUhZ4",
+    "name": "FITNESS Temple 24",
+    "lat": -1.6909033,
+    "lon": 29.2558444,
+    "catKey": "wellness",
+    "tags": {
+      "rating": 5,
+      "rating_count": 2,
+      "hours": "Mon-Sun 6:00AM - 10:00PM"
+    },
+    "contact": {
+      "phone": "+250 791 441 064",
+      "address": "Rubavu, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJI4dq78YF3RkRdbAveHkbMuM",
+    "name": "Heroes Gym Rwanda",
+    "lat": -1.6921633,
+    "lon": 29.2631231,
+    "catKey": "wellness",
+    "tags": {
+      "hours": "Mon-Sun 6:00AM - 11:00PM"
+    },
+    "contact": {
+      "phone": "+250 791 042 738",
+      "address": "Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJBw9xNaYF3RkRLLNvNgfbaHg",
+    "name": "Fitness Academy Rwanda",
+    "lat": -1.6835132,
+    "lon": 29.2514386,
+    "catKey": "wellness",
+    "tags": {
+      "hours": "Mon-Sun 9:00AM - 6:00PM"
+    },
+    "contact": {
+      "phone": "+250 739 169 391",
+      "address": "Kivumu, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJK5VBxTAF3RkRME6vDZHK0Rk",
+    "name": "House of Nails & Hair Lounge",
+    "lat": -1.6933125,
+    "lon": 29.2628125,
+    "catKey": "wellness",
+    "tags": {
+      "rating": 4.8,
+      "rating_count": 4,
+      "hours": "Mon-Tue 8:00AM-8:00PM, Wed 8:00AM-6:00PM, Thu 8:00AM-8:00PM, Fri-Sat 7:00AM-10:00PM, Sun 9:00AM-5:00PM"
+    },
+    "contact": {
+      "phone": "+250 784 012 488",
+      "address": "Gisenyi Kigali, Avenue du Commerce, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJSRiPrruL5k8RfGHMivQe4mo",
+    "name": "Happy Care Salon",
+    "lat": -1.6934625,
+    "lon": 29.2607802,
+    "catKey": "wellness",
+    "tags": {
+      "hours": "Mon-Sun 8:00AM - 9:00PM"
+    },
+    "contact": {
+      "phone": "+250 790 137 269",
+      "address": "Labrevis & Labamba Street, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJTeYKKQAF3RkRqk7RUHStJr4",
+    "name": "James Nails Salon",
+    "lat": -1.6990482,
+    "lon": 29.2560996,
+    "catKey": "wellness",
+    "tags": {
+      "hours": "Open 24 hours"
+    },
+    "contact": {
+      "phone": "+250 788 982 437",
+      "address": "Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJGz-FNAAF3RkRN08FkOVUpIY",
+    "name": "UNO Petroleum - Rubavu",
+    "lat": -1.6910337,
+    "lon": 29.2628662,
+    "catKey": "practical",
+    "tags": {
+      "rating": 5,
+      "rating_count": 1,
+      "hours": "Open 24 hours"
+    },
+    "contact": {
+      "phone": "+250 794 105 364",
+      "address": "8757+H4Q, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJzYkWDCQF3RkRXYM00LgGu_0",
+    "name": "Engen Gisenyi Service-Station",
+    "lat": -1.6957953,
+    "lon": 29.2631029,
+    "catKey": "practical",
+    "tags": {
+      "rating": 4.2,
+      "rating_count": 5
+    },
+    "contact": {
+      "address": "8737+M6Q, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJh6ZAq6YF3RkRdA6N8sLOwM8",
+    "name": "Kobil",
+    "lat": -1.696418,
+    "lon": 29.2612052,
+    "catKey": "practical",
+    "tags": {
+      "rating": 3.5,
+      "rating_count": 2
+    },
+    "contact": {
+      "address": "8736+CFP, Ave de l'Umuganda, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJVWhg1gsF3RkRNUFJkOJG7TE",
+    "name": "Merez Petrol Station",
+    "lat": -1.7029203,
+    "lon": 29.2609973,
+    "catKey": "practical",
+    "tags": {
+      "rating": 3.7,
+      "rating_count": 16
+    },
+    "contact": {
+      "phone": "+250 788 307 575",
+      "address": "77W6+R9Q, Ave de Independance, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJZ5QLvpcF3RkR8OKB_0jIJJg",
+    "name": "SP Petrol Station",
+    "lat": -1.7030125,
+    "lon": 29.2624531,
+    "catKey": "practical",
+    "tags": {},
+    "contact": {
+      "address": "77W6+QXW, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJMVNd7aQF3RkREktXL2H-NSM",
+    "name": "Rubavu Mosque",
+    "lat": -1.6933404,
+    "lon": 29.2627041,
+    "catKey": "activities",
+    "tags": {
+      "rating": 3.9,
+      "rating_count": 77,
+      "type": "Mosque"
+    },
+    "contact": {
+      "phone": "+250 782 728 017",
+      "address": "8747+M38, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ0cjYDscF3RkRzx7DoLgSNkk",
+    "name": "Al Djamiat Mosque",
+    "lat": -1.6990482,
+    "lon": 29.2560996,
+    "catKey": "activities",
+    "tags": {
+      "type": "Mosque"
+    },
+    "contact": {
+      "address": "8724+9CQ, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ9yN9KgAF3RkR4CiqO-tPlGA",
+    "name": "Mosque Ruriba Masjid",
+    "lat": -1.671209,
+    "lon": 29.2666176,
+    "catKey": "activities",
+    "tags": {
+      "rating": 5,
+      "rating_count": 2,
+      "hours": "Open 24 hours",
+      "type": "Mosque"
+    },
+    "contact": {
+      "address": "87H8+6CJ, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJJfaqyJwF3RkRF8R_g-_zPOg",
+    "name": "Grande Barrière (Main Border Rwanda-DRC)",
+    "lat": -1.6978088,
+    "lon": 29.2447552,
+    "catKey": "practical",
+    "tags": {
+      "rating": 3.7,
+      "rating_count": 60,
+      "hours": "Mon-Sun 6:00AM - 12:00AM",
+      "description": "Main border crossing between Gisenyi (Rwanda) and Goma (DRC)"
+    },
+    "contact": {
+      "address": "Av. de la Révolution, Gisenyi / Goma Border"
+    }
+  },
+  {
+    "id": "ChIJy0OK8sQF3RkRCXubJqAD2Xw",
+    "name": "La Corniche Migration Office",
+    "lat": -1.6966802,
+    "lon": 29.2454248,
+    "catKey": "practical",
+    "tags": {
+      "rating": 4.1,
+      "rating_count": 15,
+      "description": "Quieter border crossing point"
+    },
+    "contact": {
+      "address": "863W+85F, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJEwspCO0F3RkRghAnfuyzwKM",
+    "name": "Petite Barrière",
+    "lat": -1.6815504,
+    "lon": 29.2457564,
+    "catKey": "practical",
+    "tags": {
+      "rating": 4,
+      "rating_count": 25,
+      "hours": "Mon-Sun 5:30AM - 6:00PM",
+      "description": "High pedestrian traffic border crossing"
+    },
+    "contact": {
+      "address": "869W+98C, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJ4_nBHgAF3RkRLYZ2ld_dyWM",
+    "name": "Gisenyi Police Station",
+    "lat": -1.7005154,
+    "lon": 29.264799,
+    "catKey": "practical",
+    "tags": {
+      "hours": "Open 24 hours"
+    },
+    "contact": {
+      "phone": "+250 736 660 470",
+      "address": "8758+VFW, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJVVUVKgoF3RkRIj2p92TtLU8",
+    "name": "Station Police Rubavu",
+    "lat": -1.7024195,
+    "lon": 29.2610427,
+    "catKey": "practical",
+    "tags": {},
+    "contact": {
+      "address": "77X6+2CM, Ave de Independance, Gisenyi, Rwanda"
+    }
+  },
+  {
+    "id": "ChIJVST36b8F3RkRW2nDzPT9T4I",
+    "name": "Rubavu Police Station",
+    "lat": -1.6845261,
+    "lon": 29.2563933,
+    "catKey": "practical",
+    "tags": {},
+    "contact": {
+      "phone": "+250 788 311 149",
+      "address": "8784+5HJ, Gisenyi, Rwanda"
     }
   }
 ];

@@ -1,6 +1,6 @@
 import { PLACES_DATA } from './places-data';
 
-export const CENTER = [-1.7019, 29.2564];
+export const CENTER = [-1.6990482, 29.2560996];
 
 export const CATEGORIES = {
     all: { label: 'All', icon: '📍', color: '#C9A84C' },
