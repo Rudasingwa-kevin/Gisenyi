@@ -1,33 +1,8 @@
-import { useState, useEffect, useCallback } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useCallback, useMemo } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock } from 'lucide-react';
-
-const API = 'http://localhost:3000/api/admin';
-const UPLOAD_API = 'http://localhost:3000/api/upload';
-
-function fetchWithAuth(url, token, opts = {}) {
-  return fetch(url, {
-    ...opts,
-    headers: {
-      'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
-      ...opts.headers
-    }
-  });
-}
-
-async function uploadFile(file, token) {
-  const fd = new FormData();
-  fd.append('image', file);
-  const res = await fetch(UPLOAD_API, {
-    method: 'POST',
-    headers: { 'Authorization': `Bearer ${token}` },
-    body: fd
-  });
-  if (!res.ok) throw new Error('Upload failed');
-  return res.json();
-}
+import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink } from 'lucide-react';
+import { API, fetchWithAuth, uploadFile } from '../utils/admin';
 
 export default function AdminPage() {
   const { token, username, isAdmin, logout } = useAuth();
@@ -40,6 +15,21 @@ export default function AdminPage() {
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
+  const [listSearch, setListSearch] = useState('');
+  const [listSort, setListSort] = useState('name');
+  const [listPage, setListPage] = useState(1);
+
+  const switchTab = (t) => { setTab(t); setListSearch(''); setListPage(1); };
+
+  const paginated = (arr) => {
+    const totalPages = Math.ceil(arr.length / PAGE_SIZE);
+    const safePage = Math.min(listPage, totalPages || 1);
+    const start = (safePage - 1) * PAGE_SIZE;
+    return { items: arr.slice(start, start + PAGE_SIZE), page: safePage, totalPages };
+  };
+
+  const onSearchChange = (v) => { setListSearch(v); setListPage(1); };
+  const onSortChange = (v) => { setListSort(v); setListPage(1); };
 
   useEffect(() => {
     if (!isAdmin) navigate('/');
@@ -47,22 +37,22 @@ export default function AdminPage() {
 
   const loadPlaces = useCallback(async () => {
     const res = await fetchWithAuth(`${API}/places`, token);
-    if (res.ok) setPlaces(await res.json());
+    if (res.ok) { const d = await res.json(); setPlaces(d.data || d); }
   }, [token]);
 
   const loadCategories = useCallback(async () => {
     const res = await fetchWithAuth(`${API}/categories`, token);
-    if (res.ok) setCategories(await res.json());
+    if (res.ok) { const d = await res.json(); setCategories(d.data || d); }
   }, [token]);
 
   const loadEvents = useCallback(async () => {
     const res = await fetchWithAuth(`${API}/events`, token);
-    if (res.ok) setEvents(await res.json());
+    if (res.ok) { const d = await res.json(); setEvents(d.data || d); }
   }, [token]);
 
   const loadCalendarItems = useCallback(async () => {
     const res = await fetchWithAuth(`${API}/calendar`, token);
-    if (res.ok) setCalendarItems(await res.json());
+    if (res.ok) { const d = await res.json(); setCalendarItems(d.data || d); }
   }, [token]);
 
   useEffect(() => {
@@ -89,9 +79,57 @@ export default function AdminPage() {
 
   if (!isAdmin) return null;
 
-  const formDefaults = {
-    name: '', lat: '', lon: '', catKey: '', description: '', image: '', rating: 4.5, tags: '[]'
-  };
+  const filteredPlaces = useMemo(() => {
+    const f = places.filter(p => {
+      if (!listSearch) return true;
+      const q = listSearch.toLowerCase();
+      return p.name?.toLowerCase().includes(q) || p.catKey?.toLowerCase().includes(q) || p.tags?.description?.toLowerCase().includes(q);
+    }).sort((a, b) => {
+      if (listSort === 'catKey') return (a.catKey || '').localeCompare(b.catKey || '');
+      return (a.name || '').localeCompare(b.name || '');
+    });
+    const { items, page, totalPages } = paginated(f);
+    return { items, page, totalPages, total: f.length };
+  }, [places, listSearch, listSort, listPage]);
+
+  const filteredEvents = useMemo(() => {
+    const f = events.filter(e => {
+      if (!listSearch) return true;
+      const q = listSearch.toLowerCase();
+      return e.title?.toLowerCase().includes(q) || e.location?.toLowerCase().includes(q) || e.category?.toLowerCase().includes(q);
+    }).sort((a, b) => {
+      if (listSort === 'date') return (a.date || '').localeCompare(b.date || '');
+      return (a.title || '').localeCompare(b.title || '');
+    });
+    const { items, page, totalPages } = paginated(f);
+    return { items, page, totalPages, total: f.length };
+  }, [events, listSearch, listSort, listPage]);
+
+  const filteredCategories = useMemo(() => {
+    const f = categories.filter(c => {
+      if (!listSearch) return true;
+      const q = listSearch.toLowerCase();
+      return c.label?.toLowerCase().includes(q) || c.id?.toLowerCase().includes(q);
+    }).sort((a, b) => {
+      if (listSort === 'id') return (a.id || '').localeCompare(b.id || '');
+      return (a.label || '').localeCompare(b.label || '');
+    });
+    const { items, page, totalPages } = paginated(f);
+    return { items, page, totalPages, total: f.length };
+  }, [categories, listSearch, listSort, listPage]);
+
+  const filteredCalendar = useMemo(() => {
+    const f = calendarItems.filter(ci => {
+      if (!listSearch) return true;
+      const q = listSearch.toLowerCase();
+      return ci.title?.toLowerCase().includes(q) || ci.type?.toLowerCase().includes(q) || ci.description?.toLowerCase().includes(q);
+    }).sort((a, b) => {
+      if (listSort === 'title') return (a.title || '').localeCompare(b.title || '');
+      return (a.date || '').localeCompare(b.date || '');
+    });
+    const { items, page, totalPages } = paginated(f);
+    return { items, page, totalPages, total: f.length };
+  }, [calendarItems, listSearch, listSort, listPage]);
 
   return (
     <div className="min-h-screen bg-navy-950">
@@ -114,7 +152,7 @@ export default function AdminPage() {
       <div className="max-w-7xl mx-auto px-6 py-8">
         <div className="flex gap-2 mb-8 flex-wrap">
           <button
-            onClick={() => setTab('dashboard')}
+            onClick={() => switchTab('dashboard')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
               tab === 'dashboard' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
@@ -122,7 +160,7 @@ export default function AdminPage() {
             <LayoutDashboard className="w-4 h-4" /> Dashboard
           </button>
           <button
-            onClick={() => setTab('places')}
+            onClick={() => switchTab('places')}
             className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
               tab === 'places' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
@@ -130,7 +168,7 @@ export default function AdminPage() {
             <MapPin className="w-4 h-4" /> Places
           </button>
           <button
-            onClick={() => setTab('categories')}
+            onClick={() => switchTab('categories')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
               tab === 'categories' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
@@ -138,7 +176,7 @@ export default function AdminPage() {
             <LayoutGrid className="w-4 h-4" /> Categories
           </button>
           <button
-            onClick={() => setTab('events')}
+            onClick={() => switchTab('events')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
               tab === 'events' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
@@ -146,7 +184,7 @@ export default function AdminPage() {
             <Calendar className="w-4 h-4" /> Events
           </button>
           <button
-            onClick={() => setTab('calendar')}
+            onClick={() => switchTab('calendar')}
             className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
               tab === 'calendar' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
             }`}
@@ -257,11 +295,16 @@ export default function AdminPage() {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-sora font-bold text-white">Manage Places ({places.length})</h2>
               <button
-                onClick={() => { setEditing(null); setShowForm(!showForm); }}
+                onClick={() => setShowForm(!showForm)}
                 className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
               >
-                <Plus className="w-4 h-4" /> Add Place
+                <Plus className="w-4 h-4" /> {showForm ? 'Close' : 'Edit'}
               </button>
+            </div>
+            <div className="flex gap-3 mb-6">
+              <Link to="/admin/places/new" className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white/70 rounded-xl text-sm font-sora font-bold hover:bg-white/20 transition-all">
+                <Plus className="w-4 h-4" /> Add New Place
+              </Link>
             </div>
 
             {showForm && (
@@ -279,37 +322,36 @@ export default function AdminPage() {
               />
             )}
 
+            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'name', label: 'Name' }, { value: 'catKey', label: 'Category' }]} placeholder="Search places..." />
             {loading ? (
               <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (
+            ) : (<div>
               <div className="grid gap-3">
-                {places.map(place => (
+                {filteredPlaces.items.map(place => (
                   <div key={place.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
                     <div>
                       <h3 className="text-white font-inter font-semibold">{place.name}</h3>
                       <p className="text-white/30 text-sm font-inter">{place.catKey} &middot; <a href={`https://www.google.com/maps?q=${place.lat},${place.lon}`} target="_blank" rel="noopener noreferrer" className="hover:text-gold-500 transition-colors">{place.lat?.toFixed(4)}, {place.lon?.toFixed(4)}</a></p>
                     </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={async () => {
-                          setEditing(place);
-                          setShowForm(true);
-                        }}
-                        className="p-2 text-white/40 hover:text-gold-500 transition-colors"
-                      >
+                    <div className="flex gap-1">
+                      <a href={`/stays/${place.id}`} target="_blank" rel="noopener noreferrer"
+                        className="p-2 text-white/30 hover:text-gold-500 transition-colors" title="Preview">
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                      <button onClick={() => { setEditing(place); setShowForm(true); }}
+                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
                         <Pencil className="w-4 h-4" />
                       </button>
-                      <button
-                        onClick={() => handleDelete('places', place.id)}
-                        className="p-2 text-white/40 hover:text-red-400 transition-colors"
-                      >
+                      <button onClick={() => handleDelete('places', place.id)}
+                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
-            )}
+              <Pagination page={filteredPlaces.page} totalPages={filteredPlaces.totalPages} onPage={setListPage} />
+              </div>)}
           </div>
         )}
 
@@ -318,11 +360,16 @@ export default function AdminPage() {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-sora font-bold text-white">Manage Categories ({categories.length})</h2>
               <button
-                onClick={() => { setEditing(null); setShowForm(!showForm); }}
+                onClick={() => setShowForm(!showForm)}
                 className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
               >
-                <Plus className="w-4 h-4" /> Add Category
+                <Plus className="w-4 h-4" /> {showForm ? 'Close' : 'Edit'}
               </button>
+            </div>
+            <div className="flex gap-3 mb-6">
+              <Link to="/admin/categories/new" className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white/70 rounded-xl text-sm font-sora font-bold hover:bg-white/20 transition-all">
+                <Plus className="w-4 h-4" /> Add New Category
+              </Link>
             </div>
 
             {showForm && (
@@ -339,11 +386,12 @@ export default function AdminPage() {
               />
             )}
 
+            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'label', label: 'Label' }, { value: 'id', label: 'ID' }]} placeholder="Search categories..." />
             {loading ? (
               <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (
+            ) : (<div>
               <div className="grid gap-3">
-                {categories.map(cat => (
+                {filteredCategories.items.map(cat => (
                   <div key={cat.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-3">
                       <span className="text-2xl">{cat.icon}</span>
@@ -352,24 +400,21 @@ export default function AdminPage() {
                         <p className="text-white/30 text-sm font-inter">ID: {cat.id} &middot; Color: {cat.color}</p>
                       </div>
                     </div>
-                    <div className="flex gap-2">
-                      <button
-                        onClick={() => { setEditing(cat); setShowForm(true); }}
-                        className="p-2 text-white/40 hover:text-gold-500 transition-colors"
-                      >
+                    <div className="flex gap-1">
+                      <button onClick={() => { setEditing(cat); setShowForm(true); }}
+                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
                         <Pencil className="w-4 h-4" />
                       </button>
-                      <button
-                        onClick={() => handleDelete('categories', cat.id)}
-                        className="p-2 text-white/40 hover:text-red-400 transition-colors"
-                      >
+                      <button onClick={() => handleDelete('categories', cat.id)}
+                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
-            )}
+              <Pagination page={filteredCategories.page} totalPages={filteredCategories.totalPages} onPage={setListPage} />
+              </div>)}
           </div>
         )}
 
@@ -378,11 +423,16 @@ export default function AdminPage() {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-sora font-bold text-white">Manage Events ({events.length})</h2>
               <button
-                onClick={() => { setEditing(null); setShowForm(!showForm); }}
+                onClick={() => setShowForm(!showForm)}
                 className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
               >
-                <Plus className="w-4 h-4" /> Add Event
+                <Plus className="w-4 h-4" /> {showForm ? 'Close' : 'Edit'}
               </button>
+            </div>
+            <div className="flex gap-3 mb-6">
+              <Link to="/admin/events/new" className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white/70 rounded-xl text-sm font-sora font-bold hover:bg-white/20 transition-all">
+                <Plus className="w-4 h-4" /> Add New Event
+              </Link>
             </div>
 
             {showForm && (
@@ -399,11 +449,12 @@ export default function AdminPage() {
               />
             )}
 
+            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]} placeholder="Search events..." />
             {loading ? (
               <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (
+            ) : (<div>
               <div className="grid gap-3">
-                {events.map(event => (
+                {filteredEvents.items.map(event => (
                   <div key={event.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       {event.image && (
@@ -417,24 +468,25 @@ export default function AdminPage() {
                         )}
                       </div>
                     </div>
-                    <div className="flex gap-2 shrink-0">
-                      <button
-                        onClick={() => { setEditing(event); setShowForm(true); }}
-                        className="p-2 text-white/40 hover:text-gold-500 transition-colors"
-                      >
+                    <div className="flex gap-1 shrink-0">
+                      <a href={`/events?highlight=${event.id}`} target="_blank" rel="noopener noreferrer"
+                        className="p-2 text-white/30 hover:text-gold-500 transition-colors" title="Preview">
+                        <ExternalLink className="w-4 h-4" />
+                      </a>
+                      <button onClick={() => { setEditing(event); setShowForm(true); }}
+                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
                         <Pencil className="w-4 h-4" />
                       </button>
-                      <button
-                        onClick={() => handleDelete('events', event.id)}
-                        className="p-2 text-white/40 hover:text-red-400 transition-colors"
-                      >
+                      <button onClick={() => handleDelete('events', event.id)}
+                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
-            )}
+              <Pagination page={filteredEvents.page} totalPages={filteredEvents.totalPages} onPage={setListPage} />
+              </div>)}
           </div>
         )}
 
@@ -443,11 +495,16 @@ export default function AdminPage() {
             <div className="flex justify-between items-center mb-6">
               <h2 className="text-xl font-sora font-bold text-white">Manage Calendar Items ({calendarItems.length})</h2>
               <button
-                onClick={() => { setEditing(null); setShowForm(!showForm); }}
+                onClick={() => setShowForm(!showForm)}
                 className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
               >
-                <Plus className="w-4 h-4" /> Add Item
+                <Plus className="w-4 h-4" /> {showForm ? 'Close' : 'Edit'}
               </button>
+            </div>
+            <div className="flex gap-3 mb-6">
+              <Link to="/admin/calendar/new" className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white/70 rounded-xl text-sm font-sora font-bold hover:bg-white/20 transition-all">
+                <Plus className="w-4 h-4" /> Add New Item
+              </Link>
             </div>
 
             {showForm && (
@@ -464,11 +521,12 @@ export default function AdminPage() {
               />
             )}
 
+            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]} placeholder="Search calendar items..." />
             {loading ? (
               <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (
+            ) : (<div>
               <div className="grid gap-3">
-                {calendarItems.map(item => (
+                {filteredCalendar.items.map(item => (
                   <div key={item.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
                     <div className="flex items-center gap-4">
                       <div className="w-14 h-14 rounded-lg flex items-center justify-center text-2xl" style={{ backgroundColor: `${item.color}15` }}>
@@ -482,27 +540,72 @@ export default function AdminPage() {
                         {item.description && <p className="text-white/20 text-xs font-inter mt-0.5 line-clamp-1">{item.description}</p>}
                       </div>
                     </div>
-                    <div className="flex gap-2 shrink-0">
-                      <button
-                        onClick={() => { setEditing(item); setShowForm(true); }}
-                        className="p-2 text-white/40 hover:text-gold-500 transition-colors"
-                      >
+                    <div className="flex gap-1 shrink-0">
+                      <button onClick={() => { setEditing(item); setShowForm(true); }}
+                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
                         <Pencil className="w-4 h-4" />
                       </button>
-                      <button
-                        onClick={() => handleDelete('calendar', item.id)}
-                        className="p-2 text-white/40 hover:text-red-400 transition-colors"
-                      >
+                      <button onClick={() => handleDelete('calendar', item.id)}
+                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
                         <Trash2 className="w-4 h-4" />
                       </button>
                     </div>
                   </div>
                 ))}
               </div>
-            )}
+              <Pagination page={filteredCalendar.page} totalPages={filteredCalendar.totalPages} onPage={setListPage} />
+              </div>)}
           </div>
         )}
       </div>
+    </div>
+  );
+}
+
+const PAGE_SIZE = 10;
+
+function ListControls({ search, onSearch, sort, onSort, sortOptions, placeholder }) {
+  return (
+    <div className="flex items-center gap-3 mb-4">
+      <div className="relative flex-1">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
+        <input type="text" value={search} onChange={e => onSearch(e.target.value)}
+          placeholder={placeholder || 'Search...'}
+          className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-3 py-2 text-sm text-white font-inter focus:outline-none focus:border-gold-500/50 placeholder:text-white/20" />
+      </div>
+      <div className="flex items-center gap-2">
+        <ArrowUpDown className="w-3.5 h-3.5 text-white/30" />
+        <select value={sort} onChange={e => onSort(e.target.value)}
+          className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white/70 font-inter focus:outline-none focus:border-gold-500/50">
+          {sortOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
+        </select>
+      </div>
+    </div>
+  );
+}
+
+function Pagination({ page, totalPages, onPage }) {
+  if (totalPages <= 1) return null;
+  const pages = [];
+  for (let i = Math.max(1, page - 2); i <= Math.min(totalPages, page + 2); i++) pages.push(i);
+  return (
+    <div className="flex items-center justify-center gap-2 mt-6">
+      <button onClick={() => onPage(page - 1)} disabled={page <= 1}
+        className="px-3 py-1.5 rounded-lg text-xs font-inter font-semibold bg-white/5 text-white/50 hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed transition-all">
+        Prev
+      </button>
+      {pages[0] > 1 && <span className="text-white/20 text-xs">...</span>}
+      {pages.map(p => (
+        <button key={p} onClick={() => onPage(p)}
+          className={`w-8 h-8 rounded-lg text-xs font-inter font-semibold transition-all ${p === page ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}>
+          {p}
+        </button>
+      ))}
+      {pages[pages.length - 1] < totalPages && <span className="text-white/20 text-xs">...</span>}
+      <button onClick={() => onPage(page + 1)} disabled={page >= totalPages}
+        className="px-3 py-1.5 rounded-lg text-xs font-inter font-semibold bg-white/5 text-white/50 hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed transition-all">
+        Next
+      </button>
     </div>
   );
 }
