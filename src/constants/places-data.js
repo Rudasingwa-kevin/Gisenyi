@@ -9,9 +9,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 3.9,
       "rating_count": 345,
-      "hours": "Open 24 hours"
-    },
-    "contact": {
+      "hours": "Open 24 hours",
       "phone": "+250 788 200 522",
       "address": "Gisenyi Rwanda, 8724+95X, Gisenyi 00100, Rwanda"
     }
@@ -26,9 +24,7 @@ export const PLACES_DATA = [
       "rating": 3.8,
       "rating_count": 74,
       "hours": "Open 24 hours",
-      "website": "http://www.kivubeachgarden.com/"
-    },
-    "contact": {
+      "website": "http://www.kivubeachgarden.com/",
       "phone": "+250 796 293 522",
       "address": "Rubavu, Gisenyi, Rwanda"
     }
@@ -43,9 +39,7 @@ export const PLACES_DATA = [
       "rating": 4.3,
       "rating_count": 217,
       "hours": "Mon-Sun 7:00AM - 9:00PM",
-      "website": "http://inzulodge.com/"
-    },
-    "contact": {
+      "website": "http://inzulodge.com/",
       "phone": "+250 784 179 203",
       "address": "Rubavu, Nyamuymba 136 P.O. Gisenyi, Rwanda"
     }
@@ -59,9 +53,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.2,
       "rating_count": 124,
-      "website": "http://www.hakunamatatalodge.rw/"
-    },
-    "contact": {
+      "website": "http://www.hakunamatatalodge.rw/",
       "phone": "+250 787 484 954",
       "address": "7796+CRV, Rwanda"
     }
@@ -75,9 +67,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.1,
       "rating_count": 36,
-      "website": "http://www.palmgardenlodge.com/"
-    },
-    "contact": {
+      "website": "http://www.palmgardenlodge.com/",
       "phone": "+250 788 306 830",
       "address": "Gisenyi, Rwanda"
     }
@@ -90,9 +80,7 @@ export const PLACES_DATA = [
     "catKey": "hotels",
     "tags": {
       "rating": 4,
-      "rating_count": 4
-    },
-    "contact": {
+      "rating_count": 4,
       "phone": "+250 781 871 487",
       "address": "Rn4, Gisenyi, Rwanda"
     }
@@ -105,9 +93,7 @@ export const PLACES_DATA = [
     "catKey": "hotels",
     "tags": {
       "rating": 4.4,
-      "rating_count": 8
-    },
-    "contact": {
+      "rating_count": 8,
       "phone": "+250 796 912 498",
       "address": "864X+FRM, Gisenyi, Rwanda"
     }
@@ -120,9 +106,7 @@ export const PLACES_DATA = [
     "catKey": "hotels",
     "tags": {
       "rating": 3.6,
-      "rating_count": 109
-    },
-    "contact": {
+      "rating_count": 109,
       "phone": "+250 788 510 763",
       "address": "Unnamed Road, Gisenyi, Rwanda"
     }
@@ -136,9 +120,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 3.4,
       "rating_count": 15,
-      "hours": "Open 24 hours"
-    },
-    "contact": {
+      "hours": "Open 24 hours",
       "phone": "+250 782 736 000",
       "address": "Grande Barrière Gisenyi, Rwanda"
     }
@@ -152,9 +134,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.6,
       "rating_count": 23,
-      "hours": "Mon-Sun 8:00AM - 10:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 8:00AM - 10:00PM",
       "phone": "+250 791 574 271",
       "address": "8724+7G2, Gisenyi, Rwanda"
     }
@@ -169,9 +149,7 @@ export const PLACES_DATA = [
       "rating": 4.2,
       "rating_count": 322,
       "hours": "Mon-Thu 7:00AM-12:00AM, Fri-Sat 7:00AM-1:00AM, Sun 7:00AM-12:30AM",
-      "website": "https://www.stayinrwanda.com/"
-    },
-    "contact": {
+      "website": "https://www.stayinrwanda.com/",
       "phone": "+250 793 056 413",
       "address": "77V7+756, Gisenyi, Rwanda"
     }
@@ -185,9 +163,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.3,
       "rating_count": 12,
-      "hours": "Mon-Thu 7:00AM-3:00AM, Fri-Sun 7:00AM-4:00AM"
-    },
-    "contact": {
+      "hours": "Mon-Thu 7:00AM-3:00AM, Fri-Sun 7:00AM-4:00AM",
       "phone": "+250 792 016 495",
       "address": "77W6+PGQ, Gisenyi, Rwanda"
     }
@@ -202,9 +178,7 @@ export const PLACES_DATA = [
       "rating": 4.2,
       "rating_count": 59,
       "hours": "Mon-Sun 7:30AM - 11:00PM",
-      "website": "https://sabas-website.vercel.app/"
-    },
-    "contact": {
+      "website": "https://sabas-website.vercel.app/",
       "phone": "+250 791 574 497",
       "address": "8765+VMM, Gisenyi, Rwanda"
     }
@@ -219,9 +193,7 @@ export const PLACES_DATA = [
       "rating": 4.1,
       "rating_count": 44,
       "hours": "Mon-Thu 9:00AM-11:30PM, Fri-Sun Open 24 hours",
-      "website": "http://www.legrandchalet.rw/"
-    },
-    "contact": {
+      "website": "http://www.legrandchalet.rw/",
       "phone": "+250 784 700 000",
       "address": "Gisenyi, RN4, Ave de la Production, Rwanda"
     }
@@ -235,9 +207,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 3.9,
       "rating_count": 334,
-      "hours": "Mon-Fri 8:00AM-1:00AM, Sat-Sun 8:00AM-2:00AM"
-    },
-    "contact": {
+      "hours": "Mon-Fri 8:00AM-1:00AM, Sat-Sun 8:00AM-2:00AM",
       "phone": "+250 791 693 096",
       "address": "Ave de la Production, Gisenyi, Rwanda"
     }
@@ -251,9 +221,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.1,
       "rating_count": 13,
-      "hours": "Mon-Sun 8:30AM - 10:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 8:30AM - 10:00PM",
       "phone": "+250 791 349 612",
       "address": "8735+R6C, Gisenyi, Rwanda"
     }
@@ -266,9 +234,7 @@ export const PLACES_DATA = [
     "catKey": "dining",
     "tags": {
       "rating": 4.6,
-      "rating_count": 15
-    },
-    "contact": {
+      "rating_count": 15,
       "phone": "+250 788 900 636",
       "address": "8754+P7W, Gisenyi, Rwanda"
     }
@@ -281,9 +247,7 @@ export const PLACES_DATA = [
     "catKey": "dining",
     "tags": {
       "rating": 4.8,
-      "rating_count": 5
-    },
-    "contact": {
+      "rating_count": 5,
       "address": "8755+56C, Gisenyi, Rwanda"
     }
   },
@@ -296,9 +260,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.2,
       "rating_count": 76,
-      "hours": "Mon-Sun 7:00AM - 11:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 7:00AM - 11:00PM",
       "phone": "+250 791 042 738",
       "address": "8757+569, Rubavu, Gisenyi, Rwanda"
     }
@@ -312,9 +274,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 5,
       "rating_count": 1,
-      "hours": "Mon-Sun 7:00AM - 11:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 7:00AM - 11:00PM",
       "phone": "+250 791 857 696",
       "address": "8754+G95, Gisenyi, Rwanda"
     }
@@ -328,9 +288,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 5,
       "rating_count": 1,
-      "hours": "Mon-Sun 8:00AM - 8:30PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 8:00AM - 8:30PM",
       "phone": "+250 794 617 935",
       "address": "Big JJ Building Bus Park, Gisenyi, Rwanda"
     }
@@ -344,9 +302,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 5,
       "rating_count": 4,
-      "hours": "Open 24 hours"
-    },
-    "contact": {
+      "hours": "Open 24 hours",
       "phone": "+250 786 971 950",
       "address": "869X+4RG, Gisenyi, Rwanda"
     }
@@ -359,9 +315,7 @@ export const PLACES_DATA = [
     "catKey": "practical",
     "tags": {
       "rating": 5,
-      "rating_count": 2
-    },
-    "contact": {
+      "rating_count": 2,
       "address": "8736+GFG, Ave de l'Umuganda, Gisenyi, Rwanda"
     }
   },
@@ -374,9 +328,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4,
       "rating_count": 1,
-      "hours": "Mon-Sun 6:00AM - 10:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 6:00AM - 10:00PM",
       "phone": "+250 788 455 565",
       "address": "8737+39W, Gisenyi, Rwanda"
     }
@@ -389,9 +341,7 @@ export const PLACES_DATA = [
     "catKey": "practical",
     "tags": {
       "hours": "Mon-Sun 7:00AM - 11:00PM",
-      "website": "https://www.mediasolpharma.com/"
-    },
-    "contact": {
+      "website": "https://www.mediasolpharma.com/",
       "phone": "+250 789 990 455",
       "address": "N/A, Gisenyi, Rwanda"
     }
@@ -402,8 +352,7 @@ export const PLACES_DATA = [
     "lat": -1.6965031,
     "lon": 29.2615345,
     "catKey": "practical",
-    "tags": {},
-    "contact": {
+    "tags": {
       "address": "8736+9JV, Gisenyi, Rwanda"
     }
   },
@@ -417,9 +366,7 @@ export const PLACES_DATA = [
       "rating": 4.4,
       "rating_count": 12,
       "hours": "Mon-Sat 8:00AM - 5:00PM, Sun Closed",
-      "has_atm": true
-    },
-    "contact": {
+      "has_atm": true,
       "address": "8724+Q4C, Ave des Fleures, Gisenyi, Rwanda"
     }
   },
@@ -431,9 +378,7 @@ export const PLACES_DATA = [
     "catKey": "practical",
     "tags": {
       "hours": "Open 24 hours",
-      "type": "ATM"
-    },
-    "contact": {
+      "type": "ATM",
       "address": "8737+68J, Rue de l'Aeropor, Gisenyi, Rwanda"
     }
   },
@@ -444,9 +389,7 @@ export const PLACES_DATA = [
     "lon": 29.2634911,
     "catKey": "practical",
     "tags": {
-      "type": "ATM"
-    },
-    "contact": {
+      "type": "ATM",
       "address": "8737+999, Gisenyi, Rwanda"
     }
   },
@@ -460,9 +403,7 @@ export const PLACES_DATA = [
       "rating": 3.4,
       "rating_count": 5,
       "hours": "Mon-Fri 8:00AM-6:00PM, Sat 9:00AM-2:00PM, Sun Closed",
-      "website": "https://rwanda.accessbankplc.com/"
-    },
-    "contact": {
+      "website": "https://rwanda.accessbankplc.com/",
       "address": "77X5+P6V, Ave de Independance, Gisenyi, Rwanda"
     }
   },
@@ -475,9 +416,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 3,
       "rating_count": 1,
-      "hours": "Mon-Fri 7:30AM-7:00PM, Sat 8:00AM-6:00PM, Sun Closed"
-    },
-    "contact": {
+      "hours": "Mon-Fri 7:30AM-7:00PM, Sat 8:00AM-6:00PM, Sun Closed",
       "phone": "+250 739 783 805",
       "address": "8736+MCJ, Gisenyi, Rwanda"
     }
@@ -491,9 +430,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.2,
       "rating_count": 32,
-      "hours": "Mon-Sun 8:00AM - 12:00AM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 8:00AM - 12:00AM",
       "phone": "+250 734 598 224",
       "address": "8792+2G5, Gisenyi, Rwanda"
     }
@@ -507,9 +444,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4,
       "rating_count": 16,
-      "hours": "Mon-Sun 8:00AM - 10:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 8:00AM - 10:00PM",
       "phone": "+250 787 098 443",
       "address": "8736+WW3, Gisenyi, Rwanda"
     }
@@ -523,9 +458,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 3.8,
       "rating_count": 18,
-      "hours": "Mon-Sun 8:00AM - 11:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 8:00AM - 11:00PM",
       "phone": "+250 789 482 034",
       "address": "8765+VJ9, Gisenyi, Rwanda"
     }
@@ -537,9 +470,7 @@ export const PLACES_DATA = [
     "lon": 29.2614101,
     "catKey": "shopping",
     "tags": {
-      "hours": "Mon-Fri 8:00AM-10:00PM, Sat 9:00AM-10:00PM, Sun 1:30PM-10:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Fri 8:00AM-10:00PM, Sat 9:00AM-10:00PM, Sun 1:30PM-10:00PM",
       "phone": "+250 788 430 295",
       "address": "Gisenyi, Rwanda"
     }
@@ -553,9 +484,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 5,
       "rating_count": 1,
-      "hours": "Mon-Sat 6:00AM - 9:00PM, Sun Closed"
-    },
-    "contact": {
+      "hours": "Mon-Sat 6:00AM - 9:00PM, Sun Closed",
       "phone": "+250 783 086 783",
       "address": "8736+QXQ, Ave du Marche, Gisenyi, Rwanda"
     }
@@ -569,9 +498,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 3.7,
       "rating_count": 556,
-      "hours": "Mon 7:30AM-7:30PM, Tue-Sat 7:30AM-5:30PM, Sun Closed"
-    },
-    "contact": {
+      "hours": "Mon 7:30AM-7:30PM, Tue-Sat 7:30AM-5:30PM, Sun Closed",
       "phone": "+250 722 487 468",
       "address": "8736+QXQ, Ave du Marche, Gisenyi, Rwanda"
     }
@@ -585,9 +512,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 3.8,
       "rating_count": 186,
-      "hours": "Mon-Fri 8:00AM-8:00PM, Sat-Sun 6:00AM-8:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Fri 8:00AM-8:00PM, Sat-Sun 6:00AM-8:00PM",
       "phone": "+250 781 866 036",
       "address": "Mbugangari, 87F3+5FX, Gisenyi, Rwanda"
     }
@@ -600,9 +525,7 @@ export const PLACES_DATA = [
     "catKey": "shopping",
     "tags": {
       "rating": 3.2,
-      "rating_count": 13
-    },
-    "contact": {
+      "rating_count": 13,
       "phone": "+250 782 444 412",
       "address": "8736+WWQ, Rue des Poissons, Gisenyi, Rwanda"
     }
@@ -616,9 +539,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.8,
       "rating_count": 12,
-      "hours": "Open 24 hours"
-    },
-    "contact": {
+      "hours": "Open 24 hours",
       "phone": "+250 785 196 386",
       "address": "Rue de I'Industrie, Rwanda"
     }
@@ -633,9 +554,7 @@ export const PLACES_DATA = [
       "rating": 4.4,
       "rating_count": 7,
       "hours": "Open 24 hours",
-      "website": "http://www.hopitalcroixdusud.com/"
-    },
-    "contact": {
+      "website": "http://www.hopitalcroixdusud.com/",
       "phone": "+250 780 900 488",
       "address": "Ave du Marche, Gisenyi, Rwanda"
     }
@@ -650,9 +569,7 @@ export const PLACES_DATA = [
       "rating": 4.1,
       "rating_count": 14,
       "hours": "Open 24 hours",
-      "website": "http://www.gisenyihospital.gov.rw/"
-    },
-    "contact": {
+      "website": "http://www.gisenyihospital.gov.rw/",
       "phone": "+250 788 629 215",
       "address": "Rue de l'Hopital, Gisenyi, Rwanda"
     }
@@ -666,9 +583,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 3.8,
       "rating_count": 4,
-      "hours": "Mon-Sun 8:00AM - 9:30PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 8:00AM - 9:30PM",
       "phone": "+250 786 226 457",
       "address": "Unnamed Road, Gisenyi, Rwanda"
     }
@@ -682,9 +597,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4,
       "rating_count": 2,
-      "hours": "Open 24 hours"
-    },
-    "contact": {
+      "hours": "Open 24 hours",
       "phone": "+250 785 014 749",
       "address": "8746+697, Gisenyi, Rwanda"
     }
@@ -699,9 +612,7 @@ export const PLACES_DATA = [
       "rating": 3.8,
       "rating_count": 311,
       "description": "Volcanic hot springs & mud baths. Entry 5,000 RWF",
-      "website": "http://www.amestours.com/"
-    },
-    "contact": {
+      "website": "http://www.amestours.com/",
       "phone": "+250 788 948 476",
       "address": "775F+V9R, Rubavu, Rwanda"
     }
@@ -716,9 +627,7 @@ export const PLACES_DATA = [
       "rating": 5,
       "rating_count": 1,
       "hours": "Open 24 hours",
-      "website": "http://visitlakekivu.com/"
-    },
-    "contact": {
+      "website": "http://visitlakekivu.com/",
       "phone": "+250 789 474 864",
       "address": "Public Beach, Gisenyi, Rwanda"
     }
@@ -732,9 +641,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.1,
       "rating_count": 7,
-      "hours": "Mon 6:00AM-5:00PM, Tue-Sun Open 24 hours"
-    },
-    "contact": {
+      "hours": "Mon 6:00AM-5:00PM, Tue-Sun Open 24 hours",
       "phone": "+250 728 376 781",
       "address": "Gisenyi, Rwanda"
     }
@@ -749,9 +656,7 @@ export const PLACES_DATA = [
       "rating": 4.3,
       "rating_count": 33,
       "hours": "Mon Closed, Tue-Sun Open 24 hours",
-      "description": "Live band, karaoke & lake views"
-    },
-    "contact": {
+      "description": "Live band, karaoke & lake views",
       "phone": "+250 783 000 935",
       "address": "8722+W5J, Gisenyi, Rwanda"
     }
@@ -765,9 +670,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.1,
       "rating_count": 15,
-      "hours": "Open 24 hours"
-    },
-    "contact": {
+      "hours": "Open 24 hours",
       "phone": "+250 783 584 628",
       "address": "8755+2WW, Ave de l'Umuganda, Gisenyi, Rwanda"
     }
@@ -781,9 +684,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.7,
       "rating_count": 11,
-      "hours": "Mon-Thu 6:00AM-9:00PM, Fri 6:00AM-11:30AM & 2:00PM-9:00PM, Sat 6:00AM-8:00PM, Sun 6:00AM-12:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Thu 6:00AM-9:00PM, Fri 6:00AM-11:30AM & 2:00PM-9:00PM, Sat 6:00AM-8:00PM, Sun 6:00AM-12:00PM",
       "phone": "+250 780 762 013",
       "address": "Rue des Poissons, Gisenyi, Rwanda"
     }
@@ -797,9 +698,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 5,
       "rating_count": 2,
-      "hours": "Mon-Sun 6:00AM - 10:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 6:00AM - 10:00PM",
       "phone": "+250 791 441 064",
       "address": "Rubavu, Rwanda"
     }
@@ -811,9 +710,7 @@ export const PLACES_DATA = [
     "lon": 29.2631231,
     "catKey": "wellness",
     "tags": {
-      "hours": "Mon-Sun 6:00AM - 11:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 6:00AM - 11:00PM",
       "phone": "+250 791 042 738",
       "address": "Gisenyi, Rwanda"
     }
@@ -825,9 +722,7 @@ export const PLACES_DATA = [
     "lon": 29.2514386,
     "catKey": "wellness",
     "tags": {
-      "hours": "Mon-Sun 9:00AM - 6:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 9:00AM - 6:00PM",
       "phone": "+250 739 169 391",
       "address": "Kivumu, Gisenyi, Rwanda"
     }
@@ -841,9 +736,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.8,
       "rating_count": 4,
-      "hours": "Mon-Tue 8:00AM-8:00PM, Wed 8:00AM-6:00PM, Thu 8:00AM-8:00PM, Fri-Sat 7:00AM-10:00PM, Sun 9:00AM-5:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Tue 8:00AM-8:00PM, Wed 8:00AM-6:00PM, Thu 8:00AM-8:00PM, Fri-Sat 7:00AM-10:00PM, Sun 9:00AM-5:00PM",
       "phone": "+250 784 012 488",
       "address": "Gisenyi Kigali, Avenue du Commerce, Gisenyi, Rwanda"
     }
@@ -855,9 +748,7 @@ export const PLACES_DATA = [
     "lon": 29.2607802,
     "catKey": "wellness",
     "tags": {
-      "hours": "Mon-Sun 8:00AM - 9:00PM"
-    },
-    "contact": {
+      "hours": "Mon-Sun 8:00AM - 9:00PM",
       "phone": "+250 790 137 269",
       "address": "Labrevis & Labamba Street, Gisenyi, Rwanda"
     }
@@ -869,9 +760,7 @@ export const PLACES_DATA = [
     "lon": 29.2560996,
     "catKey": "wellness",
     "tags": {
-      "hours": "Open 24 hours"
-    },
-    "contact": {
+      "hours": "Open 24 hours",
       "phone": "+250 788 982 437",
       "address": "Gisenyi, Rwanda"
     }
@@ -885,9 +774,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 5,
       "rating_count": 1,
-      "hours": "Open 24 hours"
-    },
-    "contact": {
+      "hours": "Open 24 hours",
       "phone": "+250 794 105 364",
       "address": "8757+H4Q, Gisenyi, Rwanda"
     }
@@ -900,9 +787,7 @@ export const PLACES_DATA = [
     "catKey": "practical",
     "tags": {
       "rating": 4.2,
-      "rating_count": 5
-    },
-    "contact": {
+      "rating_count": 5,
       "address": "8737+M6Q, Gisenyi, Rwanda"
     }
   },
@@ -914,9 +799,7 @@ export const PLACES_DATA = [
     "catKey": "practical",
     "tags": {
       "rating": 3.5,
-      "rating_count": 2
-    },
-    "contact": {
+      "rating_count": 2,
       "address": "8736+CFP, Ave de l'Umuganda, Gisenyi, Rwanda"
     }
   },
@@ -928,9 +811,7 @@ export const PLACES_DATA = [
     "catKey": "practical",
     "tags": {
       "rating": 3.7,
-      "rating_count": 16
-    },
-    "contact": {
+      "rating_count": 16,
       "phone": "+250 788 307 575",
       "address": "77W6+R9Q, Ave de Independance, Gisenyi, Rwanda"
     }
@@ -941,8 +822,7 @@ export const PLACES_DATA = [
     "lat": -1.7030125,
     "lon": 29.2624531,
     "catKey": "practical",
-    "tags": {},
-    "contact": {
+    "tags": {
       "address": "77W6+QXW, Gisenyi, Rwanda"
     }
   },
@@ -955,9 +835,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 3.9,
       "rating_count": 77,
-      "type": "Mosque"
-    },
-    "contact": {
+      "type": "Mosque",
       "phone": "+250 782 728 017",
       "address": "8747+M38, Gisenyi, Rwanda"
     }
@@ -969,9 +847,7 @@ export const PLACES_DATA = [
     "lon": 29.2560996,
     "catKey": "activities",
     "tags": {
-      "type": "Mosque"
-    },
-    "contact": {
+      "type": "Mosque",
       "address": "8724+9CQ, Gisenyi, Rwanda"
     }
   },
@@ -985,9 +861,7 @@ export const PLACES_DATA = [
       "rating": 5,
       "rating_count": 2,
       "hours": "Open 24 hours",
-      "type": "Mosque"
-    },
-    "contact": {
+      "type": "Mosque",
       "address": "87H8+6CJ, Gisenyi, Rwanda"
     }
   },
@@ -1001,9 +875,7 @@ export const PLACES_DATA = [
       "rating": 3.7,
       "rating_count": 60,
       "hours": "Mon-Sun 6:00AM - 12:00AM",
-      "description": "Main border crossing between Gisenyi (Rwanda) and Goma (DRC)"
-    },
-    "contact": {
+      "description": "Main border crossing between Gisenyi (Rwanda) and Goma (DRC)",
       "address": "Av. de la Révolution, Gisenyi / Goma Border"
     }
   },
@@ -1016,9 +888,7 @@ export const PLACES_DATA = [
     "tags": {
       "rating": 4.1,
       "rating_count": 15,
-      "description": "Quieter border crossing point"
-    },
-    "contact": {
+      "description": "Quieter border crossing point",
       "address": "863W+85F, Gisenyi, Rwanda"
     }
   },
@@ -1032,9 +902,7 @@ export const PLACES_DATA = [
       "rating": 4,
       "rating_count": 25,
       "hours": "Mon-Sun 5:30AM - 6:00PM",
-      "description": "High pedestrian traffic border crossing"
-    },
-    "contact": {
+      "description": "High pedestrian traffic border crossing",
       "address": "869W+98C, Gisenyi, Rwanda"
     }
   },
@@ -1045,9 +913,7 @@ export const PLACES_DATA = [
     "lon": 29.264799,
     "catKey": "practical",
     "tags": {
-      "hours": "Open 24 hours"
-    },
-    "contact": {
+      "hours": "Open 24 hours",
       "phone": "+250 736 660 470",
       "address": "8758+VFW, Gisenyi, Rwanda"
     }
@@ -1058,8 +924,7 @@ export const PLACES_DATA = [
     "lat": -1.7024195,
     "lon": 29.2610427,
     "catKey": "practical",
-    "tags": {},
-    "contact": {
+    "tags": {
       "address": "77X6+2CM, Ave de Independance, Gisenyi, Rwanda"
     }
   },
@@ -1069,8 +934,7 @@ export const PLACES_DATA = [
     "lat": -1.6845261,
     "lon": 29.2563933,
     "catKey": "practical",
-    "tags": {},
-    "contact": {
+    "tags": {
       "phone": "+250 788 311 149",
       "address": "8784+5HJ, Gisenyi, Rwanda"
     }

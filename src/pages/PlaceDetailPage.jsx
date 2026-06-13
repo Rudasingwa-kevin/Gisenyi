@@ -54,8 +54,8 @@ export default function PlaceDetailPage({ places }) {
     : (galleryPhotos[place.catKey] || galleryPhotos.hotels).slice(0, 4).map(id =>
         `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=60&w=400&h=400`
       );
-  const stars = Math.round(tags.rating || 4.5);
   const tags = place.tags || {};
+  const stars = Math.round(tags.rating || 4.5);
 
   return (
     <div className="min-h-screen bg-navy-950">
@@ -68,7 +68,7 @@ export default function PlaceDetailPage({ places }) {
         <div className="absolute inset-0 bg-gradient-to-t from-navy-950 via-navy-950/40 to-transparent" />
         <div className="absolute inset-0 bg-gradient-to-r from-navy-950/60 to-transparent" />
 
-        <div className="absolute top-6 left-6 z-10">
+        <div className="absolute top-24 left-6 z-10">
           <button
             onClick={() => navigate(-1)}
             className="flex items-center gap-2 px-4 py-2.5 rounded-xl glass-dark text-white/80 hover:text-white transition-all text-sm font-inter"
@@ -96,7 +96,7 @@ export default function PlaceDetailPage({ places }) {
               <h1 className="text-3xl md:text-5xl font-sora font-extrabold text-white mb-2">{place.name}</h1>
               <p className="text-white/40 text-sm font-inter flex items-center gap-1.5">
                 <MapPin className="w-3.5 h-3.5" />
-                {place.contact?.address || `${place.lat.toFixed(4)}, ${place.lon.toFixed(4)}`}
+                {place.contact?.address || tags.address || `${place.lat.toFixed(4)}, ${place.lon.toFixed(4)}`}
               </p>
             </div>
 
@@ -153,10 +153,10 @@ export default function PlaceDetailPage({ places }) {
               )}
 
               <div className="grid grid-cols-2 gap-4">
-                {place.contact?.phone && (
-                  <a href={`tel:${place.contact.phone}`} className="flex items-center gap-3 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
+                {(place.contact?.phone || tags.phone) && (
+                  <a href={`tel:${place.contact?.phone || tags.phone}`} className="flex items-center gap-3 p-4 bg-white/5 rounded-xl hover:bg-white/10 transition-colors">
                     <Phone className="w-4 h-4 text-gold-500 shrink-0" />
-                    <span className="text-sm text-white/60 font-inter truncate">{place.contact.phone}</span>
+                    <span className="text-sm text-white/60 font-inter truncate">{place.contact?.phone || tags.phone}</span>
                   </a>
                 )}
                 {tags.website && (
