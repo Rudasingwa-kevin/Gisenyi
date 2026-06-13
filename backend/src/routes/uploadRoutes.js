@@ -1,33 +1,29 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
+const { CloudinaryStorage } = require('multer-storage-cloudinary');
+const cloudinary = require('cloudinary').v2;
 
-const UPLOAD_DIR = path.join(__dirname, '../../uploads');
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-if (!fs.existsSync(UPLOAD_DIR)) fs.mkdirSync(UPLOAD_DIR, { recursive: true });
-
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => cb(null, UPLOAD_DIR),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname);
-    const name = `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`;
-    cb(null, name);
+const storage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'gisenyi',
+    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif'],
+    transformation: [{ width: 1920, height: 1080, crop: 'limit', quality: 'auto' }]
   }
 });
 
-const fileFilter = (req, file, cb) => {
-  const ok = /\.(jpg|jpeg|png|gif|webp|avif)$/i.test(path.extname(file.originalname));
-  cb(null, ok);
-};
-
-const upload = multer({ storage, fileFilter, limits: { fileSize: 10 * 1024 * 1024 } });
+const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
 
 router.post('/', upload.single('image'), (req, res) => {
   if (!req.file) return res.status(400).json({ error: 'No image file provided' });
-  const url = `/uploads/${req.file.filename}`;
-  res.json({ url, filename: req.file.filename });
+  res.json({ url: req.file.path, filename: req.file.filename });
 });
 
 module.exports = router;
