@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid } from 'lucide-react';
+import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar } from 'lucide-react';
 
 const API = 'http://localhost:3000/api/admin';
 
@@ -22,6 +22,7 @@ export default function AdminPage() {
   const [tab, setTab] = useState('places');
   const [places, setPlaces] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [events, setEvents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -40,17 +41,23 @@ export default function AdminPage() {
     if (res.ok) setCategories(await res.json());
   }, [token]);
 
+  const loadEvents = useCallback(async () => {
+    const res = await fetchWithAuth(`${API}/events`, token);
+    if (res.ok) setEvents(await res.json());
+  }, [token]);
+
   useEffect(() => {
     if (!isAdmin) return;
     setLoading(true);
-    Promise.all([loadPlaces(), loadCategories()]).then(() => setLoading(false));
-  }, [isAdmin, loadPlaces, loadCategories]);
+    Promise.all([loadPlaces(), loadCategories(), loadEvents()]).then(() => setLoading(false));
+  }, [isAdmin, loadPlaces, loadCategories, loadEvents]);
 
   const handleDelete = async (type, id) => {
     if (!confirm('Are you sure you want to delete this item?')) return;
     const res = await fetchWithAuth(`${API}/${type}/${id}`, token, { method: 'DELETE' });
     if (res.ok) {
       if (type === 'places') setPlaces(p => p.filter(x => x.id !== id));
+      else if (type === 'events') setEvents(e => e.filter(x => x.id !== id));
       else setCategories(c => c.filter(x => x.id !== id));
     }
   };
@@ -101,6 +108,14 @@ export default function AdminPage() {
             }`}
           >
             <LayoutGrid className="w-4 h-4" /> Categories
+          </button>
+          <button
+            onClick={() => setTab('events')}
+            className={`flex items-center gap-2 px-5 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+              tab === 'events' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
+            }`}
+          >
+            <Calendar className="w-4 h-4" /> Events
           </button>
         </div>
 
@@ -224,8 +239,171 @@ export default function AdminPage() {
             )}
           </div>
         )}
+
+        {tab === 'events' && (
+          <div>
+            <div className="flex justify-between items-center mb-6">
+              <h2 className="text-xl font-sora font-bold text-white">Manage Events ({events.length})</h2>
+              <button
+                onClick={() => { setEditing(null); setShowForm(!showForm); }}
+                className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
+              >
+                <Plus className="w-4 h-4" /> Add Event
+              </button>
+            </div>
+
+            {showForm && (
+              <EventForm
+                event={editing}
+                token={token}
+                onSave={(e) => {
+                  if (editing) setEvents(ev => ev.map(x => x.id === e.id ? e : x));
+                  else setEvents(ev => [...ev, e]);
+                  setShowForm(false);
+                  setEditing(null);
+                }}
+                onCancel={() => { setShowForm(false); setEditing(null); }}
+              />
+            )}
+
+            {loading ? (
+              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
+            ) : (
+              <div className="grid gap-3">
+                {events.map(event => (
+                  <div key={event.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
+                    <div className="flex items-center gap-4">
+                      {event.image && (
+                        <img src={event.image} alt="" className="w-14 h-14 rounded-lg object-cover bg-navy-800" />
+                      )}
+                      <div>
+                        <h3 className="text-white font-inter font-semibold">{event.title}</h3>
+                        <p className="text-white/30 text-sm font-inter">{event.date} &middot; {event.location} &middot; <span className="text-gold-500/60">{event.category}</span></p>
+                        {event.ticketLink && (
+                          <p className="text-white/20 text-xs font-inter mt-0.5">Ticket: {event.ticketLink}</p>
+                        )}
+                      </div>
+                    </div>
+                    <div className="flex gap-2 shrink-0">
+                      <button
+                        onClick={() => { setEditing(event); setShowForm(true); }}
+                        className="p-2 text-white/40 hover:text-gold-500 transition-colors"
+                      >
+                        <Pencil className="w-4 h-4" />
+                      </button>
+                      <button
+                        onClick={() => handleDelete('events', event.id)}
+                        className="p-2 text-white/40 hover:text-red-400 transition-colors"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        )}
       </div>
     </div>
+  );
+}
+
+function EventForm({ event, token, onSave, onCancel }) {
+  const [form, setForm] = useState({
+    title: event?.title || '',
+    description: event?.description || '',
+    date: event?.date || '',
+    time: event?.time || '',
+    location: event?.location || '',
+    category: event?.category || 'concert',
+    price: event?.price || '',
+    image: event?.image || '',
+    ticketLink: event?.ticketLink || ''
+  });
+  const [saving, setSaving] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    const url = event ? `${API}/events/${event.id}` : `${API}/events`;
+    const method = event ? 'PUT' : 'POST';
+    const res = await fetchWithAuth(url, token, { method, body: JSON.stringify(form) });
+    if (res.ok) onSave(await res.json());
+    setSaving(false);
+  };
+
+  return (
+    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-6 mb-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Title</label>
+          <input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Category</label>
+          <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50">
+            <option value="concert">Concert</option>
+            <option value="movie">Movie Night</option>
+            <option value="comedy">Comedy</option>
+            <option value="arts">Arts</option>
+            <option value="cultural">Cultural</option>
+          </select>
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Date</label>
+          <input type="text" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
+            placeholder="e.g. June 20, 2026"
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Time</label>
+          <input type="text" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))}
+            placeholder="e.g. 7:00 PM"
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Location</label>
+          <input type="text" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Price</label>
+          <input type="text" value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))}
+            placeholder="e.g. 15,000 RWF or Free"
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
+        </div>
+        <div className="md:col-span-2">
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Description</label>
+          <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Flyer / Banner Image URL</label>
+          <input type="url" value={form.image} onChange={e => setForm(f => ({ ...f, image: e.target.value }))}
+            placeholder="https://example.com/flyer.jpg"
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
+        </div>
+        <div>
+          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Ticket Link (URL)</label>
+          <input type="url" value={form.ticketLink} onChange={e => setForm(f => ({ ...f, ticketLink: e.target.value }))}
+            placeholder="https://example.com/buy-tickets"
+            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
+        </div>
+      </div>
+      <div className="flex gap-3 pt-4">
+        <button type="submit" disabled={saving}
+          className="px-5 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
+          {saving ? 'Saving...' : event ? 'Update Event' : 'Create Event'}
+        </button>
+        <button type="button" onClick={onCancel}
+          className="px-5 py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
+          Cancel
+        </button>
+      </div>
+    </form>
   );
 }
 
