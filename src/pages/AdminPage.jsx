@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink, Image as ImageIcon, Video } from 'lucide-react';
+import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink, Image as ImageIcon, Video, MessageSquare, Star } from 'lucide-react';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
 
 export default function AdminPage() {
@@ -13,6 +13,7 @@ export default function AdminPage() {
   const [events, setEvents] = useState([]);
   const [calendarItems, setCalendarItems] = useState([]);
   const [galleryItems, setGalleryItems] = useState([]);
+  const [feedbackItems, setFeedbackItems] = useState([]);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -61,10 +62,15 @@ export default function AdminPage() {
     if (res.ok) { const d = await res.json(); setGalleryItems(d.data || d); }
   }, [token]);
 
+  const loadFeedback = useCallback(async () => {
+    const res = await fetchWithAuth(`${API}/feedback`, token);
+    if (res.ok) { const d = await res.json(); setFeedbackItems(d.data || d); }
+  }, [token]);
+
   useEffect(() => {
     if (!isAdmin) return;
     setLoading(true);
-    Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems()]).then(() => setLoading(false));
+    Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems(), loadFeedback()]).then(() => setLoading(false));
   }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems]);
 
   const handleDelete = async (type, id) => {
@@ -137,6 +143,16 @@ export default function AdminPage() {
     const { items, page, totalPages } = paginated(f);
     return { items, page, totalPages, total: f.length };
   }, [calendarItems, listSearch, listSort, listPage]);
+
+  const filteredFeedback = useMemo(() => {
+    const f = feedbackItems.filter(fb => {
+      if (!listSearch) return true;
+      const q = listSearch.toLowerCase();
+      return fb.name?.toLowerCase().includes(q) || fb.message?.toLowerCase().includes(q) || fb.email?.toLowerCase().includes(q);
+    }).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const { items, page, totalPages } = paginated(f);
+    return { items, page, totalPages, total: f.length };
+  }, [feedbackItems, listSearch, listPage]);
 
   const filteredGallery = useMemo(() => {
     const f = galleryItems.filter(g => {
@@ -219,6 +235,14 @@ export default function AdminPage() {
           >
             <ImageIcon className="w-4 h-4" /> Gallery
           </button>
+          <button
+            onClick={() => switchTab('feedback')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+              tab === 'feedback' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
+            }`}
+          >
+            <MessageSquare className="w-4 h-4" /> Feedback
+          </button>
         </div>
 
         {tab === 'dashboard' && (
@@ -232,7 +256,7 @@ export default function AdminPage() {
               <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
             ) : (
               <>
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4 mb-6 md:mb-8">
+                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-6 md:mb-8">
                   <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
                     <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
                       <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
@@ -268,6 +292,15 @@ export default function AdminPage() {
                     </div>
                     <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{calendarItems.length}</span>
                     <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Calendar Items</p>
+                  </div>
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <MessageSquare className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
+                      </div>
+                    </div>
+                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{feedbackItems.length}</span>
+                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Feedback</p>
                   </div>
                 </div>
 
@@ -583,6 +616,53 @@ export default function AdminPage() {
               </div>
               <Pagination page={filteredCalendar.page} totalPages={filteredCalendar.totalPages} onPage={setListPage} />
               </div>)}
+          </div>
+        )}
+
+        {tab === 'feedback' && (
+          <div>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Visitor Feedback ({feedbackItems.length})</h2>
+            </div>
+            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'name', label: 'Name' }]} placeholder="Search feedback..." />
+            {loading ? (
+              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
+            ) : filteredFeedback.items.length === 0 ? (
+              <div className="text-center py-16">
+                <MessageSquare className="w-10 h-10 mx-auto text-white/20 mb-3" />
+                <p className="font-inter text-white/30">No feedback yet</p>
+              </div>
+            ) : (
+              <div className="space-y-3">
+                {filteredFeedback.items.map(fb => (
+                  <div key={fb.id} className="bg-white/5 border border-white/5 rounded-xl p-4 md:p-5">
+                    <div className="flex items-start justify-between gap-4 mb-3">
+                      <div className="min-w-0">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <h3 className="text-white font-inter font-semibold text-sm">{fb.name}</h3>
+                          {fb.email && (
+                            <span className="text-white/30 text-xs font-inter hidden sm:inline">{fb.email}</span>
+                          )}
+                          {fb.page && (
+                            <span className="text-[9px] font-poppins font-bold text-white/20 uppercase tracking-[0.15em] bg-white/5 px-2 py-0.5 rounded">{fb.page}</span>
+                          )}
+                        </div>
+                        <div className="flex items-center gap-1 mt-1">
+                          {[1, 2, 3, 4, 5].map(n => (
+                            <Star key={n} className={`w-3 h-3 ${n <= fb.rating ? 'fill-gold-500 text-gold-500' : 'text-white/10'}`} />
+                          ))}
+                        </div>
+                      </div>
+                      <span className="text-[10px] font-inter text-white/20 shrink-0">
+                        {new Date(fb.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                      </span>
+                    </div>
+                    <p className="text-white/60 text-sm font-inter leading-relaxed">{fb.message}</p>
+                  </div>
+                ))}
+                <Pagination page={filteredFeedback.page} totalPages={filteredFeedback.totalPages} onPage={setListPage} />
+              </div>
+            )}
           </div>
         )}
 

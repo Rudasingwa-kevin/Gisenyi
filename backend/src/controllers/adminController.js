@@ -221,3 +221,15 @@ exports.deleteGalleryItem = async (req, res, next) => {
     res.json({ success: true });
   } catch (error) { next(error); }
 };
+
+// Feedback
+exports.getFeedback = async (req, res, next) => {
+  try {
+    const { skip, take, page, limit } = paginate(req.query.page, req.query.limit);
+    const [data, total] = await Promise.all([
+      prisma.feedback.findMany({ skip, take, orderBy: { createdAt: 'desc' } }),
+      prisma.feedback.count()
+    ]);
+    res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
+  } catch (error) { next(error); }
+};
