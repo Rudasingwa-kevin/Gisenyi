@@ -34,4 +34,6 @@ router.post('/gallery', adminController.createGalleryItem);
 router.put('/gallery/:id', adminController.updateGalleryItem);
 router.delete('/gallery/:id', adminController.deleteGalleryItem);
 
+router.get('/feedback', adminController.getFeedback);
+
 module.exports = router;

@@ -1,6 +1,7 @@
 import { useMemo } from 'react';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
+import FeedbackSection from '../components/FeedbackSection';
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Compass, Star, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -280,6 +281,8 @@ const HomePage = ({ stats, loading }) => {
           </motion.div>
         </div>
       </section>
+
+      <FeedbackSection />
 
       {/* Final CTA */}
       <section className="py-20 md:py-32 px-4 sm:px-6 bg-gradient-to-b from-transparent via-navy-800/30 to-navy-900">
