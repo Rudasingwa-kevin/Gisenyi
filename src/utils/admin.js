@@ -1,5 +1,7 @@
-export const API = 'http://localhost:3000/api/admin';
-export const UPLOAD_API = 'http://localhost:3000/api/upload';
+import { API_BASE } from './api';
+
+export const API = `${API_BASE}/api/admin`;
+export const UPLOAD_API = `${API_BASE}/api/upload`;
 
 export function fetchWithAuth(url, token, opts = {}) {
   return fetch(url, {

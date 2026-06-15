@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin, Circle, Plus, X } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -25,8 +26,8 @@ const CalendarPage = () => {
   useEffect(() => {
     setLoading(true);
     Promise.all([
-      fetch(`http://localhost:3000/api/calendar?month=${currentMonth + 1}&year=${currentYear}`).then(r => r.ok ? r.json() : []),
-      fetch(`http://localhost:3000/api/events`).then(r => r.ok ? r.json() : [])
+      fetch(`${API_BASE}/api/calendar?month=${currentMonth + 1}&year=${currentYear}`).then(r => r.ok ? r.json() : []),
+      fetch(`${API_BASE}/api/events`).then(r => r.ok ? r.json() : [])
     ]).then(([calItems, evts]) => {
       setItems(calItems);
       setEvents(evts);

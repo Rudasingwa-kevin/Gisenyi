@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Image as ImageIcon } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
 
 function ImageUpload({ value, onChange, label, preview, token }) {
@@ -73,7 +74,7 @@ export default function AddPlacePage() {
   }, [isAdmin, navigate]);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/categories').then(r => r.ok && r.json()).then(d => {
+    fetch(`${API_BASE}/api/categories`).then(r => r.ok && r.json()).then(d => {
       const list = d.data || d || [];
       setCategories(list);
       if (list.length) setForm(f => ({ ...f, catKey: list[0].id }));
