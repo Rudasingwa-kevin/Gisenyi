@@ -94,12 +94,4 @@ VITE_API_URL=https://your-api.com npm run build
 # Backend
 cd backend
 NODE_ENV=production npm start
-```
 
-## Admin Access
-
-Default admin credentials (change immediately):
-- Username: `admin`
-- Password: `admin123`
-
-Create a new admin via `cd backend && node src/utils/seed-admin.js`.
