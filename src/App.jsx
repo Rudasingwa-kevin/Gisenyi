@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import { API_BASE } from './utils/api';
+import { trackPage } from './utils/tracker';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -42,6 +43,7 @@ const AnimatedOutlet = ({ children }) => (
 
 function AppLayout() {
   const { pathname } = useLocation();
+  useEffect(() => { trackPage(pathname); }, [pathname]);
   const isAdminPage = pathname.startsWith('/admin');
   const [places, setPlaces] = useState([]);
   const [loading, setLoading] = useState(true);

@@ -1,8 +1,9 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink, Image as ImageIcon, Video, MessageSquare, Star } from 'lucide-react';
+import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink, Image as ImageIcon, Video, MessageSquare, Star, Activity } from 'lucide-react';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 export default function AdminPage() {
   const { token, username, isAdmin, logout } = useAuth();
@@ -14,6 +15,7 @@ export default function AdminPage() {
   const [calendarItems, setCalendarItems] = useState([]);
   const [galleryItems, setGalleryItems] = useState([]);
   const [feedbackItems, setFeedbackItems] = useState([]);
+  const [visitorStats, setVisitorStats] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -67,12 +69,17 @@ export default function AdminPage() {
     if (res.ok) { const d = await res.json(); setFeedbackItems(d.data || d); }
   }, [token]);
 
+  const loadVisitorStats = useCallback(async () => {
+    const res = await fetchWithAuth(`${API}/visitor-stats`, token);
+    if (res.ok) { const d = await res.json(); setVisitorStats(d); }
+  }, [token]);
+
   useEffect(() => {
     if (!isAdmin) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
-    Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems(), loadFeedback()]).then(() => setLoading(false));
-  }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems]);
+    Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems(), loadFeedback(), loadVisitorStats()]).then(() => setLoading(false));
+  }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems, loadVisitorStats]);
 
   const handleDelete = async (type, id) => {
     if (!confirm('Are you sure you want to delete this item?')) return;
@@ -309,6 +316,24 @@ export default function AdminPage() {
                     <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{feedbackItems.length}</span>
                     <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Feedback</p>
                   </div>
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <Activity className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
+                      </div>
+                    </div>
+                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{visitorStats?.totalVisits ?? 0}</span>
+                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Total Visits</p>
+                  </div>
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
+                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
+                        <Activity className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
+                      </div>
+                    </div>
+                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{visitorStats?.uniqueVisitors ?? 0}</span>
+                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Unique Visitors</p>
+                  </div>
                 </div>
 
                 <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
@@ -352,6 +377,62 @@ export default function AdminPage() {
                       </div>
                     )}
                   </div>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mt-6">
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
+                      <Activity className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Daily Visits (30 days)
+                    </h3>
+                    {visitorStats?.daily?.length > 0 ? (
+                      <ResponsiveContainer width="100%" height={200}>
+                        <BarChart data={visitorStats.daily}>
+                          <XAxis dataKey="date" tick={{ fill: '#9CA3AF', fontSize: 10 }} tickFormatter={v => v.slice(5)} />
+                          <YAxis tick={{ fill: '#9CA3AF', fontSize: 10 }} />
+                          <Tooltip contentStyle={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }} />
+                          <Bar dataKey="count" fill="#C9A84C" radius={[4, 4, 0, 0]} />
+                        </BarChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="h-[200px] flex items-center justify-center text-white/30 text-sm font-inter">No visit data yet</div>
+                    )}
+                  </div>
+                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                    <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
+                      <Activity className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Visit Trend
+                    </h3>
+                    {visitorStats?.daily?.length > 0 ? (
+                      <ResponsiveContainer width="100%" height={200}>
+                        <LineChart data={visitorStats.daily}>
+                          <XAxis dataKey="date" tick={{ fill: '#9CA3AF', fontSize: 10 }} tickFormatter={v => v.slice(5)} />
+                          <YAxis tick={{ fill: '#9CA3AF', fontSize: 10 }} />
+                          <Tooltip contentStyle={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }} />
+                          <Line type="monotone" dataKey="count" stroke="#C9A84C" strokeWidth={2} dot={false} />
+                        </LineChart>
+                      </ResponsiveContainer>
+                    ) : (
+                      <div className="h-[200px] flex items-center justify-center text-white/30 text-sm font-inter">No visit data yet</div>
+                    )}
+                  </div>
+                </div>
+
+                <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6 mt-6">
+                  <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
+                    <Activity className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Top Pages
+                  </h3>
+                  {visitorStats?.topPages?.length > 0 ? (
+                    <div className="space-y-2">
+                      {visitorStats.topPages.map((p, i) => (
+                        <div key={p.page} className="flex items-center gap-3">
+                          <span className="text-white/30 text-xs font-mono w-5">{i + 1}.</span>
+                          <span className="text-white/70 text-sm font-inter flex-1 truncate">{p.page}</span>
+                          <span className="text-gold-500 text-sm font-sora font-bold">{p.count}</span>
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    <p className="text-white/30 text-sm font-inter">No page data yet</p>
+                  )}
                 </div>
               </>
             )}

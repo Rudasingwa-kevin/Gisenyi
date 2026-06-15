@@ -37,4 +37,6 @@ router.delete('/gallery/:id', adminController.deleteGalleryItem);
 
 router.get('/feedback', adminController.getFeedback);
 
+router.get('/visitor-stats', adminController.getVisitorStats);
+
 module.exports = router;

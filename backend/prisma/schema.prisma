@@ -88,3 +88,14 @@ model Feedback {
   page      String?
   createdAt DateTime @default(now())
 }
+
+model Visit {
+  id        String   @id @default(uuid())
+  sessionId String
+  page      String
+  referrer  String?
+  createdAt DateTime @default(now())
+
+  @@index([sessionId])
+  @@index([createdAt])
+}

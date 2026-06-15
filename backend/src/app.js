@@ -56,6 +56,7 @@ app.use('/api/admin', require('./routes/adminRoutes'));
 app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/gallery', require('./routes/galleryRoutes'));
 app.use('/api/feedback', require('./routes/feedbackRoutes'));
+app.use('/api/track', require('./routes/trackRoutes'));
 
 const prisma = require('./utils/prisma');
 

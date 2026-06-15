@@ -234,3 +234,41 @@ exports.getFeedback = async (req, res, next) => {
     res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) { next(error); }
 };
+
+exports.getVisitorStats = async (req, res, next) => {
+  try {
+    const thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+
+    const [totalVisits, uniqueVisitors, dailyVisits, topPages] = await Promise.all([
+      prisma.visit.count(),
+      prisma.visit.groupBy({ by: ['sessionId'], _count: true }),
+      prisma.visit.findMany({
+        where: { createdAt: { gte: thirtyDaysAgo } },
+        select: { createdAt: true },
+        orderBy: { createdAt: 'asc' }
+      }),
+      prisma.visit.groupBy({
+        by: ['page'],
+        _count: true,
+        orderBy: { _count: { page: 'desc' } },
+        take: 10
+      })
+    ]);
+
+    const dailyMap = {};
+    dailyVisits.forEach(v => {
+      const day = v.createdAt.toISOString().slice(0, 10);
+      dailyMap[day] = (dailyMap[day] || 0) + 1;
+    });
+
+    const daily = Object.entries(dailyMap).map(([date, count]) => ({ date, count }));
+
+    res.json({
+      totalVisits,
+      uniqueVisitors: uniqueVisitors.length,
+      daily,
+      topPages: topPages.map(p => ({ page: p.page, count: p._count }))
+    });
+  } catch (error) { next(error); }
+};
