@@ -25,7 +25,7 @@ app.use(cors({
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000,
-  max: 100,
+  max: process.env.NODE_ENV === 'production' ? 100 : 300,
   standardHeaders: true,
   legacyHeaders: false,
 });

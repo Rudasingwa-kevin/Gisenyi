@@ -17,19 +17,32 @@ const HARDCODED_CATEGORIES = {
   culture: { label: 'Culture', icon: '🎭', color: '#C9A84C' }
 };
 
+let fetchPromise = null;
+
+function fetchCategories() {
+  if (!fetchPromise) {
+    fetchPromise = fetch(`${API_BASE}/api/categories`)
+      .then(r => r.ok ? r.json() : [])
+      .then(arr => {
+        if (!arr?.length) return HARDCODED_CATEGORIES;
+        const map = { ...HARDCODED_CATEGORIES };
+        arr.forEach(c => { map[c.id] = { label: c.label, icon: c.icon, color: c.color }; });
+        return map;
+      })
+      .catch(() => HARDCODED_CATEGORIES);
+  }
+  return fetchPromise;
+}
+
 export function useCategories() {
   const [categories, setCategories] = useState(() => HARDCODED_CATEGORIES);
 
   useEffect(() => {
-    fetch(`${API_BASE}/api/categories`)
-      .then(r => r.ok ? r.json() : [])
-      .then(arr => {
-        if (!arr?.length) return;
-        const map = { ...HARDCODED_CATEGORIES };
-        arr.forEach(c => { map[c.id] = { label: c.label, icon: c.icon, color: c.color }; });
-        setCategories(map);
-      })
-      .catch(() => {});
+    let cancelled = false;
+    fetchCategories().then(map => {
+      if (!cancelled) setCategories(map);
+    });
+    return () => { cancelled = true; };
   }, []);
 
   return categories;
