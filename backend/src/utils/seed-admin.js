@@ -2,12 +2,12 @@ const bcrypt = require('bcryptjs');
 const prisma = require('./prisma');
 
 async function main() {
-  const username = 'admin';
-  const password = 'admin123';
+  const username = process.env.ADMIN_USERNAME || 'admin';
+  const password = process.env.ADMIN_PASSWORD || 'admin123';
 
   const existing = await prisma.user.findUnique({ where: { username } });
   if (existing) {
-    console.log('Admin user already exists');
+    console.log(`Admin user '${username}' already exists`);
     return;
   }
 

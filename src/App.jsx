@@ -18,6 +18,7 @@ import AddCategoryPage from './pages/AddCategoryPage';
 import AddEventPage from './pages/AddEventPage';
 import AddCalendarItemPage from './pages/AddCalendarItemPage';
 import LoginModal from './components/LoginModal';
+import ErrorBoundary from './components/ErrorBoundary';
 import { AuthProvider } from './context/AuthContext';
 import { FALLBACK_DATA } from './constants/data';
 
@@ -96,6 +97,7 @@ function AppLayout() {
       {!isAdminPage && <Navbar />}
 
       <main className="flex-grow">
+        <ErrorBoundary>
         <AnimatePresence mode="wait">
           <Routes>
             <Route path="/" element={
@@ -179,6 +181,7 @@ function AppLayout() {
             } />
           </Routes>
         </AnimatePresence>
+        </ErrorBoundary>
       </main>
 
       {!isAdminPage && <Footer onAdminClick={() => setShowLogin(true)} />}

@@ -1,13 +1,11 @@
 const express = require('express');
 const router = express.Router();
 const prisma = require('../utils/prisma');
+const { validate, schemas } = require('../middleware/validate');
 
-router.post('/', async (req, res, next) => {
+router.post('/', validate(schemas.feedback), async (req, res, next) => {
   try {
     const { name, email, rating, message, page } = req.body;
-    if (!name || !message) {
-      return res.status(400).json({ error: 'Name and message are required' });
-    }
     const feedback = await prisma.feedback.create({
       data: {
         name,

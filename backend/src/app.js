@@ -57,8 +57,15 @@ app.use('/api/upload', require('./routes/uploadRoutes'));
 app.use('/api/gallery', require('./routes/galleryRoutes'));
 app.use('/api/feedback', require('./routes/feedbackRoutes'));
 
-app.get('/health', (req, res) => {
-    res.json({ status: 'ok', timestamp: new Date().toISOString() });
+const prisma = require('./utils/prisma');
+
+app.get('/health', async (req, res) => {
+    try {
+        await prisma.$queryRaw`SELECT 1`;
+        res.json({ status: 'ok', db: 'connected', timestamp: new Date().toISOString() });
+    } catch {
+        res.status(503).json({ status: 'error', db: 'disconnected', timestamp: new Date().toISOString() });
+    }
 });
 
 // Error handling middleware
