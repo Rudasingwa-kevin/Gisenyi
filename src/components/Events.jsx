@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Ticket, Mic, Film, Music, Palette, Theater, Sparkles, ExternalLink, X } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 
 const CATEGORIES = [
   { key: 'all', label: 'All Events', icon: Sparkles },
@@ -30,7 +31,7 @@ const Events = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch('http://localhost:3000/api/events')
+    fetch(`${API_BASE}/api/events`)
       .then(r => r.ok ? r.json() : Promise.reject())
       .then(data => { if (data?.length) setEvents(data); })
       .catch(() => {})

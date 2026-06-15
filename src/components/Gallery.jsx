@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 
 const fallbackPhotos = [
   'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb',
@@ -32,7 +33,7 @@ const Gallery = ({ photos }) => {
   const [lightbox, setLightbox] = useState(null);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/gallery')
+    fetch(`${API_BASE}/api/gallery`)
       .then(r => r.ok ? r.json() : [])
       .then(data => {
         if (data.length) setItems(data);

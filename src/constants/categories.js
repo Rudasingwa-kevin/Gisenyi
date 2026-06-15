@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { API_BASE } from '../utils/api';
 
 const HARDCODED_CATEGORIES = {
   all: { label: 'All', icon: '📍', color: '#C9A84C' },
@@ -20,7 +21,7 @@ export function useCategories() {
   const [categories, setCategories] = useState(() => HARDCODED_CATEGORIES);
 
   useEffect(() => {
-    fetch('http://localhost:3000/api/categories')
+    fetch(`${API_BASE}/api/categories`)
       .then(r => r.ok ? r.json() : [])
       .then(arr => {
         if (!arr?.length) return;

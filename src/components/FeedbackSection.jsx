@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Star, MessageSquare, ThumbsUp } from 'lucide-react';
+import { API_BASE } from '../utils/api';
 
 const stagger = {
   initial: { opacity: 0, y: 30 },
@@ -19,7 +20,7 @@ const FeedbackSection = () => {
     if (!form.name || !form.message) return;
     setSending(true);
     try {
-      const res = await fetch('http://localhost:3000/api/feedback', {
+      const res = await fetch(`${API_BASE}/api/feedback`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ ...form, page: window.location.pathname })

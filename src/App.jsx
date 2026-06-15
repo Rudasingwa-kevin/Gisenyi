@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo, useCallback } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { API_BASE } from './utils/api';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import HomePage from './pages/HomePage';
@@ -53,7 +54,7 @@ function AppLayout() {
   const fetchAll = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch('http://localhost:3000/api/places');
+      const res = await fetch(`${API_BASE}/api/places`);
       if (res.ok) {
         const data = await res.json();
         if (data?.length) { setPlaces(data); setLoading(false); return; }
