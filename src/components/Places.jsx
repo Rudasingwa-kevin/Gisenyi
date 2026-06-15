@@ -20,7 +20,7 @@ const catImages = {
   culture: '1499786388474-37f59913e7d9'
 };
 
-const PlaceCard = ({ place, index, setSelectedPlace }) => {
+const PlaceCard = ({ place, index }) => {
   const navigate = useNavigate();
   const categories = useCategories();
   const CATEGORIES = categories;

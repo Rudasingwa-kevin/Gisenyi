@@ -1,7 +1,7 @@
 import { useState, useEffect, useMemo } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin, Circle, Plus, X } from 'lucide-react';
+import { motion } from 'framer-motion';
+import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin, Circle } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -24,6 +24,7 @@ const CalendarPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     Promise.all([
       fetch(`${API_BASE}/api/calendar?month=${currentMonth + 1}&year=${currentYear}`).then(r => r.ok ? r.json() : []),
@@ -73,11 +74,6 @@ const CalendarPage = () => {
       return !isNaN(d) && d.getFullYear() === currentYear && d.getMonth() === currentMonth && d.getDate() === day;
     }).map(e => ({ ...e, type: 'event', color: TYPE_COLORS.event, _isRealEvent: true }));
     return [...calItems, ...dayEvents];
-  };
-
-  const formatDateStr = (day) => {
-    if (!day) return '';
-    return `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
   };
 
   const isToday = (day) => {

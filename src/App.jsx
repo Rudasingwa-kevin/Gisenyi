@@ -60,7 +60,7 @@ function AppLayout() {
         const data = await res.json();
         if (data?.length) { setPlaces(data); setLoading(false); return; }
       }
-    } catch {}
+    } catch { /* ignore */ }
     setPlaces(FALLBACK_DATA);
     setLoading(false);
 
@@ -72,15 +72,17 @@ function AppLayout() {
           setWikiPhotos(Object.values(wData.query.pages).map(p => p.thumbnail?.source).filter(Boolean));
         }
       }
-    } catch {}
+    } catch { /* ignore */ }
   }, []);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { fetchAll(); }, [fetchAll]);
 
   useEffect(() => {
     if (places.length) {
       const cats = {};
       places.forEach(p => { cats[p.catKey] = (cats[p.catKey] || 0) + 1; });
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setStats({ total: places.length, categories: cats });
     }
   }, [places]);

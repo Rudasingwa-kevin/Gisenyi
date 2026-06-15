@@ -1,7 +1,7 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ArrowLeft, Image as ImageIcon } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
 
@@ -38,7 +38,7 @@ function ImageUpload({ value, onChange, label, preview, token }) {
   );
 }
 
-function GalleryUpload({ index, token, onUrl }) {
+function GalleryUpload({ token, onUrl }) {
   const [uploading, setUploading] = useState(false);
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
@@ -157,7 +157,7 @@ export default function AddPlacePage() {
                     <input type="url" value={val} onChange={e => updateGalleryUrl(i, e.target.value)}
                       placeholder="https://example.com/photo.jpg"
                       className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-                    <GalleryUpload index={i} token={token} onUrl={url => updateGalleryUrl(i, url)} />
+                    <GalleryUpload token={token} onUrl={url => updateGalleryUrl(i, url)} />
                   </div>
                 );
               })}

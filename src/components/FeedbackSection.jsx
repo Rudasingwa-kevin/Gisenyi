@@ -29,7 +29,7 @@ const FeedbackSection = () => {
         setSubmitted(true);
         setForm({ name: '', email: '', rating: 5, message: '' });
       }
-    } catch {}
+    } catch { /* ignore */ }
     setSending(false);
   };
 

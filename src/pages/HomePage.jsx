@@ -1,4 +1,3 @@
-import { useMemo } from 'react';
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import FeedbackSection from '../components/FeedbackSection';

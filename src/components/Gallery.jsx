@@ -14,10 +14,6 @@ const fallbackPhotos = [
   'https://images.unsplash.com/photo-1497366811353-507074f9a6d2'
 ];
 
-function isVideoUrl(url) {
-  return /\.(mp4|webm|mov)(\?|$)/i.test(url) || /youtube\.com\/watch/i.test(url) || /youtu\.be\//i.test(url) || /vimeo\.com\//i.test(url);
-}
-
 function getYoutubeEmbed(url) {
   const m = url.match(/(?:youtube\.com\/watch\?v=|youtu\.be\/)([\w-]+)/);
   return m ? `https://www.youtube.com/embed/${m[1]}?autoplay=1` : null;

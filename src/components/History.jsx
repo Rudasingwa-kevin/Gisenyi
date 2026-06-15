@@ -12,7 +12,7 @@ const TimelineDot = ({ index }) => (
   </div>
 );
 
-const HistoryEra = ({ era, index }) => (
+const HistoryEra = ({ era }) => (
   <motion.div
     initial={{ opacity: 0, x: era.side === 'left' ? -40 : 40 }}
     whileInView={{ opacity: 1, x: 0 }}

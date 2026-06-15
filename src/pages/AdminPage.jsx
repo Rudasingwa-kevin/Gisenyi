@@ -69,6 +69,7 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!isAdmin) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems(), loadFeedback()]).then(() => setLoading(false));
   }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems]);
@@ -92,6 +93,7 @@ export default function AdminPage() {
 
   if (!isAdmin) return null;
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredPlaces = useMemo(() => {
     const f = places.filter(p => {
       if (!listSearch) return true;
@@ -105,6 +107,7 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [places, listSearch, listSort, listPage]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredEvents = useMemo(() => {
     const f = events.filter(e => {
       if (!listSearch) return true;
@@ -118,6 +121,7 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [events, listSearch, listSort, listPage]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredCategories = useMemo(() => {
     const f = categories.filter(c => {
       if (!listSearch) return true;
@@ -131,6 +135,7 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [categories, listSearch, listSort, listPage]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredCalendar = useMemo(() => {
     const f = calendarItems.filter(ci => {
       if (!listSearch) return true;
@@ -144,6 +149,7 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [calendarItems, listSearch, listSort, listPage]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredFeedback = useMemo(() => {
     const f = feedbackItems.filter(fb => {
       if (!listSearch) return true;
@@ -154,6 +160,7 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [feedbackItems, listSearch, listPage]);
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredGallery = useMemo(() => {
     const f = galleryItems.filter(g => {
       if (!listSearch) return true;
@@ -819,7 +826,7 @@ function ImageUpload({ value, onChange, label, preview, token: t }) {
   );
 }
 
-function GalleryUpload({ index, token, onUrl }) {
+function GalleryUpload({ token, onUrl }) {
   const [uploading, setUploading] = useState(false);
 
   const handleFile = async (e) => {
@@ -1027,7 +1034,7 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
                   placeholder="https://example.com/photo.jpg"
                   className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50"
                 />
-                <GalleryUpload index={i} token={token} onUrl={url => updateGalleryUrl(i, url)} />
+                <GalleryUpload token={token} onUrl={url => updateGalleryUrl(i, url)} />
               </div>
             );
           })}

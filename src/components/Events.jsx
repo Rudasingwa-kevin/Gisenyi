@@ -26,10 +26,12 @@ const Events = () => {
 
   useEffect(() => {
     const h = searchParams.get('highlight');
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (h) setHighlightId(h);
   }, [searchParams]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     fetch(`${API_BASE}/api/events`)
       .then(r => r.ok ? r.json() : Promise.reject())
