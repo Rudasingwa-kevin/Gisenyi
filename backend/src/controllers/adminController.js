@@ -9,9 +9,10 @@ function paginate(page, limit) {
 exports.getPlaces = async (req, res, next) => {
   try {
     const { skip, take, page, limit } = paginate(req.query.page, req.query.limit);
+    const where = { lon: { gte: 29.245 } };
     const [data, total] = await Promise.all([
-      prisma.place.findMany({ skip, take, orderBy: { name: 'asc' } }),
-      prisma.place.count()
+      prisma.place.findMany({ where, skip, take, orderBy: { name: 'asc' } }),
+      prisma.place.count({ where })
     ]);
     res.json({ data, total, page, totalPages: Math.ceil(total / limit) });
   } catch (error) { next(error); }

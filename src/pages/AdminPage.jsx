@@ -38,32 +38,32 @@ export default function AdminPage() {
   }, [isAdmin, navigate]);
 
   const loadPlaces = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/places`, token);
+    const res = await fetchWithAuth(`${API}/places?limit=500`, token);
     if (res.ok) { const d = await res.json(); setPlaces(d.data || d); }
   }, [token]);
 
   const loadCategories = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/categories`, token);
+    const res = await fetchWithAuth(`${API}/categories?limit=500`, token);
     if (res.ok) { const d = await res.json(); setCategories(d.data || d); }
   }, [token]);
 
   const loadEvents = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/events`, token);
+    const res = await fetchWithAuth(`${API}/events?limit=500`, token);
     if (res.ok) { const d = await res.json(); setEvents(d.data || d); }
   }, [token]);
 
   const loadCalendarItems = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/calendar`, token);
+    const res = await fetchWithAuth(`${API}/calendar?limit=500`, token);
     if (res.ok) { const d = await res.json(); setCalendarItems(d.data || d); }
   }, [token]);
 
   const loadGalleryItems = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/gallery`, token);
+    const res = await fetchWithAuth(`${API}/gallery?limit=500`, token);
     if (res.ok) { const d = await res.json(); setGalleryItems(d.data || d); }
   }, [token]);
 
   const loadFeedback = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/feedback`, token);
+    const res = await fetchWithAuth(`${API}/feedback?limit=500`, token);
     if (res.ok) { const d = await res.json(); setFeedbackItems(d.data || d); }
   }, [token]);
 
