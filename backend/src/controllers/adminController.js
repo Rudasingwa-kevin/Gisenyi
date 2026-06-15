@@ -1,3 +1,4 @@
+const os = require('os');
 const prisma = require('../utils/prisma');
 
 function paginate(page, limit) {
@@ -271,4 +272,50 @@ exports.getVisitorStats = async (req, res, next) => {
       topPages: topPages.map(p => ({ page: p.page, count: p._count }))
     });
   } catch (error) { next(error); }
+};
+
+exports.getSystemInfo = async (req, res, next) => {
+  try {
+    const start = Date.now();
+    await prisma.$queryRaw`SELECT 1`;
+    const dbPing = Date.now() - start;
+
+    const mem = process.memoryUsage();
+    const totalMem = os.totalmem();
+    const freeMem = os.freemem();
+
+    res.json({
+      server: {
+        uptime: process.uptime(),
+        nodeVersion: process.version,
+        platform: os.platform(),
+        arch: os.arch(),
+        hostname: os.hostname(),
+        cpus: os.cpus().length,
+        env: process.env.NODE_ENV || 'development'
+      },
+      memory: {
+        process: { rss: mem.rss, heapUsed: mem.heapUsed, heapTotal: mem.heapTotal },
+        system: { total: totalMem, free: freeMem, used: totalMem - freeMem }
+      },
+      database: { status: 'connected', pingMs: dbPing }
+    });
+  } catch (error) {
+    res.json({
+      server: {
+        uptime: process.uptime(),
+        nodeVersion: process.version,
+        platform: os.platform(),
+        arch: os.arch(),
+        hostname: os.hostname(),
+        cpus: os.cpus().length,
+        env: process.env.NODE_ENV || 'development'
+      },
+      memory: {
+        process: { rss: 0, heapUsed: 0, heapTotal: 0 },
+        system: { total: os.totalmem(), free: os.freemem(), used: os.totalmem() - os.freemem() }
+      },
+      database: { status: 'disconnected', pingMs: null }
+    });
+  }
 };

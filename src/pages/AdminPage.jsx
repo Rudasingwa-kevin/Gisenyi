@@ -1,7 +1,7 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink, Image as ImageIcon, Video, MessageSquare, Star, Activity } from 'lucide-react';
+import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink, Image as ImageIcon, Video, MessageSquare, Star, Activity, Server, Database, RefreshCw } from 'lucide-react';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
@@ -16,6 +16,7 @@ export default function AdminPage() {
   const [galleryItems, setGalleryItems] = useState([]);
   const [feedbackItems, setFeedbackItems] = useState([]);
   const [visitorStats, setVisitorStats] = useState(null);
+  const [systemInfo, setSystemInfo] = useState(null);
   const [loading, setLoading] = useState(true);
   const [editing, setEditing] = useState(null);
   const [showForm, setShowForm] = useState(false);
@@ -74,12 +75,18 @@ export default function AdminPage() {
     if (res.ok) { const d = await res.json(); setVisitorStats(d); }
   }, [token]);
 
+  const loadSystemInfo = useCallback(async () => {
+    const res = await fetchWithAuth(`${API}/system`, token);
+    if (res.ok) { const d = await res.json(); setSystemInfo(d); }
+  }, [token]);
+
   useEffect(() => {
     if (!isAdmin) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setLoading(true);
     Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems(), loadFeedback(), loadVisitorStats()]).then(() => setLoading(false));
-  }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems, loadVisitorStats]);
+    loadSystemInfo();
+  }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems, loadVisitorStats, loadSystemInfo]);
 
   const handleDelete = async (type, id) => {
     if (!confirm('Are you sure you want to delete this item?')) return;
@@ -256,6 +263,14 @@ export default function AdminPage() {
             }`}
           >
             <MessageSquare className="w-4 h-4" /> Feedback
+          </button>
+          <button
+            onClick={() => switchTab('system')}
+            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
+              tab === 'system' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
+            }`}
+          >
+            <Server className="w-4 h-4" /> System
           </button>
         </div>
 
@@ -749,6 +764,115 @@ export default function AdminPage() {
                   </div>
                 ))}
                 <Pagination page={filteredFeedback.page} totalPages={filteredFeedback.totalPages} onPage={setListPage} />
+              </div>
+            )}
+          </div>
+        )}
+
+        {tab === 'system' && (
+          <div>
+            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
+              <h2 className="text-lg md:text-xl font-sora font-bold text-white">System Health</h2>
+              <button onClick={loadSystemInfo} className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white/60 rounded-lg text-xs font-inter hover:bg-white/10 transition-all">
+                <RefreshCw className="w-3.5 h-3.5" /> Refresh
+              </button>
+            </div>
+
+            {!systemInfo ? (
+              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
+            ) : (
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6">
+                {/* Database */}
+                <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                  <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-4 flex items-center gap-2">
+                    <Database className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Database
+                  </h3>
+                  <div className="space-y-3">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-xs font-inter">Status</span>
+                      <span className={`flex items-center gap-1.5 text-xs font-inter font-semibold ${systemInfo.database.status === 'connected' ? 'text-green-400' : 'text-red-400'}`}>
+                        <span className={`w-2 h-2 rounded-full ${systemInfo.database.status === 'connected' ? 'bg-green-400' : 'bg-red-400'}`} />
+                        {systemInfo.database.status === 'connected' ? 'Connected' : 'Disconnected'}
+                      </span>
+                    </div>
+                    {systemInfo.database.pingMs != null && (
+                      <div className="flex items-center justify-between">
+                        <span className="text-white/40 text-xs font-inter">Ping</span>
+                        <span className="text-white/70 text-xs font-mono">{systemInfo.database.pingMs}ms</span>
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Server */}
+                <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                  <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-4 flex items-center gap-2">
+                    <Server className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Server
+                  </h3>
+                  <div className="space-y-2.5">
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-xs font-inter">Uptime</span>
+                      <span className="text-white/70 text-xs font-mono">{(() => {
+                        const u = Math.floor(systemInfo.server.uptime);
+                        const d = Math.floor(u / 86400);
+                        const h = Math.floor((u % 86400) / 3600);
+                        const m = Math.floor((u % 3600) / 60);
+                        return d > 0 ? `${d}d ${h}h ${m}m` : h > 0 ? `${h}h ${m}m` : `${m}m`;
+                      })()}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-xs font-inter">Node.js</span>
+                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.nodeVersion}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-xs font-inter">Environment</span>
+                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.env}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-xs font-inter">Platform</span>
+                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.platform} ({systemInfo.server.arch})</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-xs font-inter">Hostname</span>
+                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.hostname}</span>
+                    </div>
+                    <div className="flex items-center justify-between">
+                      <span className="text-white/40 text-xs font-inter">CPU Cores</span>
+                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.cpus}</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Memory */}
+                <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
+                  <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-4 flex items-center gap-2">
+                    <Activity className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Memory
+                  </h3>
+                  <div className="space-y-4">
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-white/40 text-xs font-inter">System RAM</span>
+                        <span className="text-white/70 text-xs font-mono">{Math.round(systemInfo.memory.system.used / 1024 / 1024)} MB / {Math.round(systemInfo.memory.system.total / 1024 / 1024)} MB</span>
+                      </div>
+                      <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-full bg-gold-500 rounded-full transition-all" style={{ width: `${(systemInfo.memory.system.used / systemInfo.memory.system.total * 100).toFixed(1)}%` }} />
+                      </div>
+                    </div>
+                    <div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-white/40 text-xs font-inter">Process RSS</span>
+                        <span className="text-white/70 text-xs font-mono">{Math.round(systemInfo.memory.process.rss / 1024 / 1024)} MB</span>
+                      </div>
+                      <div className="flex items-center justify-between mb-1.5">
+                        <span className="text-white/40 text-xs font-inter">Heap Used</span>
+                        <span className="text-white/70 text-xs font-mono">{Math.round(systemInfo.memory.process.heapUsed / 1024 / 1024)} MB / {Math.round(systemInfo.memory.process.heapTotal / 1024 / 1024)} MB</span>
+                      </div>
+                      <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
+                        <div className="h-full bg-blue-400 rounded-full transition-all" style={{ width: `${Math.min(100, (systemInfo.memory.process.heapUsed / systemInfo.memory.process.heapTotal * 100)).toFixed(1)}%` }} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
             )}
           </div>
