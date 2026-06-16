@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Ticket, Mic, Film, Music, Palette, Theater, Sparkles, ExternalLink, X } from 'lucide-react';
 import { API_BASE } from '../utils/api';
+import ShareButton from './ShareButton';
 
 const CATEGORIES = [
   { key: 'all', label: 'All Events', icon: Sparkles },
@@ -224,18 +225,25 @@ const Events = () => {
                         </div>
                       </div>
 
-                      {event.ticketLink && (
-                        <a
-                          href={event.ticketLink}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-2 py-3 rounded-xl bg-gold-500/10 border border-gold-500/20 text-gold-500 font-poppins font-semibold text-[10px] uppercase tracking-[0.2em] hover:bg-gold-500 hover:text-navy-900 transition-all duration-300"
-                        >
-                          <Ticket className="w-3.5 h-3.5" />
-                          Get Tickets
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
-                      )}
+                      <div className="flex gap-2">
+                        {event.ticketLink && (
+                          <a
+                            href={event.ticketLink}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-gold-500/10 border border-gold-500/20 text-gold-500 font-poppins font-semibold text-[10px] uppercase tracking-[0.2em] hover:bg-gold-500 hover:text-navy-900 transition-all duration-300"
+                          >
+                            <Ticket className="w-3.5 h-3.5" />
+                            Get Tickets
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                        <ShareButton
+                          item={event}
+                          type="event"
+                          className="px-3 py-3 text-[10px] font-poppins font-semibold uppercase tracking-[0.2em]"
+                        />
+                      </div>
                     </div>
                   </motion.div>
                 );

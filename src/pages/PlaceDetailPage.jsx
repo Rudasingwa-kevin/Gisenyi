@@ -2,6 +2,7 @@ import { useMemo } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Navigation, ExternalLink, Globe, Phone, Clock, Tag } from 'lucide-react';
 import { useCategories } from '../constants/categories';
+import ShareButton from '../components/ShareButton';
 
 const catImages = {
   hotels: '1542314831-068cd1dbfeeb',
@@ -101,14 +102,17 @@ export default function PlaceDetailPage({ places }) {
               </p>
             </div>
 
-            <a
-              href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lon}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 px-6 py-3 bg-gold-500 text-navy-950 rounded-xl font-sora font-bold text-sm hover:bg-gold-400 transition-all shrink-0"
-            >
-              <Navigation className="w-4 h-4" /> Get Directions
-            </a>
+            <div className="flex items-center gap-3">
+              <ShareButton item={place} type="place" />
+              <a
+                href={`https://www.google.com/maps/dir/?api=1&destination=${place.lat},${place.lon}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 px-6 py-3 bg-gold-500 text-navy-950 rounded-xl font-sora font-bold text-sm hover:bg-gold-400 transition-all shrink-0"
+              >
+                <Navigation className="w-4 h-4" /> Get Directions
+              </a>
+            </div>
           </div>
 
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
