@@ -1,30 +1,40 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { CloudinaryStorage } = require('multer-storage-cloudinary');
-const cloudinary = require('cloudinary').v2;
+const { supabase } = require('../utils/supabase');
 
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET
-});
+const BUCKET_NAME = process.env.SUPABASE_STORAGE_BUCKET || 'gisenyi';
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif', 'video/mp4', 'video/quicktime', 'video/webm'];
 
-const storage = new CloudinaryStorage({
-  cloudinary,
-  params: {
-    folder: 'gisenyi',
-    resource_type: 'auto',
-    allowed_formats: ['jpg', 'jpeg', 'png', 'gif', 'webp', 'avif', 'mp4', 'mov', 'webm'],
-    transformation: [{ width: 1920, height: 1080, crop: 'limit', quality: 'auto' }]
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
+
+router.post('/', upload.single('file'), async (req, res) => {
+  try {
+    if (!req.file) return res.status(400).json({ error: 'No file provided' });
+    if (!ALLOWED_TYPES.includes(req.file.mimetype)) {
+      return res.status(400).json({ error: `File type ${req.file.mimetype} not allowed` });
+    }
+
+    const ext = req.file.originalname.split('.').pop();
+    const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+
+    const { data, error } = await supabase.storage
+      .from(BUCKET_NAME)
+      .upload(filename, req.file.buffer, {
+        contentType: req.file.mimetype,
+        upsert: false,
+      });
+
+    if (error) throw error;
+
+    const { data: { publicUrl } } = supabase.storage
+      .from(BUCKET_NAME)
+      .getPublicUrl(filename);
+
+    res.json({ url: publicUrl, filename });
+  } catch (error) {
+    res.status(500).json({ error: error.message });
   }
-});
-
-const upload = multer({ storage, limits: { fileSize: 10 * 1024 * 1024 } });
-
-router.post('/', upload.single('image'), (req, res) => {
-  if (!req.file) return res.status(400).json({ error: 'No image file provided' });
-  res.json({ url: req.file.path, filename: req.file.filename });
 });
 
 module.exports = router;

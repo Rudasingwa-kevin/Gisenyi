@@ -1,27 +1,16 @@
 services:
-  db:
-    image: postgres:16-alpine
-    restart: unless-stopped
-    volumes:
-      - pgdata:/var/lib/postgresql/data
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: ${DB_PASSWORD:-postgres}
-      POSTGRES_DB: gisenyi
-
   backend:
     build: ./backend
     restart: unless-stopped
-    depends_on:
-      - db
     environment:
       PORT: 3000
-      DATABASE_URL: postgresql://postgres:${DB_PASSWORD:-postgres}@db:5432/gisenyi?schema=public
-      DIRECT_URL: postgresql://postgres:${DB_PASSWORD:-postgres}@db:5432/gisenyi?schema=public
+      DATABASE_URL: postgresql://postgres:${DB_PASSWORD}@db.srfrzcdzdclpkcnzitbf.supabase.co:5432/postgres?schema=public
+      DIRECT_URL: postgresql://postgres:${DB_PASSWORD}@db.srfrzcdzdclpkcnzitbf.supabase.co:5432/postgres?schema=public
       JWT_SECRET: ${JWT_SECRET}
-      CLOUDINARY_CLOUD_NAME: ${CLOUDINARY_CLOUD_NAME}
-      CLOUDINARY_API_KEY: ${CLOUDINARY_API_KEY}
-      CLOUDINARY_API_SECRET: ${CLOUDINARY_API_SECRET}
+      SUPABASE_URL: ${SUPABASE_URL}
+      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
+      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY}
+      SUPABASE_STORAGE_BUCKET: gisenyi
       NODE_ENV: production
 
   frontend:
@@ -31,6 +20,3 @@ services:
       - "80:80"
     depends_on:
       - backend
-
-volumes:
-  pgdata:
