@@ -1,7 +1,20 @@
 const { z } = require('zod');
+const xss = require('xss');
+
+function sanitizeValue(val) {
+  if (typeof val === 'string') return xss(val, { whiteList: {}, stripIgnoreTag: true });
+  if (Array.isArray(val)) return val.map(sanitizeValue);
+  if (val && typeof val === 'object') {
+    const sanitized = {};
+    for (const [k, v] of Object.entries(val)) sanitized[k] = sanitizeValue(v);
+    return sanitized;
+  }
+  return val;
+}
 
 function validate(schema) {
   return (req, res, next) => {
+    req.body = sanitizeValue(req.body);
     const result = schema.safeParse(req.body);
     if (!result.success) {
       return res.status(400).json({
@@ -12,6 +25,31 @@ function validate(schema) {
     req.body = result.data;
     next();
   };
+}
+
+function validateQuery(schema) {
+  return (req, res, next) => {
+    req.query = sanitizeValue(req.query);
+    const result = schema.safeParse(req.query);
+    if (!result.success) {
+      return res.status(400).json({
+        error: 'Invalid query parameters',
+        details: result.error.flatten().fieldErrors,
+      });
+    }
+    req.query = result.data;
+    next();
+  };
+}
+
+const uuidRegex = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
+function validateId(req, res, next) {
+  const { id } = req.params;
+  if (!id || !uuidRegex.test(id)) {
+    return res.status(400).json({ error: 'Invalid ID format' });
+  }
+  next();
 }
 
 const schemas = {
@@ -73,6 +111,21 @@ const schemas = {
     message: z.string().min(1, 'Message is required'),
     page: z.string().optional().default(''),
   }),
+
+  track: z.object({
+    sessionId: z.string().min(1, 'sessionId is required'),
+    page: z.string().min(1, 'page is required'),
+    referrer: z.string().optional().default(''),
+  }),
+
+  placeQuery: z.object({
+    category: z.string().optional(),
+  }),
+
+  calendarQuery: z.object({
+    month: z.coerce.number().int().min(1).max(12).optional(),
+    year: z.coerce.number().int().min(1900).max(2100).optional(),
+  }),
 };
 
-module.exports = { validate, schemas };
+module.exports = { validate, validateQuery, validateId, schemas };
