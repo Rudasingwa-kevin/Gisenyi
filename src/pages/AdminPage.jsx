@@ -3,10 +3,11 @@ import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink, Image as ImageIcon, Video, MessageSquare, Star, Activity, Server, Database, RefreshCw } from 'lucide-react';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
+import { formatDate, toDateString } from '../utils/helpers';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
 
 export default function AdminPage() {
-  const { token, username, isAdmin, logout } = useAuth();
+  const { username, isAdmin, logout } = useAuth();
   const navigate = useNavigate();
   const [tab, setTab] = useState('dashboard');
   const [places, setPlaces] = useState([]);
@@ -41,44 +42,44 @@ export default function AdminPage() {
   }, [isAdmin, navigate]);
 
   const loadPlaces = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/places?limit=500`, token);
+    const res = await fetchWithAuth(`${API}/places?limit=500`);
     if (res.ok) { const d = await res.json(); setPlaces(d.data || d); }
-  }, [token]);
+  }, []);
 
   const loadCategories = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/categories?limit=500`, token);
+    const res = await fetchWithAuth(`${API}/categories?limit=500`);
     if (res.ok) { const d = await res.json(); setCategories(d.data || d); }
-  }, [token]);
+  }, []);
 
   const loadEvents = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/events?limit=500`, token);
+    const res = await fetchWithAuth(`${API}/events?limit=500`);
     if (res.ok) { const d = await res.json(); setEvents(d.data || d); }
-  }, [token]);
+  }, []);
 
   const loadCalendarItems = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/calendar?limit=500`, token);
+    const res = await fetchWithAuth(`${API}/calendar?limit=500`);
     if (res.ok) { const d = await res.json(); setCalendarItems(d.data || d); }
-  }, [token]);
+  }, []);
 
   const loadGalleryItems = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/gallery?limit=500`, token);
+    const res = await fetchWithAuth(`${API}/gallery?limit=500`);
     if (res.ok) { const d = await res.json(); setGalleryItems(d.data || d); }
-  }, [token]);
+  }, []);
 
   const loadFeedback = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/feedback?limit=500`, token);
+    const res = await fetchWithAuth(`${API}/feedback?limit=500`);
     if (res.ok) { const d = await res.json(); setFeedbackItems(d.data || d); }
-  }, [token]);
+  }, []);
 
   const loadVisitorStats = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/visitor-stats`, token);
+    const res = await fetchWithAuth(`${API}/visitor-stats`);
     if (res.ok) { const d = await res.json(); setVisitorStats(d); }
-  }, [token]);
+  }, []);
 
   const loadSystemInfo = useCallback(async () => {
-    const res = await fetchWithAuth(`${API}/system`, token);
+    const res = await fetchWithAuth(`${API}/system`);
     if (res.ok) { const d = await res.json(); setSystemInfo(d); }
-  }, [token]);
+  }, []);
 
   useEffect(() => {
     if (!isAdmin) return;
@@ -90,7 +91,7 @@ export default function AdminPage() {
 
   const handleDelete = async (type, id) => {
     if (!confirm('Are you sure you want to delete this item?')) return;
-    const res = await fetchWithAuth(`${API}/${type}/${id}`, token, { method: 'DELETE' });
+    const res = await fetchWithAuth(`${API}/${type}/${id}`, { method: 'DELETE' });
     if (res.ok) {
       if (type === 'places') setPlaces(p => p.filter(x => x.id !== id));
       else if (type === 'events') setEvents(e => e.filter(x => x.id !== id));
@@ -128,7 +129,7 @@ export default function AdminPage() {
       const q = listSearch.toLowerCase();
       return e.title?.toLowerCase().includes(q) || e.location?.toLowerCase().includes(q) || e.category?.toLowerCase().includes(q);
     }).sort((a, b) => {
-      if (listSort === 'date') return (a.date || '').localeCompare(b.date || '');
+      if (listSort === 'date') return new Date(a.date) - new Date(b.date);
       return (a.title || '').localeCompare(b.title || '');
     });
     const { items, page, totalPages } = paginated(f);
@@ -157,7 +158,7 @@ export default function AdminPage() {
       return ci.title?.toLowerCase().includes(q) || ci.type?.toLowerCase().includes(q) || ci.description?.toLowerCase().includes(q);
     }).sort((a, b) => {
       if (listSort === 'title') return (a.title || '').localeCompare(b.title || '');
-      return (a.date || '').localeCompare(b.date || '');
+      return new Date(a.date) - new Date(b.date);
     });
     const { items, page, totalPages } = paginated(f);
     return { items, page, totalPages, total: f.length };
@@ -385,7 +386,7 @@ export default function AdminPage() {
                             {e.image && <img src={e.image} alt="" className="w-7 md:w-8 h-7 md:h-8 rounded-lg object-cover bg-navy-800" />}
                             <div className="min-w-0">
                               <p className="text-white text-xs md:text-sm font-inter truncate">{e.title}</p>
-                              <p className="text-white/30 text-[9px] md:text-[10px] font-inter flex items-center gap-1"><Clock className="w-2.5 md:w-3 h-2.5 md:h-3" /> {e.date}</p>
+                              <p className="text-white/30 text-[9px] md:text-[10px] font-inter flex items-center gap-1"><Clock className="w-2.5 md:w-3 h-2.5 md:h-3" /> {formatDate(e.date)}</p>
                             </div>
                           </div>
                         ))}
@@ -475,7 +476,6 @@ export default function AdminPage() {
               <PlaceForm
                 place={editing}
                 categories={categories}
-                token={token}
                 onSave={(p) => {
                   if (editing) setPlaces(pl => pl.map(x => x.id === p.id ? p : x));
                   else setPlaces(pl => [...pl, p]);
@@ -539,7 +539,6 @@ export default function AdminPage() {
             {showForm && (
               <CategoryForm
                 category={editing}
-                token={token}
                 onSave={(c) => {
                   if (editing) setCategories(cat => cat.map(x => x.id === c.id ? c : x));
                   else setCategories(cat => [...cat, c]);
@@ -602,7 +601,6 @@ export default function AdminPage() {
             {showForm && (
               <EventForm
                 event={editing}
-                token={token}
                 onSave={(e) => {
                   if (editing) setEvents(ev => ev.map(x => x.id === e.id ? e : x));
                   else setEvents(ev => [...ev, e]);
@@ -626,7 +624,7 @@ export default function AdminPage() {
                       )}
                       <div>
                         <h3 className="text-white font-inter font-semibold">{event.title}</h3>
-                        <p className="text-white/30 text-sm font-inter">{event.date} &middot; {event.location} &middot; <span className="text-gold-500/60">{event.category}</span></p>
+                        <p className="text-white/30 text-sm font-inter">{formatDate(event.date)} &middot; {event.location} &middot; <span className="text-gold-500/60">{event.category}</span></p>
                         {event.ticketLink && (
                           <p className="text-white/20 text-xs font-inter mt-0.5">Ticket: {event.ticketLink}</p>
                         )}
@@ -674,7 +672,6 @@ export default function AdminPage() {
             {showForm && (
               <CalendarItemForm
                 item={editing}
-                token={token}
                 onSave={(ci) => {
                   if (editing) setCalendarItems(items => items.map(x => x.id === ci.id ? ci : x));
                   else setCalendarItems(items => [...items, ci]);
@@ -699,7 +696,7 @@ export default function AdminPage() {
                       <div>
                         <h3 className="text-white font-inter font-semibold">{item.title}</h3>
                         <p className="text-white/30 text-sm font-inter">
-                          {item.date}{item.time ? ` ${item.time}` : ''} &middot; <span className="capitalize" style={{ color: item.color }}>{item.type}</span>
+                          {formatDate(item.date)}{item.time ? ` ${item.time}` : ''} &middot; <span className="capitalize" style={{ color: item.color }}>{item.type}</span>
                         </p>
                         {item.description && <p className="text-white/20 text-xs font-inter mt-0.5 line-clamp-1">{item.description}</p>}
                       </div>
@@ -895,7 +892,6 @@ export default function AdminPage() {
             {showForm && (
               <GalleryItemForm
                 item={editing}
-                token={token}
                 onSave={(g) => {
                   if (editing) setGalleryItems(items => items.map(x => x.id === g.id ? g : x));
                   else setGalleryItems(items => [g, ...items]);
@@ -996,7 +992,7 @@ function Pagination({ page, totalPages, onPage }) {
   );
 }
 
-function ImageUpload({ value, onChange, label, preview, token: t }) {
+function ImageUpload({ value, onChange, label, preview }) {
   const [uploading, setUploading] = useState(false);
 
   const handleFile = async (e) => {
@@ -1004,7 +1000,7 @@ function ImageUpload({ value, onChange, label, preview, token: t }) {
     if (!file) return;
     setUploading(true);
     try {
-      const { url } = await uploadFile(file, t);
+      const { url } = await uploadFile(file);
       onChange(url);
     } catch (err) {
       alert('Upload failed: ' + err.message);
@@ -1031,7 +1027,7 @@ function ImageUpload({ value, onChange, label, preview, token: t }) {
   );
 }
 
-function GalleryUpload({ token, onUrl }) {
+function GalleryUpload({ onUrl }) {
   const [uploading, setUploading] = useState(false);
 
   const handleFile = async (e) => {
@@ -1039,7 +1035,7 @@ function GalleryUpload({ token, onUrl }) {
     if (!file) return;
     setUploading(true);
     try {
-      const { url } = await uploadFile(file, token);
+      const { url } = await uploadFile(file);
       onUrl(url);
     } catch (err) {
       alert('Upload failed: ' + err.message);
@@ -1055,11 +1051,11 @@ function GalleryUpload({ token, onUrl }) {
   );
 }
 
-function EventForm({ event, token, onSave, onCancel }) {
+function EventForm({ event, onSave, onCancel }) {
   const [form, setForm] = useState({
     title: event?.title || '',
     description: event?.description || '',
-    date: event?.date || '',
+    date: event?.date ? toDateString(event.date) : '',
     time: event?.time || '',
     location: event?.location || '',
     category: event?.category || 'concert',
@@ -1074,7 +1070,7 @@ function EventForm({ event, token, onSave, onCancel }) {
     setSaving(true);
     const url = event ? `${API}/events/${event.id}` : `${API}/events`;
     const method = event ? 'PUT' : 'POST';
-    const res = await fetchWithAuth(url, token, { method, body: JSON.stringify(form) });
+    const res = await fetchWithAuth(url, { method, body: JSON.stringify(form) });
     if (res.ok) onSave(await res.json());
     setSaving(false);
   };
@@ -1100,8 +1096,7 @@ function EventForm({ event, token, onSave, onCancel }) {
         </div>
         <div>
           <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Date</label>
-          <input type="text" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
-            placeholder="e.g. June 20, 2026"
+          <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
             className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
         </div>
         <div>
@@ -1126,7 +1121,7 @@ function EventForm({ event, token, onSave, onCancel }) {
           <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
             className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
         </div>
-        <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Flyer / Banner Image" preview token={token} />
+        <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Flyer / Banner Image" preview />
         <div>
           <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Ticket Link (URL)</label>
           <input type="url" value={form.ticketLink} onChange={e => setForm(f => ({ ...f, ticketLink: e.target.value }))}
@@ -1148,7 +1143,7 @@ function EventForm({ event, token, onSave, onCancel }) {
   );
 }
 
-function PlaceForm({ place, categories, token, onSave, onCancel }) {
+function PlaceForm({ place, categories, onSave, onCancel }) {
   const [form, setForm] = useState({
     name: place?.name || '',
     lat: place?.lat || '',
@@ -1175,7 +1170,7 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
     };
     const url = place ? `${API}/places/${place.id}` : `${API}/places`;
     const method = place ? 'PUT' : 'POST';
-    const res = await fetchWithAuth(url, token, { method, body: JSON.stringify(body) });
+    const res = await fetchWithAuth(url, { method, body: JSON.stringify(body) });
     if (res.ok) onSave(await res.json());
     setSaving(false);
   };
@@ -1216,7 +1211,7 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
           <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
             className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
         </div>
-        <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Hero Image" preview token={token} />
+        <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Hero Image" preview />
         <div>
           <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Rating</label>
           <input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={e => setForm(f => ({ ...f, rating: e.target.value }))}
@@ -1239,7 +1234,7 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
                   placeholder="https://example.com/photo.jpg"
                   className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50"
                 />
-                <GalleryUpload token={token} onUrl={url => updateGalleryUrl(i, url)} />
+                <GalleryUpload onUrl={url => updateGalleryUrl(i, url)} />
               </div>
             );
           })}
@@ -1260,11 +1255,11 @@ function PlaceForm({ place, categories, token, onSave, onCancel }) {
   );
 }
 
-function CalendarItemForm({ item, token, onSave, onCancel }) {
+function CalendarItemForm({ item, onSave, onCancel }) {
   const [form, setForm] = useState({
     title: item?.title || '',
     description: item?.description || '',
-    date: item?.date || '',
+    date: item?.date ? toDateString(item.date) : '',
     time: item?.time || '',
     type: item?.type || 'note',
     color: item?.color || '#4A90D9',
@@ -1277,7 +1272,7 @@ function CalendarItemForm({ item, token, onSave, onCancel }) {
     setSaving(true);
     const url = item ? `${API}/calendar/${item.id}` : `${API}/calendar`;
     const method = item ? 'PUT' : 'POST';
-    const res = await fetchWithAuth(url, token, { method, body: JSON.stringify(form) });
+    const res = await fetchWithAuth(url, { method, body: JSON.stringify(form) });
     if (res.ok) onSave(await res.json());
     setSaving(false);
   };
@@ -1340,7 +1335,7 @@ function CalendarItemForm({ item, token, onSave, onCancel }) {
   );
 }
 
-function GalleryItemForm({ item, token, onSave, onCancel }) {
+function GalleryItemForm({ item, onSave, onCancel }) {
   const [form, setForm] = useState({
     url: item?.url || '',
     type: item?.type || 'image',
@@ -1354,7 +1349,7 @@ function GalleryItemForm({ item, token, onSave, onCancel }) {
     if (!file) return;
     setUploading(true);
     try {
-      const { url } = await uploadFile(file, token);
+      const { url } = await uploadFile(file);
       setForm(f => ({ ...f, url }));
     } catch (err) {
       alert('Upload failed: ' + err.message);
@@ -1367,7 +1362,7 @@ function GalleryItemForm({ item, token, onSave, onCancel }) {
     setSaving(true);
     const url = item ? `${API}/gallery/${item.id}` : `${API}/gallery`;
     const method = item ? 'PUT' : 'POST';
-    const res = await fetchWithAuth(url, token, { method, body: JSON.stringify(form) });
+    const res = await fetchWithAuth(url, { method, body: JSON.stringify(form) });
     if (res.ok) onSave(await res.json());
     setSaving(false);
   };
@@ -1421,7 +1416,7 @@ function GalleryItemForm({ item, token, onSave, onCancel }) {
   );
 }
 
-function CategoryForm({ category, token, onSave, onCancel }) {
+function CategoryForm({ category, onSave, onCancel }) {
   const [form, setForm] = useState({
     id: category?.id || '',
     label: category?.label || '',
@@ -1435,7 +1430,7 @@ function CategoryForm({ category, token, onSave, onCancel }) {
     setSaving(true);
     const url = category ? `${API}/categories/${category.id}` : `${API}/categories`;
     const method = category ? 'PUT' : 'POST';
-    const res = await fetchWithAuth(url, token, { method, body: JSON.stringify(form) });
+    const res = await fetchWithAuth(url, { method, body: JSON.stringify(form) });
     if (res.ok) onSave(await res.json());
     setSaving(false);
   };

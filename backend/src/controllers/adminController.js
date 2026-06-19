@@ -137,8 +137,9 @@ exports.getCalendarItems = async (req, res, next) => {
     const { skip, take, page, limit } = paginate(pg, lm);
     const where = {};
     if (month && year) {
-      const m = String(month).padStart(2, '0');
-      where.date = { startsWith: `${year}-${m}` };
+      const start = new Date(year, month - 1, 1);
+      const end = new Date(year, month, 1);
+      where.date = { gte: start, lt: end };
     }
     const [data, total] = await Promise.all([
       prisma.calendarItem.findMany({ where, skip, take, orderBy: [{ date: 'asc' }, { time: 'asc' }] }),

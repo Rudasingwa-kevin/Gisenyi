@@ -3,6 +3,7 @@ import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calendar, Clock, MapPin, Ticket, Mic, Film, Music, Palette, Theater, Sparkles, ExternalLink, X } from 'lucide-react';
 import { API_BASE } from '../utils/api';
+import { formatDate } from '../utils/helpers';
 import ShareButton from './ShareButton';
 
 const CATEGORIES = [
@@ -210,7 +211,7 @@ const Events = () => {
                       <div className="space-y-2 mb-6">
                         <div className="flex items-center gap-2.5 text-white/40 group-hover:text-white/60 transition-colors">
                           <Calendar className="w-3.5 h-3.5 text-gold-500/60 shrink-0" />
-                          <span className="font-inter text-xs">{event.date}</span>
+                          <span className="font-inter text-xs">{formatDate(event.date)}</span>
                           {event.time && (
                             <>
                               <span className="text-white/20">•</span>

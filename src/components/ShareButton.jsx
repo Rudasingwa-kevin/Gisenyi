@@ -2,6 +2,7 @@ import { useState, useRef, useCallback } from 'react';
 import { Share2, Download, Copy, Check, X, ExternalLink } from 'lucide-react';
 import { toPng } from 'html-to-image';
 import { motion, AnimatePresence } from 'framer-motion';
+import { formatDate } from '../utils/helpers';
 
 const CAT_IMAGES = {
   hotels: '1542314831-068cd1dbfeeb',
@@ -205,7 +206,7 @@ export default function ShareButton({ item, type = 'place', className = '' }) {
                       <>
                         <p className="flex items-center gap-2.5 text-white/50 font-inter text-sm">
                           <span className="shrink-0">📅</span>
-                          <span>{item.date}</span>
+                          <span>{formatDate(item.date)}</span>
                         </p>
                         {item.time && (
                           <p className="flex items-center gap-2.5 text-white/50 font-inter text-sm">

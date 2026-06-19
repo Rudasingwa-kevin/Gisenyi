@@ -5,14 +5,14 @@ import { ArrowLeft } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
 
-function ImageUpload({ value, onChange, label, preview, token }) {
+function ImageUpload({ value, onChange, label, preview }) {
   const [uploading, setUploading] = useState(false);
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
     try {
-      const { url } = await uploadFile(file, token);
+      const { url } = await uploadFile(file);
       onChange(url);
     } catch (err) {
       alert('Upload failed: ' + err.message);
@@ -38,14 +38,14 @@ function ImageUpload({ value, onChange, label, preview, token }) {
   );
 }
 
-function GalleryUpload({ token, onUrl }) {
+function GalleryUpload({ onUrl }) {
   const [uploading, setUploading] = useState(false);
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
     try {
-      const { url } = await uploadFile(file, token);
+      const { url } = await uploadFile(file);
       onUrl(url);
     } catch (err) {
       alert('Upload failed: ' + err.message);
@@ -61,7 +61,7 @@ function GalleryUpload({ token, onUrl }) {
 }
 
 export default function AddPlacePage() {
-  const { token, isAdmin } = useAuth();
+  const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const [categories, setCategories] = useState([]);
   const [form, setForm] = useState({
@@ -92,7 +92,7 @@ export default function AddPlacePage() {
       gallery: JSON.parse(form.gallery || '[]'),
       tags: JSON.parse(form.tags || '[]')
     };
-    const res = await fetchWithAuth(`${API}/places`, token, { method: 'POST', body: JSON.stringify(body) });
+    const res = await fetchWithAuth(`${API}/places`, { method: 'POST', body: JSON.stringify(body) });
     if (res.ok) navigate('/admin');
     setSaving(false);
   };
@@ -139,7 +139,7 @@ export default function AddPlacePage() {
               <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
             </div>
-            <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Hero Image" preview token={token} />
+            <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Hero Image" preview />
             <div>
               <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Rating</label>
               <input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={e => setForm(f => ({ ...f, rating: e.target.value }))}
@@ -157,7 +157,7 @@ export default function AddPlacePage() {
                     <input type="url" value={val} onChange={e => updateGalleryUrl(i, e.target.value)}
                       placeholder="https://example.com/photo.jpg"
                       className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-                    <GalleryUpload token={token} onUrl={url => updateGalleryUrl(i, url)} />
+                    <GalleryUpload onUrl={url => updateGalleryUrl(i, url)} />
                   </div>
                 );
               })}

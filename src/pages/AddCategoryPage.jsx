@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { API, fetchWithAuth } from '../utils/admin';
 
 export default function AddCategoryPage() {
-  const { token, isAdmin } = useAuth();
+  const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({ id: '', label: '', icon: '', color: '#C9A84C' });
   const [saving, setSaving] = useState(false);
@@ -17,7 +17,7 @@ export default function AddCategoryPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const res = await fetchWithAuth(`${API}/categories`, token, { method: 'POST', body: JSON.stringify(form) });
+    const res = await fetchWithAuth(`${API}/categories`, { method: 'POST', body: JSON.stringify(form) });
     if (res.ok) navigate('/admin');
     setSaving(false);
   };

@@ -5,8 +5,9 @@ exports.getAll = async (req, res, next) => {
     const { month, year } = req.query;
     const where = {};
     if (month && year) {
-      const m = String(month).padStart(2, '0');
-      where.date = { startsWith: `${year}-${m}` };
+      const start = new Date(year, month - 1, 1);
+      const end = new Date(year, month, 1);
+      where.date = { gte: start, lt: end };
     }
     const items = await prisma.calendarItem.findMany({ where, orderBy: [{ date: 'asc' }, { time: 'asc' }] });
     res.json(items);

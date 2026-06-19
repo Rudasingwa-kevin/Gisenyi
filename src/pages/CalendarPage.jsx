@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin, Circle } from 'lucide-react';
 import { API_BASE } from '../utils/api';
+import { formatDate } from '../utils/helpers';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -67,11 +68,13 @@ const CalendarPage = () => {
 
   const getItemsForDay = (day) => {
     if (!day) return [];
-    const dateStr = `${currentYear}-${String(currentMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
-    const calItems = items.filter(i => i.date === dateStr);
+    const calItems = items.filter(i => {
+      const d = new Date(i.date);
+      return d.getFullYear() === currentYear && d.getMonth() === currentMonth && d.getDate() === day;
+    });
     const dayEvents = events.filter(e => {
       const d = new Date(e.date);
-      return !isNaN(d) && d.getFullYear() === currentYear && d.getMonth() === currentMonth && d.getDate() === day;
+      return d.getFullYear() === currentYear && d.getMonth() === currentMonth && d.getDate() === day;
     }).map(e => ({ ...e, type: 'event', color: TYPE_COLORS.event, _isRealEvent: true }));
     return [...calItems, ...dayEvents];
   };

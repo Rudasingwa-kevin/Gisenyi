@@ -4,41 +4,48 @@ import { API_BASE } from '../utils/api';
 const AuthContext = createContext(null);
 
 export function AuthProvider({ children }) {
-  const [token, setToken] = useState(localStorage.getItem('admin_token'));
-  const [username, setUsername] = useState(localStorage.getItem('admin_username'));
+  const [username, setUsername] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (token) localStorage.setItem('admin_token', token);
-    else localStorage.removeItem('admin_token');
-  }, [token]);
-
-  useEffect(() => {
-    if (username) localStorage.setItem('admin_username', username);
-    else localStorage.removeItem('admin_username');
-  }, [username]);
+    // Check if already logged in via cookie
+    fetch(`${API_BASE}/api/auth/me`, { credentials: 'include' })
+      .then(res => {
+        if (res.ok) return res.json();
+        throw new Error('Not authenticated');
+      })
+      .then(data => {
+        setUsername(data.username);
+        setLoading(false);
+      })
+      .catch(() => setLoading(false));
+  }, []);
 
   const login = async (user, pass) => {
     const res = await fetch(`${API_BASE}/api/auth/login`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
+      credentials: 'include',
       body: JSON.stringify({ username: user, password: pass })
     });
     if (!res.ok) throw new Error('Invalid credentials');
     const data = await res.json();
-    setToken(data.token);
     setUsername(data.username);
     return data;
   };
 
-  const logout = () => {
-    setToken(null);
+  const logout = async () => {
+    await fetch(`${API_BASE}/api/auth/logout`, {
+      method: 'POST',
+      credentials: 'include',
+    });
     setUsername(null);
   };
 
-  const isAdmin = !!token;
+  const isAdmin = !!username;
 
   return (
-    <AuthContext.Provider value={{ token, username, isAdmin, login, logout }}>
+    <AuthContext.Provider value={{ username, isAdmin, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );

@@ -6,12 +6,24 @@ if (!process.env.JWT_SECRET) {
 const JWT_SECRET = process.env.JWT_SECRET;
 
 exports.authMiddleware = (req, res, next) => {
+  let token = null;
+
+  // Try cookie first
+  if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
+  }
+
+  // Fallback to Authorization header
   const header = req.headers.authorization;
-  if (!header || !header.startsWith('Bearer ')) {
+  if (!token && header && header.startsWith('Bearer ')) {
+    token = header.split(' ')[1];
+  }
+
+  if (!token) {
     return res.status(401).json({ error: 'Unauthorized' });
   }
+
   try {
-    const token = header.split(' ')[1];
     req.user = jwt.verify(token, JWT_SECRET);
     next();
   } catch {

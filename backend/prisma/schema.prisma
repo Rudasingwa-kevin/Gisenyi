@@ -35,7 +35,7 @@ model Category {
 model CalendarItem {
   id          String   @id @default(uuid())
   title       String
-  date        String
+  date        DateTime
   time        String?
   type        String   @default("note")
   description String?
@@ -51,7 +51,7 @@ model Event {
   id          String   @id @default(uuid())
   title       String
   description String?
-  date        String
+  date        DateTime
   time        String?
   location    String
   category    String

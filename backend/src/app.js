@@ -3,6 +3,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const rateLimit = require('express-rate-limit');
 const morgan = require('morgan');
+const cookieParser = require('cookie-parser');
 const dotenv = require('dotenv');
 const path = require('path');
 
@@ -20,6 +21,7 @@ app.use(cors({
     if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
     cb(new Error('Not allowed by CORS'));
   },
+  credentials: true,
 }));
 
 // Rate limiting
@@ -41,6 +43,7 @@ app.use('/api/auth', authLimiter);
 
 // Body parsing
 app.use(express.json({ limit: '1mb' }));
+app.use(cookieParser());
 app.use(morgan('dev'));
 
 // Serve uploaded images

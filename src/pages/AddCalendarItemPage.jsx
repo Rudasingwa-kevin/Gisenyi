@@ -5,7 +5,7 @@ import { ArrowLeft } from 'lucide-react';
 import { API, fetchWithAuth } from '../utils/admin';
 
 export default function AddCalendarItemPage() {
-  const { token, isAdmin } = useAuth();
+  const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     title: '', description: '', date: '', time: '', type: 'note', color: '#4A90D9', location: ''
@@ -19,7 +19,7 @@ export default function AddCalendarItemPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const res = await fetchWithAuth(`${API}/calendar`, token, { method: 'POST', body: JSON.stringify(form) });
+    const res = await fetchWithAuth(`${API}/calendar`, { method: 'POST', body: JSON.stringify(form) });
     if (res.ok) navigate('/admin');
     setSaving(false);
   };

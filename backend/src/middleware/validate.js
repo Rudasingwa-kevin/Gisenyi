@@ -74,21 +74,24 @@ const schemas = {
 
   event: z.object({
     title: z.string().min(1, 'Title is required'),
-    date: z.string().min(1, 'Date is required'),
+    date: z.coerce.date(),
     time: z.string().optional().default(''),
     location: z.string().optional().default(''),
     description: z.string().optional().default(''),
     category: z.string().optional().default(''),
+    price: z.string().optional().default(''),
     image: z.string().optional().default(''),
     ticketLink: z.string().optional().default(''),
   }),
 
   calendarItem: z.object({
     title: z.string().min(1, 'Title is required'),
-    date: z.string().min(1, 'Date is required'),
-    category: z.string().optional().default(''),
-    description: z.string().optional().default(''),
+    date: z.coerce.date(),
     time: z.string().optional().default(''),
+    type: z.string().optional().default('note'),
+    color: z.string().optional().default(''),
+    location: z.string().optional().default(''),
+    description: z.string().optional().default(''),
   }),
 
   category: z.object({

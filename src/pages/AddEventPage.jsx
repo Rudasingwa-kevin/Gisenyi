@@ -4,14 +4,14 @@ import { useAuth } from '../context/AuthContext';
 import { ArrowLeft } from 'lucide-react';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
 
-function ImageUpload({ value, onChange, label, preview, token }) {
+function ImageUpload({ value, onChange, label, preview }) {
   const [uploading, setUploading] = useState(false);
   const handleFile = async (e) => {
     const file = e.target.files?.[0];
     if (!file) return;
     setUploading(true);
     try {
-      const { url } = await uploadFile(file, token);
+      const { url } = await uploadFile(file);
       onChange(url);
     } catch (err) {
       alert('Upload failed: ' + err.message);
@@ -38,7 +38,7 @@ function ImageUpload({ value, onChange, label, preview, token }) {
 }
 
 export default function AddEventPage() {
-  const { token, isAdmin } = useAuth();
+  const { isAdmin } = useAuth();
   const navigate = useNavigate();
   const [form, setForm] = useState({
     title: '', description: '', date: '', time: '', location: '', category: 'concert', price: '', image: '', ticketLink: ''
@@ -52,7 +52,7 @@ export default function AddEventPage() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSaving(true);
-    const res = await fetchWithAuth(`${API}/events`, token, { method: 'POST', body: JSON.stringify(form) });
+    const res = await fetchWithAuth(`${API}/events`, { method: 'POST', body: JSON.stringify(form) });
     if (res.ok) navigate('/admin');
     setSaving(false);
   };
@@ -84,8 +84,7 @@ export default function AddEventPage() {
             </div>
             <div>
               <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Date</label>
-              <input type="text" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
-                placeholder="e.g. June 20, 2026"
+              <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
             </div>
             <div>
@@ -110,7 +109,7 @@ export default function AddEventPage() {
               <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
                 className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
             </div>
-            <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Flyer / Banner Image" preview token={token} />
+            <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Flyer / Banner Image" preview />
             <div>
               <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Ticket Link (URL)</label>
               <input type="url" value={form.ticketLink} onChange={e => setForm(f => ({ ...f, ticketLink: e.target.value }))}

@@ -6,9 +6,9 @@ export const UPLOAD_API = `${API_BASE}/api/upload`;
 export function fetchWithAuth(url, token, opts = {}) {
   return fetch(url, {
     ...opts,
+    credentials: 'include',
     headers: {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer ${token}`,
       ...opts.headers
     }
   });
@@ -16,10 +16,10 @@ export function fetchWithAuth(url, token, opts = {}) {
 
 export async function uploadFile(file, token) {
   const fd = new FormData();
-  fd.append('image', file);
+  fd.append('file', file);
   const res = await fetch(UPLOAD_API, {
     method: 'POST',
-    headers: { 'Authorization': `Bearer ${token}` },
+    credentials: 'include',
     body: fd
   });
   if (!res.ok) throw new Error('Upload failed');
