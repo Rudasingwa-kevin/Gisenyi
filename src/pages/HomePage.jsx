@@ -7,27 +7,27 @@ import { Link } from 'react-router-dom';
 import { FALLBACK_DATA } from '../constants/data';
 
 const catImages = {
-  hotels: '1542314831-068cd1dbfeeb',
-  dining: '1566073771259-6a8506099945',
-  nightlife: '1470337458703-46a199543c0b',
-  beach: '1507525428697-bcebc0197c25',
-  wellness: '1544367567-0f2fcb009e0b',
-  activities: '1506905925346-21bda4d32df4',
-  shopping: '1441986300917-64674bd600d8',
-  practical: '1497366811353-507074f9a6d2',
-  cafe: '1501339755260-7a88e06da40e',
-  bar: '1514362545857-3bc16c4a7f1b',
-  attraction: '1469854523086-cc02fe5d8800',
-  culture: '1499786388474-37f59913e7d9'
+  hotels: '/place1.jpeg',
+  dining: '/place2.jpeg',
+  nightlife: '/place3.jpeg',
+  beach: '/place4.jpeg',
+  wellness: '/place5.jpeg',
+  activities: '/place6.jpeg',
+  shopping: '/place1.jpeg',
+  practical: '/place2.jpeg',
+  cafe: '/place3.jpeg',
+  bar: '/place4.jpeg',
+  attraction: '/place5.jpeg',
+  culture: '/place6.jpeg'
 };
 
 const galleryPreviews = [
-  '1542314831-068cd1dbfeeb',
-  '1566073771259-6a8506099945',
-  '1507525428697-bcebc0197c25',
-  '1470337458703-46a199543c0b',
-  '1540541338287-41700207eda5',
-  '1544367567-0f2fcb009e0b'
+  '/place1.jpeg',
+  '/place2.jpeg',
+  '/place3.jpeg',
+  '/place4.jpeg',
+  '/place5.jpeg',
+  '/place6.jpeg'
 ];
 
 const experiences = [
@@ -36,42 +36,45 @@ const experiences = [
     desc: 'From volcanic genesis to the modern renaissance, explore the chronicles of Rwanda\'s most resilient city.',
     link: '/history',
     label: 'Discover History',
-    img: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=800'
+    img: '/place1.jpeg'
   },
   {
     title: 'Curated Destinations',
     desc: 'Experience the pinnacle of African lakeside luxury. From boutique resorts to world-class dining.',
     link: '/stays',
     label: 'View Stays',
-    img: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=800'
+    img: '/place2.jpeg'
   },
   {
     title: 'Interactive Exploration',
     desc: 'Navigate the shoreline with real-time data powered by OpenStreetMap.',
     link: '/map',
     label: 'Open Map',
-    img: 'https://images.unsplash.com/photo-1540541338287-41700207eda5?auto=format&fit=crop&q=80&w=800'
+    img: '/place3.jpeg'
   }
 ];
 
-const featuredPlaces = [
-  { id: 'inzulodge', name: 'INZU Lodge', catKey: 'hotels', rating: 4.3, tag: 'Boutique Lakeside' },
-  { id: 'wazi', name: 'Wazi Wine Garage', catKey: 'dining', rating: 4.6, tag: 'Wine & Dine' },
-  { id: 'nyanja', name: 'Nyanja Night Club', catKey: 'nightlife', rating: 4.3, tag: 'Live Music' },
-  { id: 'nyamyumba', name: 'Nyamyumba Hot Springs', catKey: 'activities', rating: 3.8, tag: 'Volcanic Springs' },
-  { id: 'apollo', name: 'Apollo Fitness', catKey: 'wellness', rating: 4.7, tag: 'Wellness Center' },
-  { id: 'sagabay', name: 'Sagabay Restaurant', catKey: 'dining', rating: 4.2, tag: 'Lake View Dining' }
-];
-
-const stagger = {
-  initial: { opacity: 0, y: 30 },
-  whileInView: { opacity: 1, y: 0 },
-  viewport: { once: true, margin: '-60px' },
-  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
-};
-
-const HomePage = ({ stats, loading }) => {
+const HomePage = ({ stats, loading, places = [] }) => {
   const totalPlaces = stats?.total || FALLBACK_DATA.length;
+
+  const featuredPlaces = [
+    { name: 'INZU Lodge', catKey: 'hotels', rating: 4.3, tag: 'Boutique Lakeside' },
+    { name: 'Wazi Wine Garage', catKey: 'dining', rating: 4.6, tag: 'Wine & Dine' },
+    { name: 'Nyanja Night Club', catKey: 'nightlife', rating: 4.3, tag: 'Live Music' },
+    { name: 'Nyamyumba Hot Springs', catKey: 'activities', rating: 3.8, tag: 'Volcanic Springs' },
+    { name: 'Apollo Fitness', catKey: 'wellness', rating: 4.7, tag: 'Wellness Center' },
+    { name: 'Sagabay Restaurant', catKey: 'dining', rating: 4.2, tag: 'Lake View Dining' }
+  ];
+
+  const placeMap = {};
+  places.forEach(p => { placeMap[p.name] = p; });
+
+  const stagger = {
+    initial: { opacity: 0, y: 30 },
+    whileInView: { opacity: 1, y: 0 },
+    viewport: { once: true, margin: '-60px' },
+    transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] }
+  };
 
   return (
     <div>
@@ -95,11 +98,12 @@ const HomePage = ({ stats, loading }) => {
 
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
             {featuredPlaces.map((place, i) => {
-              const photoId = catImages[place.catKey] || catImages.hotels;
-              const imgUrl = `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=600&h=800`;
+              const dbPlace = placeMap[place.name];
+              const galleryFirst = Array.isArray(dbPlace?.gallery) && dbPlace.gallery.length > 0 ? dbPlace.gallery[0] : null;
+              const imgUrl = dbPlace?.image || galleryFirst || catImages[place.catKey] || catImages.hotels;
               return (
                 <motion.div
-                  key={place.id}
+                  key={place.name}
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
@@ -218,7 +222,7 @@ const HomePage = ({ stats, loading }) => {
           </motion.div>
 
           <div className="grid grid-cols-2 md:grid-cols-3 gap-3 md:gap-4">
-            {galleryPreviews.map((photoId, i) => (
+            {galleryPreviews.map((img, i) => (
               <motion.div
                 key={i}
                 initial={{ opacity: 0, y: 20 }}
@@ -230,7 +234,7 @@ const HomePage = ({ stats, loading }) => {
               >
                 <div className={`${i === 0 ? 'aspect-[2/1] md:aspect-auto md:h-full' : 'aspect-[4/3]'}`}>
                   <img
-                    src={`https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=${i === 0 ? '1000' : '600'}`}
+                    src={img}
                     alt={`Gisenyi ${i + 1}`}
                     className="w-full h-full object-cover transition-all duration-700 group-hover:scale-105"
                     loading="lazy"
@@ -247,7 +251,7 @@ const HomePage = ({ stats, loading }) => {
       <section className="py-16 md:py-28 px-4 sm:px-6 relative overflow-hidden">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1540541338287-41700207eda5?auto=format&fit=crop&q=80&w=1920"
+            src="/place4.jpeg"
             alt=""
             className="w-full h-full object-cover"
           />

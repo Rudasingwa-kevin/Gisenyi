@@ -6,18 +6,18 @@ import { useCategories } from '../constants/categories';
 import { GridSkeleton } from './LoadingSkeleton';
 
 const catImages = {
-  hotels: '1542314831-068cd1dbfeeb',
-  dining: '1566073771259-6a8506099945',
-  nightlife: '1470337458703-46a199543c0b',
-  beach: '1507525428697-bcebc0197c25',
-  wellness: '1544367567-0f2fcb009e0b',
-  activities: '1506905925346-21bda4d32df4',
-  shopping: '1441986300917-64674bd600d8',
-  practical: '1497366811353-507074f9a6d2',
-  cafe: '1501339755260-7a88e06da40e',
-  bar: '1514362545857-3bc16c4a7f1b',
-  attraction: '1469854523086-cc02fe5d8800',
-  culture: '1499786388474-37f59913e7d9'
+  hotels: '/place1.jpeg',
+  dining: '/place2.jpeg',
+  nightlife: '/place3.jpeg',
+  beach: '/place4.jpeg',
+  wellness: '/place5.jpeg',
+  activities: '/place6.jpeg',
+  shopping: '/place1.jpeg',
+  practical: '/place2.jpeg',
+  cafe: '/place3.jpeg',
+  bar: '/place4.jpeg',
+  attraction: '/place5.jpeg',
+  culture: '/place6.jpeg'
 };
 
 const PlaceCard = ({ place, index }) => {
@@ -25,8 +25,8 @@ const PlaceCard = ({ place, index }) => {
   const categories = useCategories();
   const CATEGORIES = categories;
   const cat = CATEGORIES[place.catKey] || CATEGORIES.all;
-  const photoId = catImages[place.catKey] || '1542314831-068cd1dbfeeb';
-  const cardImage = place.image || `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=600&h=800`;
+  const galleryFirst = Array.isArray(place?.gallery) && place.gallery.length > 0 ? place.gallery[0] : null;
+  const cardImage = place.image || galleryFirst || catImages[place.catKey] || catImages.hotels;
 
   return (
     <motion.div

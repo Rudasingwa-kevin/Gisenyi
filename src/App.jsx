@@ -107,7 +107,7 @@ function AppLayout() {
           <Routes>
             <Route path="/" element={
               <AnimatedOutlet key="home">
-                <HomePage stats={stats} loading={loading} />
+                <HomePage stats={stats} loading={loading} places={places} />
               </AnimatedOutlet>
             } />
             <Route path="/history" element={

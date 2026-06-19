@@ -5,14 +5,14 @@ import { useCategories } from '../constants/categories';
 import ShareButton from '../components/ShareButton';
 
 const catImages = {
-  hotels: '1542314831-068cd1dbfeeb',
-  dining: '1566073771259-6a8506099945',
-  nightlife: '1470337458703-46a199543c0b',
-  beach: '1507525428697-bcebc0197c25',
-  wellness: '1544367567-0f2fcb009e0b',
-  activities: '1506905925346-21bda4d32df4',
-  shopping: '1441986300917-64674bd600d8',
-  practical: '1497366811353-507074f9a6d2',
+  hotels: '/place1.jpeg',
+  dining: '/place2.jpeg',
+  nightlife: '/place3.jpeg',
+  beach: '/place4.jpeg',
+  wellness: '/place5.jpeg',
+  activities: '/place6.jpeg',
+  shopping: '/place1.jpeg',
+  practical: '/place2.jpeg',
 };
 
 const galleryPhotos = {
@@ -49,13 +49,11 @@ export default function PlaceDetailPage({ places }) {
   }
 
   const cat = CATEGORIES[place.catKey] || CATEGORIES.all;
-  const photoId = catImages[place.catKey] || '1542314831-068cd1dbfeeb';
-  const heroImage = place.image || `https://images.unsplash.com/photo-${photoId}?auto=format&fit=crop&q=80&w=1920&h=1080`;
+  const galleryFirst = Array.isArray(place.gallery) && place.gallery.length > 0 ? place.gallery[0] : null;
+  const heroImage = place.image || galleryFirst || catImages[place.catKey] || catImages.hotels;
   const gallery = (place.gallery && place.gallery.length > 0)
     ? place.gallery.slice(0, 4)
-    : (galleryPhotos[place.catKey] || galleryPhotos.hotels).slice(0, 4).map(id =>
-        `https://images.unsplash.com/photo-${id}?auto=format&fit=crop&q=60&w=400&h=400`
-      );
+    : [catImages[place.catKey] || catImages.hotels, catImages.hotels, catImages.dining, catImages.nightlife].slice(0, 4);
   const tags = place.tags || {};
   const stars = Math.round(tags.rating || 4.5);
 
