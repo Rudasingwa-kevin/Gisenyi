@@ -10,7 +10,7 @@ function paginate(page, limit) {
 exports.getPlaces = async (req, res, next) => {
   try {
     const { skip, take, page, limit } = paginate(req.query.page, req.query.limit);
-    const where = { lon: { gte: 29.245 } };
+    const where = {};
     const [data, total] = await Promise.all([
       prisma.place.findMany({ where, skip, take, orderBy: { name: 'asc' } }),
       prisma.place.count({ where })

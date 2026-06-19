@@ -4,8 +4,8 @@ exports.getAllPlaces = async (req, res, next) => {
     try {
         const { category } = req.query;
         const where = category && category !== 'all'
-            ? { catKey: category, lon: { gte: 29.245 } }
-            : { lon: { gte: 29.245 } };
+            ? { catKey: category }
+            : {};
 
         const places = await prisma.place.findMany({
             where,
