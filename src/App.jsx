@@ -18,6 +18,7 @@ import AddPlacePage from './pages/AddPlacePage';
 import AddCategoryPage from './pages/AddCategoryPage';
 import AddEventPage from './pages/AddEventPage';
 import AddCalendarItemPage from './pages/AddCalendarItemPage';
+import NotFoundPage from './pages/NotFoundPage';
 import LoginModal from './components/LoginModal';
 import ErrorBoundary from './components/ErrorBoundary';
 import { AuthProvider } from './context/AuthContext';
@@ -181,6 +182,11 @@ function AppLayout() {
             <Route path="/stays/:id" element={
               <AnimatedOutlet key="detail">
                 <PlaceDetailPage places={places} />
+              </AnimatedOutlet>
+            } />
+            <Route path="*" element={
+              <AnimatedOutlet key="not-found">
+                <NotFoundPage />
               </AnimatedOutlet>
             } />
           </Routes>

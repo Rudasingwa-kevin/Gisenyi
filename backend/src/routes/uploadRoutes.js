@@ -2,13 +2,14 @@ const express = require('express');
 const router = express.Router();
 const multer = require('multer');
 const { supabase } = require('../utils/supabase');
+const { authMiddleware } = require('../middleware/auth');
 
 const BUCKET_NAME = process.env.SUPABASE_STORAGE_BUCKET || 'gisenyi';
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif', 'video/mp4', 'video/quicktime', 'video/webm'];
 
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
-router.post('/', upload.single('file'), async (req, res) => {
+router.post('/', authMiddleware, upload.single('file'), async (req, res) => {
   try {
     if (!req.file) return res.status(400).json({ error: 'No file provided' });
     if (!ALLOWED_TYPES.includes(req.file.mimetype)) {
