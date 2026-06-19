@@ -1,12 +1,16 @@
 const express = require('express');
 const router = express.Router();
 const multer = require('multer');
-const { supabase } = require('../utils/supabase');
+const cloudinary = require('cloudinary').v2;
 const { authMiddleware } = require('../middleware/auth');
 
-const BUCKET_NAME = process.env.SUPABASE_STORAGE_BUCKET || 'gisenyi';
-const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif', 'video/mp4', 'video/quicktime', 'video/webm'];
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/avif', 'video/mp4', 'video/quicktime', 'video/webm'];
 const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } });
 
 router.post('/', authMiddleware, upload.single('file'), async (req, res) => {
@@ -16,23 +20,22 @@ router.post('/', authMiddleware, upload.single('file'), async (req, res) => {
       return res.status(400).json({ error: `File type ${req.file.mimetype} not allowed` });
     }
 
-    const ext = req.file.originalname.split('.').pop();
-    const filename = `${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+    const isVideo = req.file.mimetype.startsWith('video/');
+    const result = await new Promise((resolve, reject) => {
+      const stream = cloudinary.uploader.upload_stream(
+        {
+          folder: 'gisenyi',
+          resource_type: isVideo ? 'video' : 'image',
+        },
+        (error, result) => {
+          if (error) reject(error);
+          else resolve(result);
+        }
+      );
+      stream.end(req.file.buffer);
+    });
 
-    const { data, error } = await supabase.storage
-      .from(BUCKET_NAME)
-      .upload(filename, req.file.buffer, {
-        contentType: req.file.mimetype,
-        upsert: false,
-      });
-
-    if (error) throw error;
-
-    const { data: { publicUrl } } = supabase.storage
-      .from(BUCKET_NAME)
-      .getPublicUrl(filename);
-
-    res.json({ url: publicUrl, filename });
+    res.json({ url: result.secure_url, filename: result.public_id });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
