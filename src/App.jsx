@@ -55,8 +55,8 @@ function AppLayout() {
   const [stats, setStats] = useState(null);
   const [showLogin, setShowLogin] = useState(false);
 
-  const fetchAll = useCallback(async () => {
-    setLoading(true);
+  const fetchAll = useCallback(async (showLoading = true) => {
+    if (showLoading) setLoading(true);
     try {
       const res = await fetch(`${API_BASE}/api/places`);
       if (res.ok) {
@@ -79,7 +79,7 @@ function AppLayout() {
   }, []);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => { fetchAll(); }, [fetchAll]);
+  useEffect(() => { if (pathname === '/') fetchAll(places.length === 0); }, [fetchAll, pathname]);
 
   useEffect(() => {
     if (places.length) {
