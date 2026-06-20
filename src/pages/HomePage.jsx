@@ -102,38 +102,42 @@ const HomePage = ({ stats, loading, places = [] }) => {
               const galleryFirst = Array.isArray(dbPlace?.gallery) && dbPlace.gallery.length > 0 ? dbPlace.gallery[0] : null;
               const imgUrl = dbPlace?.image || galleryFirst || catImages[place.catKey] || catImages.hotels;
               return (
-                <motion.div
+                <Link
                   key={place.name}
-                  initial={{ opacity: 0, y: 20 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: i * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-                  whileHover={{ y: -6 }}
-                  className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer"
+                  to={dbPlace ? `/stays/${dbPlace.id}` : '#'}
                 >
-                  <img
-                    src={imgUrl}
-                    alt={place.name}
-                    className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
-                    loading="lazy"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/30 to-transparent" />
-                  <div className="absolute top-3 left-3">
-                    <div className="px-2.5 py-1 rounded-lg glass-dark text-[8px] font-poppins font-bold text-gold-500 uppercase tracking-[0.15em]">
-                      {place.tag}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ delay: i * 0.06, duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    whileHover={{ y: -6 }}
+                    className="group relative aspect-[3/4] rounded-2xl overflow-hidden cursor-pointer"
+                  >
+                    <img
+                      src={imgUrl}
+                      alt={place.name}
+                      className="absolute inset-0 w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                      loading="lazy"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/30 to-transparent" />
+                    <div className="absolute top-3 left-3">
+                      <div className="px-2.5 py-1 rounded-lg glass-dark text-[8px] font-poppins font-bold text-gold-500 uppercase tracking-[0.15em]">
+                        {place.tag}
+                      </div>
                     </div>
-                  </div>
-                  <div className="absolute bottom-4 left-4 right-4">
-                    <div className="flex items-center gap-1 mb-1.5">
-                      <Star className="w-3 h-3 fill-gold-500 text-gold-500" />
-                      <span className="text-[10px] font-poppins font-bold text-white/70">{place.rating}</span>
+                    <div className="absolute bottom-4 left-4 right-4">
+                      <div className="flex items-center gap-1 mb-1.5">
+                        <Star className="w-3 h-3 fill-gold-500 text-gold-500" />
+                        <span className="text-[10px] font-poppins font-bold text-white/70">{place.rating}</span>
+                      </div>
+                      <h3 className="font-sora text-base sm:text-lg font-extrabold text-white">{place.name}</h3>
+                      <div className="flex items-center gap-1 mt-2 text-[8px] font-poppins font-bold text-gold-500 uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        Explore <ChevronRight className="w-3 h-3" />
+                      </div>
                     </div>
-                    <h3 className="font-sora text-base sm:text-lg font-extrabold text-white">{place.name}</h3>
-                    <div className="flex items-center gap-1 mt-2 text-[8px] font-poppins font-bold text-gold-500 uppercase tracking-[0.15em] opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      Explore <ChevronRight className="w-3 h-3" />
-                    </div>
-                  </div>
-                </motion.div>
+                  </motion.div>
+                </Link>
               );
             })}
           </div>
