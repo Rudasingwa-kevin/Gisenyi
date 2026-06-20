@@ -1225,16 +1225,21 @@ function PlaceForm({ place, categories, onSave, onCancel }) {
           {[0, 1, 2, 3].map(i => {
             const val = JSON.parse(form.gallery || '[]')[i] || '';
             return (
-              <div key={i} className="flex items-center gap-2">
-                <span className="text-[9px] font-poppins font-bold text-white/30 uppercase tracking-wider w-6 shrink-0">#{i + 1}</span>
-                <input
-                  type="url"
-                  value={val}
-                  onChange={e => updateGalleryUrl(i, e.target.value)}
-                  placeholder="https://example.com/photo.jpg"
-                  className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50"
-                />
-                <GalleryUpload onUrl={url => updateGalleryUrl(i, url)} />
+              <div key={i}>
+                <div className="flex items-center gap-2">
+                  <span className="text-[9px] font-poppins font-bold text-white/30 uppercase tracking-wider w-6 shrink-0">#{i + 1}</span>
+                  <input
+                    type="url"
+                    value={val}
+                    onChange={e => updateGalleryUrl(i, e.target.value)}
+                    placeholder="https://example.com/photo.jpg"
+                    className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50"
+                  />
+                  <GalleryUpload onUrl={url => updateGalleryUrl(i, url)} />
+                </div>
+                {val && (
+                  <img src={val} alt="" className="mt-2 h-20 w-full rounded-lg object-cover bg-navy-800" onError={e => { e.target.style.display = 'none' }} />
+                )}
               </div>
             );
           })}
