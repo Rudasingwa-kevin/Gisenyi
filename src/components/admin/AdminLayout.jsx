@@ -7,6 +7,7 @@ import {
   ImageIcon, MessageSquare, Server, Plus
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
+import { ToastProvider } from './Toast';
 
 const navItems = [
   { path: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
@@ -60,6 +61,10 @@ export default function AdminLayout() {
 
   if (!isAdmin) return null;
 
+  return <ToastProvider><AdminLayoutInner location={location} sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} username={username} logout={logout} /></ToastProvider>;
+}
+
+function AdminLayoutInner({ location, sidebarOpen, setSidebarOpen, username, logout }) {
   const isActive = (item) => {
     if (item.exact) return location.pathname === item.path;
     return location.pathname.startsWith(item.path);
@@ -73,7 +78,7 @@ export default function AdminLayout() {
   const breadcrumbLabels = {
     places: 'Places', categories: 'Categories', events: 'Events',
     calendar: 'Calendar', gallery: 'Gallery', feedback: 'Feedback',
-    system: 'System', new: 'New',
+    system: 'System', new: 'New', edit: 'Edit',
   };
 
   return (

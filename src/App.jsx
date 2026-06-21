@@ -174,12 +174,15 @@ function AppLayout() {
               <Route index element={<DashboardPage />} />
               <Route path="places" element={<PlacesPage />} />
               <Route path="places/new" element={<AddPlacePage />} />
+              <Route path="places/:id/edit" element={<AddPlacePage />} />
               <Route path="categories" element={<CategoriesPage />} />
               <Route path="categories/new" element={<AddCategoryPage />} />
               <Route path="events" element={<EventsAdminPage />} />
               <Route path="events/new" element={<AddEventPage />} />
+              <Route path="events/:id/edit" element={<AddEventPage />} />
               <Route path="calendar" element={<AdminCalendarPage />} />
               <Route path="calendar/new" element={<AddCalendarItemPage />} />
+              <Route path="calendar/:id/edit" element={<AddCalendarItemPage />} />
               <Route path="gallery" element={<AdminGalleryPage />} />
               <Route path="feedback" element={<FeedbackPage />} />
               <Route path="system" element={<SystemPage />} />

@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plus, Pencil, Trash2, ExternalLink, MapPin } from 'lucide-react';
+import { Plus, Pencil, Trash2, ExternalLink, MapPin, Download, Filter } from 'lucide-react';
 import { useAdminData, useFilteredItems, PAGE_SIZE } from '../../components/admin/useAdminData';
+import { exportToCSV } from '../../utils/export';
 import { ListControls, Pagination } from '../../components/admin/ListComponents';
 import { AnimatedList, AnimatedListItem } from '../../components/admin/AnimatedList';
 import { SkeletonList } from '../../components/admin/SkeletonLoader';
@@ -18,8 +19,12 @@ function PlacesContent() {
   const [sort, setSort] = useState('name');
   const [page, setPage] = useState(1);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [catFilter, setCatFilter] = useState('all');
 
-  const filtered = useFilteredItems(places, {
+  const categories = [...new Set(places.map(p => p.catKey).filter(Boolean))];
+  const preFiltered = catFilter === 'all' ? places : places.filter(p => p.catKey === catFilter);
+
+  const filtered = useFilteredItems(preFiltered, {
     searchFields: ['name', 'catKey', 'tags.description'],
     sortFn: (s) => (a, b) => s === 'catKey'
       ? (a.catKey || '').localeCompare(b.catKey || '')
@@ -46,6 +51,18 @@ function PlacesContent() {
             <Plus className="w-4 h-4" /> Add Place
           </Link>
         </motion.div>
+        {places.length > 0 && (
+          <button onClick={() => exportToCSV(places, [
+            { label: 'ID', accessor: 'id' },
+            { label: 'Name', accessor: 'name' },
+            { label: 'Category', accessor: 'catKey' },
+            { label: 'Latitude', accessor: 'lat' },
+            { label: 'Longitude', accessor: 'lon' },
+            { label: 'Rating', accessor: 'rating' },
+          ], 'places.csv')} className="inline-flex items-center gap-1.5 px-3 py-2 text-white/40 hover:text-white/70 text-sm font-inter rounded-xl hover:bg-white/[0.04] border border-white/[0.06] transition-all">
+            <Download className="w-3.5 h-3.5" /> Export
+          </button>
+        )}
       </div>
 
       <ListControls
@@ -56,6 +73,16 @@ function PlacesContent() {
         sortOptions={[{ value: 'name', label: 'Name' }, { value: 'catKey', label: 'Category' }]}
         placeholder="Search places..."
       />
+
+      {categories.length > 1 && (
+        <div className="flex items-center gap-2 flex-wrap">
+          <Filter className="w-3.5 h-3.5 text-white/25" />
+          <button onClick={() => { setCatFilter('all'); setPage(1); }} className={`px-2.5 py-1 rounded-lg text-[11px] font-inter transition-all ${catFilter === 'all' ? 'bg-gold-500/15 text-gold-400 border border-gold-500/20' : 'text-white/35 hover:text-white/60 border border-white/[0.04] hover:border-white/[0.08]'}`}>All</button>
+          {categories.map(cat => (
+            <button key={cat} onClick={() => { setCatFilter(cat); setPage(1); }} className={`px-2.5 py-1 rounded-lg text-[11px] font-inter transition-all ${catFilter === cat ? 'bg-gold-500/15 text-gold-400 border border-gold-500/20' : 'text-white/35 hover:text-white/60 border border-white/[0.04] hover:border-white/[0.08]'}`}>{cat}</button>
+          ))}
+        </div>
+      )}
 
       {loading ? <SkeletonList /> : filtered.items.length === 0 ? (
         <EmptyState icon={MapPin} title="No places found" description={search ? 'Try a different search' : 'Add your first place'} action={
@@ -80,6 +107,9 @@ function PlacesContent() {
                     <a href={`/stays/${place.id}`} target="_blank" rel="noopener noreferrer" className="p-2 text-white/30 hover:text-gold-500 rounded-lg hover:bg-white/[0.04] transition-colors" title="Preview">
                       <ExternalLink className="w-4 h-4" />
                     </a>
+                    <button onClick={() => navigate(`/admin/places/${place.id}/edit`)} className="p-2 text-white/30 hover:text-gold-500 rounded-lg hover:bg-white/[0.04] transition-colors" title="Edit">
+                      <Pencil className="w-4 h-4" />
+                    </button>
                     <button onClick={() => setDeleteTarget(place)} className="p-2 text-white/40 hover:text-red-400 rounded-lg hover:bg-white/[0.04] transition-colors">
                       <Trash2 className="w-4 h-4" />
                     </button>

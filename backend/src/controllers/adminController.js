@@ -284,6 +284,54 @@ exports.getSystemInfo = async (req, res, next) => {
     const mem = process.memoryUsage();
     const totalMem = os.totalmem();
     const freeMem = os.freemem();
+    const cpus = os.cpus();
+
+    const cpuUsage = cpus.map(cpu => {
+      const total = Object.values(cpu.times).reduce((a, b) => a + b, 0);
+      const idle = cpu.times.idle;
+      return ((total - idle) / total * 100).toFixed(1);
+    });
+
+    const loadAvg = os.loadavg();
+
+    const [
+      placeCount,
+      eventCount,
+      categoryCount,
+      calendarCount,
+      galleryCount,
+      feedbackCount,
+      visitCount,
+    ] = await Promise.all([
+      prisma.place.count(),
+      prisma.event.count(),
+      prisma.category.count(),
+      prisma.calendarItem.count(),
+      prisma.galleryItem.count(),
+      prisma.feedback.count(),
+      prisma.visit.count(),
+    ]);
+
+    const dbSize = await prisma.$queryRaw`
+      SELECT pg_size_pretty(pg_database_size(current_database())) as size
+    `;
+
+    const tableStats = await prisma.$queryRaw`
+      SELECT 
+        schemaname, relname as table_name,
+        n_live_tup as row_count,
+        pg_size_pretty(pg_total_relation_size(relid)) as total_size
+      FROM pg_stat_user_tables
+      ORDER BY n_live_tup DESC
+    `;
+
+    const services = {
+      database: { configured: true, status: 'connected' },
+      cloudinary: { configured: !!process.env.CLOUDINARY_CLOUD_NAME },
+      supabase: { configured: !!process.env.SUPABASE_URL },
+      auth: { configured: !!process.env.JWT_SECRET },
+      tracking: { configured: true },
+    };
 
     res.json({
       server: {
@@ -292,16 +340,41 @@ exports.getSystemInfo = async (req, res, next) => {
         platform: os.platform(),
         arch: os.arch(),
         hostname: os.hostname(),
-        cpus: os.cpus().length,
-        env: process.env.NODE_ENV || 'development'
+        cpus: cpus.length,
+        cpuModel: cpus[0]?.model || 'Unknown',
+        cpuSpeed: cpus[0]?.speed || 0,
+        env: process.env.NODE_ENV || 'development',
+        pid: process.pid,
+        loadAverage: { '1m': loadAvg[0]?.toFixed(2), '5m': loadAvg[1]?.toFixed(2), '15m': loadAvg[2]?.toFixed(2) },
+        cpuUsage: cpuUsage,
       },
       memory: {
-        process: { rss: mem.rss, heapUsed: mem.heapUsed, heapTotal: mem.heapTotal },
+        process: { rss: mem.rss, heapUsed: mem.heapUsed, heapTotal: mem.heapTotal, external: mem.external || 0 },
         system: { total: totalMem, free: freeMem, used: totalMem - freeMem }
       },
-      database: { status: 'connected', pingMs: dbPing }
+      database: {
+        status: 'connected',
+        pingMs: dbPing,
+        size: dbSize?.[0]?.size || 'Unknown',
+        tables: tableStats || [],
+      },
+      content: {
+        places: placeCount,
+        events: eventCount,
+        categories: categoryCount,
+        calendar: calendarCount,
+        gallery: galleryCount,
+        feedback: feedbackCount,
+        visits: visitCount,
+      },
+      services,
     });
   } catch (error) {
+    const mem = process.memoryUsage();
+    const totalMem = os.totalmem();
+    const cpus = os.cpus();
+    const loadAvg = os.loadavg();
+
     res.json({
       server: {
         uptime: process.uptime(),
@@ -309,14 +382,27 @@ exports.getSystemInfo = async (req, res, next) => {
         platform: os.platform(),
         arch: os.arch(),
         hostname: os.hostname(),
-        cpus: os.cpus().length,
-        env: process.env.NODE_ENV || 'development'
+        cpus: cpus.length,
+        cpuModel: cpus[0]?.model || 'Unknown',
+        cpuSpeed: cpus[0]?.speed || 0,
+        env: process.env.NODE_ENV || 'development',
+        pid: process.pid,
+        loadAverage: { '1m': loadAvg[0]?.toFixed(2), '5m': loadAvg[1]?.toFixed(2), '15m': loadAvg[2]?.toFixed(2) },
+        cpuUsage: [],
       },
       memory: {
-        process: { rss: 0, heapUsed: 0, heapTotal: 0 },
-        system: { total: os.totalmem(), free: os.freemem(), used: os.totalmem() - os.freemem() }
+        process: { rss: mem.rss, heapUsed: mem.heapUsed, heapTotal: mem.heapTotal, external: mem.external || 0 },
+        system: { total: totalMem, free: os.freemem(), used: totalMem - os.freemem() }
       },
-      database: { status: 'disconnected', pingMs: null }
+      database: { status: 'disconnected', pingMs: null, size: 'Unknown', tables: [] },
+      content: { places: 0, events: 0, categories: 0, calendar: 0, gallery: 0, feedback: 0, visits: 0 },
+      services: {
+        database: { configured: true, status: 'disconnected' },
+        cloudinary: { configured: !!process.env.CLOUDINARY_CLOUD_NAME },
+        supabase: { configured: !!process.env.SUPABASE_URL },
+        auth: { configured: !!process.env.JWT_SECRET },
+        tracking: { configured: true },
+      },
     });
   }
 };

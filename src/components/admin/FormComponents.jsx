@@ -1,47 +1,64 @@
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { Upload, X, Image as ImageIcon } from 'lucide-react';
+import { useState, useCallback } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Upload, X, Image as ImageIcon, AlertCircle } from 'lucide-react';
 import { cn } from '../../utils/helpers';
 import { uploadFile } from '../../utils/admin';
 
-export function FormField({ label, children, className, hint }) {
+export function FormField({ label, children, className, hint, error, required }) {
   return (
     <div className={cn('space-y-1.5', className)}>
       <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em]">
         {label}
+        {required && <span className="text-gold-500 ml-0.5">*</span>}
       </label>
       {children}
-      {hint && <p className="text-[10px] text-white/25 font-inter">{hint}</p>}
+      <AnimatePresence>
+        {error && (
+          <motion.p
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: 'auto' }}
+            exit={{ opacity: 0, height: 0 }}
+            className="flex items-center gap-1.5 text-red-400 text-[11px] font-inter"
+          >
+            <AlertCircle className="w-3 h-3 shrink-0" /> {error}
+          </motion.p>
+        )}
+      </AnimatePresence>
+      {hint && !error && <p className="text-[10px] text-white/25 font-inter">{hint}</p>}
     </div>
   );
 }
 
-export function Input({ className, ...props }) {
+export function Input({ className, error, ...props }) {
   return (
     <input
       className={cn(
-        'w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5',
+        'w-full bg-white/[0.04] border rounded-xl px-4 py-2.5',
         'text-white text-sm font-inter',
-        'focus:outline-none focus:border-gold-500/40 focus:bg-white/[0.06]',
+        'focus:outline-none focus:bg-white/[0.06]',
         'placeholder:text-white/20 transition-all duration-200',
+        error ? 'border-red-500/40 focus:border-red-500/60' : 'border-white/[0.08] focus:border-gold-500/40',
         className
       )}
+      aria-invalid={!!error}
       {...props}
     />
   );
 }
 
-export function Select({ options, className, ...props }) {
+export function Select({ options, className, error, ...props }) {
   return (
     <select
       className={cn(
-        'w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5',
+        'w-full bg-white/[0.04] border rounded-xl px-4 py-2.5',
         'text-white text-sm font-inter',
-        'focus:outline-none focus:border-gold-500/40 focus:bg-white/[0.06]',
+        'focus:outline-none focus:bg-white/[0.06]',
         'transition-all duration-200 appearance-none',
         'bg-[url("data:image/svg+xml,%3Csvg%20xmlns%3D%27http%3A//www.w3.org/2000/svg%27%20width%3D%2712%27%20height%3D%2712%27%20viewBox%3D%270%200%2012%2012%27%20fill%3D%27none%27%3E%3Cpath%20d%3D%27M3%205L6%208L9%205%27%20stroke%3D%27rgba(255%2C255%2C255%2C0.3)%27%20stroke-width%3D%271.5%27%20stroke-linecap%3D%27round%27/%3E%3C/svg%3E")] bg-no-repeat bg-[right_12px_center]',
+        error ? 'border-red-500/40 focus:border-red-500/60' : 'border-white/[0.08] focus:border-gold-500/40',
         className
       )}
+      aria-invalid={!!error}
       {...props}
     >
       {options.map(o => (
@@ -53,16 +70,18 @@ export function Select({ options, className, ...props }) {
   );
 }
 
-export function Textarea({ className, ...props }) {
+export function Textarea({ className, error, ...props }) {
   return (
     <textarea
       className={cn(
-        'w-full bg-white/[0.04] border border-white/[0.08] rounded-xl px-4 py-2.5',
+        'w-full bg-white/[0.04] border rounded-xl px-4 py-2.5',
         'text-white text-sm font-inter resize-none',
-        'focus:outline-none focus:border-gold-500/40 focus:bg-white/[0.06]',
+        'focus:outline-none focus:bg-white/[0.06]',
         'placeholder:text-white/20 transition-all duration-200',
+        error ? 'border-red-500/40 focus:border-red-500/60' : 'border-white/[0.08] focus:border-gold-500/40',
         className
       )}
+      aria-invalid={!!error}
       {...props}
     />
   );
@@ -79,7 +98,7 @@ export function ImageUpload({ value, onChange, label, preview }) {
       const { url } = await uploadFile(file);
       onChange(url);
     } catch (err) {
-      alert('Upload failed: ' + err.message);
+      console.error('Upload failed:', err.message);
     }
     setUploading(false);
   };
@@ -120,7 +139,7 @@ export function ImageUpload({ value, onChange, label, preview }) {
             src={value}
             alt=""
             className="h-28 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.06]"
-            onError={e => { e.target.style.display = 'none' }}
+            onError={e => { e.target.style.display = 'none'; }}
           />
           <button
             onClick={() => onChange('')}
@@ -145,7 +164,7 @@ export function GalleryUpload({ onUrl }) {
       const { url } = await uploadFile(file);
       onUrl(url);
     } catch (err) {
-      alert('Upload failed: ' + err.message);
+      console.error('Upload failed:', err.message);
     }
     setUploading(false);
   };
@@ -201,4 +220,44 @@ export function FormActions({ saving, saveLabel = 'Save', onCancel }) {
       )}
     </div>
   );
+}
+
+export function useFormValidation(rules) {
+  const [errors, setErrors] = useState({});
+
+  const validate = useCallback((data) => {
+    const newErrors = {};
+    for (const [field, fieldRules] of Object.entries(rules)) {
+      const value = data[field];
+      for (const rule of fieldRules) {
+        if (rule.required && (!value || (typeof value === 'string' && !value.trim()))) {
+          newErrors[field] = rule.message || `${field} is required`;
+          break;
+        }
+        if (rule.pattern && value && !rule.pattern.test(value)) {
+          newErrors[field] = rule.message || `Invalid ${field}`;
+          break;
+        }
+        if (rule.min != null && value && Number(value) < rule.min) {
+          newErrors[field] = rule.message || `Minimum value is ${rule.min}`;
+          break;
+        }
+        if (rule.max != null && value && Number(value) > rule.max) {
+          newErrors[field] = rule.message || `Maximum value is ${rule.max}`;
+          break;
+        }
+        if (rule.validate && value) {
+          const msg = rule.validate(value);
+          if (msg) { newErrors[field] = msg; break; }
+        }
+      }
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  }, [rules]);
+
+  const clearErrors = useCallback(() => setErrors({}), []);
+  const clearField = useCallback((field) => setErrors(prev => { const n = { ...prev }; delete n[field]; return n; }), []);
+
+  return { errors, validate, clearErrors, clearField };
 }

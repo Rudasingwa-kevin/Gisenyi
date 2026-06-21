@@ -1,9 +1,10 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plus, Trash2, Circle, Clock } from 'lucide-react';
+import { Plus, Pencil, Trash2, Circle, Clock, Download } from 'lucide-react';
 import { useAdminData, useFilteredItems, PAGE_SIZE } from '../../components/admin/useAdminData';
 import { formatDate } from '../../utils/helpers';
+import { exportToCSV } from '../../utils/export';
 import { ListControls, Pagination } from '../../components/admin/ListComponents';
 import { AnimatedList, AnimatedListItem } from '../../components/admin/AnimatedList';
 import { SkeletonList } from '../../components/admin/SkeletonLoader';
@@ -12,6 +13,7 @@ import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal';
 import { ToastProvider, useToast } from '../../components/admin/Toast';
 
 function CalendarContent() {
+  const navigate = useNavigate();
   const { addToast } = useToast();
   const { items: calendarItems, loading, remove } = useAdminData('calendar');
   const [search, setSearch] = useState('');
@@ -46,6 +48,17 @@ function CalendarContent() {
             <Plus className="w-4 h-4" /> Add Item
           </Link>
         </motion.div>
+        {calendarItems.length > 0 && (
+          <button onClick={() => exportToCSV(calendarItems, [
+            { label: 'ID', accessor: 'id' },
+            { label: 'Title', accessor: 'title' },
+            { label: 'Date', accessor: 'date' },
+            { label: 'Type', accessor: 'type' },
+            { label: 'Location', accessor: 'location' },
+          ], 'calendar.csv')} className="inline-flex items-center gap-1.5 px-3 py-2 text-white/40 hover:text-white/70 text-sm font-inter rounded-xl hover:bg-white/[0.04] border border-white/[0.06] transition-all">
+            <Download className="w-3.5 h-3.5" /> Export
+          </button>
+        )}
       </div>
 
       <ListControls search={search} onSearch={v => { setSearch(v); setPage(1); }} sort={sort} onSort={v => { setSort(v); setPage(1); }} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]} placeholder="Search calendar..." />
@@ -70,6 +83,9 @@ function CalendarContent() {
                     </div>
                   </div>
                   <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                    <button onClick={() => navigate(`/admin/calendar/${item.id}/edit`)} className="p-2 text-white/30 hover:text-gold-500 rounded-lg hover:bg-white/[0.04] transition-colors" title="Edit">
+                      <Pencil className="w-4 h-4" />
+                    </button>
                     <button onClick={() => setDeleteTarget(item)} className="p-2 text-white/40 hover:text-red-400 rounded-lg hover:bg-white/[0.04] transition-colors">
                       <Trash2 className="w-4 h-4" />
                     </button>

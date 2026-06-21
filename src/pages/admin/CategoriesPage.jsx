@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { Plus, Pencil, Trash2, LayoutGrid } from 'lucide-react';
 import { useAdminData, useFilteredItems, PAGE_SIZE } from '../../components/admin/useAdminData';
@@ -11,6 +11,7 @@ import DeleteConfirmModal from '../../components/admin/DeleteConfirmModal';
 import { ToastProvider, useToast } from '../../components/admin/Toast';
 
 function CategoriesContent() {
+  const navigate = useNavigate();
   const { addToast } = useToast();
   const { items: categories, loading, remove } = useAdminData('categories');
   const [search, setSearch] = useState('');
@@ -65,6 +66,9 @@ function CategoriesContent() {
                     </div>
                   </div>
                   <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                    <button onClick={() => navigate(`/admin/categories/${cat.id}/edit`)} className="p-2 text-white/30 hover:text-gold-500 rounded-lg hover:bg-white/[0.04] transition-colors" title="Edit">
+                      <Pencil className="w-4 h-4" />
+                    </button>
                     <button onClick={() => setDeleteTarget(cat)} className="p-2 text-white/40 hover:text-red-400 rounded-lg hover:bg-white/[0.04] transition-colors">
                       <Trash2 className="w-4 h-4" />
                     </button>

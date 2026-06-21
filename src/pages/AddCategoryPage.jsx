@@ -1,31 +1,68 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { ArrowLeft, LayoutGrid } from 'lucide-react';
+import { ArrowLeft, LayoutGrid, Loader2 } from 'lucide-react';
 import { API, fetchWithAuth } from '../utils/admin';
-import { FormField, Input, FormActions } from '../components/admin/FormComponents';
+import { FormField, Input, FormActions, useFormValidation } from '../components/admin/FormComponents';
 import { ToastProvider, useToast } from '../components/admin/Toast';
+import { useUnsavedChanges } from '../hooks/useUnsavedChanges';
 
 function AddCategoryInner() {
   const { isAdmin } = useAuth();
   const navigate = useNavigate();
+  const { id } = useParams();
+  const isEdit = !!id;
   const { addToast } = useToast();
+  const [loading, setLoading] = useState(isEdit);
+  const [initialForm, setInitialForm] = useState(null);
   const [form, setForm] = useState({ id: '', label: '', icon: '', color: '#C9A84C' });
   const [saving, setSaving] = useState(false);
 
+  const { errors, validate, clearField } = useFormValidation({
+    id: [{ required: true, message: 'Category ID is required' }],
+    label: [{ required: true, message: 'Label is required' }],
+    icon: [{ required: true, message: 'Icon is required' }],
+  });
+
   useEffect(() => { if (!isAdmin) navigate('/'); }, [isAdmin, navigate]);
+
+  useEffect(() => {
+    if (!isEdit) return;
+    fetchWithAuth(`${API}/categories`).then(r => r.ok && r.json()).then(data => {
+      const list = data.data || data || [];
+      const item = list.find(c => c.id === id);
+      if (item) {
+        setForm({ id: item.id || '', label: item.label || '', icon: item.icon || '', color: item.color || '#C9A84C' });
+        setInitialForm({ id: item.id || '', label: item.label || '', icon: item.icon || '', color: item.color || '#C9A84C' });
+      } else addToast('Category not found', 'error');
+      setLoading(false);
+    }).catch(() => { setLoading(false); addToast('Failed to load category', 'error'); });
+  }, [id, isEdit]);
+
+  const isDirty = initialForm && JSON.stringify(form) !== JSON.stringify(initialForm);
+  useUnsavedChanges(isDirty);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!validate(form)) return;
     setSaving(true);
-    const res = await fetchWithAuth(`${API}/categories`, { method: 'POST', body: JSON.stringify(form) });
+    const res = await fetchWithAuth(
+      isEdit ? `${API}/categories/${id}` : `${API}/categories`,
+      { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(form) }
+    );
     if (res.ok) {
-      addToast('Category created', 'success');
+      addToast(isEdit ? 'Category updated' : 'Category created', 'success');
       setTimeout(() => navigate('/admin/categories'), 800);
-    } else addToast('Failed to create category', 'error');
+    } else addToast(isEdit ? 'Failed to update category' : 'Failed to create category', 'error');
     setSaving(false);
   };
+
+  if (loading) return (
+    <div className="flex items-center justify-center py-32">
+      <Loader2 className="w-6 h-6 text-gold-500 animate-spin" />
+    </div>
+  );
 
   return (
     <div className="max-w-3xl">
@@ -38,18 +75,26 @@ function AddCategoryInner() {
             <LayoutGrid className="w-5 h-5 text-gold-500" />
           </div>
           <div>
-            <h1 className="text-xl font-sora font-bold text-white">Add New Category</h1>
-            <p className="text-xs text-white/30 font-inter">Create a new place category</p>
+            <h1 className="text-xl font-sora font-bold text-white">{isEdit ? 'Edit Category' : 'Add New Category'}</h1>
+            <p className="text-xs text-white/30 font-inter">{isEdit ? 'Update category details' : 'Create a new place category'}</p>
           </div>
         </div>
         <form onSubmit={handleSubmit} className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 space-y-5">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <FormField label="ID (key)"><Input type="text" value={form.id} onChange={e => setForm(f => ({ ...f, id: e.target.value }))} required /></FormField>
-            <FormField label="Label"><Input type="text" value={form.label} onChange={e => setForm(f => ({ ...f, label: e.target.value }))} required /></FormField>
-            <FormField label="Icon (emoji)"><Input type="text" value={form.icon} onChange={e => setForm(f => ({ ...f, icon: e.target.value }))} required /></FormField>
-            <FormField label="Color"><input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))} className="w-full h-10 bg-white/[0.04] border border-white/[0.08] rounded-xl cursor-pointer" /></FormField>
+            <FormField label="ID (key)" error={errors.id} required>
+              <Input type="text" value={form.id} onChange={e => { setForm(f => ({ ...f, id: e.target.value })); clearField('id'); }} disabled={isEdit} />
+            </FormField>
+            <FormField label="Label" error={errors.label} required>
+              <Input type="text" value={form.label} onChange={e => { setForm(f => ({ ...f, label: e.target.value })); clearField('label'); }} />
+            </FormField>
+            <FormField label="Icon (emoji)" error={errors.icon} required>
+              <Input type="text" value={form.icon} onChange={e => { setForm(f => ({ ...f, icon: e.target.value })); clearField('icon'); }} />
+            </FormField>
+            <FormField label="Color">
+              <input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))} className="w-full h-10 bg-white/[0.04] border border-white/[0.08] rounded-xl cursor-pointer" />
+            </FormField>
           </div>
-          <FormActions saving={saving} saveLabel="Create Category" onCancel={() => navigate('/admin/categories')} />
+          <FormActions saving={saving} saveLabel={isEdit ? 'Update Category' : 'Create Category'} onCancel={() => navigate('/admin/categories')} />
         </form>
       </motion.div>
     </div>
