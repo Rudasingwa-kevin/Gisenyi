@@ -10,19 +10,28 @@ import HistoryPage from './pages/HistoryPage';
 import StaysPage from './pages/StaysPage';
 import MapPage from './pages/MapPage';
 import GalleryPage from './pages/GalleryPage';
-import AdminPage from './pages/AdminPage';
 import PlaceDetailPage from './pages/PlaceDetailPage';
 import EventsPage from './pages/EventsPage';
 import CalendarPage from './pages/CalendarPage';
-import AddPlacePage from './pages/AddPlacePage';
-import AddCategoryPage from './pages/AddCategoryPage';
-import AddEventPage from './pages/AddEventPage';
-import AddCalendarItemPage from './pages/AddCalendarItemPage';
 import NotFoundPage from './pages/NotFoundPage';
 import LoginModal from './components/LoginModal';
 import ErrorBoundary from './components/ErrorBoundary';
 import { AuthProvider } from './context/AuthContext';
 import { FALLBACK_DATA } from './constants/data';
+
+import AdminLayout from './components/admin/AdminLayout';
+import DashboardPage from './pages/admin/DashboardPage';
+import PlacesPage from './pages/admin/PlacesPage';
+import CategoriesPage from './pages/admin/CategoriesPage';
+import EventsAdminPage from './pages/admin/EventsPage';
+import AdminCalendarPage from './pages/admin/AdminCalendarPage';
+import AdminGalleryPage from './pages/admin/AdminGalleryPage';
+import FeedbackPage from './pages/admin/FeedbackPage';
+import SystemPage from './pages/admin/SystemPage';
+import AddPlacePage from './pages/AddPlacePage';
+import AddCategoryPage from './pages/AddCategoryPage';
+import AddEventPage from './pages/AddEventPage';
+import AddCalendarItemPage from './pages/AddCalendarItemPage';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -101,7 +110,7 @@ function AppLayout() {
     <div className="font-outfit min-h-screen flex flex-col">
       {!isAdminPage && <Navbar />}
 
-      <main className="flex-grow">
+      <main className={isAdminPage ? '' : 'flex-grow'}>
         <ErrorBoundary>
         <AnimatePresence mode="wait">
           <Routes>
@@ -144,31 +153,6 @@ function AppLayout() {
                 <GalleryPage photos={wikiPhotos} />
               </AnimatedOutlet>
             } />
-            <Route path="/admin" element={
-              <AnimatedOutlet key="admin">
-                <AdminPage />
-              </AnimatedOutlet>
-            } />
-            <Route path="/admin/places/new" element={
-              <AnimatedOutlet key="add-place">
-                <AddPlacePage />
-              </AnimatedOutlet>
-            } />
-            <Route path="/admin/categories/new" element={
-              <AnimatedOutlet key="add-category">
-                <AddCategoryPage />
-              </AnimatedOutlet>
-            } />
-            <Route path="/admin/events/new" element={
-              <AnimatedOutlet key="add-event">
-                <AddEventPage />
-              </AnimatedOutlet>
-            } />
-            <Route path="/admin/calendar/new" element={
-              <AnimatedOutlet key="add-calendar">
-                <AddCalendarItemPage />
-              </AnimatedOutlet>
-            } />
             <Route path="/events" element={
               <AnimatedOutlet key="events">
                 <EventsPage />
@@ -184,6 +168,23 @@ function AppLayout() {
                 <PlaceDetailPage places={places} />
               </AnimatedOutlet>
             } />
+
+            {/* Admin nested routes */}
+            <Route path="/admin" element={<AdminLayout />}>
+              <Route index element={<DashboardPage />} />
+              <Route path="places" element={<PlacesPage />} />
+              <Route path="places/new" element={<AddPlacePage />} />
+              <Route path="categories" element={<CategoriesPage />} />
+              <Route path="categories/new" element={<AddCategoryPage />} />
+              <Route path="events" element={<EventsAdminPage />} />
+              <Route path="events/new" element={<AddEventPage />} />
+              <Route path="calendar" element={<AdminCalendarPage />} />
+              <Route path="calendar/new" element={<AddCalendarItemPage />} />
+              <Route path="gallery" element={<AdminGalleryPage />} />
+              <Route path="feedback" element={<FeedbackPage />} />
+              <Route path="system" element={<SystemPage />} />
+            </Route>
+
             <Route path="*" element={
               <AnimatedOutlet key="not-found">
                 <NotFoundPage />

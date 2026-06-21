@@ -5,7 +5,6 @@ import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, MapPin } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 import { API, fetchWithAuth } from '../utils/admin';
-import AdminHeader from '../components/admin/AdminHeader';
 import { FormField, Input, Select, Textarea, ImageUpload, GalleryUpload, FormActions } from '../components/admin/FormComponents';
 import { ToastProvider, useToast } from '../components/admin/Toast';
 
@@ -45,7 +44,7 @@ function AddPlaceInner() {
     const res = await fetchWithAuth(`${API}/places`, { method: 'POST', body: JSON.stringify(body) });
     if (res.ok) {
       addToast('Place created successfully', 'success');
-      setTimeout(() => navigate('/admin'), 800);
+      setTimeout(() => navigate('/admin/places'), 800);
     } else {
       addToast('Failed to create place', 'error');
     }
@@ -59,90 +58,73 @@ function AddPlaceInner() {
   };
 
   return (
-    <div className="min-h-screen bg-[#030810]">
-      <AdminHeader />
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 md:py-8">
-        <motion.button
-          initial={{ opacity: 0, x: -10 }}
-          animate={{ opacity: 1, x: 0 }}
-          onClick={() => navigate('/admin')}
-          className="flex items-center gap-2 text-white/40 hover:text-gold-500 transition-colors text-sm font-inter mb-6 group"
-        >
-          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Admin
-        </motion.button>
+    <div className="max-w-3xl">
+      <motion.button
+        initial={{ opacity: 0, x: -10 }}
+        animate={{ opacity: 1, x: 0 }}
+        onClick={() => navigate('/admin/places')}
+        className="flex items-center gap-2 text-white/40 hover:text-gold-500 transition-colors text-sm font-inter mb-6 group"
+      >
+        <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Places
+      </motion.button>
 
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-500/5 flex items-center justify-center border border-gold-500/10">
-              <MapPin className="w-5 h-5 text-gold-500" />
-            </div>
-            <div>
-              <h1 className="text-xl font-sora font-bold text-white">Add New Place</h1>
-              <p className="text-xs text-white/30 font-inter">Create a new place entry</p>
-            </div>
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-500/5 flex items-center justify-center border border-gold-500/10">
+            <MapPin className="w-5 h-5 text-gold-500" />
           </div>
+          <div>
+            <h1 className="text-xl font-sora font-bold text-white">Add New Place</h1>
+            <p className="text-xs text-white/30 font-inter">Create a new place entry</p>
+          </div>
+        </div>
 
-          <form onSubmit={handleSubmit} className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 space-y-5">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField label="Name">
-                <Input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />
-              </FormField>
-              <FormField label="Category">
-                <Select
-                  value={form.catKey}
-                  onChange={e => setForm(f => ({ ...f, catKey: e.target.value }))}
-                  options={categories.map(c => ({ value: c.id, label: c.label }))}
-                />
-              </FormField>
-              <FormField label="Latitude">
-                <Input type="number" step="any" value={form.lat} onChange={e => setForm(f => ({ ...f, lat: e.target.value }))} required />
-              </FormField>
-              <FormField label="Longitude">
-                <Input type="number" step="any" value={form.lon} onChange={e => setForm(f => ({ ...f, lon: e.target.value }))} required />
-              </FormField>
-              <FormField label="Description" className="md:col-span-2">
-                <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3} />
-              </FormField>
-              <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Hero Image" preview />
-              <FormField label="Rating">
-                <Input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={e => setForm(f => ({ ...f, rating: e.target.value }))} />
-              </FormField>
-            </div>
-            <FormField label="Gallery Images (up to 4)">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
-                {[0, 1, 2, 3].map(i => {
-                  const val = JSON.parse(form.gallery || '[]')[i] || '';
-                  return (
-                    <div key={i}>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[9px] font-poppins font-bold text-white/25 uppercase tracking-wider w-6 shrink-0">#{i + 1}</span>
-                        <Input type="url" value={val} onChange={e => updateGalleryUrl(i, e.target.value)} placeholder="https://example.com/photo.jpg" className="flex-1" />
-                        <GalleryUpload onUrl={url => updateGalleryUrl(i, url)} />
-                      </div>
-                      {val && (
-                        <img src={val} alt="" className="mt-2 h-20 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.04]" onError={e => { e.target.style.display = 'none' }} />
-                      )}
-                    </div>
-                  );
-                })}
-              </div>
+        <form onSubmit={handleSubmit} className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 space-y-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <FormField label="Name">
+              <Input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />
             </FormField>
-            <FormActions saving={saving} saveLabel="Create Place" onCancel={() => navigate('/admin')} />
-          </form>
-        </motion.div>
-      </div>
+            <FormField label="Category">
+              <Select value={form.catKey} onChange={e => setForm(f => ({ ...f, catKey: e.target.value }))} options={categories.map(c => ({ value: c.id, label: c.label }))} />
+            </FormField>
+            <FormField label="Latitude">
+              <Input type="number" step="any" value={form.lat} onChange={e => setForm(f => ({ ...f, lat: e.target.value }))} required />
+            </FormField>
+            <FormField label="Longitude">
+              <Input type="number" step="any" value={form.lon} onChange={e => setForm(f => ({ ...f, lon: e.target.value }))} required />
+            </FormField>
+            <FormField label="Description" className="md:col-span-2">
+              <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3} />
+            </FormField>
+            <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Hero Image" preview />
+            <FormField label="Rating">
+              <Input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={e => setForm(f => ({ ...f, rating: e.target.value }))} />
+            </FormField>
+          </div>
+          <FormField label="Gallery Images (up to 4)">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+              {[0, 1, 2, 3].map(i => {
+                const val = JSON.parse(form.gallery || '[]')[i] || '';
+                return (
+                  <div key={i}>
+                    <div className="flex items-center gap-2">
+                      <span className="text-[9px] font-poppins font-bold text-white/25 uppercase tracking-wider w-6 shrink-0">#{i + 1}</span>
+                      <Input type="url" value={val} onChange={e => updateGalleryUrl(i, e.target.value)} placeholder="https://example.com/photo.jpg" className="flex-1" />
+                      <GalleryUpload onUrl={url => updateGalleryUrl(i, url)} />
+                    </div>
+                    {val && <img src={val} alt="" className="mt-2 h-20 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.04]" onError={e => { e.target.style.display = 'none' }} />}
+                  </div>
+                );
+              })}
+            </div>
+          </FormField>
+          <FormActions saving={saving} saveLabel="Create Place" onCancel={() => navigate('/admin/places')} />
+        </form>
+      </motion.div>
     </div>
   );
 }
 
 export default function AddPlacePage() {
-  return (
-    <ToastProvider>
-      <AddPlaceInner />
-    </ToastProvider>
-  );
+  return <ToastProvider><AddPlaceInner /></ToastProvider>;
 }
