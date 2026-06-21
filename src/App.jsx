@@ -32,6 +32,7 @@ import AddPlacePage from './pages/AddPlacePage';
 import AddCategoryPage from './pages/AddCategoryPage';
 import AddEventPage from './pages/AddEventPage';
 import AddCalendarItemPage from './pages/AddCalendarItemPage';
+import AddGalleryItemPage from './pages/AddGalleryItemPage';
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -184,6 +185,8 @@ function AppLayout() {
               <Route path="calendar/new" element={<AddCalendarItemPage />} />
               <Route path="calendar/:id/edit" element={<AddCalendarItemPage />} />
               <Route path="gallery" element={<AdminGalleryPage />} />
+              <Route path="gallery/new" element={<AddGalleryItemPage />} />
+              <Route path="gallery/:id/edit" element={<AddGalleryItemPage />} />
               <Route path="feedback" element={<FeedbackPage />} />
               <Route path="system" element={<SystemPage />} />
             </Route>
