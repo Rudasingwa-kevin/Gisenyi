@@ -1,5 +1,6 @@
 node_modules
 .git
-*.md
 .env
-tests
+.env.*
+!.env.example
+*.log

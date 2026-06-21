@@ -4,13 +4,19 @@ services:
     restart: unless-stopped
     environment:
       PORT: 3000
-      DATABASE_URL: postgresql://postgres:${DB_PASSWORD}@db.srfrzcdzdclpkcnzitbf.supabase.co:5432/postgres?schema=public
-      DIRECT_URL: postgresql://postgres:${DB_PASSWORD}@db.srfrzcdzdclpkcnzitbf.supabase.co:5432/postgres?schema=public
-      JWT_SECRET: ${JWT_SECRET}
-      SUPABASE_URL: ${SUPABASE_URL}
-      SUPABASE_ANON_KEY: ${SUPABASE_ANON_KEY}
-      SUPABASE_SERVICE_KEY: ${SUPABASE_SERVICE_KEY}
+      DATABASE_URL: $DATABASE_URL
+      DIRECT_URL: $DIRECT_URL
+      JWT_SECRET: $JWT_SECRET
+      CORS_ORIGIN: $CORS_ORIGIN
+      SUPABASE_URL: $SUPABASE_URL
+      SUPABASE_ANON_KEY: $SUPABASE_ANON_KEY
+      SUPABASE_SERVICE_KEY: $SUPABASE_SERVICE_KEY
       SUPABASE_STORAGE_BUCKET: gisenyi
+      CLOUDINARY_CLOUD_NAME: $CLOUDINARY_CLOUD_NAME
+      CLOUDINARY_API_KEY: $CLOUDINARY_API_KEY
+      CLOUDINARY_API_SECRET: $CLOUDINARY_API_SECRET
+      ADMIN_USERNAME: $ADMIN_USERNAME
+      ADMIN_PASSWORD: $ADMIN_PASSWORD
       NODE_ENV: production
 
   frontend:
