@@ -100,19 +100,39 @@
 .animate-ripple { animation: ripple 10s infinite linear; }
 .animate-mesh { animation: mesh-shift 12s ease-in-out infinite; }
 
-/* Sidebar scrollbar */
-.sidebar-scrollbar::-webkit-scrollbar {
+/* Admin panel scrollbar */
+.sidebar-scrollbar::-webkit-scrollbar,
+.admin-scrollbar::-webkit-scrollbar {
   width: 4px;
 }
-.sidebar-scrollbar::-webkit-scrollbar-track {
+.sidebar-scrollbar::-webkit-scrollbar-track,
+.admin-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
-.sidebar-scrollbar::-webkit-scrollbar-thumb {
+.sidebar-scrollbar::-webkit-scrollbar-thumb,
+.admin-scrollbar::-webkit-scrollbar-thumb {
   background: rgba(201, 168, 76, 0.2);
   border-radius: 2px;
 }
-.sidebar-scrollbar::-webkit-scrollbar-thumb:hover {
+.sidebar-scrollbar::-webkit-scrollbar-thumb:hover,
+.admin-scrollbar::-webkit-scrollbar-thumb:hover {
   background: rgba(201, 168, 76, 0.4);
+}
+
+@keyframes glow-pulse {
+  0%, 100% { box-shadow: 0 0 20px rgba(201, 168, 76, 0.1); }
+  50% { box-shadow: 0 0 40px rgba(201, 168, 76, 0.2); }
+}
+.animate-glow { animation: glow-pulse 3s ease-in-out infinite; }
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.animate-gradient {
+  background-size: 200% 200%;
+  animation: gradient-shift 4s ease infinite;
 }
 
 .gisenyi-popup .leaflet-popup-content-wrapper {

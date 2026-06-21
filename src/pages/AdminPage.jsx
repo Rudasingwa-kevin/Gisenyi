@@ -1,14 +1,51 @@
 import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { ShieldAlert, Plus, Pencil, Trash2, LogOut, MapPin, LayoutGrid, Calendar, Circle, LayoutDashboard, Building2, Sparkles, Clock, Search, ArrowUpDown, ExternalLink, Image as ImageIcon, Video, MessageSquare, Star, Activity, Server, Database, RefreshCw } from 'lucide-react';
+import { motion, AnimatePresence } from 'framer-motion';
+import {
+  Plus, Pencil, Trash2, MapPin, LayoutGrid, Calendar, Circle,
+  Building2, Sparkles, Clock, ExternalLink, Image as ImageIcon,
+  Video, MessageSquare, Star, Activity, Server, Database, RefreshCw,
+  ChevronRight, TrendingUp, Eye, BarChart3
+} from 'lucide-react';
 import { API, fetchWithAuth, uploadFile } from '../utils/admin';
 import { formatDate, toDateString } from '../utils/helpers';
-import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
+import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts';
+import AdminHeader from '../components/admin/AdminHeader';
+import TabNavigation from '../components/admin/TabNavigation';
+import StatCard from '../components/admin/StatCard';
+import { AnimatedCard, AnimatedCardHeader } from '../components/admin/AnimatedCard';
+import { AnimatedList, AnimatedListItem } from '../components/admin/AnimatedList';
+import { ListControls, Pagination } from '../components/admin/ListComponents';
+import { FormField, Input, Select, Textarea, ImageUpload, GalleryUpload, FormActions } from '../components/admin/FormComponents';
+import { SkeletonDashboard, SkeletonList } from '../components/admin/SkeletonLoader';
+import EmptyState from '../components/admin/EmptyState';
+import DeleteConfirmModal from '../components/admin/DeleteConfirmModal';
+import SuccessModal from '../components/admin/SuccessModal';
+import { ToastProvider, useToast } from '../components/admin/Toast';
 
-export default function AdminPage() {
-  const { username, isAdmin, logout } = useAuth();
+const PAGE_SIZE = 10;
+
+const pageTransition = {
+  initial: { opacity: 0, y: 12 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } },
+  exit: { opacity: 0, y: -8, transition: { duration: 0.2 } },
+};
+
+const CustomTooltip = ({ active, payload, label }) => {
+  if (!active || !payload?.length) return null;
+  return (
+    <div className="glass-dark rounded-xl px-3 py-2 border border-white/10 shadow-xl">
+      <p className="text-[10px] text-white/40 font-inter mb-0.5">{label}</p>
+      <p className="text-sm text-gold-500 font-sora font-bold">{payload[0].value}</p>
+    </div>
+  );
+};
+
+function AdminPageInner() {
+  const { username, isAdmin } = useAuth();
   const navigate = useNavigate();
+  const { addToast } = useToast();
   const [tab, setTab] = useState('dashboard');
   const [places, setPlaces] = useState([]);
   const [categories, setCategories] = useState([]);
@@ -24,8 +61,16 @@ export default function AdminPage() {
   const [listSearch, setListSearch] = useState('');
   const [listSort, setListSort] = useState('name');
   const [listPage, setListPage] = useState(1);
+  const [deleteTarget, setDeleteTarget] = useState(null);
+  const [successModal, setSuccessModal] = useState({ open: false, title: '', message: '' });
 
-  const switchTab = (t) => { setTab(t); setListSearch(''); setListPage(1); };
+  const switchTab = (t) => {
+    setTab(t);
+    setListSearch('');
+    setListPage(1);
+    setShowForm(false);
+    setEditing(null);
+  };
 
   const paginated = (arr) => {
     const totalPages = Math.ceil(arr.length / PAGE_SIZE);
@@ -33,9 +78,6 @@ export default function AdminPage() {
     const start = (safePage - 1) * PAGE_SIZE;
     return { items: arr.slice(start, start + PAGE_SIZE), page: safePage, totalPages };
   };
-
-  const onSearchChange = (v) => { setListSearch(v); setListPage(1); };
-  const onSortChange = (v) => { setListSort(v); setListPage(1); };
 
   useEffect(() => {
     if (!isAdmin) navigate('/');
@@ -83,14 +125,11 @@ export default function AdminPage() {
 
   useEffect(() => {
     if (!isAdmin) return;
-    // eslint-disable-next-line react-hooks/set-state-in-effect
-    setLoading(true);
     Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems(), loadFeedback(), loadVisitorStats()]).then(() => setLoading(false));
     loadSystemInfo();
   }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems, loadVisitorStats, loadSystemInfo]);
 
   const handleDelete = async (type, id) => {
-    if (!confirm('Are you sure you want to delete this item?')) return;
     const res = await fetchWithAuth(`${API}/${type}/${id}`, { method: 'DELETE' });
     if (res.ok) {
       if (type === 'places') setPlaces(p => p.filter(x => x.id !== id));
@@ -98,17 +137,14 @@ export default function AdminPage() {
       else if (type === 'calendar') setCalendarItems(c => c.filter(x => x.id !== id));
       else if (type === 'gallery') setGalleryItems(g => g.filter(x => x.id !== id));
       else setCategories(c => c.filter(x => x.id !== id));
+      addToast('Item deleted successfully', 'success');
+    } else {
+      addToast('Failed to delete item', 'error');
     }
-  };
-
-  const handleLogout = () => {
-    logout();
-    navigate('/');
   };
 
   if (!isAdmin) return null;
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredPlaces = useMemo(() => {
     const f = places.filter(p => {
       if (!listSearch) return true;
@@ -122,7 +158,6 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [places, listSearch, listSort, listPage]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredEvents = useMemo(() => {
     const f = events.filter(e => {
       if (!listSearch) return true;
@@ -136,7 +171,6 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [events, listSearch, listSort, listPage]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredCategories = useMemo(() => {
     const f = categories.filter(c => {
       if (!listSearch) return true;
@@ -150,7 +184,6 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [categories, listSearch, listSort, listPage]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredCalendar = useMemo(() => {
     const f = calendarItems.filter(ci => {
       if (!listSearch) return true;
@@ -164,7 +197,6 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [calendarItems, listSearch, listSort, listPage]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredFeedback = useMemo(() => {
     const f = feedbackItems.filter(fb => {
       if (!listSearch) return true;
@@ -175,7 +207,6 @@ export default function AdminPage() {
     return { items, page, totalPages, total: f.length };
   }, [feedbackItems, listSearch, listPage]);
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const filteredGallery = useMemo(() => {
     const f = galleryItems.filter(g => {
       if (!listSearch) return true;
@@ -190,956 +221,768 @@ export default function AdminPage() {
   }, [galleryItems, listSearch, listSort, listPage]);
 
   return (
-    <div className="min-h-screen bg-navy-950">
-      <div className="sticky top-0 z-40 bg-navy-900/80 backdrop-blur-xl border-b border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between">
-          <div className="flex items-center gap-2 md:gap-3 min-w-0">
-            <ShieldAlert className="w-4 md:w-5 h-4 md:h-5 text-gold-500 shrink-0" />
-            <span className="text-white font-sora font-bold text-sm md:text-base truncate">Admin Panel</span>
-            <span className="text-white/30 text-xs md:text-sm font-inter hidden sm:inline">({username})</span>
-          </div>
-          <button
-            onClick={handleLogout}
-            className="flex items-center gap-1.5 text-white/50 hover:text-red-400 transition-colors text-xs md:text-sm font-inter shrink-0"
-          >
-            <LogOut className="w-3.5 md:w-4 h-3.5 md:h-4" /> Logout
-          </button>
-        </div>
-      </div>
+    <div className="min-h-screen bg-[#030810]">
+      <AdminHeader />
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-6 md:py-8">
-        <div className="flex gap-2 mb-6 md:mb-8 flex-wrap">
-          <button
-            onClick={() => switchTab('dashboard')}
-            className={`flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-inter font-semibold transition-all ${
-              tab === 'dashboard' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
-            }`}
-          >
-            <LayoutDashboard className="w-3.5 md:w-4 h-3.5 md:h-4" /> Dashboard
-          </button>
-          <button
-            onClick={() => switchTab('places')}
-            className={`flex items-center gap-2 px-3 md:px-4 py-2 md:py-2.5 rounded-xl text-xs md:text-sm font-inter font-semibold transition-all ${
-              tab === 'places' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
-            }`}
-          >
-            <MapPin className="w-3.5 md:w-4 h-3.5 md:h-4" /> Places
-          </button>
-          <button
-            onClick={() => switchTab('categories')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
-              tab === 'categories' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
-            }`}
-          >
-            <LayoutGrid className="w-4 h-4" /> Categories
-          </button>
-          <button
-            onClick={() => switchTab('events')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
-              tab === 'events' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
-            }`}
-          >
-            <Calendar className="w-4 h-4" /> Events
-          </button>
-          <button
-            onClick={() => switchTab('calendar')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
-              tab === 'calendar' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
-            }`}
-          >
-            <Circle className="w-4 h-4" /> Calendar
-          </button>
-          <button
-            onClick={() => switchTab('gallery')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
-              tab === 'gallery' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
-            }`}
-          >
-            <ImageIcon className="w-4 h-4" /> Gallery
-          </button>
-          <button
-            onClick={() => switchTab('feedback')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
-              tab === 'feedback' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
-            }`}
-          >
-            <MessageSquare className="w-4 h-4" /> Feedback
-          </button>
-          <button
-            onClick={() => switchTab('system')}
-            className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold transition-all ${
-              tab === 'system' ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/60 hover:bg-white/10'
-            }`}
-          >
-            <Server className="w-4 h-4" /> System
-          </button>
-        </div>
+      <div className="max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5 md:py-7">
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4, delay: 0.1 }}
+          className="mb-6"
+        >
+          <TabNavigation activeTab={tab} onTabChange={switchTab} />
+        </motion.div>
 
-        {tab === 'dashboard' && (
-          <div>
-            <div className="mb-8">
-              <h2 className="text-xl font-sora font-bold text-white mb-1">Dashboard</h2>
-              <p className="text-sm font-inter text-white/40">Overview of your Gisenyi platform</p>
-            </div>
+        <AnimatePresence mode="wait">
+          {tab === 'dashboard' && (
+            <motion.div key="dashboard" {...pageTransition}>
+              {loading ? (
+                <SkeletonDashboard />
+              ) : (
+                <div className="space-y-6">
+                  <div>
+                    <motion.h2
+                      initial={{ opacity: 0, x: -10 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className="text-xl font-sora font-bold text-white mb-1"
+                    >
+                      Welcome back, {username}
+                    </motion.h2>
+                    <p className="text-sm font-inter text-white/30">Here's what's happening with your platform</p>
+                  </div>
 
-            {loading ? (
-              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (
-              <>
-                <div className="grid grid-cols-2 md:grid-cols-5 gap-3 md:gap-4 mb-6 md:mb-8">
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <MapPin className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
-                      </div>
-                    </div>
-                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{places.length}</span>
-                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Places</p>
+                  <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
+                    <StatCard icon={MapPin} label="Places" value={places.length} color="gold" delay={0} />
+                    <StatCard icon={LayoutGrid} label="Categories" value={categories.length} color="blue" delay={0.07} />
+                    <StatCard icon={Calendar} label="Events" value={events.length} color="purple" delay={0.14} />
+                    <StatCard icon={Circle} label="Calendar Items" value={calendarItems.length} color="cyan" delay={0.21} />
+                    <StatCard icon={MessageSquare} label="Feedback" value={feedbackItems.length} color="green" delay={0.28} />
+                    <StatCard icon={Eye} label="Total Visits" value={visitorStats?.totalVisits ?? 0} color="gold" delay={0.35} />
+                    <StatCard icon={Activity} label="Unique Visitors" value={visitorStats?.uniqueVisitors ?? 0} color="red" delay={0.42} />
                   </div>
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <LayoutGrid className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
-                      </div>
-                    </div>
-                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{categories.length}</span>
-                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Categories</p>
-                  </div>
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <Calendar className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
-                      </div>
-                    </div>
-                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{events.length}</span>
-                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Events</p>
-                  </div>
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <Circle className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
-                      </div>
-                    </div>
-                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{calendarItems.length}</span>
-                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Calendar Items</p>
-                  </div>
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <MessageSquare className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
-                      </div>
-                    </div>
-                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{feedbackItems.length}</span>
-                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Feedback</p>
-                  </div>
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <Activity className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
-                      </div>
-                    </div>
-                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{visitorStats?.totalVisits ?? 0}</span>
-                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Total Visits</p>
-                  </div>
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <div className="flex items-center gap-2 md:gap-3 mb-2 md:mb-3">
-                      <div className="w-8 md:w-10 h-8 md:h-10 rounded-lg md:rounded-xl bg-gold-500/10 flex items-center justify-center">
-                        <Activity className="w-4 md:w-5 h-4 md:h-5 text-gold-500" />
-                      </div>
-                    </div>
-                    <span className="text-xl md:text-3xl font-sora font-extrabold text-white">{visitorStats?.uniqueVisitors ?? 0}</span>
-                    <p className="text-[9px] md:text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.15em] mt-1">Unique Visitors</p>
-                  </div>
-                </div>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6">
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
-                      <Building2 className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Recent Places
-                    </h3>
-                    {places.length === 0 ? (
-                      <p className="text-white/30 text-xs md:text-sm font-inter">No places yet</p>
-                    ) : (
-                      <div className="space-y-1.5 md:space-y-2">
-                        {places.slice(0, 5).map(p => (
-                          <div key={p.id} className="flex items-center gap-2 md:gap-3 p-2 rounded-lg bg-white/5">
-                            {p.image && <img src={p.image} alt="" className="w-7 md:w-8 h-7 md:h-8 rounded-lg object-cover bg-navy-800" />}
-                            <div className="min-w-0">
-                              <p className="text-white text-xs md:text-sm font-inter truncate">{p.name}</p>
-                              <p className="text-white/30 text-[9px] md:text-[10px] font-inter">{p.catKey}</p>
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5">
+                    <AnimatedCard delay={0.15}>
+                      <AnimatedCardHeader icon={Building2} title="Recent Places" />
+                      {places.length === 0 ? (
+                        <EmptyState icon={MapPin} title="No places yet" description="Add your first place to get started" />
+                      ) : (
+                        <div className="space-y-2">
+                          {places.slice(0, 5).map((p, i) => (
+                            <motion.div
+                              key={p.id}
+                              initial={{ opacity: 0, x: -8 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.2 + i * 0.06 }}
+                              className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors group"
+                            >
+                              {p.image && (
+                                <img src={p.image} alt="" className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />
+                              )}
+                              <div className="min-w-0 flex-1">
+                                <p className="text-white text-sm font-inter font-medium truncate group-hover:text-gold-400 transition-colors">{p.name}</p>
+                                <p className="text-white/25 text-xs font-inter">{p.catKey}</p>
+                              </div>
+                              <ChevronRight className="w-3.5 h-3.5 text-white/15 group-hover:text-gold-500/50 transition-colors" />
+                            </motion.div>
+                          ))}
+                        </div>
+                      )}
+                    </AnimatedCard>
+
+                    <AnimatedCard delay={0.2}>
+                      <AnimatedCardHeader icon={Sparkles} title="Upcoming Events" />
+                      {events.length === 0 ? (
+                        <EmptyState icon={Calendar} title="No events yet" description="Add your first event to get started" />
+                      ) : (
+                        <div className="space-y-2">
+                          {events.slice(0, 5).map((e, i) => (
+                            <motion.div
+                              key={e.id}
+                              initial={{ opacity: 0, x: -8 }}
+                              animate={{ opacity: 1, x: 0 }}
+                              transition={{ delay: 0.25 + i * 0.06 }}
+                              className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors group"
+                            >
+                              {e.image && (
+                                <img src={e.image} alt="" className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />
+                              )}
+                              <div className="min-w-0 flex-1">
+                                <p className="text-white text-sm font-inter font-medium truncate group-hover:text-gold-400 transition-colors">{e.title}</p>
+                                <p className="text-white/25 text-xs font-inter flex items-center gap-1">
+                                  <Clock className="w-3 h-3" /> {formatDate(e.date)}
+                                </p>
+                              </div>
+                              <ChevronRight className="w-3.5 h-3.5 text-white/15 group-hover:text-gold-500/50 transition-colors" />
+                            </motion.div>
+                          ))}
+                        </div>
+                      )}
+                    </AnimatedCard>
+                  </div>
+
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-5">
+                    <AnimatedCard delay={0.25}>
+                      <AnimatedCardHeader icon={BarChart3} title="Daily Visits" subtitle="Last 30 days" />
+                      {visitorStats?.daily?.length > 0 ? (
+                        <ResponsiveContainer width="100%" height={220}>
+                          <BarChart data={visitorStats.daily} barCategoryGap="25%">
+                            <XAxis
+                              dataKey="date"
+                              tick={{ fill: 'rgba(255,255,255,0.25)', fontSize: 10 }}
+                              tickFormatter={v => v.slice(5)}
+                              axisLine={false}
+                              tickLine={false}
+                            />
+                            <YAxis tick={{ fill: 'rgba(255,255,255,0.25)', fontSize: 10 }} axisLine={false} tickLine={false} />
+                            <Tooltip content={<CustomTooltip />} cursor={false} />
+                            <Bar dataKey="count" fill="url(#goldGradient)" radius={[6, 6, 0, 0]} />
+                            <defs>
+                              <linearGradient id="goldGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#C9A84C" />
+                                <stop offset="100%" stopColor="#C9A84C" stopOpacity={0.3} />
+                              </linearGradient>
+                            </defs>
+                          </BarChart>
+                        </ResponsiveContainer>
+                      ) : (
+                        <div className="h-[220px] flex items-center justify-center text-white/20 text-sm font-inter">No visit data yet</div>
+                      )}
+                    </AnimatedCard>
+
+                    <AnimatedCard delay={0.3}>
+                      <AnimatedCardHeader icon={TrendingUp} title="Visit Trend" subtitle="Growth over time" />
+                      {visitorStats?.daily?.length > 0 ? (
+                        <ResponsiveContainer width="100%" height={220}>
+                          <AreaChart data={visitorStats.daily}>
+                            <defs>
+                              <linearGradient id="areaGradient" x1="0" y1="0" x2="0" y2="1">
+                                <stop offset="0%" stopColor="#C9A84C" stopOpacity={0.3} />
+                                <stop offset="100%" stopColor="#C9A84C" stopOpacity={0} />
+                              </linearGradient>
+                            </defs>
+                            <XAxis
+                              dataKey="date"
+                              tick={{ fill: 'rgba(255,255,255,0.25)', fontSize: 10 }}
+                              tickFormatter={v => v.slice(5)}
+                              axisLine={false}
+                              tickLine={false}
+                            />
+                            <YAxis tick={{ fill: 'rgba(255,255,255,0.25)', fontSize: 10 }} axisLine={false} tickLine={false} />
+                            <Tooltip content={<CustomTooltip />} />
+                            <Area
+                              type="monotone"
+                              dataKey="count"
+                              stroke="#C9A84C"
+                              strokeWidth={2.5}
+                              fill="url(#areaGradient)"
+                              dot={false}
+                              activeDot={{ r: 5, fill: '#C9A84C', stroke: '#030810', strokeWidth: 2 }}
+                            />
+                          </AreaChart>
+                        </ResponsiveContainer>
+                      ) : (
+                        <div className="h-[220px] flex items-center justify-center text-white/20 text-sm font-inter">No visit data yet</div>
+                      )}
+                    </AnimatedCard>
+                  </div>
+
+                  <AnimatedCard delay={0.35}>
+                    <AnimatedCardHeader icon={TrendingUp} title="Top Pages" />
+                    {visitorStats?.topPages?.length > 0 ? (
+                      <div className="space-y-2.5">
+                        {visitorStats.topPages.map((p, i) => (
+                          <motion.div
+                            key={p.page}
+                            initial={{ opacity: 0, x: -8 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: 0.4 + i * 0.05 }}
+                            className="flex items-center gap-3 group"
+                          >
+                            <span className="text-white/20 text-xs font-mono w-5 text-right">{i + 1}</span>
+                            <div className="flex-1 h-7 bg-white/[0.02] rounded-lg overflow-hidden">
+                              <motion.div
+                                initial={{ width: 0 }}
+                                animate={{ width: `${(p.count / (visitorStats.topPages[0]?.count || 1)) * 100}%` }}
+                                transition={{ duration: 0.8, delay: 0.5 + i * 0.05, ease: [0.22, 1, 0.36, 1] }}
+                                className="h-full bg-gradient-to-r from-gold-500/20 to-gold-500/5 rounded-lg flex items-center px-3"
+                              >
+                                <span className="text-white/60 text-xs font-inter truncate">{p.page}</span>
+                              </motion.div>
                             </div>
-                          </div>
+                            <span className="text-gold-500 text-xs font-sora font-bold w-8 text-right">{p.count}</span>
+                          </motion.div>
                         ))}
                       </div>
-                    )}
-                  </div>
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
-                      <Sparkles className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Upcoming Events
-                    </h3>
-                    {events.length === 0 ? (
-                      <p className="text-white/30 text-xs md:text-sm font-inter">No events yet</p>
                     ) : (
-                      <div className="space-y-1.5 md:space-y-2">
-                        {events.slice(0, 5).map(e => (
-                          <div key={e.id} className="flex items-center gap-2 md:gap-3 p-2 rounded-lg bg-white/5">
-                            {e.image && <img src={e.image} alt="" className="w-7 md:w-8 h-7 md:h-8 rounded-lg object-cover bg-navy-800" />}
+                      <EmptyState icon={BarChart3} title="No page data yet" />
+                    )}
+                  </AnimatedCard>
+                </div>
+              )}
+            </motion.div>
+          )}
+
+          {tab === 'places' && (
+            <motion.div key="places" {...pageTransition}>
+              <PageHeader
+                title="Manage Places"
+                count={places.length}
+                onAddNew={() => navigate('/admin/places/new')}
+                addLabel="Add Place"
+              />
+              {showForm && (
+                <PlaceForm
+                  place={editing}
+                  categories={categories}
+                  onSave={(p) => {
+                    if (editing) setPlaces(pl => pl.map(x => x.id === p.id ? p : x));
+                    else setPlaces(pl => [...pl, p]);
+                    setShowForm(false);
+                    setEditing(null);
+                    addToast(editing ? 'Place updated' : 'Place created', 'success');
+                  }}
+                  onCancel={() => { setShowForm(false); setEditing(null); }}
+                />
+              )}
+              <ListControls
+                search={listSearch}
+                onSearch={v => { setListSearch(v); setListPage(1); }}
+                sort={listSort}
+                onSort={v => { setListSort(v); setListPage(1); }}
+                sortOptions={[{ value: 'name', label: 'Name' }, { value: 'catKey', label: 'Category' }]}
+                placeholder="Search places..."
+              />
+              {loading ? (
+                <SkeletonList />
+              ) : filteredPlaces.items.length === 0 ? (
+                <EmptyState
+                  icon={MapPin}
+                  title="No places found"
+                  description={listSearch ? 'Try a different search term' : 'Add your first place to get started'}
+                  action={!listSearch && (
+                    <Link to="/admin/places/new" className="inline-flex items-center gap-2 px-4 py-2 bg-gold-500/10 text-gold-500 border border-gold-500/20 rounded-xl text-sm font-inter font-semibold hover:bg-gold-500/20 transition-all">
+                      <Plus className="w-4 h-4" /> Add Place
+                    </Link>
+                  )}
+                />
+              ) : (
+                <>
+                  <AnimatedList className="space-y-2.5">
+                    {filteredPlaces.items.map(place => (
+                      <AnimatedListItem key={place.id}>
+                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.05] hover:border-white/[0.08] transition-all group">
+                          <div className="min-w-0 flex-1">
+                            <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{place.name}</h3>
+                            <p className="text-white/25 text-xs font-inter mt-0.5">
+                              {place.catKey} &middot;
+                              <a href={`https://www.google.com/maps?q=${place.lat},${place.lon}`} target="_blank" rel="noopener noreferrer" className="hover:text-gold-500 transition-colors ml-1">
+                                {place.lat?.toFixed(4)}, {place.lon?.toFixed(4)}
+                              </a>
+                            </p>
+                          </div>
+                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href={`/stays/${place.id}`} target="_blank" rel="noopener noreferrer" className="p-2 text-white/30 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/[0.04]" title="Preview">
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                            <button onClick={() => { setEditing(place); setShowForm(true); }} className="p-2 text-white/40 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <Pencil className="w-4 h-4" />
+                            </button>
+                            <button onClick={() => setDeleteTarget({ type: 'places', id: place.id, name: place.name })} className="p-2 text-white/40 hover:text-red-400 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </AnimatedListItem>
+                    ))}
+                  </AnimatedList>
+                  <Pagination page={filteredPlaces.page} totalPages={filteredPlaces.totalPages} onPage={setListPage} totalItems={filteredPlaces.total} itemsPerPage={PAGE_SIZE} />
+                </>
+              )}
+            </motion.div>
+          )}
+
+          {tab === 'categories' && (
+            <motion.div key="categories" {...pageTransition}>
+              <PageHeader
+                title="Manage Categories"
+                count={categories.length}
+                onAddNew={() => navigate('/admin/categories/new')}
+                addLabel="Add Category"
+              />
+              {showForm && (
+                <CategoryForm
+                  category={editing}
+                  onSave={(c) => {
+                    if (editing) setCategories(cat => cat.map(x => x.id === c.id ? c : x));
+                    else setCategories(cat => [...cat, c]);
+                    setShowForm(false);
+                    setEditing(null);
+                    addToast(editing ? 'Category updated' : 'Category created', 'success');
+                  }}
+                  onCancel={() => { setShowForm(false); setEditing(null); }}
+                />
+              )}
+              <ListControls
+                search={listSearch}
+                onSearch={v => { setListSearch(v); setListPage(1); }}
+                sort={listSort}
+                onSort={v => { setListSort(v); setListPage(1); }}
+                sortOptions={[{ value: 'label', label: 'Label' }, { value: 'id', label: 'ID' }]}
+                placeholder="Search categories..."
+              />
+              {loading ? (
+                <SkeletonList />
+              ) : filteredCategories.items.length === 0 ? (
+                <EmptyState icon={LayoutGrid} title="No categories found" description={listSearch ? 'Try a different search term' : 'Add your first category'} />
+              ) : (
+                <>
+                  <AnimatedList className="space-y-2.5">
+                    {filteredCategories.items.map(cat => (
+                      <AnimatedListItem key={cat.id}>
+                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.05] hover:border-white/[0.08] transition-all group">
+                          <div className="flex items-center gap-3 min-w-0 flex-1">
+                            <span className="text-2xl shrink-0">{cat.icon}</span>
                             <div className="min-w-0">
-                              <p className="text-white text-xs md:text-sm font-inter truncate">{e.title}</p>
-                              <p className="text-white/30 text-[9px] md:text-[10px] font-inter flex items-center gap-1"><Clock className="w-2.5 md:w-3 h-2.5 md:h-3" /> {formatDate(e.date)}</p>
+                              <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors">{cat.label}</h3>
+                              <p className="text-white/25 text-xs font-inter">ID: {cat.id} &middot; <span className="inline-block w-2 h-2 rounded-full mr-1" style={{ backgroundColor: cat.color }} />{cat.color}</p>
                             </div>
                           </div>
-                        ))}
+                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button onClick={() => { setEditing(cat); setShowForm(true); }} className="p-2 text-white/40 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <Pencil className="w-4 h-4" />
+                            </button>
+                            <button onClick={() => setDeleteTarget({ type: 'categories', id: cat.id, name: cat.label })} className="p-2 text-white/40 hover:text-red-400 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </AnimatedListItem>
+                    ))}
+                  </AnimatedList>
+                  <Pagination page={filteredCategories.page} totalPages={filteredCategories.totalPages} onPage={setListPage} totalItems={filteredCategories.total} itemsPerPage={PAGE_SIZE} />
+                </>
+              )}
+            </motion.div>
+          )}
+
+          {tab === 'events' && (
+            <motion.div key="events" {...pageTransition}>
+              <PageHeader
+                title="Manage Events"
+                count={events.length}
+                onAddNew={() => navigate('/admin/events/new')}
+                addLabel="Add Event"
+              />
+              {showForm && (
+                <EventForm
+                  event={editing}
+                  onSave={(e) => {
+                    if (editing) setEvents(ev => ev.map(x => x.id === e.id ? e : x));
+                    else setEvents(ev => [...ev, e]);
+                    setShowForm(false);
+                    setEditing(null);
+                    addToast(editing ? 'Event updated' : 'Event created', 'success');
+                  }}
+                  onCancel={() => { setShowForm(false); setEditing(null); }}
+                />
+              )}
+              <ListControls
+                search={listSearch}
+                onSearch={v => { setListSearch(v); setListPage(1); }}
+                sort={listSort}
+                onSort={v => { setListSort(v); setListPage(1); }}
+                sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]}
+                placeholder="Search events..."
+              />
+              {loading ? (
+                <SkeletonList />
+              ) : filteredEvents.items.length === 0 ? (
+                <EmptyState icon={Calendar} title="No events found" description={listSearch ? 'Try a different search term' : 'Add your first event'} />
+              ) : (
+                <>
+                  <AnimatedList className="space-y-2.5">
+                    {filteredEvents.items.map(event => (
+                      <AnimatedListItem key={event.id}>
+                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.05] hover:border-white/[0.08] transition-all group">
+                          <div className="flex items-center gap-4 min-w-0 flex-1">
+                            {event.image && (
+                              <img src={event.image} alt="" className="w-12 h-12 rounded-xl object-cover bg-navy-800 border border-white/[0.06] shrink-0" />
+                            )}
+                            <div className="min-w-0">
+                              <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{event.title}</h3>
+                              <p className="text-white/25 text-xs font-inter mt-0.5">
+                                {formatDate(event.date)} &middot; {event.location} &middot; <span className="text-gold-500/50">{event.category}</span>
+                              </p>
+                              {event.ticketLink && (
+                                <p className="text-white/15 text-xs font-inter mt-0.5 truncate">Ticket: {event.ticketLink}</p>
+                              )}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                            <a href={`/events?highlight=${event.id}`} target="_blank" rel="noopener noreferrer" className="p-2 text-white/30 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/[0.04]" title="Preview">
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                            <button onClick={() => { setEditing(event); setShowForm(true); }} className="p-2 text-white/40 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <Pencil className="w-4 h-4" />
+                            </button>
+                            <button onClick={() => setDeleteTarget({ type: 'events', id: event.id, name: event.title })} className="p-2 text-white/40 hover:text-red-400 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </AnimatedListItem>
+                    ))}
+                  </AnimatedList>
+                  <Pagination page={filteredEvents.page} totalPages={filteredEvents.totalPages} onPage={setListPage} totalItems={filteredEvents.total} itemsPerPage={PAGE_SIZE} />
+                </>
+              )}
+            </motion.div>
+          )}
+
+          {tab === 'calendar' && (
+            <motion.div key="calendar" {...pageTransition}>
+              <PageHeader
+                title="Manage Calendar"
+                count={calendarItems.length}
+                onAddNew={() => navigate('/admin/calendar/new')}
+                addLabel="Add Item"
+              />
+              {showForm && (
+                <CalendarItemForm
+                  item={editing}
+                  onSave={(ci) => {
+                    if (editing) setCalendarItems(items => items.map(x => x.id === ci.id ? ci : x));
+                    else setCalendarItems(items => [...items, ci]);
+                    setShowForm(false);
+                    setEditing(null);
+                    addToast(editing ? 'Item updated' : 'Item created', 'success');
+                  }}
+                  onCancel={() => { setShowForm(false); setEditing(null); }}
+                />
+              )}
+              <ListControls
+                search={listSearch}
+                onSearch={v => { setListSearch(v); setListPage(1); }}
+                sort={listSort}
+                onSort={v => { setListSort(v); setListPage(1); }}
+                sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]}
+                placeholder="Search calendar items..."
+              />
+              {loading ? (
+                <SkeletonList />
+              ) : filteredCalendar.items.length === 0 ? (
+                <EmptyState icon={Circle} title="No calendar items found" description={listSearch ? 'Try a different search term' : 'Add your first calendar item'} />
+              ) : (
+                <>
+                  <AnimatedList className="space-y-2.5">
+                    {filteredCalendar.items.map(item => (
+                      <AnimatedListItem key={item.id}>
+                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.05] hover:border-white/[0.08] transition-all group">
+                          <div className="flex items-center gap-4 min-w-0 flex-1">
+                            <div className="w-11 h-11 rounded-xl flex items-center justify-center shrink-0" style={{ backgroundColor: `${item.color}15`, border: `1px solid ${item.color}20` }}>
+                              <Circle className="w-4 h-4" style={{ color: item.color }} fill={item.color} stroke="none" />
+                            </div>
+                            <div className="min-w-0">
+                              <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{item.title}</h3>
+                              <p className="text-white/25 text-xs font-inter">
+                                {formatDate(item.date)}{item.time ? ` ${item.time}` : ''} &middot; <span className="capitalize" style={{ color: item.color }}>{item.type}</span>
+                              </p>
+                              {item.description && <p className="text-white/15 text-xs font-inter mt-0.5 line-clamp-1">{item.description}</p>}
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity shrink-0">
+                            <button onClick={() => { setEditing(item); setShowForm(true); }} className="p-2 text-white/40 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <Pencil className="w-4 h-4" />
+                            </button>
+                            <button onClick={() => setDeleteTarget({ type: 'calendar', id: item.id, name: item.title })} className="p-2 text-white/40 hover:text-red-400 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </AnimatedListItem>
+                    ))}
+                  </AnimatedList>
+                  <Pagination page={filteredCalendar.page} totalPages={filteredCalendar.totalPages} onPage={setListPage} totalItems={filteredCalendar.total} itemsPerPage={PAGE_SIZE} />
+                </>
+              )}
+            </motion.div>
+          )}
+
+          {tab === 'gallery' && (
+            <motion.div key="gallery" {...pageTransition}>
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+                <div>
+                  <h2 className="text-lg font-sora font-bold text-white">Manage Gallery</h2>
+                  <p className="text-xs text-white/30 font-inter mt-0.5">{galleryItems.length} items</p>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={() => { setEditing(null); setShowForm(true); }}
+                  className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 rounded-xl text-sm font-sora font-bold hover:from-gold-400 hover:to-gold-300 hover:shadow-lg hover:shadow-gold-500/20 transition-all"
+                >
+                  <Plus className="w-4 h-4" /> Add Item
+                </motion.button>
+              </div>
+              {showForm && (
+                <GalleryItemForm
+                  item={editing}
+                  onSave={(g) => {
+                    if (editing) setGalleryItems(items => items.map(x => x.id === g.id ? g : x));
+                    else setGalleryItems(items => [g, ...items]);
+                    setShowForm(false);
+                    setEditing(null);
+                    addToast(editing ? 'Gallery item updated' : 'Gallery item added', 'success');
+                  }}
+                  onCancel={() => { setShowForm(false); setEditing(null); }}
+                />
+              )}
+              <ListControls
+                search={listSearch}
+                onSearch={v => { setListSearch(v); setListPage(1); }}
+                sort={listSort}
+                onSort={v => { setListSort(v); setListPage(1); }}
+                sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]}
+                placeholder="Search gallery..."
+              />
+              {loading ? (
+                <SkeletonList />
+              ) : filteredGallery.items.length === 0 ? (
+                <EmptyState icon={ImageIcon} title="No gallery items found" />
+              ) : (
+                <>
+                  <AnimatedList className="space-y-2.5">
+                    {filteredGallery.items.map(item => (
+                      <AnimatedListItem key={item.id}>
+                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.05] hover:border-white/[0.08] transition-all group">
+                          <div className="flex items-center gap-4 min-w-0 flex-1">
+                            <div className="w-12 h-12 rounded-xl overflow-hidden bg-navy-800 border border-white/[0.06] shrink-0 flex items-center justify-center">
+                              {item.type === 'video' ? (
+                                <Video className="w-5 h-5 text-gold-500" />
+                              ) : (
+                                <img src={item.url} alt={item.title || ''} className="w-full h-full object-cover" onError={e => { e.target.style.display = 'none' }} />
+                              )}
+                            </div>
+                            <div className="min-w-0">
+                              <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{item.title || 'Untitled'}</h3>
+                              <p className="text-white/25 text-xs font-inter capitalize">{item.type}</p>
+                            </div>
+                          </div>
+                          <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <a href={item.url} target="_blank" rel="noopener noreferrer" className="p-2 text-white/40 hover:text-gold-500 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <ExternalLink className="w-4 h-4" />
+                            </a>
+                            <button onClick={() => setDeleteTarget({ type: 'gallery', id: item.id, name: item.title || 'Untitled' })} className="p-2 text-white/40 hover:text-red-400 transition-colors rounded-lg hover:bg-white/[0.04]">
+                              <Trash2 className="w-4 h-4" />
+                            </button>
+                          </div>
+                        </div>
+                      </AnimatedListItem>
+                    ))}
+                  </AnimatedList>
+                  <Pagination page={filteredGallery.page} totalPages={filteredGallery.totalPages} onPage={setListPage} totalItems={filteredGallery.total} itemsPerPage={PAGE_SIZE} />
+                </>
+              )}
+            </motion.div>
+          )}
+
+          {tab === 'feedback' && (
+            <motion.div key="feedback" {...pageTransition}>
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+                <div>
+                  <h2 className="text-lg font-sora font-bold text-white">Visitor Feedback</h2>
+                  <p className="text-xs text-white/30 font-inter mt-0.5">{feedbackItems.length} messages</p>
+                </div>
+              </div>
+              <ListControls
+                search={listSearch}
+                onSearch={v => { setListSearch(v); setListPage(1); }}
+                sort={listSort}
+                onSort={v => { setListSort(v); setListPage(1); }}
+                sortOptions={[{ value: 'date', label: 'Date' }, { value: 'name', label: 'Name' }]}
+                placeholder="Search feedback..."
+              />
+              {loading ? (
+                <SkeletonList />
+              ) : filteredFeedback.items.length === 0 ? (
+                <EmptyState icon={MessageSquare} title="No feedback yet" description="Feedback from visitors will appear here" />
+              ) : (
+                <>
+                  <AnimatedList className="space-y-3">
+                    {filteredFeedback.items.map(fb => (
+                      <AnimatedListItem key={fb.id}>
+                        <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-5 hover:bg-white/[0.05] hover:border-white/[0.08] transition-all">
+                          <div className="flex items-start justify-between gap-4 mb-3">
+                            <div className="min-w-0">
+                              <div className="flex items-center gap-2 flex-wrap">
+                                <h3 className="text-white font-inter font-semibold text-sm">{fb.name}</h3>
+                                {fb.email && <span className="text-white/25 text-xs font-inter hidden sm:inline">{fb.email}</span>}
+                                {fb.page && (
+                                  <span className="text-[9px] font-poppins font-bold text-white/20 uppercase tracking-[0.15em] bg-white/[0.04] px-2 py-0.5 rounded-md border border-white/[0.04]">{fb.page}</span>
+                                )}
+                              </div>
+                              <div className="flex items-center gap-0.5 mt-1.5">
+                                {[1, 2, 3, 4, 5].map(n => (
+                                  <Star key={n} className={`w-3.5 h-3.5 transition-colors ${n <= fb.rating ? 'fill-gold-500 text-gold-500' : 'text-white/[0.06]'}`} />
+                                ))}
+                              </div>
+                            </div>
+                            <span className="text-[10px] font-inter text-white/20 shrink-0">
+                              {new Date(fb.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
+                            </span>
+                          </div>
+                          <p className="text-white/50 text-sm font-inter leading-relaxed">{fb.message}</p>
+                        </div>
+                      </AnimatedListItem>
+                    ))}
+                  </AnimatedList>
+                  <Pagination page={filteredFeedback.page} totalPages={filteredFeedback.totalPages} onPage={setListPage} totalItems={filteredFeedback.total} itemsPerPage={PAGE_SIZE} />
+                </>
+              )}
+            </motion.div>
+          )}
+
+          {tab === 'system' && (
+            <motion.div key="system" {...pageTransition}>
+              <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+                <div>
+                  <h2 className="text-lg font-sora font-bold text-white">System Health</h2>
+                  <p className="text-xs text-white/30 font-inter mt-0.5">Server and infrastructure status</p>
+                </div>
+                <motion.button
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  onClick={loadSystemInfo}
+                  className="flex items-center gap-2 px-3.5 py-2 bg-white/[0.04] text-white/50 rounded-xl text-xs font-inter hover:bg-white/[0.08] hover:text-white/70 transition-all border border-white/[0.06]"
+                >
+                  <RefreshCw className="w-3.5 h-3.5" /> Refresh
+                </motion.button>
+              </div>
+              {!systemInfo ? (
+                <SkeletonDashboard />
+              ) : (
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-5">
+                  <AnimatedCard delay={0}>
+                    <AnimatedCardHeader icon={Database} title="Database" />
+                    <div className="space-y-3.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-white/35 text-xs font-inter">Status</span>
+                        <span className={`flex items-center gap-2 text-xs font-inter font-semibold ${systemInfo.database.status === 'connected' ? 'text-green-400' : 'text-red-400'}`}>
+                          <span className={`w-2 h-2 rounded-full ${systemInfo.database.status === 'connected' ? 'bg-green-400 animate-pulse-soft' : 'bg-red-400'}`} />
+                          {systemInfo.database.status === 'connected' ? 'Connected' : 'Disconnected'}
+                        </span>
                       </div>
-                    )}
-                  </div>
-                </div>
+                      {systemInfo.database.pingMs != null && (
+                        <div className="flex items-center justify-between">
+                          <span className="text-white/35 text-xs font-inter">Ping</span>
+                          <span className="text-white/60 text-xs font-mono">{systemInfo.database.pingMs}ms</span>
+                        </div>
+                      )}
+                    </div>
+                  </AnimatedCard>
 
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-6 mt-6">
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
-                      <Activity className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Daily Visits (30 days)
-                    </h3>
-                    {visitorStats?.daily?.length > 0 ? (
-                      <ResponsiveContainer width="100%" height={200}>
-                        <BarChart data={visitorStats.daily}>
-                          <XAxis dataKey="date" tick={{ fill: '#9CA3AF', fontSize: 10 }} tickFormatter={v => v.slice(5)} />
-                          <YAxis tick={{ fill: '#9CA3AF', fontSize: 10 }} />
-                          <Tooltip contentStyle={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }} />
-                          <Bar dataKey="count" fill="#C9A84C" radius={[4, 4, 0, 0]} />
-                        </BarChart>
-                      </ResponsiveContainer>
-                    ) : (
-                      <div className="h-[200px] flex items-center justify-center text-white/30 text-sm font-inter">No visit data yet</div>
-                    )}
-                  </div>
-                  <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                    <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
-                      <Activity className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Visit Trend
-                    </h3>
-                    {visitorStats?.daily?.length > 0 ? (
-                      <ResponsiveContainer width="100%" height={200}>
-                        <LineChart data={visitorStats.daily}>
-                          <XAxis dataKey="date" tick={{ fill: '#9CA3AF', fontSize: 10 }} tickFormatter={v => v.slice(5)} />
-                          <YAxis tick={{ fill: '#9CA3AF', fontSize: 10 }} />
-                          <Tooltip contentStyle={{ background: '#1a1a2e', border: '1px solid rgba(255,255,255,0.1)', borderRadius: 8, fontSize: 12 }} />
-                          <Line type="monotone" dataKey="count" stroke="#C9A84C" strokeWidth={2} dot={false} />
-                        </LineChart>
-                      </ResponsiveContainer>
-                    ) : (
-                      <div className="h-[200px] flex items-center justify-center text-white/30 text-sm font-inter">No visit data yet</div>
-                    )}
-                  </div>
-                </div>
-
-                <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6 mt-6">
-                  <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-3 md:mb-4 flex items-center gap-2">
-                    <Activity className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Top Pages
-                  </h3>
-                  {visitorStats?.topPages?.length > 0 ? (
-                    <div className="space-y-2">
-                      {visitorStats.topPages.map((p, i) => (
-                        <div key={p.page} className="flex items-center gap-3">
-                          <span className="text-white/30 text-xs font-mono w-5">{i + 1}.</span>
-                          <span className="text-white/70 text-sm font-inter flex-1 truncate">{p.page}</span>
-                          <span className="text-gold-500 text-sm font-sora font-bold">{p.count}</span>
+                  <AnimatedCard delay={0.1}>
+                    <AnimatedCardHeader icon={Server} title="Server" />
+                    <div className="space-y-3">
+                      {[
+                        ['Uptime', (() => {
+                          const u = Math.floor(systemInfo.server.uptime);
+                          const d = Math.floor(u / 86400);
+                          const h = Math.floor((u % 86400) / 3600);
+                          const m = Math.floor((u % 3600) / 60);
+                          return d > 0 ? `${d}d ${h}h ${m}m` : h > 0 ? `${h}h ${m}m` : `${m}m`;
+                        })()],
+                        ['Node.js', systemInfo.server.nodeVersion],
+                        ['Environment', systemInfo.server.env],
+                        ['Platform', `${systemInfo.server.platform} (${systemInfo.server.arch})`],
+                        ['CPU Cores', systemInfo.server.cpus],
+                      ].map(([label, value]) => (
+                        <div key={label} className="flex items-center justify-between">
+                          <span className="text-white/35 text-xs font-inter">{label}</span>
+                          <span className="text-white/60 text-xs font-mono">{value}</span>
                         </div>
                       ))}
                     </div>
-                  ) : (
-                    <p className="text-white/30 text-sm font-inter">No page data yet</p>
-                  )}
-                </div>
-              </>
-            )}
-          </div>
-        )}
+                  </AnimatedCard>
 
-        {tab === 'places' && (
-          <div>
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
-              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Places ({places.length})</h2>
-              <button
-                onClick={() => setShowForm(!showForm)}
-                className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
-              >
-                <Plus className="w-4 h-4" /> {showForm ? 'Close' : 'Edit'}
-              </button>
-            </div>
-            <div className="flex gap-3 mb-6">
-              <Link to="/admin/places/new" className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white/70 rounded-xl text-sm font-sora font-bold hover:bg-white/20 transition-all">
-                <Plus className="w-4 h-4" /> Add New Place
-              </Link>
-            </div>
-
-            {showForm && (
-              <PlaceForm
-                place={editing}
-                categories={categories}
-                onSave={(p) => {
-                  if (editing) setPlaces(pl => pl.map(x => x.id === p.id ? p : x));
-                  else setPlaces(pl => [...pl, p]);
-                  setShowForm(false);
-                  setEditing(null);
-                }}
-                onCancel={() => { setShowForm(false); setEditing(null); }}
-              />
-            )}
-
-            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'name', label: 'Name' }, { value: 'catKey', label: 'Category' }]} placeholder="Search places..." />
-            {loading ? (
-              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (<div>
-              <div className="grid gap-3">
-                {filteredPlaces.items.map(place => (
-                  <div key={place.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
-                    <div>
-                      <h3 className="text-white font-inter font-semibold">{place.name}</h3>
-                      <p className="text-white/30 text-sm font-inter">{place.catKey} &middot; <a href={`https://www.google.com/maps?q=${place.lat},${place.lon}`} target="_blank" rel="noopener noreferrer" className="hover:text-gold-500 transition-colors">{place.lat?.toFixed(4)}, {place.lon?.toFixed(4)}</a></p>
-                    </div>
-                    <div className="flex gap-1">
-                      <a href={`/stays/${place.id}`} target="_blank" rel="noopener noreferrer"
-                        className="p-2 text-white/30 hover:text-gold-500 transition-colors" title="Preview">
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                      <button onClick={() => { setEditing(place); setShowForm(true); }}
-                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
-                        <Pencil className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => handleDelete('places', place.id)}
-                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Pagination page={filteredPlaces.page} totalPages={filteredPlaces.totalPages} onPage={setListPage} />
-              </div>)}
-          </div>
-        )}
-
-        {tab === 'categories' && (
-          <div>
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
-              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Categories ({categories.length})</h2>
-              <button
-                onClick={() => setShowForm(!showForm)}
-                className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
-              >
-                <Plus className="w-4 h-4" /> {showForm ? 'Close' : 'Edit'}
-              </button>
-            </div>
-            <div className="flex gap-3 mb-6">
-              <Link to="/admin/categories/new" className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white/70 rounded-xl text-sm font-sora font-bold hover:bg-white/20 transition-all">
-                <Plus className="w-4 h-4" /> Add New Category
-              </Link>
-            </div>
-
-            {showForm && (
-              <CategoryForm
-                category={editing}
-                onSave={(c) => {
-                  if (editing) setCategories(cat => cat.map(x => x.id === c.id ? c : x));
-                  else setCategories(cat => [...cat, c]);
-                  setShowForm(false);
-                  setEditing(null);
-                }}
-                onCancel={() => { setShowForm(false); setEditing(null); }}
-              />
-            )}
-
-            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'label', label: 'Label' }, { value: 'id', label: 'ID' }]} placeholder="Search categories..." />
-            {loading ? (
-              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (<div>
-              <div className="grid gap-3">
-                {filteredCategories.items.map(cat => (
-                  <div key={cat.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <span className="text-2xl">{cat.icon}</span>
+                  <AnimatedCard delay={0.2}>
+                    <AnimatedCardHeader icon={Activity} title="Memory" />
+                    <div className="space-y-5">
                       <div>
-                        <h3 className="text-white font-inter font-semibold">{cat.label}</h3>
-                        <p className="text-white/30 text-sm font-inter">ID: {cat.id} &middot; Color: {cat.color}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-1">
-                      <button onClick={() => { setEditing(cat); setShowForm(true); }}
-                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
-                        <Pencil className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => handleDelete('categories', cat.id)}
-                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Pagination page={filteredCategories.page} totalPages={filteredCategories.totalPages} onPage={setListPage} />
-              </div>)}
-          </div>
-        )}
-
-        {tab === 'events' && (
-          <div>
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
-              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Events ({events.length})</h2>
-              <button
-                onClick={() => setShowForm(!showForm)}
-                className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
-              >
-                <Plus className="w-4 h-4" /> {showForm ? 'Close' : 'Edit'}
-              </button>
-            </div>
-            <div className="flex gap-3 mb-6">
-              <Link to="/admin/events/new" className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white/70 rounded-xl text-sm font-sora font-bold hover:bg-white/20 transition-all">
-                <Plus className="w-4 h-4" /> Add New Event
-              </Link>
-            </div>
-
-            {showForm && (
-              <EventForm
-                event={editing}
-                onSave={(e) => {
-                  if (editing) setEvents(ev => ev.map(x => x.id === e.id ? e : x));
-                  else setEvents(ev => [...ev, e]);
-                  setShowForm(false);
-                  setEditing(null);
-                }}
-                onCancel={() => { setShowForm(false); setEditing(null); }}
-              />
-            )}
-
-            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]} placeholder="Search events..." />
-            {loading ? (
-              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (<div>
-              <div className="grid gap-3">
-                {filteredEvents.items.map(event => (
-                  <div key={event.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      {event.image && (
-                        <img src={event.image} alt="" className="w-14 h-14 rounded-lg object-cover bg-navy-800" />
-                      )}
-                      <div>
-                        <h3 className="text-white font-inter font-semibold">{event.title}</h3>
-                        <p className="text-white/30 text-sm font-inter">{formatDate(event.date)} &middot; {event.location} &middot; <span className="text-gold-500/60">{event.category}</span></p>
-                        {event.ticketLink && (
-                          <p className="text-white/20 text-xs font-inter mt-0.5">Ticket: {event.ticketLink}</p>
-                        )}
-                      </div>
-                    </div>
-                    <div className="flex gap-1 shrink-0">
-                      <a href={`/events?highlight=${event.id}`} target="_blank" rel="noopener noreferrer"
-                        className="p-2 text-white/30 hover:text-gold-500 transition-colors" title="Preview">
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                      <button onClick={() => { setEditing(event); setShowForm(true); }}
-                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
-                        <Pencil className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => handleDelete('events', event.id)}
-                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Pagination page={filteredEvents.page} totalPages={filteredEvents.totalPages} onPage={setListPage} />
-              </div>)}
-          </div>
-        )}
-
-        {tab === 'calendar' && (
-          <div>
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
-              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Calendar Items ({calendarItems.length})</h2>
-              <button
-                onClick={() => setShowForm(!showForm)}
-                className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
-              >
-                <Plus className="w-4 h-4" /> {showForm ? 'Close' : 'Edit'}
-              </button>
-            </div>
-            <div className="flex gap-3 mb-6">
-              <Link to="/admin/calendar/new" className="flex items-center gap-2 px-4 py-2 bg-white/10 text-white/70 rounded-xl text-sm font-sora font-bold hover:bg-white/20 transition-all">
-                <Plus className="w-4 h-4" /> Add New Item
-              </Link>
-            </div>
-
-            {showForm && (
-              <CalendarItemForm
-                item={editing}
-                onSave={(ci) => {
-                  if (editing) setCalendarItems(items => items.map(x => x.id === ci.id ? ci : x));
-                  else setCalendarItems(items => [...items, ci]);
-                  setShowForm(false);
-                  setEditing(null);
-                }}
-                onCancel={() => { setShowForm(false); setEditing(null); }}
-              />
-            )}
-
-            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]} placeholder="Search calendar items..." />
-            {loading ? (
-              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (<div>
-              <div className="grid gap-3">
-                {filteredCalendar.items.map(item => (
-                  <div key={item.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4">
-                      <div className="w-14 h-14 rounded-lg flex items-center justify-center text-2xl" style={{ backgroundColor: `${item.color}15` }}>
-                        <Circle className="w-4 h-4" style={{ color: item.color }} fill={item.color} stroke="none" />
-                      </div>
-                      <div>
-                        <h3 className="text-white font-inter font-semibold">{item.title}</h3>
-                        <p className="text-white/30 text-sm font-inter">
-                          {formatDate(item.date)}{item.time ? ` ${item.time}` : ''} &middot; <span className="capitalize" style={{ color: item.color }}>{item.type}</span>
-                        </p>
-                        {item.description && <p className="text-white/20 text-xs font-inter mt-0.5 line-clamp-1">{item.description}</p>}
-                      </div>
-                    </div>
-                    <div className="flex gap-1 shrink-0">
-                      <button onClick={() => { setEditing(item); setShowForm(true); }}
-                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
-                        <Pencil className="w-4 h-4" />
-                      </button>
-                      <button onClick={() => handleDelete('calendar', item.id)}
-                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Pagination page={filteredCalendar.page} totalPages={filteredCalendar.totalPages} onPage={setListPage} />
-              </div>)}
-          </div>
-        )}
-
-        {tab === 'feedback' && (
-          <div>
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
-              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Visitor Feedback ({feedbackItems.length})</h2>
-            </div>
-            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'name', label: 'Name' }]} placeholder="Search feedback..." />
-            {loading ? (
-              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : filteredFeedback.items.length === 0 ? (
-              <div className="text-center py-16">
-                <MessageSquare className="w-10 h-10 mx-auto text-white/20 mb-3" />
-                <p className="font-inter text-white/30">No feedback yet</p>
-              </div>
-            ) : (
-              <div className="space-y-3">
-                {filteredFeedback.items.map(fb => (
-                  <div key={fb.id} className="bg-white/5 border border-white/5 rounded-xl p-4 md:p-5">
-                    <div className="flex items-start justify-between gap-4 mb-3">
-                      <div className="min-w-0">
-                        <div className="flex items-center gap-2 flex-wrap">
-                          <h3 className="text-white font-inter font-semibold text-sm">{fb.name}</h3>
-                          {fb.email && (
-                            <span className="text-white/30 text-xs font-inter hidden sm:inline">{fb.email}</span>
-                          )}
-                          {fb.page && (
-                            <span className="text-[9px] font-poppins font-bold text-white/20 uppercase tracking-[0.15em] bg-white/5 px-2 py-0.5 rounded">{fb.page}</span>
-                          )}
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-white/35 text-xs font-inter">System RAM</span>
+                          <span className="text-white/60 text-xs font-mono">{Math.round(systemInfo.memory.system.used / 1024 / 1024)} MB / {Math.round(systemInfo.memory.system.total / 1024 / 1024)} MB</span>
                         </div>
-                        <div className="flex items-center gap-1 mt-1">
-                          {[1, 2, 3, 4, 5].map(n => (
-                            <Star key={n} className={`w-3 h-3 ${n <= fb.rating ? 'fill-gold-500 text-gold-500' : 'text-white/10'}`} />
-                          ))}
+                        <div className="w-full h-2 bg-white/[0.04] rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${(systemInfo.memory.system.used / systemInfo.memory.system.total * 100)}%` }}
+                            transition={{ duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+                            className="h-full bg-gradient-to-r from-gold-500 to-gold-400 rounded-full"
+                          />
                         </div>
                       </div>
-                      <span className="text-[10px] font-inter text-white/20 shrink-0">
-                        {new Date(fb.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit' })}
-                      </span>
-                    </div>
-                    <p className="text-white/60 text-sm font-inter leading-relaxed">{fb.message}</p>
-                  </div>
-                ))}
-                <Pagination page={filteredFeedback.page} totalPages={filteredFeedback.totalPages} onPage={setListPage} />
-              </div>
-            )}
-          </div>
-        )}
-
-        {tab === 'system' && (
-          <div>
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
-              <h2 className="text-lg md:text-xl font-sora font-bold text-white">System Health</h2>
-              <button onClick={loadSystemInfo} className="flex items-center gap-1.5 px-3 py-1.5 bg-white/5 text-white/60 rounded-lg text-xs font-inter hover:bg-white/10 transition-all">
-                <RefreshCw className="w-3.5 h-3.5" /> Refresh
-              </button>
-            </div>
-
-            {!systemInfo ? (
-              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6 mb-6">
-                {/* Database */}
-                <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                  <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-4 flex items-center gap-2">
-                    <Database className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Database
-                  </h3>
-                  <div className="space-y-3">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/40 text-xs font-inter">Status</span>
-                      <span className={`flex items-center gap-1.5 text-xs font-inter font-semibold ${systemInfo.database.status === 'connected' ? 'text-green-400' : 'text-red-400'}`}>
-                        <span className={`w-2 h-2 rounded-full ${systemInfo.database.status === 'connected' ? 'bg-green-400' : 'bg-red-400'}`} />
-                        {systemInfo.database.status === 'connected' ? 'Connected' : 'Disconnected'}
-                      </span>
-                    </div>
-                    {systemInfo.database.pingMs != null && (
-                      <div className="flex items-center justify-between">
-                        <span className="text-white/40 text-xs font-inter">Ping</span>
-                        <span className="text-white/70 text-xs font-mono">{systemInfo.database.pingMs}ms</span>
+                      <div>
+                        <div className="flex items-center justify-between mb-2">
+                          <span className="text-white/35 text-xs font-inter">Heap Used</span>
+                          <span className="text-white/60 text-xs font-mono">{Math.round(systemInfo.memory.process.heapUsed / 1024 / 1024)} MB / {Math.round(systemInfo.memory.process.heapTotal / 1024 / 1024)} MB</span>
+                        </div>
+                        <div className="w-full h-2 bg-white/[0.04] rounded-full overflow-hidden">
+                          <motion.div
+                            initial={{ width: 0 }}
+                            animate={{ width: `${Math.min(100, (systemInfo.memory.process.heapUsed / systemInfo.memory.process.heapTotal * 100))}%` }}
+                            transition={{ duration: 1, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                            className="h-full bg-gradient-to-r from-blue-500 to-blue-400 rounded-full"
+                          />
+                        </div>
                       </div>
-                    )}
-                  </div>
+                    </div>
+                  </AnimatedCard>
                 </div>
-
-                {/* Server */}
-                <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                  <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-4 flex items-center gap-2">
-                    <Server className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Server
-                  </h3>
-                  <div className="space-y-2.5">
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/40 text-xs font-inter">Uptime</span>
-                      <span className="text-white/70 text-xs font-mono">{(() => {
-                        const u = Math.floor(systemInfo.server.uptime);
-                        const d = Math.floor(u / 86400);
-                        const h = Math.floor((u % 86400) / 3600);
-                        const m = Math.floor((u % 3600) / 60);
-                        return d > 0 ? `${d}d ${h}h ${m}m` : h > 0 ? `${h}h ${m}m` : `${m}m`;
-                      })()}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/40 text-xs font-inter">Node.js</span>
-                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.nodeVersion}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/40 text-xs font-inter">Environment</span>
-                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.env}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/40 text-xs font-inter">Platform</span>
-                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.platform} ({systemInfo.server.arch})</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/40 text-xs font-inter">Hostname</span>
-                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.hostname}</span>
-                    </div>
-                    <div className="flex items-center justify-between">
-                      <span className="text-white/40 text-xs font-inter">CPU Cores</span>
-                      <span className="text-white/70 text-xs font-mono">{systemInfo.server.cpus}</span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Memory */}
-                <div className="glass rounded-xl md:rounded-2xl border border-white/5 p-4 md:p-6">
-                  <h3 className="font-sora font-bold text-white text-xs md:text-sm mb-4 flex items-center gap-2">
-                    <Activity className="w-3.5 md:w-4 h-3.5 md:h-4 text-gold-500" /> Memory
-                  </h3>
-                  <div className="space-y-4">
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-white/40 text-xs font-inter">System RAM</span>
-                        <span className="text-white/70 text-xs font-mono">{Math.round(systemInfo.memory.system.used / 1024 / 1024)} MB / {Math.round(systemInfo.memory.system.total / 1024 / 1024)} MB</span>
-                      </div>
-                      <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-gold-500 rounded-full transition-all" style={{ width: `${(systemInfo.memory.system.used / systemInfo.memory.system.total * 100).toFixed(1)}%` }} />
-                      </div>
-                    </div>
-                    <div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-white/40 text-xs font-inter">Process RSS</span>
-                        <span className="text-white/70 text-xs font-mono">{Math.round(systemInfo.memory.process.rss / 1024 / 1024)} MB</span>
-                      </div>
-                      <div className="flex items-center justify-between mb-1.5">
-                        <span className="text-white/40 text-xs font-inter">Heap Used</span>
-                        <span className="text-white/70 text-xs font-mono">{Math.round(systemInfo.memory.process.heapUsed / 1024 / 1024)} MB / {Math.round(systemInfo.memory.process.heapTotal / 1024 / 1024)} MB</span>
-                      </div>
-                      <div className="w-full h-2 bg-white/5 rounded-full overflow-hidden">
-                        <div className="h-full bg-blue-400 rounded-full transition-all" style={{ width: `${Math.min(100, (systemInfo.memory.process.heapUsed / systemInfo.memory.process.heapTotal * 100)).toFixed(1)}%` }} />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            )}
-          </div>
-        )}
-
-        {tab === 'gallery' && (
-          <div>
-            <div className="flex flex-wrap items-center justify-between gap-3 mb-4 md:mb-6">
-              <h2 className="text-lg md:text-xl font-sora font-bold text-white">Manage Gallery ({galleryItems.length})</h2>
-            </div>
-            <div className="flex gap-3 mb-6">
-              <button
-                onClick={() => { setEditing(null); setShowForm(true); }}
-                className="flex items-center gap-2 px-4 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all"
-              >
-                <Plus className="w-4 h-4" /> Add Item
-              </button>
-            </div>
-
-            {showForm && (
-              <GalleryItemForm
-                item={editing}
-                onSave={(g) => {
-                  if (editing) setGalleryItems(items => items.map(x => x.id === g.id ? g : x));
-                  else setGalleryItems(items => [g, ...items]);
-                  setShowForm(false);
-                  setEditing(null);
-                }}
-                onCancel={() => { setShowForm(false); setEditing(null); }}
-              />
-            )}
-
-            <ListControls search={listSearch} onSearch={onSearchChange} sort={listSort} onSort={onSortChange} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Title' }]} placeholder="Search gallery..." />
-            {loading ? (
-              <div className="text-white/40 text-center py-20 font-inter">Loading...</div>
-            ) : (<div>
-              <div className="grid gap-3">
-                {filteredGallery.items.map(item => (
-                  <div key={item.id} className="bg-white/5 border border-white/5 rounded-xl p-4 flex items-center justify-between">
-                    <div className="flex items-center gap-4 min-w-0">
-                      <div className="w-14 h-14 rounded-lg overflow-hidden bg-navy-800 shrink-0 flex items-center justify-center">
-                        {item.type === 'video' ? (
-                          <Video className="w-6 h-6 text-gold-500" />
-                        ) : (
-                          <img src={item.url} alt={item.title || ''} className="w-full h-full object-cover" onError={e => { e.target.style.display = 'none' }} />
-                        )}
-                      </div>
-                      <div className="min-w-0">
-                        <h3 className="text-white font-inter font-semibold truncate">{item.title || 'Untitled'}</h3>
-                        <p className="text-white/30 text-sm font-inter capitalize">{item.type}</p>
-                      </div>
-                    </div>
-                    <div className="flex gap-1 shrink-0">
-                      <a href={item.url} target="_blank" rel="noopener noreferrer"
-                        className="p-2 text-white/40 hover:text-gold-500 transition-colors">
-                        <ExternalLink className="w-4 h-4" />
-                      </a>
-                      <button onClick={() => handleDelete('gallery', item.id)}
-                        className="p-2 text-white/40 hover:text-red-400 transition-colors">
-                        <Trash2 className="w-4 h-4" />
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-              <Pagination page={filteredGallery.page} totalPages={filteredGallery.totalPages} onPage={setListPage} />
-              </div>)}
-          </div>
-        )}
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
+
+      <DeleteConfirmModal
+        isOpen={!!deleteTarget}
+        onClose={() => setDeleteTarget(null)}
+        onConfirm={() => {
+          if (deleteTarget) handleDelete(deleteTarget.type, deleteTarget.id);
+          setDeleteTarget(null);
+        }}
+        title={deleteTarget?.name || 'this item'}
+      />
+
+      <SuccessModal
+        isOpen={successModal.open}
+        onClose={() => setSuccessModal({ open: false, title: '', message: '' })}
+        title={successModal.title}
+        message={successModal.message}
+      />
     </div>
   );
 }
 
-const PAGE_SIZE = 10;
-
-function ListControls({ search, onSearch, sort, onSort, sortOptions, placeholder }) {
+function PageHeader({ title, count, onAddNew, addLabel }) {
   return (
-    <div className="flex items-center gap-3 mb-4">
-      <div className="relative flex-1">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-white/30" />
-        <input type="text" value={search} onChange={e => onSearch(e.target.value)}
-          placeholder={placeholder || 'Search...'}
-          className="w-full bg-white/5 border border-white/10 rounded-lg pl-10 pr-3 py-2 text-sm text-white font-inter focus:outline-none focus:border-gold-500/50 placeholder:text-white/20" />
+    <div className="flex flex-wrap items-center justify-between gap-3 mb-5">
+      <div>
+        <h2 className="text-lg font-sora font-bold text-white">{title}</h2>
+        <p className="text-xs text-white/30 font-inter mt-0.5">{count} items</p>
       </div>
-      <div className="flex items-center gap-2">
-        <ArrowUpDown className="w-3.5 h-3.5 text-white/30" />
-        <select value={sort} onChange={e => onSort(e.target.value)}
-          className="bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-sm text-white/70 font-inter focus:outline-none focus:border-gold-500/50">
-          {sortOptions.map(o => <option key={o.value} value={o.value}>{o.label}</option>)}
-        </select>
-      </div>
+      <motion.div className="flex items-center gap-2" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
+        <Link
+          to={onAddNew}
+          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-gold-500 to-gold-400 text-navy-950 rounded-xl text-sm font-sora font-bold hover:from-gold-400 hover:to-gold-300 hover:shadow-lg hover:shadow-gold-500/20 transition-all"
+        >
+          <Plus className="w-4 h-4" /> {addLabel}
+        </Link>
+      </motion.div>
     </div>
-  );
-}
-
-function Pagination({ page, totalPages, onPage }) {
-  if (totalPages <= 1) return null;
-  const pages = [];
-  for (let i = Math.max(1, page - 2); i <= Math.min(totalPages, page + 2); i++) pages.push(i);
-  return (
-    <div className="flex items-center justify-center gap-2 mt-6">
-      <button onClick={() => onPage(page - 1)} disabled={page <= 1}
-        className="px-3 py-1.5 rounded-lg text-xs font-inter font-semibold bg-white/5 text-white/50 hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed transition-all">
-        Prev
-      </button>
-      {pages[0] > 1 && <span className="text-white/20 text-xs">...</span>}
-      {pages.map(p => (
-        <button key={p} onClick={() => onPage(p)}
-          className={`w-8 h-8 rounded-lg text-xs font-inter font-semibold transition-all ${p === page ? 'bg-gold-500 text-navy-950' : 'bg-white/5 text-white/50 hover:bg-white/10'}`}>
-          {p}
-        </button>
-      ))}
-      {pages[pages.length - 1] < totalPages && <span className="text-white/20 text-xs">...</span>}
-      <button onClick={() => onPage(page + 1)} disabled={page >= totalPages}
-        className="px-3 py-1.5 rounded-lg text-xs font-inter font-semibold bg-white/5 text-white/50 hover:bg-white/10 disabled:opacity-20 disabled:cursor-not-allowed transition-all">
-        Next
-      </button>
-    </div>
-  );
-}
-
-function ImageUpload({ value, onChange, label, preview }) {
-  const [uploading, setUploading] = useState(false);
-
-  const handleFile = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    try {
-      const { url } = await uploadFile(file);
-      onChange(url);
-    } catch (err) {
-      alert('Upload failed: ' + err.message);
-    }
-    setUploading(false);
-  };
-
-  return (
-    <div className="md:col-span-2">
-      <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">{label}</label>
-      <div className="flex gap-2">
-        <input type="url" value={value} onChange={e => onChange(e.target.value)}
-          placeholder="https://example.com/image.jpg"
-          className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        <label className={`shrink-0 px-4 py-2 rounded-lg text-sm font-inter font-semibold cursor-pointer transition-all ${uploading ? 'bg-white/10 text-white/40' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
-          {uploading ? 'Uploading...' : 'Upload'}
-          <input type="file" accept="image/*" onChange={handleFile} className="hidden" disabled={uploading} />
-        </label>
-      </div>
-      {preview && value && (
-        <img src={value} alt="" className="mt-2 h-24 rounded-lg object-cover bg-navy-800" onError={e => { e.target.style.display = 'none' }} />
-      )}
-    </div>
-  );
-}
-
-function GalleryUpload({ onUrl }) {
-  const [uploading, setUploading] = useState(false);
-
-  const handleFile = async (e) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-    setUploading(true);
-    try {
-      const { url } = await uploadFile(file);
-      onUrl(url);
-    } catch (err) {
-      alert('Upload failed: ' + err.message);
-    }
-    setUploading(false);
-  };
-
-  return (
-    <label className={`shrink-0 px-3 py-2 rounded-lg text-[10px] font-inter font-semibold cursor-pointer transition-all ${uploading ? 'bg-white/5 text-white/30' : 'bg-white/10 text-white/60 hover:bg-white/20'}`}>
-      {uploading ? '...' : 'Upload'}
-      <input type="file" accept="image/*" onChange={handleFile} className="hidden" disabled={uploading} />
-    </label>
-  );
-}
-
-function EventForm({ event, onSave, onCancel }) {
-  const [form, setForm] = useState({
-    title: event?.title || '',
-    description: event?.description || '',
-    date: event?.date ? toDateString(event.date) : '',
-    time: event?.time || '',
-    location: event?.location || '',
-    category: event?.category || 'concert',
-    price: event?.price || '',
-    image: event?.image || '',
-    ticketLink: event?.ticketLink || ''
-  });
-  const [saving, setSaving] = useState(false);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setSaving(true);
-    const url = event ? `${API}/events/${event.id}` : `${API}/events`;
-    const method = event ? 'PUT' : 'POST';
-    const res = await fetchWithAuth(url, { method, body: JSON.stringify(form) });
-    if (res.ok) onSave(await res.json());
-    setSaving(false);
-  };
-
-  return (
-    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-6 mb-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Title</label>
-          <input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Category</label>
-          <select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50">
-            <option value="concert">Concert</option>
-            <option value="movie">Movie Night</option>
-            <option value="comedy">Comedy</option>
-            <option value="arts">Arts</option>
-            <option value="cultural">Cultural</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Date</label>
-          <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Time</label>
-          <input type="text" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))}
-            placeholder="e.g. 7:00 PM"
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Location</label>
-          <input type="text" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Price</label>
-          <input type="text" value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))}
-            placeholder="e.g. 15,000 RWF or Free"
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        </div>
-        <div className="md:col-span-2">
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Description</label>
-          <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
-        </div>
-        <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Flyer / Banner Image" preview />
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Ticket Link (URL)</label>
-          <input type="url" value={form.ticketLink} onChange={e => setForm(f => ({ ...f, ticketLink: e.target.value }))}
-            placeholder="https://example.com/buy-tickets"
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        </div>
-      </div>
-      <div className="flex gap-3 pt-4">
-        <button type="submit" disabled={saving}
-          className="px-5 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
-          {saving ? 'Saving...' : event ? 'Update Event' : 'Create Event'}
-        </button>
-        <button type="button" onClick={onCancel}
-          className="px-5 py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
-          Cancel
-        </button>
-      </div>
-    </form>
   );
 }
 
@@ -1182,81 +1025,131 @@ function PlaceForm({ place, categories, onSave, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-6 mb-6 space-y-4">
+    <motion.form
+      initial={{ opacity: 0, height: 0, marginBottom: 0 }}
+      animate={{ opacity: 1, height: 'auto', marginBottom: 24 }}
+      exit={{ opacity: 0, height: 0, marginBottom: 0 }}
+      onSubmit={handleSubmit}
+      className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 space-y-5 overflow-hidden"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Name</label>
-          <input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Category</label>
-          <select value={form.catKey} onChange={e => setForm(f => ({ ...f, catKey: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50">
-            {categories.map(c => <option key={c.id} value={c.id}>{c.label}</option>)}
-          </select>
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Latitude</label>
-          <input type="number" step="any" value={form.lat} onChange={e => setForm(f => ({ ...f, lat: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Longitude</label>
-          <input type="number" step="any" value={form.lon} onChange={e => setForm(f => ({ ...f, lon: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div className="md:col-span-2">
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Description</label>
-          <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
-        </div>
+        <FormField label="Name">
+          <Input type="text" value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} required />
+        </FormField>
+        <FormField label="Category">
+          <Select
+            value={form.catKey}
+            onChange={e => setForm(f => ({ ...f, catKey: e.target.value }))}
+            options={categories.map(c => ({ value: c.id, label: c.label }))}
+          />
+        </FormField>
+        <FormField label="Latitude">
+          <Input type="number" step="any" value={form.lat} onChange={e => setForm(f => ({ ...f, lat: e.target.value }))} required />
+        </FormField>
+        <FormField label="Longitude">
+          <Input type="number" step="any" value={form.lon} onChange={e => setForm(f => ({ ...f, lon: e.target.value }))} required />
+        </FormField>
+        <FormField label="Description" className="md:col-span-2">
+          <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3} />
+        </FormField>
         <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Hero Image" preview />
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Rating</label>
-          <input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={e => setForm(f => ({ ...f, rating: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        </div>
+        <FormField label="Rating">
+          <Input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={e => setForm(f => ({ ...f, rating: e.target.value }))} />
+        </FormField>
       </div>
 
-      <div>
-        <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-2">Gallery Images (up to 4)</label>
+      <FormField label="Gallery Images (up to 4)">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {[0, 1, 2, 3].map(i => {
             const val = JSON.parse(form.gallery || '[]')[i] || '';
             return (
               <div key={i}>
                 <div className="flex items-center gap-2">
-                  <span className="text-[9px] font-poppins font-bold text-white/30 uppercase tracking-wider w-6 shrink-0">#{i + 1}</span>
-                  <input
-                    type="url"
-                    value={val}
-                    onChange={e => updateGalleryUrl(i, e.target.value)}
-                    placeholder="https://example.com/photo.jpg"
-                    className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50"
-                  />
+                  <span className="text-[9px] font-poppins font-bold text-white/25 uppercase tracking-wider w-6 shrink-0">#{i + 1}</span>
+                  <Input type="url" value={val} onChange={e => updateGalleryUrl(i, e.target.value)} placeholder="https://example.com/photo.jpg" className="flex-1" />
                   <GalleryUpload onUrl={url => updateGalleryUrl(i, url)} />
                 </div>
                 {val && (
-                  <img src={val} alt="" className="mt-2 h-20 w-full rounded-lg object-cover bg-navy-800" onError={e => { e.target.style.display = 'none' }} />
+                  <img src={val} alt="" className="mt-2 h-20 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.04]" onError={e => { e.target.style.display = 'none' }} />
                 )}
               </div>
             );
           })}
         </div>
-      </div>
+      </FormField>
 
-      <div className="flex gap-3 pt-2">
-        <button type="submit" disabled={saving}
-          className="px-5 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
-          {saving ? 'Saving...' : place ? 'Update Place' : 'Create Place'}
-        </button>
-        <button type="button" onClick={onCancel}
-          className="px-5 py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
-          Cancel
-        </button>
+      <FormActions saving={saving} saveLabel={place ? 'Update Place' : 'Create Place'} onCancel={onCancel} />
+    </motion.form>
+  );
+}
+
+function EventForm({ event, onSave, onCancel }) {
+  const [form, setForm] = useState({
+    title: event?.title || '',
+    description: event?.description || '',
+    date: event?.date ? toDateString(event.date) : '',
+    time: event?.time || '',
+    location: event?.location || '',
+    category: event?.category || 'concert',
+    price: event?.price || '',
+    image: event?.image || '',
+    ticketLink: event?.ticketLink || ''
+  });
+  const [saving, setSaving] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setSaving(true);
+    const url = event ? `${API}/events/${event.id}` : `${API}/events`;
+    const method = event ? 'PUT' : 'POST';
+    const res = await fetchWithAuth(url, { method, body: JSON.stringify(form) });
+    if (res.ok) onSave(await res.json());
+    setSaving(false);
+  };
+
+  return (
+    <motion.form
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
+      onSubmit={handleSubmit}
+      className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 mb-6 space-y-5 overflow-hidden"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField label="Title">
+          <Input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required />
+        </FormField>
+        <FormField label="Category">
+          <Select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} options={[
+            { value: 'concert', label: 'Concert' },
+            { value: 'movie', label: 'Movie Night' },
+            { value: 'comedy', label: 'Comedy' },
+            { value: 'arts', label: 'Arts' },
+            { value: 'cultural', label: 'Cultural' },
+          ]} />
+        </FormField>
+        <FormField label="Date">
+          <Input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} required />
+        </FormField>
+        <FormField label="Time">
+          <Input type="text" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))} placeholder="e.g. 7:00 PM" />
+        </FormField>
+        <FormField label="Location">
+          <Input type="text" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} required />
+        </FormField>
+        <FormField label="Price">
+          <Input type="text" value={form.price} onChange={e => setForm(f => ({ ...f, price: e.target.value }))} placeholder="e.g. 15,000 RWF or Free" />
+        </FormField>
+        <FormField label="Description" className="md:col-span-2">
+          <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={3} />
+        </FormField>
+        <ImageUpload value={form.image} onChange={v => setForm(f => ({ ...f, image: v }))} label="Flyer / Banner Image" preview />
+        <FormField label="Ticket Link">
+          <Input type="url" value={form.ticketLink} onChange={e => setForm(f => ({ ...f, ticketLink: e.target.value }))} placeholder="https://example.com/buy-tickets" />
+        </FormField>
       </div>
-    </form>
+      <FormActions saving={saving} saveLabel={event ? 'Update Event' : 'Create Event'} onCancel={onCancel} />
+    </motion.form>
   );
 }
 
@@ -1283,60 +1176,43 @@ function CalendarItemForm({ item, onSave, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-6 mb-6">
+    <motion.form
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
+      onSubmit={handleSubmit}
+      className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 mb-6 space-y-5 overflow-hidden"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Title</label>
-          <input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Type</label>
-          <select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50">
-            <option value="event">Event</option>
-            <option value="note">Note</option>
-            <option value="reminder">Reminder</option>
-            <option value="holiday">Holiday</option>
-          </select>
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Date (YYYY-MM-DD)</label>
-          <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Time</label>
-          <input type="time" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        </div>
-        <div className="md:col-span-2">
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Description</label>
-          <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Location</label>
-          <input type="text" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Color</label>
-          <input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))}
-            className="w-full h-10 bg-white/5 border border-white/10 rounded-lg cursor-pointer" />
-        </div>
+        <FormField label="Title">
+          <Input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required />
+        </FormField>
+        <FormField label="Type">
+          <Select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} options={[
+            { value: 'event', label: 'Event' },
+            { value: 'note', label: 'Note' },
+            { value: 'reminder', label: 'Reminder' },
+            { value: 'holiday', label: 'Holiday' },
+          ]} />
+        </FormField>
+        <FormField label="Date">
+          <Input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} required />
+        </FormField>
+        <FormField label="Time">
+          <Input type="time" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))} />
+        </FormField>
+        <FormField label="Description" className="md:col-span-2">
+          <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2} />
+        </FormField>
+        <FormField label="Location">
+          <Input type="text" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} />
+        </FormField>
+        <FormField label="Color">
+          <input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))} className="w-full h-10 bg-white/[0.04] border border-white/[0.08] rounded-xl cursor-pointer" />
+        </FormField>
       </div>
-      <div className="flex gap-3 pt-4">
-        <button type="submit" disabled={saving}
-          className="px-5 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
-          {saving ? 'Saving...' : item ? 'Update Item' : 'Create Item'}
-        </button>
-        <button type="button" onClick={onCancel}
-          className="px-5 py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
-          Cancel
-        </button>
-      </div>
-    </form>
+      <FormActions saving={saving} saveLabel={item ? 'Update Item' : 'Create Item'} onCancel={onCancel} />
+    </motion.form>
   );
 }
 
@@ -1373,51 +1249,47 @@ function GalleryItemForm({ item, onSave, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-4 md:p-6 mb-6">
+    <motion.form
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
+      onSubmit={handleSubmit}
+      className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 mb-6 space-y-5 overflow-hidden"
+    >
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Title</label>
-          <input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-            placeholder="Photo title (optional)"
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Type</label>
-          <select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50">
-            <option value="image">Image</option>
-            <option value="video">Video</option>
-          </select>
-        </div>
-        <div className="md:col-span-2">
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">URL</label>
+        <FormField label="Title">
+          <Input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Photo title (optional)" />
+        </FormField>
+        <FormField label="Type">
+          <Select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} options={[
+            { value: 'image', label: 'Image' },
+            { value: 'video', label: 'Video' },
+          ]} />
+        </FormField>
+        <FormField label="URL" className="md:col-span-2">
           <div className="flex gap-2">
-            <input type="url" value={form.url} onChange={e => setForm(f => ({ ...f, url: e.target.value }))}
-              placeholder={form.type === 'video' ? 'https://youtube.com/watch?v=... or https://example.com/video.mp4' : 'https://example.com/image.jpg'}
-              className="flex-1 bg-white/5 border border-white/10 rounded-lg px-3 py-3 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-            <label className={`shrink-0 px-4 py-3 rounded-lg text-sm font-inter font-semibold cursor-pointer transition-all ${uploading ? 'bg-white/10 text-white/40' : 'bg-white/10 text-white/70 hover:bg-white/20'}`}>
-              {uploading ? '...' : 'Upload'}
+            <Input
+              type="url"
+              value={form.url}
+              onChange={e => setForm(f => ({ ...f, url: e.target.value }))}
+              placeholder={form.type === 'video' ? 'https://youtube.com/watch?v=...' : 'https://example.com/image.jpg'}
+              className="flex-1"
+              required
+            />
+            <label className={`shrink-0 px-4 py-2.5 rounded-xl text-sm font-inter font-semibold cursor-pointer transition-all flex items-center gap-2 ${uploading ? 'bg-white/[0.04] text-white/30 border border-white/[0.06]' : 'bg-white/[0.06] text-white/60 hover:bg-white/[0.1] border border-white/[0.08]'}`}>
+              {uploading ? <div className="w-4 h-4 border-2 border-white/20 border-t-gold-500 rounded-full animate-spin" /> : 'Upload'}
               <input type="file" accept={form.type === 'video' ? 'video/*' : 'image/*'} onChange={handleFile} className="hidden" disabled={uploading} />
             </label>
           </div>
-        </div>
+        </FormField>
         {form.url && form.type === 'image' && (
           <div className="md:col-span-2">
-            <img src={form.url} alt="" className="h-32 rounded-lg object-cover bg-navy-800" onError={e => { e.target.style.display = 'none' }} />
+            <img src={form.url} alt="" className="h-32 rounded-xl object-cover bg-navy-800 border border-white/[0.06]" onError={e => { e.target.style.display = 'none' }} />
           </div>
         )}
       </div>
-      <div className="flex flex-col sm:flex-row gap-3 pt-4">
-        <button type="submit" disabled={saving}
-          className="w-full sm:w-auto px-5 py-2.5 sm:py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
-          {saving ? 'Saving...' : item ? 'Update' : 'Add to Gallery'}
-        </button>
-        <button type="button" onClick={onCancel}
-          className="w-full sm:w-auto px-5 py-2.5 sm:py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
-          Cancel
-        </button>
-      </div>
-    </form>
+      <FormActions saving={saving} saveLabel={item ? 'Update' : 'Add to Gallery'} onCancel={onCancel} />
+    </motion.form>
   );
 }
 
@@ -1441,40 +1313,36 @@ function CategoryForm({ category, onSave, onCancel }) {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-6 mb-6">
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">ID (key)</label>
-          <input type="text" value={form.id} onChange={e => setForm(f => ({ ...f, id: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50"
-            disabled={!!category} required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Label</label>
-          <input type="text" value={form.label} onChange={e => setForm(f => ({ ...f, label: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Icon (emoji)</label>
-          <input type="text" value={form.icon} onChange={e => setForm(f => ({ ...f, icon: e.target.value }))}
-            className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-        </div>
-        <div>
-          <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Color (hex)</label>
-          <input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))}
-            className="w-full h-10 bg-white/5 border border-white/10 rounded-lg cursor-pointer" />
-        </div>
+    <motion.form
+      initial={{ opacity: 0, height: 0 }}
+      animate={{ opacity: 1, height: 'auto' }}
+      exit={{ opacity: 0, height: 0 }}
+      onSubmit={handleSubmit}
+      className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 mb-6 space-y-5 overflow-hidden"
+    >
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <FormField label="ID (key)">
+          <Input type="text" value={form.id} onChange={e => setForm(f => ({ ...f, id: e.target.value }))} disabled={!!category} required />
+        </FormField>
+        <FormField label="Label">
+          <Input type="text" value={form.label} onChange={e => setForm(f => ({ ...f, label: e.target.value }))} required />
+        </FormField>
+        <FormField label="Icon (emoji)">
+          <Input type="text" value={form.icon} onChange={e => setForm(f => ({ ...f, icon: e.target.value }))} required />
+        </FormField>
+        <FormField label="Color">
+          <input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))} className="w-full h-10 bg-white/[0.04] border border-white/[0.08] rounded-xl cursor-pointer" />
+        </FormField>
       </div>
-      <div className="flex gap-3">
-        <button type="submit" disabled={saving}
-          className="px-5 py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
-          {saving ? 'Saving...' : category ? 'Update Category' : 'Create Category'}
-        </button>
-        <button type="button" onClick={onCancel}
-          className="px-5 py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
-          Cancel
-        </button>
-      </div>
-    </form>
+      <FormActions saving={saving} saveLabel={category ? 'Update Category' : 'Create Category'} onCancel={onCancel} />
+    </motion.form>
+  );
+}
+
+export default function AdminPage() {
+  return (
+    <ToastProvider>
+      <AdminPageInner />
+    </ToastProvider>
   );
 }

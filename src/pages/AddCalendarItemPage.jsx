@@ -1,12 +1,17 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, CalendarDays } from 'lucide-react';
 import { API, fetchWithAuth } from '../utils/admin';
+import AdminHeader from '../components/admin/AdminHeader';
+import { FormField, Input, Select, Textarea, FormActions } from '../components/admin/FormComponents';
+import { ToastProvider, useToast } from '../components/admin/Toast';
 
-export default function AddCalendarItemPage() {
+function AddCalendarItemInner() {
   const { isAdmin } = useAuth();
   const navigate = useNavigate();
+  const { addToast } = useToast();
   const [form, setForm] = useState({
     title: '', description: '', date: '', time: '', type: 'note', color: '#4A90D9', location: ''
   });
@@ -20,72 +25,84 @@ export default function AddCalendarItemPage() {
     e.preventDefault();
     setSaving(true);
     const res = await fetchWithAuth(`${API}/calendar`, { method: 'POST', body: JSON.stringify(form) });
-    if (res.ok) navigate('/admin');
+    if (res.ok) {
+      addToast('Calendar item created successfully', 'success');
+      setTimeout(() => navigate('/admin'), 800);
+    } else {
+      addToast('Failed to create calendar item', 'error');
+    }
     setSaving(false);
   };
 
   return (
-    <div className="min-h-screen bg-navy-950">
+    <div className="min-h-screen bg-[#030810]">
+      <AdminHeader />
       <div className="max-w-3xl mx-auto px-4 sm:px-6 py-6 md:py-8">
-        <button onClick={() => navigate('/admin')} className="flex items-center gap-2 text-white/50 hover:text-gold-500 transition-colors text-xs md:text-sm font-inter mb-4 md:mb-6">
-          <ArrowLeft className="w-3.5 md:w-4 h-3.5 md:h-4" /> Back to Admin
-        </button>
-        <h1 className="text-xl md:text-2xl font-sora font-bold text-white mb-4 md:mb-6">Add New Calendar Item</h1>
-        <form onSubmit={handleSubmit} className="bg-white/5 border border-white/5 rounded-xl p-4 md:p-6">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Title</label>
-              <input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
+        <motion.button
+          initial={{ opacity: 0, x: -10 }}
+          animate={{ opacity: 1, x: 0 }}
+          onClick={() => navigate('/admin')}
+          className="flex items-center gap-2 text-white/40 hover:text-gold-500 transition-colors text-sm font-inter mb-6 group"
+        >
+          <ArrowLeft className="w-4 h-4 group-hover:-translate-x-1 transition-transform" /> Back to Admin
+        </motion.button>
+
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className="flex items-center gap-3 mb-6">
+            <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-gold-500/20 to-gold-500/5 flex items-center justify-center border border-gold-500/10">
+              <CalendarDays className="w-5 h-5 text-gold-500" />
             </div>
             <div>
-              <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Type</label>
-              <select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50">
-                <option value="event">Event</option>
-                <option value="note">Note</option>
-                <option value="reminder">Reminder</option>
-                <option value="holiday">Holiday</option>
-              </select>
-            </div>
-            <div>
-              <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Date (YYYY-MM-DD)</label>
-              <input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" required />
-            </div>
-            <div>
-              <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Time</label>
-              <input type="time" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-            </div>
-            <div className="md:col-span-2">
-              <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Description</label>
-              <textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50 resize-none" />
-            </div>
-            <div>
-              <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Location</label>
-              <input type="text" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))}
-                className="w-full bg-white/5 border border-white/10 rounded-lg px-3 py-2 text-white text-sm font-inter focus:outline-none focus:border-gold-500/50" />
-            </div>
-            <div>
-              <label className="block text-[10px] font-poppins font-bold text-white/40 uppercase tracking-[0.2em] mb-1">Color</label>
-              <input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))}
-                className="w-full h-10 bg-white/5 border border-white/10 rounded-lg cursor-pointer" />
+              <h1 className="text-xl font-sora font-bold text-white">Add Calendar Item</h1>
+              <p className="text-xs text-white/30 font-inter">Create a new calendar entry</p>
             </div>
           </div>
-          <div className="flex flex-col sm:flex-row gap-3 pt-4">
-            <button type="submit" disabled={saving}
-              className="w-full sm:w-auto px-5 py-2.5 sm:py-2 bg-gold-500 text-navy-950 rounded-xl text-sm font-sora font-bold hover:bg-gold-600 transition-all disabled:opacity-50">
-              {saving ? 'Saving...' : 'Create Item'}
-            </button>
-            <button type="button" onClick={() => navigate('/admin')}
-              className="w-full sm:w-auto px-5 py-2.5 sm:py-2 bg-white/5 text-white/60 rounded-xl text-sm font-inter hover:bg-white/10 transition-all">
-              Cancel
-            </button>
-          </div>
-        </form>
+
+          <form onSubmit={handleSubmit} className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 space-y-5">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField label="Title">
+                <Input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} required />
+              </FormField>
+              <FormField label="Type">
+                <Select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} options={[
+                  { value: 'event', label: 'Event' },
+                  { value: 'note', label: 'Note' },
+                  { value: 'reminder', label: 'Reminder' },
+                  { value: 'holiday', label: 'Holiday' },
+                ]} />
+              </FormField>
+              <FormField label="Date">
+                <Input type="date" value={form.date} onChange={e => setForm(f => ({ ...f, date: e.target.value }))} required />
+              </FormField>
+              <FormField label="Time">
+                <Input type="time" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))} />
+              </FormField>
+              <FormField label="Description" className="md:col-span-2">
+                <Textarea value={form.description} onChange={e => setForm(f => ({ ...f, description: e.target.value }))} rows={2} />
+              </FormField>
+              <FormField label="Location">
+                <Input type="text" value={form.location} onChange={e => setForm(f => ({ ...f, location: e.target.value }))} />
+              </FormField>
+              <FormField label="Color">
+                <input type="color" value={form.color} onChange={e => setForm(f => ({ ...f, color: e.target.value }))} className="w-full h-10 bg-white/[0.04] border border-white/[0.08] rounded-xl cursor-pointer" />
+              </FormField>
+            </div>
+            <FormActions saving={saving} saveLabel="Create Item" onCancel={() => navigate('/admin')} />
+          </form>
+        </motion.div>
       </div>
     </div>
+  );
+}
+
+export default function AddCalendarItemPage() {
+  return (
+    <ToastProvider>
+      <AddCalendarItemInner />
+    </ToastProvider>
   );
 }
