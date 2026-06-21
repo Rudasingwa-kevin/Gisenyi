@@ -3,6 +3,9 @@ builder = "dockerfile"
 dockerfilePath = "Dockerfile"
 
 [deploy]
-startCommand = "nginx -g 'daemon off;'"
 healthcheckPath = "/"
 healthcheckTimeout = 100
+
+[variables]
+PORT = "80"
+BACKEND_URL = "http://backend.railway.internal:3000"

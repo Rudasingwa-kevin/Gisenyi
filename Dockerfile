@@ -8,9 +8,14 @@ RUN npm run build
 
 FROM nginx:stable-alpine
 
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+RUN apk add --no-cache gettext
+
+COPY nginx.conf /etc/nginx/templates/default.conf.template
 COPY --from=build /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+ENV PORT=80
+ENV BACKEND_URL=http://localhost:3000
 
-CMD ["nginx", "-g", "daemon off;"]
+EXPOSE ${PORT}
+
+CMD ["sh", "-c", "envsubst '${PORT} ${BACKEND_URL}' < /etc/nginx/templates/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
