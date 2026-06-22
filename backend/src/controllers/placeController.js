@@ -30,6 +30,18 @@ exports.getPlaceById = async (req, res, next) => {
     }
 };
 
+exports.getFeaturedPlaces = async (req, res, next) => {
+    try {
+        const places = await prisma.place.findMany({
+            where: { isFeatured: true },
+            orderBy: { name: 'asc' }
+        });
+        res.json(places);
+    } catch (error) {
+        next(error);
+    }
+};
+
 exports.createPlace = async (req, res, next) => {
     try {
         const place = await prisma.place.create({

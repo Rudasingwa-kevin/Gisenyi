@@ -1,10 +1,12 @@
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import FeedbackSection from '../components/FeedbackSection';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Compass, Star, ChevronRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FALLBACK_DATA } from '../constants/data';
+import { API_BASE } from '../utils/api';
 
 const catImages = {
   hotels: '/place1.jpeg',
@@ -56,18 +58,14 @@ const experiences = [
 
 const HomePage = ({ stats, loading, places = [] }) => {
   const totalPlaces = stats?.total || FALLBACK_DATA.length;
+  const [featuredPlaces, setFeaturedPlaces] = useState([]);
 
-  const featuredPlaces = [
-    { name: 'INZU Lodge', catKey: 'hotels', rating: 4.3, tag: 'Boutique Lakeside' },
-    { name: 'Wazi Wine Garage', catKey: 'dining', rating: 4.6, tag: 'Wine & Dine' },
-    { name: 'Nyanja Night Club', catKey: 'nightlife', rating: 4.3, tag: 'Live Music' },
-    { name: 'Nyamyumba Hot Springs', catKey: 'activities', rating: 3.8, tag: 'Volcanic Springs' },
-    { name: 'Apollo Fitness', catKey: 'wellness', rating: 4.7, tag: 'Wellness Center' },
-    { name: 'Sagabay Restaurant', catKey: 'dining', rating: 4.2, tag: 'Lake View Dining' }
-  ];
-
-  const placeMap = {};
-  places.forEach(p => { placeMap[p.name] = p; });
+  useEffect(() => {
+    fetch(`${API_BASE}/api/places/featured`)
+      .then(r => r.ok ? r.json() : [])
+      .then(data => setFeaturedPlaces(Array.isArray(data) ? data : []))
+      .catch(() => setFeaturedPlaces([]));
+  }, []);
 
   const stagger = {
     initial: { opacity: 0, y: 30 },
@@ -98,13 +96,12 @@ const HomePage = ({ stats, loading, places = [] }) => {
 
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-3 md:gap-5">
             {featuredPlaces.map((place, i) => {
-              const dbPlace = placeMap[place.name];
-              const galleryFirst = Array.isArray(dbPlace?.gallery) && dbPlace.gallery.length > 0 ? dbPlace.gallery[0] : null;
-              const imgUrl = dbPlace?.image || galleryFirst || catImages[place.catKey] || catImages.hotels;
+              const galleryFirst = Array.isArray(place.gallery) && place.gallery.length > 0 ? place.gallery[0] : null;
+              const imgUrl = place.image || galleryFirst || catImages[place.catKey] || catImages.hotels;
               return (
                 <Link
-                  key={place.name}
-                  to={dbPlace ? `/stays/${dbPlace.id}` : '#'}
+                  key={place.id}
+                  to={`/stays/${place.id}`}
                 >
                   <motion.div
                     initial={{ opacity: 0, y: 20 }}
@@ -123,7 +120,7 @@ const HomePage = ({ stats, loading, places = [] }) => {
                     <div className="absolute inset-0 bg-gradient-to-t from-navy-900/95 via-navy-900/30 to-transparent" />
                     <div className="absolute top-3 left-3">
                       <div className="px-2.5 py-1 rounded-lg glass-dark text-[8px] font-poppins font-bold text-gold-500 uppercase tracking-[0.15em]">
-                        {place.tag}
+                        {place.featuredTag || place.catKey}
                       </div>
                     </div>
                     <div className="absolute bottom-4 left-4 right-4">

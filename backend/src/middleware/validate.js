@@ -60,17 +60,17 @@ const schemas = {
 
   place: z.object({
     name: z.string().min(1, 'Name is required'),
-    category: z.string().min(1, 'Category is required'),
+    catKey: z.string().min(1, 'Category is required'),
+    lat: z.coerce.number().min(-90).max(90),
+    lon: z.coerce.number().min(-180).max(180),
     description: z.string().optional().default(''),
-    latitude: z.coerce.number().min(-90).max(90).optional(),
-    longitude: z.coerce.number().min(-180).max(180).optional(),
-    address: z.string().optional().default(''),
-    phone: z.string().optional().default(''),
-    website: z.string().optional().default(''),
     image: z.string().optional().default(''),
-    rating: z.coerce.number().min(0).max(5).optional().default(0),
-    priceLevel: z.coerce.number().min(0).max(4).optional().default(0),
-  }),
+    gallery: z.any().optional().default([]),
+    rating: z.coerce.number().min(0).max(5).optional().default(4.5),
+    tags: z.any().optional().default([]),
+    isFeatured: z.boolean().optional().default(false),
+    featuredTag: z.string().optional().default(''),
+  }).passthrough(),
 
   event: z.object({
     title: z.string().min(1, 'Title is required'),

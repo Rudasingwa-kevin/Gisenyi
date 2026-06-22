@@ -19,7 +19,7 @@ function AddPlaceInner() {
   const [loading, setLoading] = useState(isEdit);
   const [initialForm, setInitialForm] = useState(null);
   const [form, setForm] = useState({
-    name: '', lat: '', lon: '', catKey: '', description: '', image: '', gallery: '[]', rating: 4.5, tags: '[]'
+    name: '', lat: '', lon: '', catKey: '', description: '', image: '', gallery: '[]', rating: 4.5, tags: '[]', isFeatured: false, featuredTag: ''
   });
   const [saving, setSaving] = useState(false);
 
@@ -48,13 +48,13 @@ function AddPlaceInner() {
         name: item.name || '', lat: String(item.lat ?? ''), lon: String(item.lon ?? ''),
         catKey: item.catKey || '', description: item.description || '', image: item.image || '',
         gallery: JSON.stringify(item.gallery || []), rating: String(item.rating ?? 4.5),
-        tags: JSON.stringify(item.tags || [])
+        tags: JSON.stringify(item.tags || []), isFeatured: !!item.isFeatured, featuredTag: item.featuredTag || ''
       });
       setInitialForm({
         name: item.name || '', lat: String(item.lat ?? ''), lon: String(item.lon ?? ''),
         catKey: item.catKey || '', description: item.description || '', image: item.image || '',
         gallery: JSON.stringify(item.gallery || []), rating: String(item.rating ?? 4.5),
-        tags: JSON.stringify(item.tags || [])
+        tags: JSON.stringify(item.tags || []), isFeatured: !!item.isFeatured, featuredTag: item.featuredTag || ''
       });
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load place', 'error'); });
@@ -70,7 +70,8 @@ function AddPlaceInner() {
     const body = {
       ...form,
       lat: parseFloat(form.lat), lon: parseFloat(form.lon), rating: parseFloat(form.rating),
-      gallery: JSON.parse(form.gallery || '[]'), tags: JSON.parse(form.tags || '[]')
+      gallery: JSON.parse(form.gallery || '[]'), tags: JSON.parse(form.tags || '[]'),
+      isFeatured: !!form.isFeatured
     };
     const res = await fetchWithAuth(
       isEdit ? `${API}/places/${id}` : `${API}/places`,
@@ -133,6 +134,30 @@ function AddPlaceInner() {
             <FormField label="Rating">
               <Input type="number" step="0.1" min="0" max="5" value={form.rating} onChange={e => setForm(f => ({ ...f, rating: e.target.value }))} />
             </FormField>
+          </div>
+          <div className="border-t border-white/[0.06] pt-5">
+            <div className="flex items-center gap-4">
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input
+                  type="checkbox"
+                  checked={!!form.isFeatured}
+                  onChange={e => setForm(f => ({ ...f, isFeatured: e.target.checked }))}
+                  className="sr-only peer"
+                />
+                <div className="w-10 h-5 bg-white/10 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white/40 after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-gold-500 peer-checked:after:bg-white"></div>
+              </label>
+              <div>
+                <span className="text-sm font-inter font-medium text-white">Featured on Homepage</span>
+                <p className="text-[11px] text-white/30 font-inter">Show this place in the Featured Destinations section</p>
+              </div>
+            </div>
+            {form.isFeatured && (
+              <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-3">
+                <FormField label="Featured Tag" description="Short label shown on the card (e.g. 'Boutique Lakeside')">
+                  <Input type="text" value={form.featuredTag} onChange={e => setForm(f => ({ ...f, featuredTag: e.target.value }))} placeholder="e.g. Boutique Lakeside" />
+                </FormField>
+              </motion.div>
+            )}
           </div>
           <FormField label="Gallery Images (up to 4)">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-3">

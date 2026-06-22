@@ -8,19 +8,21 @@ datasource db {
 }
 
 model Place {
-  id          String   @id @default(uuid())
-  osmId       String?  @unique
-  name        String
-  lat         Float
-  lon         Float
-  catKey      String
-  description String?
-  image       String?
-  gallery     Json?
-  rating      Float?   @default(4.5)
-  tags        Json?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id           String   @id @default(uuid())
+  osmId        String?  @unique
+  name         String
+  lat          Float
+  lon          Float
+  catKey       String
+  description  String?
+  image        String?
+  gallery      Json?
+  rating       Float?   @default(4.5)
+  tags         Json?
+  isFeatured   Boolean  @default(false)
+  featuredTag  String?
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 
   @@index([catKey])
 }

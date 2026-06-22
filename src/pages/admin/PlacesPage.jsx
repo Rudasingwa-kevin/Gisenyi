@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plus, Pencil, Trash2, ExternalLink, MapPin, Download, Filter } from 'lucide-react';
+import { Plus, Pencil, Trash2, ExternalLink, MapPin, Download, Filter, Star } from 'lucide-react';
 import { useAdminData, useFilteredItems, PAGE_SIZE } from '../../components/admin/useAdminData';
 import { exportToCSV } from '../../utils/export';
 import { ListControls, Pagination } from '../../components/admin/ListComponents';
@@ -95,7 +95,15 @@ function PlacesContent() {
               <AnimatedListItem key={place.id}>
                 <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.05] hover:border-white/[0.08] transition-all group">
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{place.name}</h3>
+                    <div className="flex items-center gap-2">
+                      <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{place.name}</h3>
+                      {place.isFeatured && (
+                        <span className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-md bg-gold-500/10 border border-gold-500/20 text-gold-500">
+                          <Star className="w-2.5 h-2.5 fill-gold-500" />
+                          <span className="text-[9px] font-poppins font-bold uppercase tracking-wider">Featured</span>
+                        </span>
+                      )}
+                    </div>
                     <p className="text-white/25 text-xs font-inter mt-0.5">
                       {place.catKey} &middot;
                       <a href={`https://www.google.com/maps?q=${place.lat},${place.lon}`} target="_blank" rel="noopener noreferrer" className="hover:text-gold-500 transition-colors ml-1">
