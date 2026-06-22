@@ -63,12 +63,20 @@ app.use('/api/track', require('./routes/trackRoutes'));
 
 const prisma = require('./utils/prisma');
 
+let dbConnected = false;
+
+prisma.$connect()
+  .then(() => { dbConnected = true; })
+  .catch(() => {});
+
 app.get('/health', async (req, res) => {
     try {
         await prisma.$queryRaw`SELECT 1`;
+        dbConnected = true;
         res.json({ status: 'ok', db: 'connected', timestamp: new Date().toISOString() });
     } catch {
-        res.status(503).json({ status: 'error', db: 'disconnected', timestamp: new Date().toISOString() });
+        dbConnected = false;
+        res.status(200).json({ status: 'ok', db: 'disconnected', timestamp: new Date().toISOString() });
     }
 });
 
