@@ -1,9 +1,6 @@
 const app = require('./app');
-const { exec } = require('child_process');
 const { ensureBucket } = require('./utils/supabase');
 const prisma = require('./utils/prisma');
-const { promisify } = require('util');
-const execAsync = promisify(exec);
 
 const PORT = process.env.PORT || 3000;
 
@@ -18,14 +15,6 @@ async function start() {
   app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
   });
-
-  try {
-    console.log('Running database migrations...');
-    await execAsync('npx prisma migrate deploy', { timeout: 60000 });
-    console.log('Migrations complete');
-  } catch (err) {
-    console.error('Migration failed:', err.message);
-  }
 
   try {
     await prisma.$connect();
