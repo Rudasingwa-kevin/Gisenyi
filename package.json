@@ -43,7 +43,6 @@
     "postcss": "^8.5.12",
     "tailwindcss": "^4.2.4",
     "vite": "^8.0.10",
-    "vite-plugin-prerender": "^1.0.8",
     "vitest": "^4.1.9"
   }
 }
