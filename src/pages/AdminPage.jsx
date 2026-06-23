@@ -123,28 +123,6 @@ function AdminPageInner() {
     if (res.ok) { const d = await res.json(); setSystemInfo(d); }
   }, []);
 
-  useEffect(() => {
-    if (!isAdmin) return;
-    Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems(), loadFeedback(), loadVisitorStats()]).then(() => setLoading(false));
-    loadSystemInfo();
-  }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems, loadVisitorStats, loadSystemInfo]);
-
-  const handleDelete = async (type, id) => {
-    const res = await fetchWithAuth(`${API}/${type}/${id}`, { method: 'DELETE' });
-    if (res.ok) {
-      if (type === 'places') setPlaces(p => p.filter(x => x.id !== id));
-      else if (type === 'events') setEvents(e => e.filter(x => x.id !== id));
-      else if (type === 'calendar') setCalendarItems(c => c.filter(x => x.id !== id));
-      else if (type === 'gallery') setGalleryItems(g => g.filter(x => x.id !== id));
-      else setCategories(c => c.filter(x => x.id !== id));
-      addToast('Item deleted successfully', 'success');
-    } else {
-      addToast('Failed to delete item', 'error');
-    }
-  };
-
-  if (!isAdmin) return null;
-
   const filteredPlaces = useMemo(() => {
     const f = places.filter(p => {
       if (!listSearch) return true;
@@ -219,6 +197,29 @@ function AdminPageInner() {
     const { items, page, totalPages } = paginated(f);
     return { items, page, totalPages, total: f.length };
   }, [galleryItems, listSearch, listSort, listPage]);
+
+  useEffect(() => {
+    if (!isAdmin) return;
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems(), loadFeedback(), loadVisitorStats()]).then(() => setLoading(false));
+    loadSystemInfo();
+  }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems, loadVisitorStats, loadSystemInfo]);
+
+  const handleDelete = async (type, id) => {
+    const res = await fetchWithAuth(`${API}/${type}/${id}`, { method: 'DELETE' });
+    if (res.ok) {
+      if (type === 'places') setPlaces(p => p.filter(x => x.id !== id));
+      else if (type === 'events') setEvents(e => e.filter(x => x.id !== id));
+      else if (type === 'calendar') setCalendarItems(c => c.filter(x => x.id !== id));
+      else if (type === 'gallery') setGalleryItems(g => g.filter(x => x.id !== id));
+      else setCategories(c => c.filter(x => x.id !== id));
+      addToast('Item deleted successfully', 'success');
+    } else {
+      addToast('Failed to delete item', 'error');
+    }
+  };
+
+  if (!isAdmin) return null;
 
   return (
     <div className="min-h-screen bg-[#030810]">

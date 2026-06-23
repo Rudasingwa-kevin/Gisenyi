@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin, Circle } from 'lucide-react';
 import { API_BASE } from '../utils/api';
-import { formatDate } from '../utils/helpers';
 import SEO from '../components/SEO';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];

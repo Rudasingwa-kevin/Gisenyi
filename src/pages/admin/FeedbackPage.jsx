@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { Star, MessageSquare } from 'lucide-react';
 import { useAdminData, useFilteredItems, PAGE_SIZE } from '../../components/admin/useAdminData';
 import { ListControls, Pagination } from '../../components/admin/ListComponents';

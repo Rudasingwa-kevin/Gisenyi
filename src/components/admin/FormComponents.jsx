@@ -222,6 +222,7 @@ export function FormActions({ saving, saveLabel = 'Save', onCancel }) {
   );
 }
 
+// eslint-disable-next-line react-refresh/only-export-components
 export function useFormValidation(rules) {
   const [errors, setErrors] = useState({});
 

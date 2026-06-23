@@ -56,6 +56,7 @@ export default function DashboardPage() {
     setLoading(false);
   }, []);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { loadAll(); }, [loadAll]);
 
   return (

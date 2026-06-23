@@ -2,9 +2,9 @@ import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
 import {
   Database, Server, Activity, RefreshCw, HardDrive, Cpu, MemoryStick,
-  Globe, Shield, Zap, Folder, Image, MessageSquare, MapPin, Calendar,
-  LayoutGrid, Eye, CheckCircle, XCircle, AlertTriangle, Clock, Wifi,
-  Gauge, BarChart3, Layers
+  Globe, Zap, Folder, Image, MessageSquare, MapPin, Calendar,
+  LayoutGrid, CheckCircle, XCircle, Clock, Wifi,
+  Gauge, Layers
 } from 'lucide-react';
 import { fetchWithAuth, API } from '../../utils/admin';
 import { AnimatedCard, AnimatedCardHeader } from '../../components/admin/AnimatedCard';
@@ -98,6 +98,7 @@ export default function SystemPage() {
     setLoading(false);
   };
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { load(); }, []);
 
   const avgCpu = useMemo(() => {

@@ -7,7 +7,8 @@ describe('cn', () => {
   });
 
   it('handles conditional classes', () => {
-    expect(cn('foo', false && 'bar')).toBe('foo');
+    const bar = undefined;
+    expect(cn('foo', bar)).toBe('foo');
   });
 
   it('deduplicates tailwind classes', () => {

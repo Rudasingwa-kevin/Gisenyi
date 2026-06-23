@@ -58,7 +58,7 @@ const experiences = [
   }
 ];
 
-const HomePage = ({ stats, loading, places = [] }) => {
+const HomePage = ({ stats, loading }) => {
   const totalPlaces = stats?.total || FALLBACK_DATA.length;
   const [featuredPlaces, setFeaturedPlaces] = useState([]);
 

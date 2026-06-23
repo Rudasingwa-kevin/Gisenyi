@@ -1,10 +1,10 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Outlet, useLocation, Link, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   ShieldAlert, LogOut, ChevronRight, Bell, Menu, X,
   LayoutDashboard, MapPin, LayoutGrid, Calendar, Circle,
-  ImageIcon, MessageSquare, Server, Plus
+  ImageIcon, MessageSquare, Server
 } from 'lucide-react';
 import { useAuth } from '../../context/AuthContext';
 import { ToastProvider } from './Toast';
@@ -50,13 +50,17 @@ export default function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const prevPathname = useRef(location.pathname);
 
   useEffect(() => {
     if (!isAdmin) navigate('/');
   }, [isAdmin, navigate]);
 
   useEffect(() => {
-    setSidebarOpen(false);
+    if (prevPathname.current !== location.pathname) {
+      setSidebarOpen(false);
+      prevPathname.current = location.pathname;
+    }
   }, [location.pathname]);
 
   if (!isAdmin) return null;
@@ -65,6 +69,7 @@ export default function AdminLayout() {
 }
 
 function AdminLayoutInner({ location, sidebarOpen, setSidebarOpen, username, logout }) {
+  const navigate = useNavigate();
   const isActive = (item) => {
     if (item.exact) return location.pathname === item.path;
     return location.pathname.startsWith(item.path);

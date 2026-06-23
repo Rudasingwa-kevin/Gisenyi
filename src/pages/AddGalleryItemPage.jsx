@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { API, fetchWithAuth } from '../utils/admin';
-import { FormField, Input, Select, Textarea, ImageUpload, FormActions, useFormValidation } from '../components/admin/FormComponents';
+import { FormField, Input, Select, FormActions, useFormValidation } from '../components/admin/FormComponents';
 import { ToastProvider, useToast } from '../components/admin/Toast';
 import { useUnsavedChanges } from '../hooks/useUnsavedChanges';
 

@@ -25,6 +25,7 @@ export function useAdminData(endpoint, { autoLoad = true } = {}) {
     setLoading(false);
   }, [endpoint]);
 
+  // eslint-disable-next-line react-hooks/set-state-in-effect
   useEffect(() => { if (autoLoad) load(); }, [autoLoad, load]);
 
   const remove = useCallback(async (id) => {
