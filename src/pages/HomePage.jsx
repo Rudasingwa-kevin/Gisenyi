@@ -273,7 +273,7 @@ const HomePage = ({ stats, loading }) => {
         <div className="absolute inset-0">
           <img
             src="/place4.jpeg"
-            alt=""
+            alt="Lake Kivu shoreline aerial view"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-navy-900/85 backdrop-blur-sm" />

@@ -93,7 +93,7 @@ function AddGalleryItemInner() {
                   <iframe src={form.url} className="w-full h-full" allowFullScreen title="Preview" />
                 </div>
               ) : (
-                <img src={form.url} alt="" className="h-48 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.06]" onError={e => { e.target.style.display = 'none'; }} />
+                <img src={form.url} alt="Gallery item preview" className="h-48 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.06]" onError={e => { e.target.style.display = 'none'; }} />
               )}
             </motion.div>
           )}

@@ -279,7 +279,7 @@ function AdminPageInner() {
                               className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors group"
                             >
                               {p.image && (
-                                <img src={p.image} alt="" className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />
+                                <img src={p.image} alt={p.name} className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />
                               )}
                               <div className="min-w-0 flex-1">
                                 <p className="text-white text-sm font-inter font-medium truncate group-hover:text-gold-400 transition-colors">{p.name}</p>
@@ -307,7 +307,7 @@ function AdminPageInner() {
                               className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors group"
                             >
                               {e.image && (
-                                <img src={e.image} alt="" className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />
+                                <img src={e.image} alt={e.title} className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />
                               )}
                               <div className="min-w-0 flex-1">
                                 <p className="text-white text-sm font-inter font-medium truncate group-hover:text-gold-400 transition-colors">{e.title}</p>
@@ -609,7 +609,7 @@ function AdminPageInner() {
                         <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.05] hover:border-white/[0.08] transition-all group">
                           <div className="flex items-center gap-4 min-w-0 flex-1">
                             {event.image && (
-                              <img src={event.image} alt="" className="w-12 h-12 rounded-xl object-cover bg-navy-800 border border-white/[0.06] shrink-0" />
+                              <img src={event.image} alt={event.title} className="w-12 h-12 rounded-xl object-cover bg-navy-800 border border-white/[0.06] shrink-0" />
                             )}
                             <div className="min-w-0">
                               <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{event.title}</h3>
@@ -1071,7 +1071,7 @@ function PlaceForm({ place, categories, onSave, onCancel }) {
                   <GalleryUpload onUrl={url => updateGalleryUrl(i, url)} />
                 </div>
                 {val && (
-                  <img src={val} alt="" className="mt-2 h-20 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.04]" onError={e => { e.target.style.display = 'none' }} />
+                  <img src={val} alt="Gallery item preview" className="mt-2 h-20 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.04]" onError={e => { e.target.style.display = 'none' }} />
                 )}
               </div>
             );
@@ -1285,7 +1285,7 @@ function GalleryItemForm({ item, onSave, onCancel }) {
         </FormField>
         {form.url && form.type === 'image' && (
           <div className="md:col-span-2">
-            <img src={form.url} alt="" className="h-32 rounded-xl object-cover bg-navy-800 border border-white/[0.06]" onError={e => { e.target.style.display = 'none' }} />
+            <img src={form.url} alt="Gallery item preview" className="h-32 rounded-xl object-cover bg-navy-800 border border-white/[0.06]" onError={e => { e.target.style.display = 'none' }} />
           </div>
         )}
       </div>

@@ -137,7 +137,7 @@ export function ImageUpload({ value, onChange, label, preview }) {
         >
           <img
             src={value}
-            alt=""
+            alt="Upload preview"
             className="h-28 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.06]"
             onError={e => { e.target.style.display = 'none'; }}
           />

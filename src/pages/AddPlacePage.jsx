@@ -170,7 +170,7 @@ function AddPlaceInner() {
                       <Input type="url" value={val} onChange={e => updateGalleryUrl(i, e.target.value)} placeholder="https://example.com/photo.jpg" className="flex-1" />
                       <GalleryUpload onUrl={url => updateGalleryUrl(i, url)} />
                     </div>
-                    {val && <img src={val} alt="" className="mt-2 h-20 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.04]" onError={e => { e.target.style.display = 'none'; }} />}
+                    {val && <img src={val} alt="Place preview" className="mt-2 h-20 w-full rounded-xl object-cover bg-navy-800 border border-white/[0.04]" onError={e => { e.target.style.display = 'none'; }} />}
                   </div>
                 );
               })}

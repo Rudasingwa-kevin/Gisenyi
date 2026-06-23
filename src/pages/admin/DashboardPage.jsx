@@ -110,7 +110,7 @@ export default function DashboardPage() {
                       transition={{ delay: 0.15 + i * 0.05 }}
                       className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors group"
                     >
-                      {p.image && <img src={p.image} alt="" className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />}
+                      {p.image && <img src={p.image} alt={p.name} className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />}
                       <div className="min-w-0 flex-1">
                         <p className="text-white text-sm font-inter font-medium truncate group-hover:text-gold-400 transition-colors">{p.name}</p>
                         <p className="text-white/25 text-xs font-inter">{p.catKey}</p>
@@ -138,7 +138,7 @@ export default function DashboardPage() {
                       transition={{ delay: 0.2 + i * 0.05 }}
                       className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.03] hover:bg-white/[0.06] transition-colors group"
                     >
-                      {e.image && <img src={e.image} alt="" className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />}
+                      {e.image && <img src={e.image} alt={e.title} className="w-9 h-9 rounded-lg object-cover bg-navy-800 border border-white/[0.06]" />}
                       <div className="min-w-0 flex-1">
                         <p className="text-white text-sm font-inter font-medium truncate group-hover:text-gold-400 transition-colors">{e.title}</p>
                         <p className="text-white/25 text-xs font-inter flex items-center gap-1">

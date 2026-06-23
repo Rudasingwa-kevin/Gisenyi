@@ -110,7 +110,7 @@ function EventsContent() {
               <AnimatedListItem key={event.id}>
                 <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-4 flex items-center justify-between hover:bg-white/[0.05] hover:border-white/[0.08] transition-all group">
                   <div className="flex items-center gap-4 min-w-0 flex-1">
-                    {event.image && <img src={event.image} alt="" className="w-12 h-12 rounded-xl object-cover bg-navy-800 border border-white/[0.06] shrink-0" />}
+                    {event.image && <img src={event.image} alt={event.title} className="w-12 h-12 rounded-xl object-cover bg-navy-800 border border-white/[0.06] shrink-0" />}
                     <div className="min-w-0">
                       <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{event.title}</h3>
                       <p className="text-white/25 text-xs font-inter mt-0.5">
