@@ -8,9 +8,11 @@ RUN npm run build
 
 FROM nginx:stable-alpine
 
-COPY nginx.conf /etc/nginx/nginx.conf
+RUN apk add --no-cache gettext
+
+COPY nginx.conf /etc/nginx/templates/nginx.conf.template
 COPY --from=build /app/dist /usr/share/nginx/html
 
-EXPOSE 80
+EXPOSE ${PORT}
 
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["sh", "-c", "envsubst '${PORT}' < /etc/nginx/templates/nginx.conf.template > /etc/nginx/nginx.conf && nginx -g 'daemon off;'"]
