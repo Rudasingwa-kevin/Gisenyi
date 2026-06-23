@@ -1,6 +1,8 @@
 import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import FeedbackSection from '../components/FeedbackSection';
+import SEO from '../components/SEO';
+import { SITE } from '../constants/site';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Compass, Star, ChevronRight } from 'lucide-react';
@@ -76,6 +78,24 @@ const HomePage = ({ stats, loading, places = [] }) => {
 
   return (
     <div>
+      <SEO
+        title="Gisenyi — The Riviera of Central Africa"
+        description="Discover Gisenyi — the Riviera of Central Africa. Explore hotels, restaurants, attractions and more on the shores of Lake Kivu, Rwanda."
+        url="/"
+        type="website"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: SITE.name,
+          url: SITE.url,
+          description: SITE.description,
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: `${SITE.url}/stays?q={search_term_string}`,
+            'query-input': 'required name=search_term_string',
+          },
+        }}
+      />
       <Hero />
       <Stats stats={stats} loading={loading} />
 

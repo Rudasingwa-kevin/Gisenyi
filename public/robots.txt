@@ -1,0 +1,10 @@
+# Robots.txt for Gisenyi - Lake Kivu, Rwanda Tourism Guide
+# https://gisenyi.top
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /admin/*
+
+# Sitemaps
+Sitemap: https://gisenyi.top/sitemap.xml

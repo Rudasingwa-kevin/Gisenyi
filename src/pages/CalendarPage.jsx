@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin, Circle } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 import { formatDate } from '../utils/helpers';
+import SEO from '../components/SEO';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -87,6 +88,20 @@ const CalendarPage = () => {
 
   return (
     <div className="min-h-screen bg-navy-950 pt-24 md:pt-28 px-4 sm:px-6 pb-16 md:pb-20">
+      <SEO
+        title="Events Calendar"
+        description="Plan your visit to Gisenyi with our events calendar. See what's happening on the shores of Lake Kivu — festivals, markets, and more."
+        url="/calendar"
+        type="website"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'WebApplication',
+          name: 'Gisenyi Events Calendar',
+          description: 'Interactive calendar for events in Gisenyi, Rwanda',
+          applicationCategory: 'TravelApplication',
+          url: 'https://gisenyi.top/calendar',
+        }}
+      />
       <div className="max-w-7xl mx-auto">
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="mb-8 md:mb-10">
           <span className="text-[10px] font-poppins font-bold text-gold-500 uppercase tracking-[0.3em] mb-3 md:mb-4 block">Plan Your Visit</span>

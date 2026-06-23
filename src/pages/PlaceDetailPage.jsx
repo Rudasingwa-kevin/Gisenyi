@@ -3,6 +3,8 @@ import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ArrowLeft, Star, MapPin, Navigation, ExternalLink, Globe, Phone, Clock, Tag } from 'lucide-react';
 import { useCategories } from '../constants/categories';
 import ShareButton from '../components/ShareButton';
+import SEO from '../components/SEO';
+import { SITE } from '../constants/site';
 
 const catImages = {
   hotels: '/place1.jpeg',
@@ -56,9 +58,35 @@ export default function PlaceDetailPage({ places }) {
     : [catImages[place.catKey] || catImages.hotels, catImages.hotels, catImages.dining, catImages.nightlife].slice(0, 4);
   const tags = place.tags || {};
   const stars = Math.round(tags.rating || 4.5);
+  const placeDesc = place.description || tags.description || `Discover ${place.name}, a premier ${cat.label.toLowerCase()} destination in Gisenyi, Rubavu District on the shores of Lake Kivu.`;
 
   return (
     <div className="min-h-screen bg-navy-950">
+      <SEO
+        title={place.name}
+        description={placeDesc}
+        url={`/stays/${place.id}`}
+        image={heroImage}
+        type="place"
+        structuredData={{
+          '@context': 'https://schema.org',
+          '@type': 'LocalBusiness',
+          name: place.name,
+          description: placeDesc,
+          image: heroImage,
+          url: `${SITE.url}/stays/${place.id}`,
+          address: {
+            '@type': 'PostalAddress',
+            streetAddress: place.contact?.address || tags.address || '',
+            addressLocality: 'Gisenyi',
+            addressRegion: 'Rubavu',
+            addressCountry: 'RW',
+          },
+          geo: { '@type': 'GeoCoordinates', latitude: place.lat, longitude: place.lon },
+          aggregateRating: tags.rating ? { '@type': 'AggregateRating', ratingValue: tags.rating, bestRating: 5 } : undefined,
+          telephone: place.contact?.phone || tags.phone || undefined,
+        }}
+      />
       <div className="relative h-[50vh] md:h-[60vh] overflow-hidden">
         <img
           src={heroImage}
