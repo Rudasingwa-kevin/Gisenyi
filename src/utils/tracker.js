@@ -15,7 +15,7 @@ export function trackPage(page) {
   if (page === lastPage) return;
   lastPage = page;
 
-  const data = { sessionId: getSessionId(), page, referrer: document.referrer || null };
+  const data = { sessionId: getSessionId(), page, referrer: document.referrer || '' };
   const body = JSON.stringify(data);
   if (navigator.sendBeacon) {
     navigator.sendBeacon(`${API_BASE}/api/track`, new Blob([body], { type: 'application/json' }));
