@@ -127,7 +127,7 @@ export default function ShareButton({ item, type = 'place', className = '' }) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[300] bg-navy-950/80 backdrop-blur-xl flex items-center justify-center p-4"
+            className="fixed inset-0 z-[300] bg-navy-950/80 backdrop-blur-xl flex items-center justify-center p-4 pt-24"
             onClick={() => setIsOpen(false)}
           >
             <motion.div
@@ -226,14 +226,16 @@ export default function ShareButton({ item, type = 'place', className = '' }) {
                       )}
                     </div>
 
-                    <div className="relative p-4 rounded-2xl bg-gradient-to-r from-gold-500/10 via-gold-500/5 to-transparent border border-gold-500/20">
-                      <div className="absolute top-2 right-3 opacity-20">
-                        <img src="/Gisenyi H.png" alt="" className="w-10 h-10 object-contain" />
+                    <div className="relative p-4 rounded-2xl bg-gradient-to-r from-gold-500/10 via-gold-500/5 to-transparent border border-gold-500/20 overflow-hidden">
+                      <div className="absolute -bottom-2 -right-2 opacity-30">
+                        <img src="/Gisenyi H.png" alt="" className="w-16 h-16 object-contain" />
                       </div>
-                      <p className="text-gold-500/60 font-inter text-[9px] uppercase tracking-[0.2em] mb-0.5">Visit us at</p>
-                      <p className="font-sora font-extrabold text-lg text-gold-500 tracking-tight">
-                        gisenyi.top
-                      </p>
+                      <div className="relative z-10">
+                        <p className="text-gold-500/60 font-inter text-[9px] uppercase tracking-[0.2em] mb-0.5">Visit us at</p>
+                        <p className="font-sora font-extrabold text-lg text-gold-500 tracking-tight">
+                          gisenyi.top
+                        </p>
+                      </div>
                     </div>
                   </div>
                 </div>
