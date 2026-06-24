@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import { ChevronLeft, ChevronRight, Calendar, Clock, MapPin, Circle } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 import SEO from '../components/SEO';
+import { PAGE_SEO } from '../constants/site';
 
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
@@ -88,9 +89,10 @@ const CalendarPage = () => {
   return (
     <div className="min-h-screen bg-navy-950 pt-24 md:pt-28 px-4 sm:px-6 pb-16 md:pb-20">
       <SEO
-        title="Events Calendar"
-        description="Plan your visit to Gisenyi with our events calendar. See what's happening on the shores of Lake Kivu — festivals, markets, and more."
-        url="/calendar"
+        title={PAGE_SEO.calendar.title}
+        description={PAGE_SEO.calendar.description}
+        url={PAGE_SEO.calendar.url}
+        image={PAGE_SEO.calendar.image}
         type="website"
         structuredData={{
           '@context': 'https://schema.org',

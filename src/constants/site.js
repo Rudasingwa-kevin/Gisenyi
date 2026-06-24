@@ -4,7 +4,7 @@ export const SITE = {
   title: 'Gisenyi — The Riviera of Central Africa',
   description:
     'Discover Gisenyi — the Riviera of Central Africa. Explore hotels, restaurants, attractions and more on the shores of Lake Kivu, Rwanda.',
-  ogImage: 'https://images.unsplash.com/photo-1542314831-068cd1dbfeeb?auto=format&fit=crop&q=80&w=1200',
+  ogImage: 'https://gisenyi.top/images/og-home.svg',
   twitterHandle: '@gisenyi',
   locale: 'en_US',
   type: 'website',
@@ -20,4 +20,49 @@ export const SITE = {
     'Gisenyi attractions',
     'Lake Kivu hotels',
   ],
+};
+
+export const PAGE_SEO = {
+  home: {
+    title: 'Gisenyi | Explore Lake Kivu, Rwanda',
+    description: 'Discover the beauty of Gisenyi, Rwanda — beaches, luxury stays, events, culture, and unforgettable experiences on the shores of Lake Kivu.',
+    url: '/',
+    image: 'https://gisenyi.top/images/og-home.svg',
+  },
+  stays: {
+    title: 'Luxury Stays in Gisenyi | Hotels & Resorts',
+    description: 'Find the best hotels, resorts, and unique accommodations in Gisenyi.',
+    url: '/stays',
+    image: 'https://gisenyi.top/images/og-stays.svg',
+  },
+  events: {
+    title: 'Events in Gisenyi | Culture & Entertainment',
+    description: 'Explore festivals, concerts, nightlife, and cultural events in Gisenyi.',
+    url: '/events',
+    image: 'https://gisenyi.top/images/og-events.svg',
+  },
+  gallery: {
+    title: 'Gisenyi Gallery | Moments Around Lake Kivu',
+    description: 'Experience the beauty of Gisenyi through breathtaking photography.',
+    url: '/gallery',
+    image: 'https://gisenyi.top/images/og-gallery.svg',
+  },
+  map: {
+    title: 'Explore Gisenyi Map | Discover Attractions',
+    description: 'Navigate beaches, hotels, restaurants, and attractions around Gisenyi.',
+    url: '/map',
+    image: 'https://gisenyi.top/images/og-map.svg',
+  },
+  history: {
+    title: 'History of Gisenyi | Heritage & Legacy',
+    description: 'Learn about the rich history and cultural heritage of Gisenyi, Rwanda.',
+    url: '/history',
+    image: 'https://gisenyi.top/images/og-history.svg',
+  },
+  calendar: {
+    title: 'Events Calendar | What\'s Happening in Gisenyi',
+    description: 'Stay updated with upcoming events, festivals, and activities in Gisenyi.',
+    url: '/calendar',
+    image: 'https://gisenyi.top/images/og-calendar.svg',
+  },
 };

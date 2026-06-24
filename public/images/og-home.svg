@@ -1,0 +1,58 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="50%" style="stop-color:#0F1D32"/>
+      <stop offset="100%" style="stop-color:#0A1628"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C9A84C"/>
+      <stop offset="50%" style="stop-color:#E8C84A"/>
+      <stop offset="100%" style="stop-color:#C9A84C"/>
+    </linearGradient>
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Decorative elements -->
+  <circle cx="100" cy="100" r="300" fill="#C9A84C" opacity="0.03"/>
+  <circle cx="1100" cy="530" r="250" fill="#C9A84C" opacity="0.05"/>
+  <circle cx="600" cy="315" r="400" fill="#C9A84C" opacity="0.02"/>
+  
+  <!-- Horizontal lines -->
+  <line x1="0" y1="150" x2="1200" y2="150" stroke="#C9A84C" stroke-width="0.5" opacity="0.1"/>
+  <line x1="0" y1="480" x2="1200" y2="480" stroke="#C9A84C" stroke-width="0.5" opacity="0.1"/>
+  
+  <!-- Logo icon -->
+  <g transform="translate(540, 180)">
+    <rect x="0" y="0" width="120" height="120" rx="24" fill="#C9A84C" opacity="0.15"/>
+    <path d="M60 20 L60 80 M40 40 L60 20 L80 40" stroke="#C9A84C" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <circle cx="60" cy="45" r="8" fill="#C9A84C"/>
+  </g>
+  
+  <!-- Title -->
+  <text x="600" y="360" font-family="Arial, sans-serif" font-size="72" font-weight="800" fill="url(#gold)" text-anchor="middle" filter="url(#glow)">GISENYI</text>
+  
+  <!-- Subtitle -->
+  <text x="600" y="420" font-family="Arial, sans-serif" font-size="28" font-weight="400" fill="#FFFFFF" text-anchor="middle" opacity="0.8">Discover Lake Kivu, Rwanda</text>
+  
+  <!-- Decorative line -->
+  <rect x="500" y="450" width="200" height="2" fill="url(#gold)" opacity="0.5"/>
+  
+  <!-- URL -->
+  <text x="600" y="500" font-family="Arial, sans-serif" font-size="18" font-weight="500" fill="#C9A84C" text-anchor="middle" opacity="0.7">gisenyi.top</text>
+  
+  <!-- Corner accents -->
+  <path d="M30 30 L80 30 L80 35 L35 35 L35 80 L30 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 30 L1120 30 L1120 35 L1165 35 L1165 80 L1170 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M30 600 L80 600 L80 595 L35 595 L35 550 L30 550 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 600 L1120 600 L1120 595 L1165 595 L1165 550 L1170 550 Z" fill="#C9A84C" opacity="0.3"/>
+</svg>

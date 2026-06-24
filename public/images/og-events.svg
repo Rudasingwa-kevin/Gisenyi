@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="50%" style="stop-color:#1A0A2E"/>
+      <stop offset="100%" style="stop-color:#0A1628"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C9A84C"/>
+      <stop offset="50%" style="stop-color:#E8C84A"/>
+      <stop offset="100%" style="stop-color:#C9A84C"/>
+    </linearGradient>
+    <linearGradient id="purple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#7B3FA0"/>
+      <stop offset="100%" style="stop-color:#9370DB"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Music notes decoration -->
+  <text x="900" y="150" font-family="Arial, sans-serif" font-size="120" fill="#C9A84C" opacity="0.05">&#9835;</text>
+  <text x="1050" y="300" font-family="Arial, sans-serif" font-size="80" fill="#C9A84C" opacity="0.05">&#9834;</text>
+  <text x="800" y="400" font-family="Arial, sans-serif" font-size="100" fill="#C9A84C" opacity="0.05">&#9833;</text>
+  
+  <!-- Spotlight effects -->
+  <ellipse cx="300" cy="100" rx="200" ry="100" fill="#C9A84C" opacity="0.03"/>
+  <ellipse cx="900" cy="500" rx="250" ry="120" fill="#7B3FA0" opacity="0.05"/>
+  
+  <!-- Stage lights -->
+  <line x1="200" y1="0" x2="300" y2="630" stroke="#C9A84C" stroke-width="0.5" opacity="0.1"/>
+  <line x1="400" y1="0" x2="350" y2="630" stroke="#C9A84C" stroke-width="0.5" opacity="0.1"/>
+  <line x1="1000" y1="0" x2="900" y2="630" stroke="#7B3FA0" stroke-width="0.5" opacity="0.1"/>
+  
+  <!-- Event icon -->
+  <g transform="translate(80, 180)">
+    <rect x="0" y="0" width="80" height="80" rx="16" fill="#C9A84C" opacity="0.15"/>
+    <circle cx="40" cy="35" r="15" stroke="#C9A84C" stroke-width="2" fill="none"/>
+    <path d="M35 35 L40 40 L48 30" stroke="#C9A84C" stroke-width="2" fill="none" stroke-linecap="round"/>
+    <line x1="25" y1="55" x2="55" y2="55" stroke="#C9A84C" stroke-width="2"/>
+  </g>
+  
+  <!-- Category badge -->
+  <rect x="80" y="290" width="140" height="32" rx="16" fill="url(#purple)" opacity="0.3"/>
+  <text x="150" y="311" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle" letter-spacing="2">ENTERTAINMENT</text>
+  
+  <!-- Title -->
+  <text x="80" y="380" font-family="Arial, sans-serif" font-size="56" font-weight="800" fill="url(#gold)">Events in</text>
+  <text x="80" y="445" font-family="Arial, sans-serif" font-size="56" font-weight="800" fill="url(#gold)">Gisenyi</text>
+  
+  <!-- Subtitle -->
+  <text x="80" y="490" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#FFFFFF" opacity="0.8">Culture &amp; Entertainment</text>
+  
+  <!-- Decorative line -->
+  <rect x="80" y="515" width="150" height="2" fill="url(#gold)" opacity="0.5"/>
+  
+  <!-- URL -->
+  <text x="80" y="555" font-family="Arial, sans-serif" font-size="18" font-weight="500" fill="#C9A84C" opacity="0.7">gisenyi.top/events</text>
+  
+  <!-- Corner accents -->
+  <path d="M30 30 L80 30 L80 35 L35 35 L35 80 L30 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 30 L1120 30 L1120 35 L1165 35 L1165 80 L1170 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M30 600 L80 600 L80 595 L35 595 L35 550 L30 550 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 600 L1120 600 L1120 595 L1165 595 L1165 550 L1170 550 Z" fill="#C9A84C" opacity="0.3"/>
+</svg>

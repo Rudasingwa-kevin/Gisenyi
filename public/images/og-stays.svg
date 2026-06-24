@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="50%" style="stop-color:#0F1D32"/>
+      <stop offset="100%" style="stop-color:#0A1628"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C9A84C"/>
+      <stop offset="50%" style="stop-color:#E8C84A"/>
+      <stop offset="100%" style="stop-color:#C9A84C"/>
+    </linearGradient>
+    <linearGradient id="hotel-glow" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#C9A84C;stop-opacity:0.2"/>
+      <stop offset="100%" style="stop-color:#C9A84C;stop-opacity:0"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Hotel silhouette -->
+  <rect x="850" y="200" width="200" height="300" fill="#C9A84C" opacity="0.05"/>
+  <rect x="870" y="220" width="40" height="40" fill="#C9A84C" opacity="0.1"/>
+  <rect x="930" y="220" width="40" height="40" fill="#C9A84C" opacity="0.1"/>
+  <rect x="990" y="220" width="40" height="40" fill="#C9A84C" opacity="0.1"/>
+  <rect x="870" y="280" width="40" height="40" fill="#C9A84C" opacity="0.1"/>
+  <rect x="930" y="280" width="40" height="40" fill="#C9A84C" opacity="0.1"/>
+  <rect x="990" y="280" width="40" height="40" fill="#C9A84C" opacity="0.1"/>
+  <rect x="870" y="340" width="40" height="40" fill="#C9A84C" opacity="0.1"/>
+  <rect x="930" y="340" width="40" height="40" fill="#C9A84C" opacity="0.1"/>
+  <rect x="990" y="340" width="40" height="40" fill="#C9A84C" opacity="0.1"/>
+  
+  <!-- Lake waves -->
+  <path d="M0 500 Q150 480 300 500 Q450 520 600 500 Q750 480 900 500 Q1050 520 1200 500 L1200 630 L0 630 Z" fill="#C9A84C" opacity="0.05"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="200" cy="150" r="200" fill="#C9A84C" opacity="0.03"/>
+  <circle cx="1000" cy="450" r="150" fill="#C9A84C" opacity="0.04"/>
+  
+  <!-- Hotel icon -->
+  <g transform="translate(80, 200)">
+    <rect x="0" y="0" width="80" height="80" rx="16" fill="#C9A84C" opacity="0.15"/>
+    <rect x="20" y="25" width="40" height="35" stroke="#C9A84C" stroke-width="2" fill="none"/>
+    <rect x="30" y="35" width="20" height="25" stroke="#C9A84C" stroke-width="2" fill="none"/>
+    <line x1="40" y1="15" x2="40" y2="25" stroke="#C9A84C" stroke-width="2"/>
+  </g>
+  
+  <!-- Category badge -->
+  <rect x="80" y="310" width="120" height="32" rx="16" fill="#C9A84C" opacity="0.15"/>
+  <text x="140" y="331" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#C9A84C" text-anchor="middle" letter-spacing="2">ACCOMMODATION</text>
+  
+  <!-- Title -->
+  <text x="80" y="400" font-family="Arial, sans-serif" font-size="56" font-weight="800" fill="url(#gold)">Luxury Stays</text>
+  <text x="80" y="460" font-family="Arial, sans-serif" font-size="28" font-weight="400" fill="#FFFFFF" opacity="0.8">Hotels &amp; Resorts in Gisenyi</text>
+  
+  <!-- Decorative line -->
+  <rect x="80" y="490" width="150" height="2" fill="url(#gold)" opacity="0.5"/>
+  
+  <!-- URL -->
+  <text x="80" y="530" font-family="Arial, sans-serif" font-size="18" font-weight="500" fill="#C9A84C" opacity="0.7">gisenyi.top/stays</text>
+  
+  <!-- Corner accents -->
+  <path d="M30 30 L80 30 L80 35 L35 35 L35 80 L30 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 30 L1120 30 L1120 35 L1165 35 L1165 80 L1170 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M30 600 L80 600 L80 595 L35 595 L35 550 L30 550 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 600 L1120 600 L1120 595 L1165 595 L1165 550 L1170 550 Z" fill="#C9A84C" opacity="0.3"/>
+</svg>

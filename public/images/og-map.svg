@@ -1,0 +1,81 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="50%" style="stop-color:#0F1D32"/>
+      <stop offset="100%" style="stop-color:#0A1628"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C9A84C"/>
+      <stop offset="50%" style="stop-color:#E8C84A"/>
+      <stop offset="100%" style="stop-color:#C9A84C"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Map grid lines -->
+  <line x1="0" y1="100" x2="1200" y2="100" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  <line x1="0" y1="200" x2="1200" y2="200" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  <line x1="0" y1="300" x2="1200" y2="300" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  <line x1="0" y1="400" x2="1200" y2="400" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  <line x1="0" y1="500" x2="1200" y2="500" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  <line x1="200" y1="0" x2="200" y2="630" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  <line x1="400" y1="0" x2="400" y2="630" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  <line x1="600" y1="0" x2="600" y2="630" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  <line x1="800" y1="0" x2="800" y2="630" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  <line x1="1000" y1="0" x2="1000" y2="630" stroke="#C9A84C" stroke-width="0.5" opacity="0.05"/>
+  
+  <!-- Lake shape -->
+  <ellipse cx="850" cy="315" rx="250" ry="180" fill="#C9A84C" opacity="0.05"/>
+  <ellipse cx="850" cy="315" rx="200" ry="140" fill="#C9A84C" opacity="0.03"/>
+  
+  <!-- Map markers -->
+  <g transform="translate(780, 250)">
+    <circle cx="0" cy="0" r="12" fill="#C9A84C" opacity="0.3"/>
+    <circle cx="0" cy="0" r="6" fill="#C9A84C"/>
+  </g>
+  <g transform="translate(900, 280)">
+    <circle cx="0" cy="0" r="12" fill="#C9A84C" opacity="0.3"/>
+    <circle cx="0" cy="0" r="6" fill="#C9A84C"/>
+  </g>
+  <g transform="translate(820, 350)">
+    <circle cx="0" cy="0" r="12" fill="#C9A84C" opacity="0.3"/>
+    <circle cx="0" cy="0" r="6" fill="#C9A84C"/>
+  </g>
+  <g transform="translate(950, 320)">
+    <circle cx="0" cy="0" r="12" fill="#C9A84C" opacity="0.3"/>
+    <circle cx="0" cy="0" r="6" fill="#C9A84C"/>
+  </g>
+  
+  <!-- Location pin icon -->
+  <g transform="translate(80, 180)">
+    <rect x="0" y="0" width="80" height="80" rx="16" fill="#C9A84C" opacity="0.15"/>
+    <path d="M40 20 C28 20 20 28 20 38 C20 52 40 65 40 65 C40 65 60 52 60 38 C60 28 52 20 40 20 Z" stroke="#C9A84C" stroke-width="2" fill="none"/>
+    <circle cx="40" cy="38" r="8" fill="#C9A84C"/>
+  </g>
+  
+  <!-- Category badge -->
+  <rect x="80" y="290" width="80" height="32" rx="16" fill="#C9A84C" opacity="0.15"/>
+  <text x="120" y="311" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#C9A84C" text-anchor="middle" letter-spacing="2">MAP</text>
+  
+  <!-- Title -->
+  <text x="80" y="380" font-family="Arial, sans-serif" font-size="56" font-weight="800" fill="url(#gold)">Explore</text>
+  <text x="80" y="445" font-family="Arial, sans-serif" font-size="56" font-weight="800" fill="url(#gold)">Gisenyi Map</text>
+  
+  <!-- Subtitle -->
+  <text x="80" y="490" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#FFFFFF" opacity="0.8">Discover Attractions</text>
+  
+  <!-- Decorative line -->
+  <rect x="80" y="515" width="150" height="2" fill="url(#gold)" opacity="0.5"/>
+  
+  <!-- URL -->
+  <text x="80" y="555" font-family="Arial, sans-serif" font-size="18" font-weight="500" fill="#C9A84C" opacity="0.7">gisenyi.top/map</text>
+  
+  <!-- Corner accents -->
+  <path d="M30 30 L80 30 L80 35 L35 35 L35 80 L30 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 30 L1120 30 L1120 35 L1165 35 L1165 80 L1170 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M30 600 L80 600 L80 595 L35 595 L35 550 L30 550 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 600 L1120 600 L1120 595 L1165 595 L1165 550 L1170 550 Z" fill="#C9A84C" opacity="0.3"/>
+</svg>

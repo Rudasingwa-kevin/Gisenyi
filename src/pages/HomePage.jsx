@@ -2,7 +2,7 @@ import Hero from '../components/Hero';
 import Stats from '../components/Stats';
 import FeedbackSection from '../components/FeedbackSection';
 import SEO from '../components/SEO';
-import { SITE } from '../constants/site';
+import { SITE, PAGE_SEO } from '../constants/site';
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight, MapPin, Compass, Star, ChevronRight } from 'lucide-react';
@@ -79,9 +79,10 @@ const HomePage = ({ stats, loading }) => {
   return (
     <div>
       <SEO
-        title="Gisenyi — The Riviera of Central Africa"
-        description="Discover Gisenyi — the Riviera of Central Africa. Explore hotels, restaurants, attractions and more on the shores of Lake Kivu, Rwanda."
-        url="/"
+        title={PAGE_SEO.home.title}
+        description={PAGE_SEO.home.description}
+        url={PAGE_SEO.home.url}
+        image={PAGE_SEO.home.image}
         type="website"
         structuredData={{
           '@context': 'https://schema.org',

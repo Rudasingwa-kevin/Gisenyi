@@ -1,12 +1,14 @@
 import Gallery from '../components/Gallery';
 import SEO from '../components/SEO';
+import { PAGE_SEO } from '../constants/site';
 
 const GalleryPage = ({ photos }) => (
   <div className="pt-16 md:pt-20">
     <SEO
-      title="Photo Gallery of Gisenyi"
-      description="Browse stunning photos of Gisenyi — the Riviera of Central Africa. Beautiful images of Lake Kivu, volcanic landscapes and lakeside life."
-      url="/gallery"
+      title={PAGE_SEO.gallery.title}
+      description={PAGE_SEO.gallery.description}
+      url={PAGE_SEO.gallery.url}
+      image={PAGE_SEO.gallery.image}
       type="website"
       structuredData={{
         '@context': 'https://schema.org',

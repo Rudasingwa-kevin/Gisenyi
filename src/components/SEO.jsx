@@ -46,18 +46,26 @@ export default function SEO({
     setMeta('description', pageDesc);
     setMeta('keywords', SITE.keywords.join(', '));
 
+    // Open Graph tags
     setMeta('og:title', pageTitle);
     setMeta('og:description', pageDesc);
     setMeta('og:image', pageImage);
+    setMeta('og:image:width', '1200');
+    setMeta('og:image:height', '630');
+    setMeta('og:image:alt', pageTitle);
     setMeta('og:url', pageUrl);
     setMeta('og:type', type);
     setMeta('og:site_name', SITE.name);
     setMeta('og:locale', SITE.locale);
 
+    // Twitter Card tags
     setMeta('twitter:card', 'summary_large_image');
     setMeta('twitter:title', pageTitle);
     setMeta('twitter:description', pageDesc);
     setMeta('twitter:image', pageImage);
+    setMeta('twitter:image:alt', pageTitle);
+    setMeta('twitter:site', SITE.twitterHandle);
+    setMeta('twitter:creator', SITE.twitterHandle);
 
     setCanonical(pageUrl);
 

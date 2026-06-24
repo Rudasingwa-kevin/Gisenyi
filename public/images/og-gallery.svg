@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0A1628"/>
+      <stop offset="50%" style="stop-color:#0F1D32"/>
+      <stop offset="100%" style="stop-color:#0A1628"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#C9A84C"/>
+      <stop offset="50%" style="stop-color:#E8C84A"/>
+      <stop offset="100%" style="stop-color:#C9A84C"/>
+    </linearGradient>
+  </defs>
+  
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  
+  <!-- Photo grid decoration -->
+  <rect x="750" y="80" width="180" height="140" rx="8" fill="#C9A84C" opacity="0.05"/>
+  <rect x="960" y="80" width="180" height="140" rx="8" fill="#C9A84C" opacity="0.08"/>
+  <rect x="750" y="240" width="180" height="140" rx="8" fill="#C9A84C" opacity="0.08"/>
+  <rect x="960" y="240" width="180" height="140" rx="8" fill="#C9A84C" opacity="0.05"/>
+  <rect x="750" y="400" width="180" height="140" rx="8" fill="#C9A84C" opacity="0.03"/>
+  <rect x="960" y="400" width="180" height="140" rx="8" fill="#C9A84C" opacity="0.06"/>
+  
+  <!-- Mountain silhouette -->
+  <path d="M0 550 L200 400 L400 500 L600 350 L800 450 L1000 380 L1200 500 L1200 630 L0 630 Z" fill="#C9A84C" opacity="0.03"/>
+  
+  <!-- Decorative circles -->
+  <circle cx="200" cy="150" r="180" fill="#C9A84C" opacity="0.03"/>
+  <circle cx="1100" cy="500" r="120" fill="#C9A84C" opacity="0.04"/>
+  
+  <!-- Camera icon -->
+  <g transform="translate(80, 180)">
+    <rect x="0" y="0" width="80" height="80" rx="16" fill="#C9A84C" opacity="0.15"/>
+    <rect x="15" y="25" width="50" height="35" rx="4" stroke="#C9A84C" stroke-width="2" fill="none"/>
+    <circle cx="40" cy="42" r="10" stroke="#C9A84C" stroke-width="2" fill="none"/>
+    <circle cx="40" cy="42" r="4" fill="#C9A84C"/>
+  </g>
+  
+  <!-- Category badge -->
+  <rect x="80" y="290" width="100" height="32" rx="16" fill="#C9A84C" opacity="0.15"/>
+  <text x="130" y="311" font-family="Arial, sans-serif" font-size="12" font-weight="600" fill="#C9A84C" text-anchor="middle" letter-spacing="2">GALLERY</text>
+  
+  <!-- Title -->
+  <text x="80" y="380" font-family="Arial, sans-serif" font-size="56" font-weight="800" fill="url(#gold)">Gisenyi</text>
+  <text x="80" y="445" font-family="Arial, sans-serif" font-size="56" font-weight="800" fill="url(#gold)">Gallery</text>
+  
+  <!-- Subtitle -->
+  <text x="80" y="490" font-family="Arial, sans-serif" font-size="24" font-weight="400" fill="#FFFFFF" opacity="0.8">Moments Around Lake Kivu</text>
+  
+  <!-- Decorative line -->
+  <rect x="80" y="515" width="150" height="2" fill="url(#gold)" opacity="0.5"/>
+  
+  <!-- URL -->
+  <text x="80" y="555" font-family="Arial, sans-serif" font-size="18" font-weight="500" fill="#C9A84C" opacity="0.7">gisenyi.top/gallery</text>
+  
+  <!-- Corner accents -->
+  <path d="M30 30 L80 30 L80 35 L35 35 L35 80 L30 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 30 L1120 30 L1120 35 L1165 35 L1165 80 L1170 80 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M30 600 L80 600 L80 595 L35 595 L35 550 L30 550 Z" fill="#C9A84C" opacity="0.3"/>
+  <path d="M1170 600 L1120 600 L1120 595 L1165 595 L1165 550 L1170 550 Z" fill="#C9A84C" opacity="0.3"/>
+</svg>
