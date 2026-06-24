@@ -10,43 +10,43 @@ const routes = [
     path: '/',
     title: 'Gisenyi | Explore Lake Kivu, Rwanda',
     description: 'Discover the beauty of Gisenyi, Rwanda — beaches, luxury stays, events, culture, and unforgettable experiences on the shores of Lake Kivu.',
-    image: 'https://gisenyi.top/images/og-home.svg',
+    image: 'https://gisenyi.top/images/og-home.png',
   },
   {
     path: '/stays',
     title: 'Luxury Stays in Gisenyi | Hotels & Resorts',
     description: 'Find the best hotels, resorts, and unique accommodations in Gisenyi.',
-    image: 'https://gisenyi.top/images/og-stays.svg',
+    image: 'https://gisenyi.top/images/og-stays.png',
   },
   {
     path: '/events',
     title: 'Events in Gisenyi | Culture & Entertainment',
     description: 'Explore festivals, concerts, nightlife, and cultural events in Gisenyi.',
-    image: 'https://gisenyi.top/images/og-events.svg',
+    image: 'https://gisenyi.top/images/og-events.png',
   },
   {
     path: '/gallery',
     title: 'Gisenyi Gallery | Moments Around Lake Kivu',
     description: 'Experience the beauty of Gisenyi through breathtaking photography.',
-    image: 'https://gisenyi.top/images/og-gallery.svg',
+    image: 'https://gisenyi.top/images/og-gallery.png',
   },
   {
     path: '/map',
     title: 'Explore Gisenyi Map | Discover Attractions',
     description: 'Navigate beaches, hotels, restaurants, and attractions around Gisenyi.',
-    image: 'https://gisenyi.top/images/og-map.svg',
+    image: 'https://gisenyi.top/images/og-map.png',
   },
   {
     path: '/history',
     title: 'History of Gisenyi | Heritage & Legacy',
     description: 'Learn about the rich history and cultural heritage of Gisenyi, Rwanda.',
-    image: 'https://gisenyi.top/images/og-history.svg',
+    image: 'https://gisenyi.top/images/og-history.png',
   },
   {
     path: '/calendar',
     title: "Events Calendar | What's Happening in Gisenyi",
     description: 'Stay updated with upcoming events, festivals, and activities in Gisenyi.',
-    image: 'https://gisenyi.top/images/og-calendar.svg',
+    image: 'https://gisenyi.top/images/og-calendar.png',
   },
 ];
 
@@ -67,7 +67,7 @@ function generateHTML(route, indexContent) {
       `<meta property="og:description" content="${route.description}" />`
     )
     .replace(
-      '<meta property="og:image" content="https://gisenyi.top/images/og-home.svg" />',
+      '<meta property="og:image" content="https://gisenyi.top/images/og-home.png" />',
       `<meta property="og:image" content="${route.image}" />`
     )
     .replace(
@@ -83,7 +83,7 @@ function generateHTML(route, indexContent) {
       `<meta name="twitter:description" content="${route.description}" />`
     )
     .replace(
-      '<meta name="twitter:image" content="https://gisenyi.top/images/og-home.svg" />',
+      '<meta name="twitter:image" content="https://gisenyi.top/images/og-home.png" />',
       `<meta name="twitter:image" content="${route.image}" />`
     )
     .replace(
