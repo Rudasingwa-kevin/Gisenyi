@@ -227,7 +227,7 @@ export default function ShareButton({ item, type = 'place', className = '' }) {
                   <div className="text-center">
                     <p className="text-white/30 font-inter text-[10px] uppercase tracking-[0.15em] mb-1.5">Visit us</p>
                     <p className="font-sora font-extrabold text-xl text-gold-500 tracking-tight">
-                      gisenyi.rw
+                      gisenyi.top
                     </p>
                   </div>
                 </div>

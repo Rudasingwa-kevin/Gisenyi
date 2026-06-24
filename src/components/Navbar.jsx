@@ -36,9 +36,7 @@ const Navbar = () => {
             className="relative flex items-center gap-3"
           >
             <div className="relative">
-              <div className="w-10 h-10 rounded-xl bg-gold-500/20 flex items-center justify-center group-hover:bg-gold-500/30 transition-all duration-300">
-                <MapPin className="w-5 h-5 text-gold-500" />
-              </div>
+              <img src="/Gisenyi Logo.png" alt="Gisenyi" className="w-10 h-10 rounded-xl object-cover group-hover:scale-105 transition-all duration-300" />
               <div className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-gold-500 rounded-full animate-pulse-soft" />
             </div>
             <span className="text-xl font-sora font-extrabold tracking-tight text-white">
