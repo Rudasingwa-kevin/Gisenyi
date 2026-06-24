@@ -171,9 +171,7 @@ export default function ShareButton({ item, type = 'place', className = '' }) {
 
                 <div className="relative z-10 p-6 md:p-8">
                   <div className="flex items-center gap-3 mb-5">
-                    <div className="w-8 h-8 rounded-lg bg-gold-500 flex items-center justify-center text-navy-950 font-sora font-extrabold text-sm shadow-lg shadow-gold-500/20">
-                      G
-                    </div>
+                    <img src="/Gisenyi Logo.png" alt="Gisenyi" className="w-8 h-8 rounded-lg object-cover shadow-lg shadow-gold-500/20" />
                     <div>
                       <p className="text-white font-sora font-bold text-sm leading-tight">Gisenyi</p>
                       <p className="text-white/30 font-inter text-[10px]">Lake Kivu, Rwanda</p>
