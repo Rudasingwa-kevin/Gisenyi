@@ -14,8 +14,8 @@ router.delete('/places/:id', validateId, adminController.deletePlace);
 
 router.get('/categories', adminController.getCategories);
 router.post('/categories', validate(schemas.category), adminController.createCategory);
-router.put('/categories/:id', validateId, validate(schemas.category), adminController.updateCategory);
-router.delete('/categories/:id', validateId, adminController.deleteCategory);
+router.put('/categories/:id', validate(schemas.category), adminController.updateCategory);
+router.delete('/categories/:id', adminController.deleteCategory);
 
 router.get('/events', adminController.getEvents);
 router.get('/events/:id', validateId, adminController.getEvent);
