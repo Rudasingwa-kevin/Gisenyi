@@ -15,7 +15,7 @@ const app = express();
 app.use(helmet());
 
 // CORS
-const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173').split(',').map(s => s.trim());
+const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:5173,https://gisenyi.top').split(',').map(s => s.trim());
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin || allowedOrigins.includes(origin)) return cb(null, true);
