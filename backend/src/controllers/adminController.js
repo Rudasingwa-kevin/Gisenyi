@@ -278,8 +278,19 @@ exports.getVisitorStats = async (req, res, next) => {
 exports.getSystemInfo = async (req, res, next) => {
   try {
     const start = Date.now();
-    await prisma.$queryRaw`SELECT 1`;
-    const dbPing = Date.now() - start;
+    let dbConnected = false;
+    let dbPing = 0;
+    try {
+      await Promise.race([
+        prisma.$queryRaw`SELECT 1`,
+        new Promise((_, reject) => setTimeout(() => reject(new Error('timeout')), 5000))
+      ]);
+      dbPing = Date.now() - start;
+      dbConnected = true;
+    } catch {
+      dbPing = Date.now() - start;
+      dbConnected = false;
+    }
 
     const mem = process.memoryUsage();
     const totalMem = os.totalmem();
@@ -294,39 +305,49 @@ exports.getSystemInfo = async (req, res, next) => {
 
     const loadAvg = os.loadavg();
 
-    const [
-      placeCount,
-      eventCount,
-      categoryCount,
-      calendarCount,
-      galleryCount,
-      feedbackCount,
-      visitCount,
-    ] = await Promise.all([
-      prisma.place.count(),
-      prisma.event.count(),
-      prisma.category.count(),
-      prisma.calendarItem.count(),
-      prisma.galleryItem.count(),
-      prisma.feedback.count(),
-      prisma.visit.count(),
-    ]);
+    let placeCount = 0, eventCount = 0, categoryCount = 0, calendarCount = 0, galleryCount = 0, feedbackCount = 0, visitCount = 0;
+    let dbSize = [{ size: 'Unknown' }];
+    let tableStats = [];
 
-    const dbSize = await prisma.$queryRaw`
-      SELECT pg_size_pretty(pg_database_size(current_database())) as size
-    `;
+    if (dbConnected) {
+      try {
+        [
+          placeCount,
+          eventCount,
+          categoryCount,
+          calendarCount,
+          galleryCount,
+          feedbackCount,
+          visitCount,
+        ] = await Promise.all([
+          prisma.place.count(),
+          prisma.event.count(),
+          prisma.category.count(),
+          prisma.calendarItem.count(),
+          prisma.galleryItem.count(),
+          prisma.feedback.count(),
+          prisma.visit.count(),
+        ]);
 
-    const tableStats = await prisma.$queryRaw`
-      SELECT 
-        schemaname, relname as table_name,
-        n_live_tup as row_count,
-        pg_size_pretty(pg_total_relation_size(relid)) as total_size
-      FROM pg_stat_user_tables
-      ORDER BY n_live_tup DESC
-    `;
+        dbSize = await prisma.$queryRaw`
+          SELECT pg_size_pretty(pg_database_size(current_database())) as size
+        `;
+
+        tableStats = await prisma.$queryRaw`
+          SELECT 
+            schemaname, relname as table_name,
+            n_live_tup as row_count,
+            pg_size_pretty(pg_total_relation_size(relid)) as total_size
+          FROM pg_stat_user_tables
+          ORDER BY n_live_tup DESC
+        `;
+      } catch {
+        dbConnected = false;
+      }
+    }
 
     const services = {
-      database: { configured: true, status: 'connected' },
+      database: { configured: true, status: dbConnected ? 'connected' : 'disconnected' },
       cloudinary: { configured: !!process.env.CLOUDINARY_CLOUD_NAME },
       supabase: { configured: !!process.env.SUPABASE_URL },
       auth: { configured: !!process.env.JWT_SECRET },
@@ -353,7 +374,7 @@ exports.getSystemInfo = async (req, res, next) => {
         system: { total: totalMem, free: freeMem, used: totalMem - freeMem }
       },
       database: {
-        status: 'connected',
+        status: dbConnected ? 'connected' : 'disconnected',
         pingMs: dbPing,
         size: dbSize?.[0]?.size || 'Unknown',
         tables: tableStats || [],
