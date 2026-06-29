@@ -80,7 +80,7 @@ const Navbar = () => {
             animate={{ x: 0 }}
             exit={{ x: '100%' }}
             transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed inset-0 bg-navy-900/80 backdrop-blur-2xl z-[1100] flex flex-col p-6 sm:p-10"
+            className="fixed inset-0 bg-navy-900 backdrop-blur-2xl z-[1100] flex flex-col p-6 sm:p-10"
           >
             <div className="flex justify-end">
               <motion.button
