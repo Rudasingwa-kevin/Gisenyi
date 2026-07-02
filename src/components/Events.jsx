@@ -17,6 +17,16 @@ const CATEGORIES = [
 
 const FALLBACK_EVENTS = [];
 
+const getEventStatus = (dateStr) => {
+  const now = new Date();
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+  const eventDate = new Date(dateStr + 'T00:00:00');
+  const diffDays = Math.floor((today - eventDate) / (1000 * 60 * 60 * 24));
+  if (diffDays > 0) return 'ended';
+  if (diffDays === 0) return 'today';
+  return 'upcoming';
+};
+
 const Events = () => {
   const [events, setEvents] = useState(FALLBACK_EVENTS);
   const [loading, setLoading] = useState(true);
@@ -160,6 +170,7 @@ const Events = () => {
                 const Icon = catIconMap[event.category] || Sparkles;
                 const grad = categoryGradients[event.category] || 'from-gray-600/20 to-gray-600/10';
                 const border = borderColors[event.category] || 'border-white/10';
+                const status = getEventStatus(event.date);
                 return (
                   <motion.div
                     key={event.id}
@@ -169,14 +180,31 @@ const Events = () => {
                     animate={{ opacity: 1, scale: 1 }}
                     exit={{ opacity: 0, scale: 0.9 }}
                     transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                    className="group relative overflow-hidden rounded-2xl glass border border-white/5 hover:border-gold-500/30 transition-all duration-500"
+                    className={`group relative overflow-hidden rounded-2xl glass border transition-all duration-500 ${
+                      status === 'ended'
+                        ? 'border-white/5 opacity-70 hover:opacity-90'
+                        : 'border-white/5 hover:border-gold-500/30'
+                    }`}
                   >
+                    {status === 'ended' && (
+                      <div className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-lg bg-red-500/80 text-white text-[9px] font-poppins font-bold uppercase tracking-wider backdrop-blur-sm">
+                        Ended
+                      </div>
+                    )}
+                    {status === 'today' && (
+                      <div className="absolute top-3 right-3 z-10 px-2.5 py-1 rounded-lg bg-gold-500 text-navy-900 text-[9px] font-poppins font-bold uppercase tracking-wider backdrop-blur-sm animate-pulse">
+                        Today
+                      </div>
+                    )}
+
                     {event.image ? (
                       <button onClick={() => setLightbox(event.image)} className="relative aspect-[2/1] overflow-hidden w-full">
                         <img
                           src={event.image}
                           alt={event.title}
-                          className="w-full h-full object-cover transition-all duration-700 group-hover:scale-110"
+                          className={`w-full h-full object-cover transition-all duration-700 group-hover:scale-110 ${
+                            status === 'ended' ? 'grayscale' : ''
+                          }`}
                           loading="lazy"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-navy-900/80 via-transparent to-transparent" />
@@ -227,7 +255,7 @@ const Events = () => {
                       </div>
 
                       <div className="flex gap-2">
-                        {event.ticketLink && (
+                        {event.ticketLink && status !== 'ended' && (
                           <a
                             href={event.ticketLink}
                             target="_blank"
@@ -238,6 +266,12 @@ const Events = () => {
                             Get Tickets
                             <ExternalLink className="w-3 h-3" />
                           </a>
+                        )}
+                        {status === 'ended' && (
+                          <div className="flex-1 flex items-center justify-center gap-2 py-3 rounded-xl bg-white/5 border border-white/10 text-white/30 font-poppins font-semibold text-[10px] uppercase tracking-[0.2em]">
+                            <Ticket className="w-3.5 h-3.5" />
+                            Event Ended
+                          </div>
                         )}
                         <ShareButton
                           item={event}
