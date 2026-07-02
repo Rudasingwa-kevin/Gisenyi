@@ -203,25 +203,25 @@ const Events = () => {
                       </h3>
 
                       {event.description && (
-                        <p className="font-inter text-sm text-white/50 leading-relaxed mb-5 line-clamp-2">
+                        <p className="font-inter text-sm text-white/80 leading-relaxed mb-5 line-clamp-2">
                           {event.description}
                         </p>
                       )}
 
                       <div className="space-y-2 mb-6">
-                        <div className="flex items-center gap-2.5 text-white/40 group-hover:text-white/60 transition-colors">
-                          <Calendar className="w-3.5 h-3.5 text-gold-500/60 shrink-0" />
+                        <div className="flex items-center gap-2.5 text-white/70 group-hover:text-white/90 transition-colors">
+                          <Calendar className="w-3.5 h-3.5 text-gold-500/70 shrink-0" />
                           <span className="font-inter text-xs">{formatDate(event.date)}</span>
                           {event.time && (
                             <>
-                              <span className="text-white/20">•</span>
-                              <Clock className="w-3.5 h-3.5 text-gold-500/60 shrink-0" />
+                              <span className="text-white/40">•</span>
+                              <Clock className="w-3.5 h-3.5 text-gold-500/70 shrink-0" />
                               <span className="font-inter text-xs">{event.time}</span>
                             </>
                           )}
                         </div>
-                        <div className="flex items-center gap-2 text-white/40 group-hover:text-white/60 transition-colors">
-                          <MapPin className="w-3.5 h-3.5 text-gold-500/60 shrink-0" />
+                        <div className="flex items-center gap-2 text-white/70 group-hover:text-white/90 transition-colors">
+                          <MapPin className="w-3.5 h-3.5 text-gold-500/70 shrink-0" />
                           <span className="font-inter text-xs">{event.location}</span>
                         </div>
                       </div>

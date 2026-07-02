@@ -1,5 +1,7 @@
 @import "tailwindcss";
 
+@custom-variant dark (&:is(.dark *));
+
 @theme {
   --color-navy-900: #060D1A;
   --color-navy-800: #0A1628;
@@ -22,7 +24,7 @@
 @layer base {
   html { scroll-behavior: smooth; position: relative; }
   body {
-    @apply bg-[#F8F8F6] text-navy-800 dark:bg-navy-900 dark:text-white/90 transition-colors duration-500 overflow-x-hidden font-outfit antialiased;
+    @apply bg-navy-900 text-white/90 overflow-x-hidden font-outfit antialiased;
   }
   ::selection { @apply bg-gold-500/30; }
   :focus-visible { @apply outline-2 outline-offset-2 outline-gold-500; }
