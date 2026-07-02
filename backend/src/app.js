@@ -30,6 +30,7 @@ const limiter = rateLimit({
   max: process.env.NODE_ENV === 'production' ? 100 : 300,
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
 });
 app.use('/api', limiter);
 
@@ -38,6 +39,7 @@ const authLimiter = rateLimit({
   max: 10,
   standardHeaders: true,
   legacyHeaders: false,
+  validate: { xForwardedForHeader: false },
 });
 app.use('/api/auth', authLimiter);
 
