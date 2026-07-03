@@ -46,6 +46,16 @@ const ScrollToTop = () => {
   return null;
 };
 
+const KeepAlive = () => {
+  useEffect(() => {
+    const ping = () => fetch(`${API_BASE}/health`).catch(() => {});
+    ping();
+    const interval = setInterval(ping, 5 * 60 * 1000);
+    return () => clearInterval(interval);
+  }, []);
+  return null;
+};
+
 const AnimatedOutlet = ({ children }) => (
   <motion.div variants={pageVariants} initial="initial" animate="animate" exit="exit">
     {children}
@@ -109,6 +119,7 @@ function AppLayout() {
 
   return (
     <div className="font-outfit min-h-screen flex flex-col">
+      <KeepAlive />
       {!isAdminPage && <Navbar />}
 
       <main className={isAdminPage ? '' : 'flex-grow'}>
