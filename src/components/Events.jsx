@@ -20,7 +20,8 @@ const FALLBACK_EVENTS = [];
 const getEventStatus = (dateStr) => {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
-  const eventDate = new Date(dateStr + 'T00:00:00');
+  const dateOnly = String(dateStr).slice(0, 10);
+  const eventDate = new Date(dateOnly + 'T00:00:00');
   const diffDays = Math.floor((today - eventDate) / (1000 * 60 * 60 * 24));
   if (diffDays > 0) return 'ended';
   if (diffDays === 0) return 'today';
