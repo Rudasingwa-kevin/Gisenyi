@@ -1,6 +1,7 @@
 const app = require('./app');
 const { ensureBucket } = require('./utils/supabase');
 const prisma = require('./utils/prisma');
+const { KeepAliveJob } = require('./utils/keepAlive');
 
 const PORT = process.env.PORT || 3000;
 
@@ -29,6 +30,8 @@ async function start() {
   } catch (err) {
     console.warn('Storage bucket setup failed (non-fatal):', err.message);
   }
+
+  KeepAliveJob.start();
 }
 
 start();
