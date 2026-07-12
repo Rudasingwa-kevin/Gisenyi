@@ -66,9 +66,18 @@ const Events = () => {
     }
   }, [highlightId, loading, events]);
 
-  const filtered = activeCat === 'all'
+  const filtered = (activeCat === 'all'
     ? events
-    : events.filter(e => e.category === activeCat);
+    : events.filter(e => e.category === activeCat)
+  ).sort((a, b) => {
+    const statusOrder = { today: 0, upcoming: 1, ended: 2 };
+    const sa = statusOrder[getEventStatus(a.date)] ?? 2;
+    const sb = statusOrder[getEventStatus(b.date)] ?? 2;
+    if (sa !== sb) return sa - sb;
+    if (sa === 0) return 0;
+    if (sa === 1) return new Date(a.date) - new Date(b.date);
+    return new Date(b.date) - new Date(a.date);
+  });
 
   const categoryGradients = {
     concert: 'from-emerald-600/20 to-teal-600/10',
