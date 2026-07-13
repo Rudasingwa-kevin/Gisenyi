@@ -87,7 +87,7 @@ export function Textarea({ className, error, ...props }) {
   );
 }
 
-export function ImageUpload({ value, onChange, label, preview }) {
+export function ImageUpload({ value, onChange, label, preview, accept = 'image/*,video/*' }) {
   const [uploading, setUploading] = useState(false);
 
   const handleFile = async (e) => {
@@ -126,7 +126,7 @@ export function ImageUpload({ value, onChange, label, preview }) {
         )}>
           <Upload className={cn('w-4 h-4', uploading && 'animate-spin')} />
           {uploading ? '...' : 'Upload'}
-          <input type="file" accept="image/*" onChange={handleFile} className="hidden" disabled={uploading} />
+          <input type="file" accept={accept} onChange={handleFile} className="hidden" disabled={uploading} />
         </label>
       </div>
       {preview && value && (

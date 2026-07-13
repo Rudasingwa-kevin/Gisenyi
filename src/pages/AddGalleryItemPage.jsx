@@ -4,7 +4,7 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Image as ImageIcon, Loader2 } from 'lucide-react';
 import { API, fetchWithAuth } from '../utils/admin';
-import { FormField, Input, Select, FormActions, useFormValidation } from '../components/admin/FormComponents';
+import { FormField, ImageUpload, Input, Select, FormActions, useFormValidation } from '../components/admin/FormComponents';
 import { ToastProvider, useToast } from '../components/admin/Toast';
 import { useUnsavedChanges } from '../hooks/useUnsavedChanges';
 
@@ -83,9 +83,13 @@ function AddGalleryItemInner() {
               <Input type="text" value={form.caption} onChange={e => setForm(f => ({ ...f, caption: e.target.value }))} placeholder="Optional caption" />
             </FormField>
           </div>
-          <FormField label="Media URL" error={errors.url} required>
-            <Input type="url" value={form.url} onChange={e => { setForm(f => ({ ...f, url: e.target.value })); clearField('url'); }} placeholder="https://example.com/image.jpg" />
-          </FormField>
+          <ImageUpload
+            label="Media"
+            value={form.url}
+            onChange={url => { setForm(f => ({ ...f, url })); clearField('url'); }}
+            preview
+            accept={form.type === 'video' ? 'video/*' : 'image/*'}
+          />
           {form.url && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }}>
               {form.type === 'video' ? (
