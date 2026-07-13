@@ -103,7 +103,7 @@ const schemas = {
 
   galleryItem: z.object({
     url: z.string().min(1, 'URL is required'),
-    caption: z.string().optional().default(''),
+    title: z.string().optional().default(''),
     type: z.enum(['image', 'video']).optional().default('image'),
   }),
 

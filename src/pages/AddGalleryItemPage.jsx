@@ -16,7 +16,7 @@ function AddGalleryItemInner() {
   const { addToast } = useToast();
   const [loading, setLoading] = useState(isEdit);
   const [initialForm, setInitialForm] = useState(null);
-  const [form, setForm] = useState({ url: '', caption: '', type: 'image' });
+  const [form, setForm] = useState({ url: '', title: '', type: 'image' });
   const [saving, setSaving] = useState(false);
 
   const { errors, validate, clearField } = useFormValidation({
@@ -29,8 +29,8 @@ function AddGalleryItemInner() {
     if (!isEdit) return;
     fetchWithAuth(`${API}/gallery/${id}`).then(r => r.ok && r.json()).then(data => {
       const item = data.data || data;
-      setForm({ url: item.url || '', caption: item.caption || '', type: item.type || 'image' });
-      setInitialForm({ url: item.url || '', caption: item.caption || '', type: item.type || 'image' });
+      setForm({ url: item.url || '', title: item.title || '', type: item.type || 'image' });
+      setInitialForm({ url: item.url || '', title: item.title || '', type: item.type || 'image' });
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load item', 'error'); });
   }, [id, isEdit]);
@@ -80,7 +80,7 @@ function AddGalleryItemInner() {
               <Select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} options={[{ value: 'image', label: 'Image' }, { value: 'video', label: 'Video' }]} />
             </FormField>
             <FormField label="Caption">
-              <Input type="text" value={form.caption} onChange={e => setForm(f => ({ ...f, caption: e.target.value }))} placeholder="Optional caption" />
+              <Input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Optional caption" />
             </FormField>
           </div>
           <ImageUpload
