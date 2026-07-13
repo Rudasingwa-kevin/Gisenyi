@@ -122,7 +122,7 @@ const Gallery = ({ photos }) => {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            className="fixed inset-0 z-[300] bg-navy-900/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-6"
+            className="fixed inset-0 z-[1100] bg-navy-900/95 backdrop-blur-2xl flex items-center justify-center p-4 md:p-6"
             onClick={close}
           >
             <button onClick={close} className="absolute top-4 md:top-6 right-4 md:right-6 w-10 md:w-12 h-10 md:h-12 rounded-xl glass flex items-center justify-center text-white hover:bg-white/10 transition-all z-10">
