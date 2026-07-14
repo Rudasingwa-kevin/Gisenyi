@@ -106,6 +106,7 @@ const schemas = {
     url: z.string().min(1, 'URL is required'),
     title: z.string().optional().default(''),
     type: z.enum(['image', 'video']).optional().default('image'),
+    category: z.enum(['current', 'historical']).optional().default('current'),
   }),
 
   feedback: z.object({

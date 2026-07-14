@@ -16,7 +16,7 @@ function AddGalleryItemInner() {
   const { addToast } = useToast();
   const [loading, setLoading] = useState(isEdit);
   const [initialForm, setInitialForm] = useState(null);
-  const [form, setForm] = useState({ url: '', title: '', type: 'image' });
+  const [form, setForm] = useState({ url: '', title: '', type: 'image', category: 'current' });
   const [saving, setSaving] = useState(false);
 
   const { errors, validate, clearField } = useFormValidation({
@@ -29,8 +29,8 @@ function AddGalleryItemInner() {
     if (!isEdit) return;
     fetchWithAuth(`${API}/gallery/${id}`).then(r => r.ok && r.json()).then(data => {
       const item = data.data || data;
-      setForm({ url: item.url || '', title: item.title || '', type: item.type || 'image' });
-      setInitialForm({ url: item.url || '', title: item.title || '', type: item.type || 'image' });
+      setForm({ url: item.url || '', title: item.title || '', type: item.type || 'image', category: item.category || 'current' });
+      setInitialForm({ url: item.url || '', title: item.title || '', type: item.type || 'image', category: item.category || 'current' });
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load item', 'error'); });
   }, [id, isEdit]);
@@ -75,9 +75,12 @@ function AddGalleryItemInner() {
           </div>
         </div>
         <form onSubmit={handleSubmit} className="glass rounded-2xl border border-white/[0.06] p-5 md:p-6 space-y-5">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
             <FormField label="Type">
               <Select value={form.type} onChange={e => setForm(f => ({ ...f, type: e.target.value }))} options={[{ value: 'image', label: 'Image' }, { value: 'video', label: 'Video' }]} />
+            </FormField>
+            <FormField label="Category">
+              <Select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} options={[{ value: 'current', label: 'Current' }, { value: 'historical', label: 'Historical' }]} />
             </FormField>
             <FormField label="Caption">
               <Input type="text" value={form.title} onChange={e => setForm(f => ({ ...f, title: e.target.value }))} placeholder="Optional caption" />

@@ -78,6 +78,7 @@ model GalleryItem {
   url       String
   type      String   @default("image")
   title     String?
+  category  String   @default("current")
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }

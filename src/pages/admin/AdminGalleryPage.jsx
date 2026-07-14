@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Plus, Pencil, Trash2, ExternalLink, Image as ImageIcon, Video, Download } from 'lucide-react';
+import { Plus, Pencil, Trash2, ExternalLink, Image as ImageIcon, Video, Download, Filter } from 'lucide-react';
 import { useAdminData, useFilteredItems, PAGE_SIZE } from '../../components/admin/useAdminData';
 import { ListControls, Pagination } from '../../components/admin/ListComponents';
 import { AnimatedList, AnimatedListItem } from '../../components/admin/AnimatedList';
@@ -19,9 +19,14 @@ function GalleryContent() {
   const [sort, setSort] = useState('date');
   const [page, setPage] = useState(1);
   const [deleteTarget, setDeleteTarget] = useState(null);
+  const [catFilter, setCatFilter] = useState('all');
 
-  const filtered = useFilteredItems(galleryItems, {
-    searchFields: ['title', 'type'],
+  const categories = [...new Set(galleryItems.map(i => i.category).filter(Boolean))];
+
+  const preFiltered = galleryItems.filter(e => catFilter === 'all' || e.category === catFilter);
+
+  const filtered = useFilteredItems(preFiltered, {
+    searchFields: ['title', 'type', 'category'],
     sortFn: (s) => (a, b) => s === 'title'
       ? (a.title || '').localeCompare(b.title || '')
       : new Date(b.createdAt) - new Date(a.createdAt),
@@ -53,6 +58,7 @@ function GalleryContent() {
             { label: 'ID', accessor: 'id' },
             { label: 'Caption', accessor: 'title' },
             { label: 'Type', accessor: 'type' },
+            { label: 'Category', accessor: 'category' },
             { label: 'URL', accessor: 'url' },
           ], 'gallery.csv')} className="inline-flex items-center gap-1.5 px-3 py-2 text-white/40 hover:text-white/70 text-sm font-inter rounded-xl hover:bg-white/[0.04] border border-white/[0.06] transition-all">
             <Download className="w-3.5 h-3.5" /> Export
@@ -62,6 +68,16 @@ function GalleryContent() {
       </div>
 
       <ListControls search={search} onSearch={v => { setSearch(v); setPage(1); }} sort={sort} onSort={v => { setSort(v); setPage(1); }} sortOptions={[{ value: 'date', label: 'Date' }, { value: 'title', label: 'Caption' }]} placeholder="Search gallery..." />
+
+      {categories.length > 1 && (
+        <div className="flex items-center gap-1.5">
+          <Filter className="w-3.5 h-3.5 text-white/25" />
+          <button onClick={() => { setCatFilter('all'); setPage(1); }} className={`px-2.5 py-1 rounded-lg text-[11px] font-inter transition-all ${catFilter === 'all' ? 'bg-gold-500/15 text-gold-400 border border-gold-500/20' : 'text-white/35 hover:text-white/60 border border-white/[0.04] hover:border-white/[0.08]'}`}>All</button>
+          {categories.map(cat => (
+            <button key={cat} onClick={() => { setCatFilter(cat); setPage(1); }} className={`px-2.5 py-1 rounded-lg text-[11px] font-inter capitalize transition-all ${catFilter === cat ? 'bg-gold-500/15 text-gold-400 border border-gold-500/20' : 'text-white/35 hover:text-white/60 border border-white/[0.04] hover:border-white/[0.08]'}`}>{cat}</button>
+          ))}
+        </div>
+      )}
 
       {loading ? <SkeletonList /> : filtered.items.length === 0 ? (
         <EmptyState icon={ImageIcon} title="No gallery items" />
@@ -77,7 +93,11 @@ function GalleryContent() {
                     </div>
                     <div className="min-w-0">
                       <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{item.title || 'No title'}</h3>
-                      <p className="text-white/25 text-xs font-inter capitalize">{item.type}</p>
+                      <p className="text-white/25 text-xs font-inter mt-0.5">
+                        <span className="capitalize">{item.type}</span>
+                        <span className="mx-1.5 text-white/15">&middot;</span>
+                        <span className={`capitalize ${item.category === 'historical' ? 'text-amber-400/60' : 'text-emerald-400/60'}`}>{item.category || 'current'}</span>
+                      </p>
                     </div>
                   </div>
                   <div className="flex items-center gap-0.5 opacity-0 group-hover:opacity-100 transition-opacity">

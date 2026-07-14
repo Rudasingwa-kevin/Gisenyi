@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, ChevronLeft, ChevronRight, Play } from 'lucide-react';
+import { X, ChevronLeft, ChevronRight, Play, Sparkles, Clock, History } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 
 const fallbackPhotos = [
@@ -27,6 +27,7 @@ function getVimeoEmbed(url) {
 const Gallery = ({ photos }) => {
   const [items, setItems] = useState([]);
   const [lightbox, setLightbox] = useState(null);
+  const [activeFilter, setActiveFilter] = useState('all');
 
   useEffect(() => {
     fetch(`${API_BASE}/api/gallery`)
@@ -37,11 +38,15 @@ const Gallery = ({ photos }) => {
       .catch(() => {});
   }, []);
 
-  const galleryItems = items.length
-    ? items.map(i => ({ url: i.url, type: i.type, title: i.title }))
+  const allItems = items.length
+    ? items.map(i => ({ url: i.url, type: i.type, title: i.title, category: i.category || 'current' }))
     : photos.length
-      ? photos.map(p => ({ url: p, type: 'image', title: '' }))
-      : fallbackPhotos.map(p => ({ url: p, type: 'image', title: '' }));
+      ? photos.map(p => ({ url: p, type: 'image', title: '', category: 'current' }))
+      : fallbackPhotos.map(p => ({ url: p, type: 'image', title: '', category: 'current' }));
+
+  const galleryItems = activeFilter === 'all'
+    ? allItems
+    : allItems.filter(i => i.category === activeFilter);
 
   const open = (i) => setLightbox(i);
   const close = () => setLightbox(null);
@@ -71,6 +76,37 @@ const Gallery = ({ photos }) => {
           </div>
           <span className="text-xs text-white/30 font-inter">{galleryItems.length} items</span>
         </div>
+
+        <motion.div
+          initial={{ opacity: 0, y: 10 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="flex flex-wrap gap-2 md:gap-3 mb-8 md:mb-10"
+        >
+          {[
+            { key: 'all', label: 'All', icon: Sparkles },
+            { key: 'current', label: 'Current', icon: Clock },
+            { key: 'historical', label: 'Historical', icon: History },
+          ].map(f => {
+            const Icon = f.icon;
+            return (
+              <motion.button
+                key={f.key}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={() => { setActiveFilter(f.key); setLightbox(null); }}
+                className={`flex items-center gap-2 px-4 md:px-5 py-2.5 md:py-3 rounded-xl text-[10px] md:text-[11px] font-poppins font-semibold uppercase tracking-[0.15em] transition-all duration-300 ${
+                  activeFilter === f.key
+                    ? 'bg-gold-500 text-navy-900'
+                    : 'glass text-white/60 hover:text-white hover:bg-white/5'
+                }`}
+              >
+                <Icon className="w-4 h-4" />
+                {f.label}
+              </motion.button>
+            );
+          })}
+        </motion.div>
 
         <div className="columns-2 sm:columns-3 lg:columns-4 gap-3 md:gap-4 space-y-3 md:space-y-4">
           {galleryItems.map((item, i) => (
