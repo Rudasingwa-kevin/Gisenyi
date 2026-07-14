@@ -27,7 +27,8 @@ function EventsContent() {
 
   const now = new Date();
   const preFiltered = events.filter(e => {
-    if (dateRange === 'upcoming') return new Date(e.date) >= now;
+    const eventEnd = e.endDate ? new Date(e.endDate) : new Date(e.date);
+    if (dateRange === 'upcoming') return eventEnd >= now;
     if (dateRange === 'past') return new Date(e.date) < now;
     if (dateRange === 'thisMonth') {
       const d = new Date(e.date);
@@ -114,7 +115,7 @@ function EventsContent() {
                     <div className="min-w-0">
                       <h3 className="text-white font-inter font-semibold text-sm group-hover:text-gold-400 transition-colors truncate">{event.title}</h3>
                       <p className="text-white/25 text-xs font-inter mt-0.5">
-                        <Clock className="w-3 h-3 inline mr-1" />{formatDate(event.date)} &middot; {event.location} &middot; <span className="text-gold-500/50">{event.category}</span>
+                        <Clock className="w-3 h-3 inline mr-1" />{formatDate(event.date)}{event.endDate ? ` — ${formatDate(event.endDate)}` : ''} &middot; {event.location} &middot; <span className="text-gold-500/50">{event.category}</span>
                       </p>
                     </div>
                   </div>

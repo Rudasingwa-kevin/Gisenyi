@@ -50,18 +50,19 @@ model CalendarItem {
 }
 
 model Event {
-  id          String   @id @default(uuid())
+  id          String    @id @default(uuid())
   title       String
   description String?
   date        DateTime
+  endDate     DateTime?
   time        String?
   location    String
   category    String
   price       String?
   image       String?
   ticketLink  String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([category])
 }

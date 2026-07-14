@@ -17,7 +17,7 @@ function AddEventInner() {
   const [loading, setLoading] = useState(isEdit);
   const [initialForm, setInitialForm] = useState(null);
   const [form, setForm] = useState({
-    title: '', description: '', date: '', time: '', location: '', category: 'concert', price: '', image: '', ticketLink: ''
+    title: '', description: '', date: '', endDate: '', time: '', location: '', category: 'concert', price: '', image: '', ticketLink: ''
   });
   const [saving, setSaving] = useState(false);
 
@@ -35,12 +35,12 @@ function AddEventInner() {
       const item = data.data || data;
       setForm({
         title: item.title || '', description: item.description || '', date: item.date || '',
-        time: item.time || '', location: item.location || '', category: item.category || 'concert',
+        endDate: item.endDate || '', time: item.time || '', location: item.location || '', category: item.category || 'concert',
         price: item.price || '', image: item.image || '', ticketLink: item.ticketLink || ''
       });
       setInitialForm({
         title: item.title || '', description: item.description || '', date: item.date || '',
-        time: item.time || '', location: item.location || '', category: item.category || 'concert',
+        endDate: item.endDate || '', time: item.time || '', location: item.location || '', category: item.category || 'concert',
         price: item.price || '', image: item.image || '', ticketLink: item.ticketLink || ''
       });
       setLoading(false);
@@ -92,10 +92,13 @@ function AddEventInner() {
               <Input type="text" value={form.title} onChange={e => { setForm(f => ({ ...f, title: e.target.value })); clearField('title'); }} />
             </FormField>
             <FormField label="Category">
-              <Select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} options={[{ value: 'concert', label: 'Concert' }, { value: 'movie', label: 'Movie Night' }, { value: 'comedy', label: 'Comedy' }, { value: 'arts', label: 'Arts' }, { value: 'cultural', label: 'Cultural' }]} />
+              <Select value={form.category} onChange={e => setForm(f => ({ ...f, category: e.target.value }))} options={[{ value: 'concert', label: 'Concert' }, { value: 'movie', label: 'Movie Night' }, { value: 'comedy', label: 'Comedy' }, { value: 'arts', label: 'Arts' }, { value: 'cultural', label: 'Cultural' }, { value: 'festival', label: 'Festival' }, { value: 'expo', label: 'Expo' }]} />
             </FormField>
             <FormField label="Date" error={errors.date} required>
               <Input type="date" value={form.date} onChange={e => { setForm(f => ({ ...f, date: e.target.value })); clearField('date'); }} />
+            </FormField>
+            <FormField label="End Date (optional, for multi-day events)">
+              <Input type="date" value={form.endDate} onChange={e => setForm(f => ({ ...f, endDate: e.target.value }))} min={form.date || undefined} />
             </FormField>
             <FormField label="Time">
               <Input type="text" value={form.time} onChange={e => setForm(f => ({ ...f, time: e.target.value }))} placeholder="e.g. 7:00 PM" />

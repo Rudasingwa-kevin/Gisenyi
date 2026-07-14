@@ -75,6 +75,7 @@ const schemas = {
   event: z.object({
     title: z.string().min(1, 'Title is required'),
     date: z.coerce.date(),
+    endDate: z.coerce.date().optional().nullable(),
     time: z.string().optional().default(''),
     location: z.string().optional().default(''),
     description: z.string().optional().default(''),

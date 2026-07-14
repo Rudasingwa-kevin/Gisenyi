@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Calendar, Clock, MapPin, Ticket, Mic, Film, Music, Palette, Theater, Sparkles, ExternalLink, X } from 'lucide-react';
+import { Calendar, Clock, MapPin, Ticket, Mic, Film, Music, Palette, Theater, Sparkles, ExternalLink, X, Tent, Store } from 'lucide-react';
 import { API_BASE } from '../utils/api';
 import { formatDate } from '../utils/helpers';
 import ShareButton from './ShareButton';
@@ -12,16 +12,25 @@ const CATEGORIES = [
   { key: 'movie', label: 'Movie Nights', icon: Film },
   { key: 'comedy', label: 'Comedy', icon: Mic },
   { key: 'arts', label: 'Arts', icon: Palette },
-  { key: 'cultural', label: 'Cultural', icon: Theater }
+  { key: 'cultural', label: 'Cultural', icon: Theater },
+  { key: 'festival', label: 'Festivals', icon: Tent },
+  { key: 'expo', label: 'Expos', icon: Store }
 ];
 
 const FALLBACK_EVENTS = [];
 
-const getEventStatus = (dateStr) => {
+const getEventStatus = (dateStr, endDateStr) => {
   const now = new Date();
   const today = new Date(now.getFullYear(), now.getMonth(), now.getDate());
   const dateOnly = String(dateStr).slice(0, 10);
   const eventDate = new Date(dateOnly + 'T00:00:00');
+  if (endDateStr) {
+    const endOnly = String(endDateStr).slice(0, 10);
+    const eventEnd = new Date(endOnly + 'T23:59:59');
+    if (today > eventEnd) return 'ended';
+    if (today >= eventDate && today <= eventEnd) return 'today';
+    return 'upcoming';
+  }
   const diffDays = Math.floor((today - eventDate) / (1000 * 60 * 60 * 24));
   if (diffDays > 0) return 'ended';
   if (diffDays === 0) return 'today';
@@ -71,8 +80,8 @@ const Events = () => {
     : events.filter(e => e.category === activeCat)
   ).sort((a, b) => {
     const statusOrder = { today: 0, upcoming: 1, ended: 2 };
-    const sa = statusOrder[getEventStatus(a.date)] ?? 2;
-    const sb = statusOrder[getEventStatus(b.date)] ?? 2;
+    const sa = statusOrder[getEventStatus(a.date, a.endDate)] ?? 2;
+    const sb = statusOrder[getEventStatus(b.date, b.endDate)] ?? 2;
     if (sa !== sb) return sa - sb;
     if (sa === 0) return 0;
     if (sa === 1) return new Date(a.date) - new Date(b.date);
@@ -84,7 +93,9 @@ const Events = () => {
     movie: 'from-purple-600/20 to-violet-600/10',
     comedy: 'from-amber-600/20 to-orange-600/10',
     arts: 'from-pink-600/20 to-rose-600/10',
-    cultural: 'from-red-600/20 to-orange-600/10'
+    cultural: 'from-red-600/20 to-orange-600/10',
+    festival: 'from-indigo-600/20 to-blue-600/10',
+    expo: 'from-cyan-600/20 to-teal-600/10'
   };
 
   const borderColors = {
@@ -92,7 +103,9 @@ const Events = () => {
     movie: 'border-purple-500/30',
     comedy: 'border-amber-500/30',
     arts: 'border-pink-500/30',
-    cultural: 'border-red-500/30'
+    cultural: 'border-red-500/30',
+    festival: 'border-indigo-500/30',
+    expo: 'border-cyan-500/30'
   };
 
   const catIconMap = {
@@ -100,7 +113,9 @@ const Events = () => {
     movie: Film,
     comedy: Mic,
     arts: Palette,
-    cultural: Theater
+    cultural: Theater,
+    festival: Tent,
+    expo: Store
   };
 
   return (
@@ -180,7 +195,8 @@ const Events = () => {
                 const Icon = catIconMap[event.category] || Sparkles;
                 const grad = categoryGradients[event.category] || 'from-gray-600/20 to-gray-600/10';
                 const border = borderColors[event.category] || 'border-white/10';
-                const status = getEventStatus(event.date);
+                const status = getEventStatus(event.date, event.endDate);
+                const isMultiDay = event.endDate && event.endDate !== event.date;
                 return (
                   <motion.div
                     key={event.id}
@@ -249,7 +265,12 @@ const Events = () => {
                       <div className="space-y-2 mb-6">
                         <div className="flex items-center gap-2.5 text-white/70 group-hover:text-white/90 transition-colors">
                           <Calendar className="w-3.5 h-3.5 text-gold-500/70 shrink-0" />
-                          <span className="font-inter text-xs">{formatDate(event.date)}</span>
+                          <span className="font-inter text-xs">
+                            {isMultiDay
+                              ? `${formatDate(event.date)} — ${formatDate(event.endDate)}`
+                              : formatDate(event.date)
+                            }
+                          </span>
                           {event.time && (
                             <>
                               <span className="text-white/40">•</span>
