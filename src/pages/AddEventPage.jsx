@@ -4,12 +4,13 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, Calendar, Loader2 } from 'lucide-react';
 import { API, fetchWithAuth } from '../utils/admin';
+import { toDateString } from '../utils/helpers';
 import { FormField, Input, Select, Textarea, ImageUpload, FormActions, useFormValidation } from '../components/admin/FormComponents';
 import { ToastProvider, useToast } from '../components/admin/Toast';
 import { useUnsavedChanges } from '../hooks/useUnsavedChanges';
 
 function AddEventInner() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { id } = useParams();
   const isEdit = !!id;
@@ -30,22 +31,21 @@ function AddEventInner() {
   useEffect(() => { if (!isAdmin) navigate('/'); }, [isAdmin, navigate]);
 
   useEffect(() => {
-    if (!isEdit) return;
+    if (!isEdit || authLoading || !isAdmin) return;
     fetchWithAuth(`${API}/events/${id}`).then(r => r.ok && r.json()).then(data => {
       const item = data.data || data;
-      setForm({
-        title: item.title || '', description: item.description || '', date: item.date || '',
-        endDate: item.endDate || '', time: item.time || '', location: item.location || '', category: item.category || 'concert',
+      const normalized = {
+        title: item.title || '', description: item.description || '',
+        date: toDateString(item.date) || '',
+        endDate: toDateString(item.endDate) || '',
+        time: item.time || '', location: item.location || '', category: item.category || 'concert',
         price: item.price || '', image: item.image || '', ticketLink: item.ticketLink || ''
-      });
-      setInitialForm({
-        title: item.title || '', description: item.description || '', date: item.date || '',
-        endDate: item.endDate || '', time: item.time || '', location: item.location || '', category: item.category || 'concert',
-        price: item.price || '', image: item.image || '', ticketLink: item.ticketLink || ''
-      });
+      };
+      setForm(normalized);
+      setInitialForm(normalized);
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load event', 'error'); });
-  }, [id, isEdit]);
+  }, [id, isEdit, isAdmin, authLoading]);
 
   const isDirty = initialForm && JSON.stringify(form) !== JSON.stringify(initialForm);
   useUnsavedChanges(isDirty);
