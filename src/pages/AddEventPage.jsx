@@ -54,9 +54,13 @@ function AddEventInner() {
     e.preventDefault();
     if (!validate(form)) return;
     setSaving(true);
+    const payload = {
+      ...form,
+      endDate: form.endDate || null,
+    };
     const res = await fetchWithAuth(
       isEdit ? `${API}/events/${id}` : `${API}/events`,
-      { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(form) }
+      { method: isEdit ? 'PUT' : 'POST', body: JSON.stringify(payload) }
     );
     if (res.ok) {
       addToast(isEdit ? 'Event updated' : 'Event created', 'success');

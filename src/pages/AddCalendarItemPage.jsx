@@ -4,12 +4,13 @@ import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
 import { ArrowLeft, CalendarDays, Loader2 } from 'lucide-react';
 import { API, fetchWithAuth } from '../utils/admin';
+import { toDateString } from '../utils/helpers';
 import { FormField, Input, Select, Textarea, FormActions, useFormValidation } from '../components/admin/FormComponents';
 import { ToastProvider, useToast } from '../components/admin/Toast';
 import { useUnsavedChanges } from '../hooks/useUnsavedChanges';
 
 function AddCalendarItemInner() {
-  const { isAdmin } = useAuth();
+  const { isAdmin, loading: authLoading } = useAuth();
   const navigate = useNavigate();
   const { id } = useParams();
   const isEdit = !!id;
@@ -27,20 +28,18 @@ function AddCalendarItemInner() {
   useEffect(() => { if (!isAdmin) navigate('/'); }, [isAdmin, navigate]);
 
   useEffect(() => {
-    if (!isEdit) return;
+    if (!isEdit || authLoading || !isAdmin) return;
     fetchWithAuth(`${API}/calendar/${id}`).then(r => r.ok && r.json()).then(data => {
       const item = data.data || data;
-      setForm({
-        title: item.title || '', description: item.description || '', date: item.date || '',
+      const normalized = {
+        title: item.title || '', description: item.description || '', date: toDateString(item.date) || '',
         time: item.time || '', type: item.type || 'note', color: item.color || '#4A90D9', location: item.location || ''
-      });
-      setInitialForm({
-        title: item.title || '', description: item.description || '', date: item.date || '',
-        time: item.time || '', type: item.type || 'note', color: item.color || '#4A90D9', location: item.location || ''
-      });
+      };
+      setForm(normalized);
+      setInitialForm(normalized);
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load calendar item', 'error'); });
-  }, [id, isEdit]);
+  }, [id, isEdit, isAdmin, authLoading]);
 
   const isDirty = initialForm && JSON.stringify(form) !== JSON.stringify(initialForm);
   useUnsavedChanges(isDirty);
