@@ -39,7 +39,7 @@ function AddCalendarItemInner() {
       setInitialForm(normalized);
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load calendar item', 'error'); });
-  }, [id, isEdit, isAdmin, authLoading]);
+  }, [id, isEdit, isAdmin, authLoading, addToast]);
 
   const isDirty = initialForm && JSON.stringify(form) !== JSON.stringify(initialForm);
   useUnsavedChanges(isDirty);

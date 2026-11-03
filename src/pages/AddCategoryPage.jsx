@@ -38,7 +38,7 @@ function AddCategoryInner() {
       } else addToast('Category not found', 'error');
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load category', 'error'); });
-  }, [id, isEdit]);
+  }, [id, isEdit, addToast]);
 
   const isDirty = initialForm && JSON.stringify(form) !== JSON.stringify(initialForm);
   useUnsavedChanges(isDirty);

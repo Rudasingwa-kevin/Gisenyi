@@ -19,7 +19,7 @@ function AddGalleryItemInner() {
   const [form, setForm] = useState({ url: '', title: '', type: 'image', category: 'current' });
   const [saving, setSaving] = useState(false);
 
-  const { errors, validate, clearField } = useFormValidation({
+  const { validate, clearField } = useFormValidation({
     url: [{ required: true, message: 'URL is required' }],
   });
 
@@ -33,7 +33,7 @@ function AddGalleryItemInner() {
       setInitialForm({ url: item.url || '', title: item.title || '', type: item.type || 'image', category: item.category || 'current' });
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load item', 'error'); });
-  }, [id, isEdit]);
+  }, [id, isEdit, addToast]);
 
   const isDirty = initialForm && JSON.stringify(form) !== JSON.stringify(initialForm);
   useUnsavedChanges(isDirty);

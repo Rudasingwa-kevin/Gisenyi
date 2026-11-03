@@ -18,4 +18,10 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
+  {
+    files: ['prerender.js'],
+    languageOptions: {
+      globals: globals.node,
+    },
+  },
 ])

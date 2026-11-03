@@ -106,7 +106,7 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
       iconSize: [44, 54],
       iconAnchor: [22, 44],
     });
-  }, []);
+  }, [CATEGORIES]);
 
   const filteredPlaces = useMemo(() => {
     return places.filter((p) => {
@@ -164,7 +164,7 @@ const MapView = ({ places, activeCat, setActiveCat, selectedPlace, setSelectedPl
       markersLayer.current.addLayer(marker);
       markerMap.current.set(place.id, marker);
     });
-  }, [filteredPlaces, mapReady, createMarkerIcon]);
+  }, [filteredPlaces, mapReady, createMarkerIcon, CATEGORIES, selectedPlace?.id]);
 
   useEffect(() => {
     if (!mapReady || !selectedPlace) return;

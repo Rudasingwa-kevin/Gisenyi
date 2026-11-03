@@ -45,7 +45,7 @@ function AddEventInner() {
       setInitialForm(normalized);
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load event', 'error'); });
-  }, [id, isEdit, isAdmin, authLoading]);
+  }, [id, isEdit, isAdmin, authLoading, addToast]);
 
   const isDirty = initialForm && JSON.stringify(form) !== JSON.stringify(initialForm);
   useUnsavedChanges(isDirty);

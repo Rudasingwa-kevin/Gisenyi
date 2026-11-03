@@ -72,12 +72,12 @@ function AdminPageInner() {
     setEditing(null);
   };
 
-  const paginated = (arr) => {
+  const paginated = useCallback((arr) => {
     const totalPages = Math.ceil(arr.length / PAGE_SIZE);
     const safePage = Math.min(listPage, totalPages || 1);
     const start = (safePage - 1) * PAGE_SIZE;
     return { items: arr.slice(start, start + PAGE_SIZE), page: safePage, totalPages };
-  };
+  }, [listPage]);
 
   useEffect(() => {
     if (!isAdmin) navigate('/');
@@ -134,7 +134,7 @@ function AdminPageInner() {
     });
     const { items, page, totalPages } = paginated(f);
     return { items, page, totalPages, total: f.length };
-  }, [places, listSearch, listSort, listPage]);
+  }, [places, listSearch, listSort, paginated]);
 
   const filteredEvents = useMemo(() => {
     const f = events.filter(e => {
@@ -147,7 +147,7 @@ function AdminPageInner() {
     });
     const { items, page, totalPages } = paginated(f);
     return { items, page, totalPages, total: f.length };
-  }, [events, listSearch, listSort, listPage]);
+  }, [events, listSearch, listSort, paginated]);
 
   const filteredCategories = useMemo(() => {
     const f = categories.filter(c => {
@@ -160,7 +160,7 @@ function AdminPageInner() {
     });
     const { items, page, totalPages } = paginated(f);
     return { items, page, totalPages, total: f.length };
-  }, [categories, listSearch, listSort, listPage]);
+  }, [categories, listSearch, listSort, paginated]);
 
   const filteredCalendar = useMemo(() => {
     const f = calendarItems.filter(ci => {
@@ -173,7 +173,7 @@ function AdminPageInner() {
     });
     const { items, page, totalPages } = paginated(f);
     return { items, page, totalPages, total: f.length };
-  }, [calendarItems, listSearch, listSort, listPage]);
+  }, [calendarItems, listSearch, listSort, paginated]);
 
   const filteredFeedback = useMemo(() => {
     const f = feedbackItems.filter(fb => {
@@ -183,7 +183,7 @@ function AdminPageInner() {
     }).sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     const { items, page, totalPages } = paginated(f);
     return { items, page, totalPages, total: f.length };
-  }, [feedbackItems, listSearch, listPage]);
+  }, [feedbackItems, listSearch, paginated]);
 
   const filteredGallery = useMemo(() => {
     const f = galleryItems.filter(g => {
@@ -196,14 +196,14 @@ function AdminPageInner() {
     });
     const { items, page, totalPages } = paginated(f);
     return { items, page, totalPages, total: f.length };
-  }, [galleryItems, listSearch, listSort, listPage]);
+  }, [galleryItems, listSearch, listSort, paginated]);
 
   useEffect(() => {
     if (!isAdmin) return;
     // eslint-disable-next-line react-hooks/set-state-in-effect
     Promise.all([loadPlaces(), loadCategories(), loadEvents(), loadCalendarItems(), loadGalleryItems(), loadFeedback(), loadVisitorStats()]).then(() => setLoading(false));
     loadSystemInfo();
-  }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems, loadVisitorStats, loadSystemInfo]);
+  }, [isAdmin, loadPlaces, loadCategories, loadEvents, loadCalendarItems, loadGalleryItems, loadFeedback, loadVisitorStats, loadSystemInfo]);
 
   const handleDelete = async (type, id) => {
     const res = await fetchWithAuth(`${API}/${type}/${id}`, { method: 'DELETE' });

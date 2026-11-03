@@ -99,7 +99,7 @@ function AppLayout() {
   }, []);
 
   // eslint-disable-next-line react-hooks/set-state-in-effect
-  useEffect(() => { if (places.length === 0) fetchAll(true); }, [fetchAll]);
+  useEffect(() => { if (places.length === 0) fetchAll(true); }, [fetchAll, places.length]);
 
   useEffect(() => {
     if (places.length) {

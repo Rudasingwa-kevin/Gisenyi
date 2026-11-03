@@ -58,7 +58,7 @@ function AddPlaceInner() {
       });
       setLoading(false);
     }).catch(() => { setLoading(false); addToast('Failed to load place', 'error'); });
-  }, [id, isEdit]);
+  }, [id, isEdit, addToast]);
 
   const isDirty = initialForm && JSON.stringify(form) !== JSON.stringify(initialForm);
   useUnsavedChanges(isDirty);
