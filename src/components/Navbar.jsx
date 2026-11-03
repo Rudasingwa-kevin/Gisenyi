@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { createPortal } from 'react-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Menu, X, MapPin } from 'lucide-react';
 import { Link, useLocation } from 'react-router-dom';
@@ -25,6 +26,7 @@ const Navbar = () => {
   }, []);
 
   return (
+    <>
     <nav className={`fixed top-0 w-full z-[1001] transition-all duration-500 ${
       scrolled ? 'glass-dark shadow-2xl shadow-gold-500/5' : 'bg-transparent'
     }`}>
@@ -73,44 +75,48 @@ const Navbar = () => {
           </button>
       </div>
 
-      <AnimatePresence>
-        {mobileOpen && (
-          <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
-            transition={{ type: 'spring', damping: 30, stiffness: 300 }}
-            className="fixed inset-0 bg-navy-900 backdrop-blur-2xl z-[1100] flex flex-col p-6 sm:p-10"
-          >
-            <div className="flex justify-end">
-              <motion.button
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setMobileOpen(false)}
-                className="w-10 md:w-12 h-10 md:h-12 rounded-xl glass flex items-center justify-center text-gold-500"
-              >
-                <X className="w-5 md:w-6 h-5 md:h-6" />
-              </motion.button>
-            </div>
-            <div className="flex-1 flex flex-col justify-center gap-4 md:gap-6">
-              {links.map((item) => (
-                <Link key={item.path} to={item.path} onClick={() => setMobileOpen(false)}>
-                  <motion.span
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    className={`text-4xl sm:text-5xl md:text-7xl font-sora font-extrabold tracking-tight transition-colors ${
-                      pathname === item.path ? 'text-gold-500' : 'text-white/40 hover:text-white'
-                    }`}
-                  >
-                    {item.name}
-                  </motion.span>
-                </Link>
-              ))}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </nav>
+      {createPortal(
+        <AnimatePresence>
+          {mobileOpen && (
+            <motion.div
+              initial={{ x: '100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '100%' }}
+              transition={{ type: 'spring', damping: 30, stiffness: 300 }}
+              className="fixed inset-0 bg-navy-900 z-[1200] flex flex-col p-6 sm:p-10"
+            >
+              <div className="flex justify-end">
+                <motion.button
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => setMobileOpen(false)}
+                  className="w-10 md:w-12 h-10 md:h-12 rounded-xl glass flex items-center justify-center text-gold-500"
+                >
+                  <X className="w-5 md:w-6 h-5 md:h-6" />
+                </motion.button>
+              </div>
+              <div className="flex-1 flex flex-col justify-center gap-4 md:gap-6">
+                {links.map((item) => (
+                  <Link key={item.path} to={item.path} onClick={() => setMobileOpen(false)}>
+                    <motion.span
+                      initial={{ opacity: 0, x: 30 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      className={`text-4xl sm:text-5xl md:text-7xl font-sora font-extrabold tracking-tight transition-colors ${
+                        pathname === item.path ? 'text-gold-500' : 'text-white/40 hover:text-white'
+                      }`}
+                    >
+                      {item.name}
+                    </motion.span>
+                  </Link>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>,
+        document.body
+      )}
+    </>
   );
 };
 
