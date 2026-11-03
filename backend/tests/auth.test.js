@@ -5,7 +5,7 @@ describe('Auth flow', () => {
   it('logs in with valid credentials and sets cookie', async () => {
     const res = await request(app)
       .post('/api/auth/login')
-      .send({ username: 'admin', password: 'e84b116613dd7b24e5d7077fb0beb2fc' });
+      .send({ username: 'admin', password: 'admin123' });
     expect(res.status).toBe(200);
     expect(res.body).toHaveProperty('username', 'admin');
     expect(res.body).not.toHaveProperty('token');
@@ -32,7 +32,7 @@ describe('Auth flow', () => {
     const agent = request.agent(app);
     await agent
       .post('/api/auth/login')
-      .send({ username: 'admin', password: 'e84b116613dd7b24e5d7077fb0beb2fc' });
+      .send({ username: 'admin', password: 'admin123' });
 
     const res = await agent.get('/api/auth/me');
     expect(res.status).toBe(200);
@@ -48,7 +48,7 @@ describe('Auth flow', () => {
     const agent = request.agent(app);
     await agent
       .post('/api/auth/login')
-      .send({ username: 'admin', password: 'e84b116613dd7b24e5d7077fb0beb2fc' });
+      .send({ username: 'admin', password: 'admin123' });
 
     const res = await agent.post('/api/auth/logout');
     expect(res.status).toBe(200);
@@ -62,7 +62,7 @@ describe('Admin routes (cookie auth)', () => {
     agent = request.agent(app);
     await agent
       .post('/api/auth/login')
-      .send({ username: 'admin', password: 'e84b116613dd7b24e5d7077fb0beb2fc' });
+      .send({ username: 'admin', password: 'admin123' });
   });
 
   it('GET /api/admin/places returns paginated data', async () => {
